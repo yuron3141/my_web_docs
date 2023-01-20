@@ -8,9 +8,9 @@
 yarn.lock
 
 # my original setting
-src/docs/personal/
+/src/docs/personal/
 
-src/docs/my-dev/my-web-app2
+/src/docs/my-dev/my-web-app2
 
 *.pdf
 
