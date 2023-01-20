@@ -1,0 +1,22 @@
+{
+  "name": "my_web_docs",
+  "version": "1.0.0",
+  "description": "This is my personnal web docs",
+  "scripts": {
+    "build:pdf:open": "md-to-pdf src/docs/release_resume/README.md --config-file ./src/configs/md-to-pdf_config.js",
+    "build:pdf:close": "md-to-pdf src/docs/personal/resume.md --config-file ./src/configs/md-to-pdf_config.js",
+    "print:html": "node src/configs/md-to-html.js src/docs/release_resume/README.md",
+    "md:svg": " mjc -f src/docs/my-dev/engineer-judge-app/api/diagram/ER.md -o SVG"
+  },
+  "author": "yuron3141",
+  "license": "MIT",
+  "devDependencies": {
+    "commander": "^10.0.0",
+    "html-pdf": "^3.0.1",
+    "marked": "^4.2.12",
+    "md-to-pdf": "^5.0.0",
+    "mermaid-js-converter": "^1.0.13",
+    "module_name": "^1.0.0",
+    "typescript": "^4.9.4"
+  }
+}

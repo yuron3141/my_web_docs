@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="Ja">
+    <head>
+        <title>Document Title</title>
+        <!-- DOCUMENTS STYLE -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <!-- Usage for This CSS Framework-->
+        <!-- https://getbootstrap.jp/docs/5.0/getting-started/introduction/ -->
+        <!-- https://bootstrap-guide.com/sample/cheatsheet -->
+    </head>
+    <body class="d-flex flex-column h-100">
+        <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
+            <div>
+                <h1 class="m-3">API 設計書</h1>
+            </div>
+        </header>
+        <main class="flex-shrink-0">
+            <!-- 目次下 -->
+            <div class="container">
+                <h3>目次</h3>
+                <ol class="list-group list-group-flush  list-group-numbered">
+                    <li class="list-group-item">
+                        <a href="#1" class="link-secondary">概要</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="#2" class="link-secondary">クライアントサイド用API</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="#3" class="link-secondary">管理者サイド用API(SSKDS)</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="#4" class="link-secondary">補足メモ</a>
+                    </li>
+
+                </ol>
+            </div>
+            <hr>
+            <!-- 書き込む要素は以下へ -->
+            <div>
+                <div id="1" class="container">
+                    <h1 class="mt-5">概要</h1>
+                    <p class="lead">
+                        サーバサイドで作る API はクライアントサイド用と管理画面の操作用(管理者使用前提)を作成する。<br>
+                        なおクライアントサイドで提供する API の処理はデータの登録(Create)、データの読み取り(Read)のみとする。
+                    </p>
+                    <p class="lead">
+                        Rest APIを採用し、返却するJSONデータフォーマットは以下を基準とする。
+                    </p>
+                    <ul class="list-group">
+                        <li class="list-group-item text-success">
+                            {<br>
+                                "status": "SUCCESS",<br>
+                                "message": "message for client",<br>
+                                "data"{<br>
+                                    # please write response data<br>
+                                }<br>
+                            }
+                        </li>
+                    </ul>
+                    <p>
+                        statusとmessageを定義したのはHTTPレスポンスへッダを見なくてもサーバで処理した状況をクライアントサイドで見れるようにするためである。<br>
+                        登録したデータ(data)をクライアントに返送するのは当アプリケーションがクライアントのどの情報を記録しているかを明示するため。
+                    </p>
+                </div>
+            </div>
+            <hr>
+            <div>
+                <div id="2" class="container">
+                    <h1 class="mt-5">クライアントサイド用API</h1>
+                    <p class="lead">
+                        クライアントサイドに提供するAPIのバージョン管理は以下のように行う。
+                    </p>
+                    <ul class="list-group">
+                        <li class="list-group-item text-primary">/api/v1/機能名</li>
+                    </ul>
+                    <p>補足：機能名は最後に「s」をつける、クエリで指定する場合は 機能名/数字 などで操作するデータを指定する構造にする</p>
+                    <div  class="p-2">
+                        <h2>Results/</h2>
+                        <p class="lead">
+                            結果の登録用テーブルへの操作を行うためのエンドポイント
+                        </p>
+                        <p>登録機能(CREATE)のみの提供とする。他操作(RUD)は禁止(アクセス無効)。</p>
+                        <div class="accordion" id="accordionFlushExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingOne">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#OneOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                    <h5>POST (:新規作成)</h5>
+                                    </button>
+                                </h2>
+                                <div id="OneOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <p>スキーマ</p>
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                {<br>
+                                                    "status": "SUCCESS",<br>
+                                                    "message": "submited your test score in database",<br>
+                                                    "data"{<br>
+                                                <p class="text-primary">
+                                                        "ip_address": "142.251.42.195",<br>
+                                                        "point_intention": "120",<br>
+                                                        "point_view": "110",<br>
+                                                        "point_expert": "80",<br>
+                                                        "point_tech": "190",<br>
+                                                        "generation": "120",<br>
+                                                        "sex": "0",<br>
+                                                        "month": "4",
+                                                </p>
+                                                    }<br>
+                                                }<br>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-2">
+                        <h2>Statistics/</h2>
+                        <p class="lead">
+                            統計情報のテーブルにアクセスをするためのエンドポイント
+                        </p>
+                        <p>読み取り機能(READ)のみの提供とする。他操作(CUD)は禁止(アクセス無効)。</p>
+                        <div class="accordion" id="accordionFlushExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingOne">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#OneTwo" aria-expanded="false" aria-controls="flush-collapseOne">
+                                    <h5>GET (:読み取り)</h5>
+                                    </button>
+                                </h2>
+                                <div id="OneTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <p>スキーマ</p>
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                {<br>
+                                                    "status": "SUCCESS",<br>
+                                                    "message": "you got statistics data",<br>
+                                                    "data"{<br>
+                                                <p class="text-primary">
+                                                        "statistics": {<br>
+                                                            "10" : [12, 23, 34, 24, 23, 45, 2, 78, 23, 27],<br>
+                                                            "20" : [12, 23, 34, 24, 23, 45, 2, 78, 23, 27],<br>
+                                                            "30" : [12, 23, 34, 24, 23, 45, 2, 78, 23, 27],<br>
+                                                            "40" : [12, 23, 34, 24, 23, 45, 2, 78, 23, 27],<br>
+                                                            "50" : [12, 23, 34, 24, 23, 45, 2, 78, 23, 27],<br>
+                                                            "60" : [12, 23, 34, 24, 23, 45, 2, 78, 23, 27],<br>
+                                                            "70" : [12, 23, 34, 24, 23, 45, 2, 78, 23, 27],<br>
+                                                            "0" : [145, 223, 234, 124, 223, 451, 22, 781, 231, 271],<br>
+                                                        },<br>
+                                                        "sum": "120",<br>
+                                                </p>
+                                                    }<br>
+                                                }<br>
+                                            </li>
+                                        </ul>
+                                        <div class="m-1 p-3 card">
+                                            <h6>補足</h6>
+                                            <p>
+                                                statistics 内の 数字 は年代(generation)を表し、配列内に10タイプの人数をそれぞれ格納。
+                                            <br> "0" は全年代のタイプごと総計人数を表し、 "sum"は総受験者数を表す。
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div id="3" class="container">
+                    <h1 class="mt-5">管理者サイド用API(SSKDS)</h1>
+                    <p class="lead">
+                        SSKDSなAPI(管理用)の構成は以下の通り
+                    </p>
+                    <ul class="list-group">
+                        <li class="list-group-item text-primary">/admin/ :unique_string: /機能名</li>
+                    </ul>
+                    <p>補足： unique_string は ユニークな文字列 とする これは悪意のあるクライアント側が管理画面にアクセスしにくいようにするため</p>
+                    <div  class="p-2">
+                        <h2>sign_in/</h2>
+                        <p class="lead">
+                            ログイン認証(パスワード認証)を行うためのエンドポイント
+                        </p>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div id="4" class="container">
+                    <h1 class="mt-5">補足メモ</h1>
+                    <p class="lead">
+                        メモ
+                    </p>
+                    <p>https://nishinatoshiharu.com/rails-jwt-auth-api/<br>
+                        https://www.ccs1981.jp/blog/ruby-on-rails-%E3%81%A7%E3%83%AD%E3%82%B0%E3%82%A4%E3%83%B3%E7%94%BB%E9%9D%A2%E3%82%92%E4%BD%9C%E3%82%8B/
+                        <br>https://wiblok.com/ruby-2/rails/rails-%E3%83%AD%E3%82%B0%E3%82%A4%E3%83%B3%E6%A9%9F%E8%83%BD/
+
+                        
+                    </p>
+                </div>
+            </div>
+        </main>
+        <footer class="footer mt-auto py-3 bg-light">
+            <div class="container">
+                <p class="text-muted text-center">Written by ゆーろん / yuron3141</p>
+            </div>
+        </footer>
+    </body>
+</html>
