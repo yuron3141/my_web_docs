@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="Ja">
+    <head>
+        <title>ゆーろんのWeb系の学習資料　|　SQL基礎</title>
+        <!-- OGP -->
+        <head prefix="og: https://ogp.me/ns#">
+        <meta property="og:url" content="https://yuron3141.github.io/my_web_docs/" />
+        <meta property="og:type" content="Blog" />
+        <meta property="og:title" content="SQL基礎" />
+        <meta property="og:description" content="ゆーろんのWeb系学習資料です。皆さんの開発のために役立つことを祈っています。" />
+        <meta property="og:site_name" content="ゆーろんアカデミー　ノート支部" />
+        <!-- DOCUMENTS STYLE -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <!-- ORIGINAL CSS -->
+        <link rel="stylesheet" href="../css/style.css" type="text/css">
+    </head>
+    <body>
+        <body class="d-flex flex-column h-100">
+            <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
+                <div>
+                    <h1 class="m-3">SQL基礎</h1>
+                </div>
+            </header>
+            <main class="m-4">
+
+                <!-- Write Text Here-->
+
+                <p>SQLとはデータベースを操作するための言語です。
+                DBMS上でデータの追加や削除、並べ替えなどを行うようコンピュータに命令することができます。</p>
+                <h2 id="目次">目次<!-- omit in toc --></h2>
+                <ul>
+                <li><a href="#1-sql%E6%A6%82%E8%AB%96">1. SQL概論</a><ul>
+                <li><a href="#14-sql%E3%81%A8%E3%81%AF">1.4. SQLとは</a></li>
+                <li><a href="#12-sql%E3%81%AE%E7%A8%AE%E9%A1%9E">1.2. SQLの種類</a></li>
+                <li><a href="#13-sql%E3%81%AE4%E5%A4%A7%E5%91%BD%E4%BB%A4">1.3. SQLの4大命令</a></li>
+                </ul>
+                </li>
+                <li><a href="#2-sql%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C">2. SQL基本操作</a><ul>
+                <li><a href="#21-insert%E6%96%87">2.1. INSERT文</a></li>
+                <li><a href="#22-select%E6%96%87">2.2. SELECT文</a></li>
+                <li><a href="#23-update%E6%96%87">2.3. UPDATE文</a></li>
+                <li><a href="#24-delete%E6%96%87">2.4. DELETE文</a></li>
+                <li><a href="#25-%E7%B5%9E%E3%82%8A%E8%BE%BC%E3%81%BF-where">2.5. 絞り込み WHERE</a></li>
+                <li><a href="#26-between%E5%8F%A5">2.6. BETWEEN句</a></li>
+                <li><a href="#27-like%E5%8F%A5">2.7. LIKE句</a></li>
+                <li><a href="#28-in%E3%81%A8not-in">2.8. INとNOT IN</a></li>
+                <li><a href="#29-exists">2.9. EXISTS</a></li>
+                <li><a href="#210-order-by%E6%96%87">2.10. ORDER BY文</a></li>
+                <li><a href="#211-%E8%A1%A8%E7%A4%BA%E4%BB%B6%E6%95%B0%E3%81%AE%E5%88%B6%E9%99%90">2.11 表示件数の制限</a></li>
+                <li><a href="#212-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB%E5%AE%9A%E7%BE%A9%E3%81%AE%E7%A2%BA%E8%AA%8D">2.12. テーブル定義の確認</a></li>
+                <li><a href="#213-sql%E3%81%AE%E9%9B%86%E5%90%88%E9%96%A2%E6%95%B0">2.13. SQLの集合関数</a><ul>
+                <li><a href="#2131-count">2.13.1. COUNT</a></li>
+                <li><a href="#2133-sum">2.13.3. SUM</a></li>
+                <li><a href="#2134-max">2.13.4. MAX</a></li>
+                <li><a href="#2135-min">2.13.5. MIN</a></li>
+                <li><a href="#2136-avg">2.13.6. AVG</a></li>
+                </ul>
+                </li>
+                <li><a href="#214-%E3%82%B0%E3%83%AB%E3%83%BC%E3%83%97">2.14. グループ</a></li>
+                </ul>
+                </li>
+                <li><a href="#3-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB%E3%81%AE%E7%B5%90%E5%90%88">3. テーブルの結合</a><ul>
+                <li><a href="#31-%E5%86%85%E9%83%A8%E7%B5%90%E5%90%88">3.1. 内部結合</a></li>
+                <li><a href="#32-%E5%A4%96%E9%83%A8%E7%B5%90%E5%90%88">3.2. 外部結合</a></li>
+                </ul>
+                </li>
+                </ul>
+                <h1 id="1-sql概論">1. SQL概論</h1>
+                <h2 id="14-sqlとは">1.4. SQLとは</h2>
+                <p>SQL(Structured Query Language)とはデータベースを操作するための言語です。
+                DBMS上でデータの追加や削除、並べ替えなどを行うようコンピュータに命令することができます。
+                基本的に１行ずつ入力して確定し、直ちに実行されます。複数のSQLを組み合わせて大きな一つの塊のSQLとして実行することもできますが、通常のプログラミング言語のように一連の操作をまとめてセットすることのできる「ストアドプロシージャ」という機能のあるDBMSもあります。</p>
+                <h3 id="ストアドプロシージャ">ストアドプロシージャ<!-- omit in toc --></h3>
+                <p>DBMSにSQL文を1つのプログラムにまとめ保存しておくことは<strong>ストアドプロシージャ</strong>と呼ばれます。
+                一連の処理が実行される。
+                また、メリットは以下の通りです。</p>
+                <ul>
+                <li>ネットワークの負荷削減</li>
+                <li>処理速度の向上</li>
+                </ul>
+                <h2 id="12-sqlの種類">1.2. SQLの種類</h2>
+                <p>標準SQL規格では大きく以下の3つが定義されています。</p>
+                <ul>
+                <li>データ定義言語(DDL).....例：CREATE,DROP,ALTER等</li>
+                <li>データ操作言語(DML).....例:INSERT,UPDATE,DELETE,SELECT</li>
+                <li>データ制御言語(DCL).....例:GRANT,REVOKE,SET TRANSACTION,BEGIN,COMMIT,ROLLBACK,SAVEPOINT,LOCK</li>
+                </ul>
+                <h2 id="13-sqlの4大命令">1.3. SQLの4大命令</h2>
+                <table>
+                <thead>
+                <tr>
+                <th>命令</th>
+                <th>説明</th>
+                <th>文法</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>INSERT</td>
+                <td>データを追加する</td>
+                <td>INSERT INTO テーブル名 (カラム名1, カラム名2, ...) VALUES (値1, 値2, ...);</td>
+                </tr>
+                <tr>
+                <td>SELECT</td>
+                <td>データを参照する</td>
+                <td>SELECT カラム名1, カラム名2, ... FROM テーブル名 [WHERE 絞込条件];</td>
+                </tr>
+                <tr>
+                <td>UPDATE</td>
+                <td>データを更新する</td>
+                <td>UPDATE テーブル名 SET カラム名1=値1 [, カラム名2=値2 ...] [WHERE 絞込条件];</td>
+                </tr>
+                <tr>
+                <td>DELETE</td>
+                <td>データを削除する</td>
+                <td>DELETE FROM テーブル名 [WHERE 絞込条件];</td>
+                </tr>
+                </tbody></table>
+                <h1 id="2-sql基本操作">2. SQL基本操作</h1>
+                <p>操作例を用いて解説。</p>
+                <p>操作例のテーブル
+                <strong>membersテーブル</strong></p>
+                <table>
+                <thead>
+                <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>sex</th>
+                <th>birthday</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>1</td>
+                <td>tarou</td>
+                <td>male</td>
+                <td>1999-11-30</td>
+                </tr>
+                <tr>
+                <td>2</td>
+                <td>hanako</td>
+                <td>female</td>
+                <td>1993-01-14</td>
+                </tr>
+                </tbody></table>
+                <h2 id="21-insert文">2.1. INSERT文</h2>
+                <p>INSERT はテーブルにレコードを追加するSQL文です。</p>
+                <pre><code class="language-sql">INSERT INTO members (name,sex,birth_day)
+                VALUES (&#39;tarou&#39;, &#39;male&#39;, &#39;1992-11-30&#39;);
+                
+                INSERT INTO members (name,sex,birth_day)
+                VALUES (&#39;hanako&#39;, &#39;femal&#39;,&#39;1993-01-14&#39;);
+                </code></pre>
+                <h2 id="22-select文">2.2. SELECT文</h2>
+                <h3 id="全件全列を参照する">全件全列を参照する<!-- omit in toc --></h3>
+                <pre><code class="language-sql">SELECT * FROM members; -- 全件検索
+                </code></pre>
+                <h3 id="特定の列だけを参照する">特定の列だけを参照する<!-- omit in toc --></h3>
+                <p>全ての列は要らない時はカラム名で絞込をしましょう。</p>
+                <pre><code class="language-sql">SELECT name FROM members; -- 全件検索(名前だけ見たい)
+                </code></pre>
+                <h4 id="特定の条件に一致するデータだけを参照する">特定の条件に一致するデータだけを参照する<!-- omit in toc --></h4>
+                <pre><code class="language-sql">SELECT * FROM members WHERE name = &#39;tarou&#39;; -- 名前が&quot;tarou&quot;のレコードを検索
+                </code></pre>
+                <h2 id="23-update文">2.3. UPDATE文</h2>
+                <h3 id="全件特定のカラムを更新">全件特定のカラムを更新<!-- omit in toc --></h3>
+                <pre><code class="language-sql">--membersのレコードのnameをすべて&#39;jirou&#39;に更新する
+                UPDATE members SET name = &#39;jirou&#39;;
+                </code></pre>
+                <p>実行後のテーブル</p>
+                <table>
+                <thead>
+                <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>sex</th>
+                <th>birthday</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>1</td>
+                <td>jirou</td>
+                <td>male</td>
+                <td>1999-11-30</td>
+                </tr>
+                <tr>
+                <td>2</td>
+                <td>jirou</td>
+                <td>female</td>
+                <td>1993-01-14</td>
+                </tr>
+                </tbody></table>
+                <h3 id="絞込条件に該当するデータの特定のカラムを更新">絞込条件に該当するデータの特定のカラムを更新<!-- omit in toc --></h3>
+                <pre><code class="language-sql">--membersのレコードでidが1のレコードのname,birth_dayを更新
+                UPDATE members SET name = &#39;saburo&#39;, birth_day = &#39;2015-03-11&#39; WHERE id = 1;
+                </code></pre>
+                <p>実行後のテーブル</p>
+                <table>
+                <thead>
+                <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>sex</th>
+                <th>birthday</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>1</td>
+                <td>aburo</td>
+                <td>male</td>
+                <td>2015-03-11</td>
+                </tr>
+                <tr>
+                <td>2</td>
+                <td>jirou</td>
+                <td>female</td>
+                <td>1993-01-14</td>
+                </tr>
+                </tbody></table>
+                <h2 id="24-delete文">2.4. DELETE文</h2>
+                <h3 id="特定条件に該当するデータを削除">特定条件に該当するデータを削除<!-- omit in toc --></h3>
+                <pre><code class="language-sql">--idが1のレコードを削除する
+                DELETE FROM members WHERE id = 1;
+                </code></pre>
+                <p>実行後のテーブル</p>
+                <table>
+                <thead>
+                <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>sex</th>
+                <th>birthday</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>2</td>
+                <td>jirou</td>
+                <td>female</td>
+                <td>1993-01-14</td>
+                </tr>
+                </tbody></table>
+                <h3 id="全件データを削除">全件データを削除<!-- omit in toc --></h3>
+                <pre><code class="language-sql">--membersのレコード全てを削除する
+                DELETE FROM members;
+                </code></pre>
+                <p>実行後のテーブル</p>
+                <table>
+                <thead>
+                <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>sex</th>
+                <th>birthday</th>
+                </tr>
+                </thead>
+                </table>
+                <h2 id="25-絞り込み-where">2.5. 絞り込み WHERE</h2>
+                <p>データの全体母数からWHERE句を使ってデータ集合を絞り込むために利用します。
+                WHERE句が使えるのはSQL4大命令のうち「SELECT」、「UPDATE」、「DELETE」。</p>
+                <h3 id="selectのwhereによる絞り込み">SELECTのWHEREによる絞り込み<!-- omit in toc --></h3>
+                <pre><code class="language-sql">SELECT ”取得したい情報” from &quot;テーブル名&quot; WHERE &quot;絞込をしたいcolumn名&quot; = &quot;値&quot;;
+                </code></pre>
+                <p>利用できる比較演算子</p>
+                <table>
+                <thead>
+                <tr>
+                <th>記号</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>=</td>
+                <td>等価演算子</td>
+                </tr>
+                <tr>
+                <td>&lt;=&gt;</td>
+                <td>安全等価演算子(NULL)</td>
+                </tr>
+                <tr>
+                <td>&gt;</td>
+                <td>右不等演算子</td>
+                </tr>
+                <tr>
+                <td>&gt;=</td>
+                <td>以上演算子</td>
+                </tr>
+                <tr>
+                <td>&lt;</td>
+                <td>左不等演算子</td>
+                </tr>
+                <tr>
+                <td>&lt;=</td>
+                <td>以下演算子</td>
+                </tr>
+                <tr>
+                <td>!=, &lt;&gt;</td>
+                <td>不等価演算子</td>
+                </tr>
+                </tbody></table>
+                <p>なおWHERE句内の比較演算は<strong>AND,OR</strong>で絞り込みが可能です。</p>
+                <pre><code class="language-sql">SELECT * from users WHERE age &gt;= 20 AND age &lt;= 30; 
+                </code></pre>
+                <h2 id="26-between句">2.6. BETWEEN句</h2>
+                <p>〇〇以上、〇〇未満の情報を取得するというケースは不等号を使っても表現することが出来ますが、BETWEENを使うことでも表現することが可能です。</p>
+                <pre><code class="language-sql">SELECT ”取得したい情報” from &quot;テーブル名&quot; WHERE &quot;絞込をしたいcolumn名&quot; BETWEEN &quot;最小値&quot; AND &quot;最大値&quot;;
+                </code></pre>
+                <p>BETWEEN句以降に最小値と最大値を指定します。
+                この時最小値と最大値の順番は重要です。
+                BETWEEN句が使えるのは、整数型を代表する以上以下で表現が出来る型のみです。</p>
+                <h2 id="27-like句">2.7. LIKE句</h2>
+                <p>部分一致で検索するときに用います。
+                LIKE句で使う&quot;%&quot;は、ワイルドカードと読んでおり、&quot;%ky%&quot;としたときには、kyを含む文字列を取得することが出来ます。
+                これを応用して、&quot;ky%&quot;と書いた時には、kyから始まる文字列の絞込が出来ます。</p>
+                <pre><code class="language-sql">SELECT ”取得したい情報” from &quot;テーブル名&quot; WHERE &quot;絞込をしたいcolumn名&quot; LIKE &quot;%絞込をしたい文字列%&quot;;
+                </code></pre>
+                <h2 id="28-inとnot-in">2.8. INとNOT IN</h2>
+                <p>INで指定するときには、カンマ区切りの配列で複数の条件を指定することが出来ます。
+                文字列の場合にも(&quot;foo&quot;,&quot;bar&quot;,&quot;baz&quot;)という形で指定をすることが出来ます。</p>
+                <pre><code class="language-sql">SELECT ”取得したい情報” from &quot;テーブル名&quot; WHERE &quot;絞込をしたいcolumn名&quot; in (&quot;指定したい情報をカンマ区切りで指定&quot;);
+                SELECT ”取得したい情報” from &quot;テーブル名&quot; WHERE &quot;絞込をしたいcolumn名&quot; not in (&quot;指定したい情報をカンマ区切りで指定&quot;);
+                </code></pre>
+                <h2 id="29-exists">2.9. EXISTS</h2>
+                <p>2つのテーブルが関係する場合の検索処理に用います。</p>
+                <pre><code class="language-sql">SELECT ”取得したい情報” from &quot;テーブル名&quot; WHERE EXISTS (SELECT &quot;column名&quot; FROM &quot;判定に使うテーブル名&quot; WHERE &quot;テーブル名.column名&quot; = &quot;判定に使うテーブル名.判定に使うcolumn名&quot;);
+                </code></pre>
+                <p>SQLの中にSQLが書かれている形のことをサブクエリーと呼びます。
+                サブクエリーが何なのか？という説明よりも、()の中で問い合わせた結果を使って再度検索が動いているのをイメージ出来るようになるとレベルアップ出来ると思います。</p>
+                <h2 id="210-order-by文">2.10. ORDER BY文</h2>
+                <p>ORDER BYはソートを行ってくれる機能です</p>
+                <pre><code class="language-sql">SELECT [表示要素名] FROM [テーブル名] ORDER BY [ソートする要素名] [昇順・降順の指定];
+                </code></pre>
+                <p>昇順・降順の指定</p>
+                <table>
+                <thead>
+                <tr>
+                <th>指定</th>
+                <th>順</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>ASC</td>
+                <td>昇順</td>
+                </tr>
+                <tr>
+                <td>DESC</td>
+                <td>降順</td>
+                </tr>
+                </tbody></table>
+                <p>並び順の指定を省略した場合はASCがデフォルトです。
+                複数のソートキーも対応しています。はじめに書くほど優先でカラムが実行されます。</p>
+                <h2 id="211-表示件数の制限">2.11 表示件数の制限</h2>
+                <p>LIMITはデータの表示件数を制限できます。</p>
+                <pre><code class="language-sql">select * from テーブル名 LIMIT 取得件数;
+                </code></pre>
+                <h2 id="212-テーブル定義の確認">2.12. テーブル定義の確認</h2>
+                <p>DESCRIBEはテーブルの定義情報を確認することが出来ます。</p>
+                <pre><code class="language-sql">DESCRIBE テーブル名;
+                </code></pre>
+                <h2 id="213-sqlの集合関数">2.13. SQLの集合関数</h2>
+                <p>集合関数とは、SQLに備わっている演算機能です。
+                集合関数には主に次の5つがあります。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>関数名</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>COUNT</td>
+                <td>総数を求める</td>
+                </tr>
+                <tr>
+                <td>SUM</td>
+                <td>総和を求める</td>
+                </tr>
+                <tr>
+                <td>MAX</td>
+                <td>最大値を求める</td>
+                </tr>
+                <tr>
+                <td>MIN</td>
+                <td>最小値を求める</td>
+                </tr>
+                <tr>
+                <td>AVG</td>
+                <td>平均を求める</td>
+                </tr>
+                </tbody></table>
+                <h3 id="2131-count">2.13.1. COUNT</h3>
+                <p>SELECT COUNTはデータの件数を数えます。</p>
+                <pre><code class="language-sql">select count(*) from テーブル名;
+                </code></pre>
+                <h3 id="2133-sum">2.13.3. SUM</h3>
+                <p>sumは総和です。</p>
+                <pre><code class="language-sql">select sum(カラム名) from テーブル名;
+                </code></pre>
+                <h3 id="2134-max">2.13.4. MAX</h3>
+                <p>maxは最大値です。</p>
+                <pre><code class="language-sql">select max(age) from users where birthplace = &#39;大分県&#39;;
+                </code></pre>
+                <h3 id="2135-min">2.13.5. MIN</h3>
+                <p>MINは最小値です。</p>
+                <pre><code class="language-sql">select count(*),max(age),min(age) from users where birthplace = &#39;大分県&#39; and gender_id = 0;
+                </code></pre>
+                <h3 id="2136-avg">2.13.6. AVG</h3>
+                <p>avgは平均値です。</p>
+                <pre><code class="language-sql">SELECT count(*) AS 総数,
+                       max(age) AS 最高齢,
+                       min(age) AS 最年少,
+                       avg(age) AS 平均年齢
+                FROM users
+                WHERE birthplace = &#39;大分県&#39;;
+                </code></pre>
+                <h2 id="214-グループ">2.14. グループ</h2>
+                <h3 id="2141-group-by">2.14.1. GROUP BY<!-- omit in toc --></h3>
+                <p>group byは「〜ごと」という処理を行います。</p>
+                <pre><code class="language-sql">SELECT 関数名(カラム名１),カラム名２ FROM テーブル名 GROUP BY カラム名２;
+                </code></pre>
+                <h3 id="2142-having">2.14.2. HAVING<!-- omit in toc --></h3>
+                <p>having は集合関数の結果をもとに絞り込むことができます。</p>
+                <pre><code class="language-sql">SELECT 関数名(カラム名１),カラム名２ FROM テーブル名 GROUP BY カラム名２ HAVING 関数名(カラム名１);
+                </code></pre>
+                <h1 id="3-テーブルの結合">3. テーブルの結合</h1>
+                <p>テーブルの結合には幾つかのパターンがあります。</p>
+                <ul>
+                <li>内部結合　：　指定された共通列で、紐付いているレコード”のみ” で結合テーブルが作成される</li>
+                <li>外部結合　：　指定された共通列で、紐付いているレコード”以外” も結合テーブルとして作成される</li>
+                </ul>
+                <h3 id="31-内部結合">3.1. 内部結合</h3>
+                <p>内部結合とは、２つのテーブルを結合しデータを取得する方法において、共通列が一致するレコード&quot;のみ&quot; 取得する方法が内部結合になります。</p>
+                <pre><code class="language-sql">SELECT
+                  テーブルA.カラム1,
+                  テーブルB.カラム1,
+                  ......
+                FROM
+                  テーブルA
+                  INNER JOIN テーブルB ON テーブルA.カラム2 = テーブルB.カラム2
+                </code></pre>
+                <p>内部結合では、FROM句で指定したテーブルAと、結合するテーブルBをINNER JOIN句で指定します。
+                そして、テーブル同士の紐付け条件としてON句を利用し、共通列となるテーブルA.カラム2、テーブルB.カラム2を指定し紐付けを行う事でテーブルが結合されます。</p>
+                <img src="https://camo.qiitausercontent.com/085482893c20f3a934052197813982f09ef3c79a/68747470733a2f2f71696974612d696d6167652d73746f72652e73332e616d617a6f6e6177732e636f6d2f302f37343135332f34306463653362312d646564332d326230652d346363622d3437656336613937613361322e706e67" width="50%">
+                
+                <h3 id="32-外部結合">3.2. 外部結合</h3>
+                <h4 id="左外部結合">左外部結合<!-- omit in toc --></h4>
+                <pre><code class="language-sql">SELECT
+                  テーブルA.カラム1,
+                  テーブルB.カラム1,
+                  ......
+                FROM
+                  テーブルA
+                  LEFT OUTER(省略可) JOIN テーブルB ON テーブルA.カラム2 = テーブルB.カラム2
+                </code></pre>
+                <p>左外部結合では、FROM句で指定したテーブルAと、結合するテーブルBをLEFT JOIN句で指定します。
+                テーブル同士の紐付け条件は、内部結合と同様にON句を利用し、共通列となるテーブルA.カラム2、テーブルB.カラム2を指定し紐付けを行います。</p>
+                <img src="https://camo.qiitausercontent.com/b07b6e018aa5f4bb423bc850184cec173f465f79/68747470733a2f2f71696974612d696d6167652d73746f72652e73332e616d617a6f6e6177732e636f6d2f302f37343135332f64306433363034642d343231342d626563332d393733352d3363353532643861653235352e706e67" width="50%">
+                
+                <h4 id="右外部結合">右外部結合<!-- omit in toc --></h4>
+                <pre><code class="language-sql">SELECT
+                  テーブルA.カラム1,
+                  テーブルB.カラム1,
+                  ......
+                FROM
+                  テーブルA
+                  RIGHT OUTER(省略可) JOIN テーブルB ON テーブルA.カラム2 = テーブルB.カラム2
+                </code></pre>
+                <p>右外部結合では、左外部結合とは反対で、RIGHT JOIN句で指定したテーブルBを基に、FROM句で結合するテーブルAをで指定します。
+                テーブル同士の紐付け条件は、左外部結合と同様にON句を利用し、共通列となるテーブルA.カラム2、テーブルB.カラム2を指定し紐付けを行います。</p>
+                <img src="https://camo.qiitausercontent.com/7ecd1b5ce0d365092722b1f0a5d9be19e3ecb982/68747470733a2f2f71696974612d696d6167652d73746f72652e73332e616d617a6f6e6177732e636f6d2f302f37343135332f33643638313334312d353935322d623630342d656638372d3133383034336434383366352e706e67" width="50%">
+                
+                <h4 id="完全外部結合">完全外部結合<!-- omit in toc --></h4>
+                <pre><code class="language-sql">SELECT
+                  テーブルA.カラム1,
+                  テーブルB.カラム1,
+                  ......
+                FROM
+                  テーブルA
+                  FULL OUTER(省略可) JOIN テーブルB ON テーブルA.カラム2 = テーブルB.カラム2
+                </code></pre>
+                <p>完全外部結合は、サンプルのSQLを見て頂くと解る通り、左外部結合と右外部結合の機能を併せ持っています。
+                テーブル同士の紐付け条件は、左/右外部結合と同様にON句を利用し、共通列となるテーブルA.カラム2、テーブルB.カラム2を指定し紐付けを行います。</p>
+                <img src="https://camo.qiitausercontent.com/84e676d5e6a36b2c462235f41e22eda169709425/68747470733a2f2f71696974612d696d6167652d73746f72652e73332e616d617a6f6e6177732e636f6d2f302f37343135332f38393834663366652d313164382d366536312d663335642d6261346638656662376638662e706e67" width="50%">
+                <!-- omit in toc -->
+
+                <!-- END -->
+
+            </main>
+            <footer class="footer mt-auto py-3 bg-light">
+                <div class="container">
+                    <p class="text-muted text-center">Written by ゆーろん / yuron3141</p>
+                </div>
+            </footer>
+        </body>
+    </body>
+</html>

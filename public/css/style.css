@@ -1,0 +1,83 @@
+table {
+	border: right #b0c4de solid 1px;
+	border-collapse: collapse;
+	margin: 15px;
+
+}
+table thead th {
+	background:#b0c4de;
+	color:#FFF;
+	padding:10px 15px;
+	border-right:#FFF solid 1px;
+	border-bottom:#FFF solid 1px;
+}
+table thead th:last-child {
+	border-right:#b0c4de solid 1px;
+}
+table tbody th {
+	background:#b0c4de;
+	color:#FFF;
+	padding:10px 15px;
+	border-bottom:#FFF solid 1px;
+	vertical-align:top;
+}
+table tbody tr:last-child th {
+	border-bottom:#b0c4de solid 1px;
+}
+table tbody td {
+	background:#FFF;
+	padding:10px 15px;
+	border-left:#b0c4de solid 1px;
+	border-right:#b0c4de solid 1px;
+	border-bottom:#b0c4de solid 1px;
+	vertical-align:top;
+}
+
+h1 {
+	margin-bottom: 1.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+h2 {
+	margin-bottom: 1.5rem;
+	margin-bottom: .5rem;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+h3 {
+	padding-left: 10px;
+	margin-bottom: 1.5rem;
+	margin-bottom: .5rem;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+h4 {
+	padding-left: 10px;
+	margin-bottom: 1.5rem;
+	margin-bottom: .5rem;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+p {
+	margin-bottom: 1.5rem;
+	padding-left: 10px;
+	font-size: 1.2rem;
+    font-weight: 100;
+}
+
+li {
+	font-size: 1rem;
+}
+
+pre {
+	background-color: black;
+	color:#FFF;
+}
+
+code{
+	padding: 20px;
+}

@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="Ja">
+    <head>
+        <title>ゆーろんのWeb系の学習資料　|　React基礎</title>
+        <!-- OGP -->
+        <head prefix="og: https://ogp.me/ns#">
+        <meta property="og:url" content="https://yuron3141.github.io/my_web_docs/" />
+        <meta property="og:type" content="Blog" />
+        <meta property="og:title" content="React基礎" />
+        <meta property="og:description" content="ゆーろんのWeb系学習資料です。皆さんの開発のために役立つことを祈っています。" />
+        <meta property="og:site_name" content="ゆーろんアカデミー　ノート支部" />
+        <!-- DOCUMENTS STYLE -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <!-- ORIGINAL CSS -->
+        <link rel="stylesheet" href="../css/style.css" type="text/css">
+    </head>
+    <body>
+        <body class="d-flex flex-column h-100">
+            <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
+                <div>
+                    <h1 class="m-3">React基礎</h1>
+                </div>
+            </header>
+            <main class="m-4">
+
+                <!-- Write Text Here-->
+
+                <p>ReactはWEBアプリケーションのユーザインターフェイスを構築するための構築するためのフレームワークです。</p>
+                <p>複雑な UI を、「コンポーネント」と呼ばれる小さく独立した部品から組み立てることが可能です。
+                Meta(旧 FaceBook)により開発されました。SPA構成のフロントエンドを作成できるのが最大の特徴でもあります。</p>
+                <h2 id="目次">目次<!-- omit in toc --></h2>
+                <ul>
+                <li><a href="#1-react%E3%81%AE%E5%9F%BA%E6%9C%AC%E6%A7%8B%E9%80%A0%E3%81%A8%E6%A6%82%E5%BF%B5">1. Reactの基本構造と概念</a><ul>
+                <li><a href="#11-react%E3%81%AE%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AD%98%E3%81%A8%E7%89%B9%E5%BE%B4">1.1. Reactの基本知識と特徴</a></li>
+                <li><a href="#12-react%E3%81%AE%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E3%81%A8%E6%A7%8B%E9%80%A0">1.2. Reactの基本操作と構造</a><ul>
+                <li><a href="#121-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E3%81%A8%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">1.2.1. 基本操作とインストール</a></li>
+                <li><a href="#122-%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA%E6%A7%8B%E6%88%90">1.2.2. ディレクトリ構成</a></li>
+                </ul>
+                </li>
+                <li><a href="#13-jsxtsx">1.3. JSX(TSX)</a></li>
+                <li><a href="#14-%E3%82%B3%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%8D%E3%83%B3%E3%83%88">1.4. コンポーネント</a><ul>
+                <li><a href="#141-props">1.4.1. props</a></li>
+                <li><a href="#142-%E9%96%A2%E6%95%B0%E3%82%B3%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%8D%E3%83%B3%E3%83%88">1.4.2. 関数コンポーネント</a></li>
+                <li><a href="#143-%E3%82%AF%E3%83%A9%E3%82%B9%E3%82%B3%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%8D%E3%83%B3%E3%83%88">1.4.3. クラスコンポーネント</a></li>
+                </ul>
+                </li>
+                <li><a href="#15-state%E3%81%A8%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B5%E3%82%A4%E3%82%AF%E3%83%AB">1.5. stateとライフサイクル</a><ul>
+                <li><a href="#151-state">1.5.1. State</a></li>
+                <li><a href="#152-%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B5%E3%82%A4%E3%82%AF%E3%83%AB">1.5.2. ライフサイクル</a></li>
+                </ul>
+                </li>
+                <li><a href="#16-%E3%83%AA%E3%82%B9%E3%83%88%E3%81%A8key">1.6. リストとkey</a></li>
+                <li><a href="#17-%E3%82%B3%E3%83%B3%E3%83%9D%E3%82%B8%E3%82%B7%E3%83%A7%E3%83%B3">1.7. コンポジション</a></li>
+                <li><a href="#18-react%E9%96%8B%E7%99%BA%E3%81%AE%E3%82%A2%E3%83%89%E3%83%90%E3%82%A4%E3%82%B9">1.8. React開発のアドバイス</a></li>
+                </ul>
+                </li>
+                <li><a href="#2-hooks">2. Hooks</a><ul>
+                <li><a href="#21-usestate">2.1. useState</a></li>
+                <li><a href="#22-useeffect">2.2. useEffect</a></li>
+                <li><a href="#23-usecontext">2.3. useContext</a></li>
+                <li><a href="#24-usereducer">2.4. useReducer</a></li>
+                <li><a href="#25-usecallback">2.5. useCallback</a></li>
+                <li><a href="#26-usememo">2.6. useMemo</a></li>
+                <li><a href="#27-useref">2.7. useRef</a></li>
+                <li><a href="#28-useimperativehandle-%E3%81%BB%E3%81%A8%E3%82%93%E3%81%A9%E4%BD%BF%E3%81%84%E3%81%BE%E3%81%9B%E3%82%93">2.8. useImperativeHandle (ほとんど使いません)</a></li>
+                <li><a href="#29-uselayouteffect-%E3%81%BB%E3%81%A8%E3%82%93%E3%81%A9%E4%BD%BF%E3%81%84%E3%81%BE%E3%81%9B%E3%82%93">2.9. useLayoutEffect (ほとんど使いません)</a></li>
+                <li><a href="#210-usedebugvalue-%E3%81%BB%E3%81%A8%E3%82%93%E3%81%A9%E4%BD%BF%E3%81%84%E3%81%BE%E3%81%9B%E3%82%93">2.10. useDebugValue (ほとんど使いません)</a></li>
+                </ul>
+                </li>
+                <li><a href="#3-react%E9%96%8B%E7%99%BA%E3%81%AE%E3%81%9F%E3%82%81%E3%81%AE%E4%BE%BF%E5%88%A9%E3%81%AA%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%83%A2%E3%82%B8%E3%83%A5%E3%83%BC%E3%83%AB">3. React開発のための便利なパッケージ(モジュール)</a><ul>
+                <li><a href="#31-%E7%8A%B6%E6%85%8B%E7%AE%A1%E7%90%86state%E3%83%95%E3%83%AC%E3%83%BC%E3%83%A0%E3%83%AF%E3%83%BC%E3%82%AF">3.1. 状態管理(state)フレームワーク</a><ul>
+                <li><a href="#311-redux">3.1.1. redux</a></li>
+                <li><a href="#312-recoil">3.1.2. recoil</a></li>
+                <li><a href="#313-mobx">3.1.3. mobx</a></li>
+                </ul>
+                </li>
+                <li><a href="#32-%E6%A9%9F%E8%83%BD%E7%B3%BB%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA">3.2. 機能系ライブラリ</a><ul>
+                <li><a href="#321-react-helmet-async">3.2.1. react-helmet-async</a></li>
+                <li><a href="#322-react-router-dom">3.2.2. react-router-dom</a></li>
+                </ul>
+                </li>
+                <li><a href="#33-react%E5%90%91%E3%81%91%E3%81%AEcss%E3%83%95%E3%83%AC%E3%83%BC%E3%83%A0%E3%83%AF%E3%83%BC%E3%82%AF">3.3. React向けのCSSフレームワーク</a><ul>
+                <li><a href="#331-material-uimui">3.3.1. Material UI(MUI)</a></li>
+                <li><a href="#332-semantic-ui-react">3.3.2. Semantic UI React</a></li>
+                <li><a href="#333-charkra-ui">3.3.3. Charkra UI</a></li>
+                <li><a href="#334-ant-design">3.3.4. Ant Design</a></li>
+                <li><a href="#335-react-bootstrap">3.3.5. React-Bootstrap</a></li>
+                <li><a href="#336-headless-ui">3.3.6. Headless UI</a></li>
+                </ul>
+                </li>
+                <li><a href="#34-%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA%E3%81%AA%E3%81%A9">3.4. その他のライブラリなど</a><ul>
+                <li><a href="#341-react-chartjs-2">3.4.1. react-chartjs-2</a></li>
+                <li><a href="#342-react-three-fiber">3.4.2. react-three-fiber</a></li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                </ul>
+                <h2 id="参考url">参考URL<!-- omit in toc --></h2>
+                <table>
+                <thead>
+                <tr>
+                <th>名称</th>
+                <th>URL</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>React 公式ドキュメント</td>
+                <td><a href="https://ja.reactjs.org/">https://ja.reactjs.org/</a></td>
+                </tr>
+                <tr>
+                <td>React 公式 APIリファレンス</td>
+                <td><a href="https://ja.reactjs.org/docs/react-api.html">https://ja.reactjs.org/docs/react-api.html</a></td>
+                </tr>
+                <tr>
+                <td>React 公式 Hook API リファレンス</td>
+                <td><a href="https://ja.reactjs.org/docs/hooks-reference.html">https://ja.reactjs.org/docs/hooks-reference.html</a></td>
+                </tr>
+                <tr>
+                <td>useEffectの挙動注意と間違った使い方の回避方法</td>
+                <td><a href="https://tyotto-good.com/blog/avoid-useeffect-mistakes">https://tyotto-good.com/blog/avoid-useeffect-mistakes</a></td>
+                </tr>
+                </tbody></table>
+                <h1 id="1-reactの基本構造と概念">1. Reactの基本構造と概念</h1>
+                <h2 id="11-reactの基本知識と特徴">1.1. Reactの基本知識と特徴</h2>
+                <p>Reactはコンポーネント指向という「小さな機能ごとの部品に分け必要に応じて組み合わせて開発する」というコンセプトの設計となっています。
+                コンポーネント指向であれば、あとから改良したい対象のコンポーネントを変更するだけで済むため拡張しやすいです。</p>
+                <p>また仮想DOMを使っているためWebページを描画する際は<strong>変更が加えられた箇所だけ反映させることが可能</strong>です。
+                そのためページ全体を更新する必要がないので描画処理が高速になります。</p>
+                <p>仮想DOMは情報(テキストデータ)やメディアデータ(画像や動画など)のみを変更したいときには便利ですが、そうではなくページ構造自体を大きく更新したい場合は不向きと言えます。(∵ 仮想DOMではDOM構造をメモリ上に保持するため)</p>
+                <p>そのためReactは<strong>ユーザー操作によって頻繁に表示内容がかわるアプリ・Webページに適している</strong>と言えます。</p>
+                <h2 id="12-reactの基本操作と構造">1.2. Reactの基本操作と構造</h2>
+                <h3 id="121-基本操作とインストール">1.2.1. 基本操作とインストール</h3>
+                <p>reactプロジェクトの作成例</p>
+                <pre><code class="language-shell">npx create-react-app アプリ名 
+                or
+                yarn creat-react-app アプリ名 //yarnでやる場合
+                or
+                npx create-react-app アプリ名 --template typescript //typescriptによる開発をする場合
+                </code></pre>
+                <p>グローバルインストールベースでのreactプロジェクトの作成例</p>
+                <pre><code class="language-shell">npm install -g create-react-app
+                
+                create-react-app アプリ名
+                </code></pre>
+                <p>reactプロジェクトの起動</p>
+                <pre><code>npm start
+                or
+                yarn start //yarnでインストールした場合
+                </code></pre>
+                <h3 id="122-ディレクトリ構成">1.2.2. ディレクトリ構成</h3>
+                <p>基本作成される各フォルダやファイル(src/内)</p>
+                <table>
+                <thead>
+                <tr>
+                <th>ディレクトリ</th>
+                <th>用途</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>index.html</td>
+                <td>起点となるrootを持つdiv要素のみのindex.html。開発するときにだいたい削除する。</td>
+                </tr>
+                <tr>
+                <td>index.js</td>
+                <td>Reactアプリの起点となるファイル。</td>
+                </tr>
+                <tr>
+                <td>App.js</td>
+                <td>index.jsから呼ばれているコンポーネント。ここをベースに書き換え作成したコンポーネントを大体呼び出す。</td>
+                </tr>
+                </tbody></table>
+                <p>開発する際のディレクトリ構成のアドバイスとしては以下のようなものを追加で作るといいかもしれません。</p>
+                <p>参考程度に。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>ディレクトリ</th>
+                <th>用途</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>components/</td>
+                <td>コンポーネントを保存するディレクトリ。このディレクトリ内でさらに細分化も可能。</td>
+                </tr>
+                <tr>
+                <td>pages/</td>
+                <td>切り替えるページを格納するディレクトリ。</td>
+                </tr>
+                <tr>
+                <td>styles/</td>
+                <td>独自のcssを格納するディレクトリ。</td>
+                </tr>
+                </tbody></table>
+                <h2 id="13-jsxtsx">1.3. JSX(TSX)</h2>
+                <p>JSXはコンポーネントのrenderメソッド内に記述する JavaScript の拡張構文です。</p>
+                <p>以下のように記述します。</p>
+                <pre><code class="language-jsx">const value = &#39;sapmle&#39;;
+                
+                return{
+                  &lt;div&gt;
+                      &lt;h1&gt;Hello World&lt;/h1&gt;
+                      &lt;p&gt;this is a {value}.&lt;/p&gt;
+                  &lt;/div&gt;
+                }
+                </code></pre>
+                <p>JavaScriptの拡張であるためreturn内の<code>{}</code>内で囲まれた領域で関数を呼び出したり、変数を入れたりすることなどが可能です。(JavaScriptが記述可能)
+                コメントアウトも<code>{}</code>内で記述します。</p>
+                <p>JSX記法ではhtmlのクラス指定は<code>class=&quot;&quot;</code>ではなく<strong>className=&quot;&quot;</strong>、style指定は<code>style=&quot;&quot;</code>内ではなく<strong>style={{}}</strong>内に記述します。</p>
+                <p>img, brなどのタグが閉じないHTML要素の場合は<code>/</code>を末尾につけます。</p>
+                <pre><code class="language-jsx">&lt;br /&gt;
+                &lt;img src=&quot;example.gif&quot; /&gt;
+                </code></pre>
+                <h3 id="イベント処理">イベント処理<!-- omit in toc --></h3>
+                <p>例1</p>
+                <pre><code class="language-jsx">function Form() {
+                  function handleSubmit(e) {
+                    e.preventDefault();
+                    console.log(&#39;You clicked submit.&#39;);
+                  }
+                
+                  return (
+                    &lt;form onSubmit={handleSubmit}&gt;
+                      &lt;button type=&quot;submit&quot;&gt;Submit&lt;/button&gt;
+                    &lt;/form&gt;
+                  );
+                }
+                </code></pre>
+                <p>例2</p>
+                <pre><code class="language-jsx">return {
+                  &lt;div&gt;
+                    &lt;button onClick={(e) =&gt; this.deleteRow(id, e)}&gt;Delete Row&lt;/button&gt;
+                    &lt;button onClick={this.deleteRow.bind(this, id)}&gt;Delete Row&lt;/button&gt;
+                  &lt;/div&gt;
+                }
+                </code></pre>
+                <h2 id="14-コンポーネント">1.4. コンポーネント</h2>
+                <p>コンポーネントは<strong>見た目と機能を組み合わせたもの</strong>です。
+                見た目(ヘッダー,フッターなど)や機能などはコンポーネントであると言えます。</p>
+                <h3 id="141-props">1.4.1. props</h3>
+                <h4 id="props">props<!-- omit in toc --></h4>
+                <p>React のコンポーネントにはpropsという任意の値を渡すことができる機能があります。
+                propsでは親コンポーネント(Parent)から子コンポーネント(Child)にデータを渡せます。(逆は後述)</p>
+                <p>これにより同じコンポーネントでも渡された props によって UI やロジックに変化をつけることが可能です。</p>
+                <p>以下は関数コンポーネントの例です。</p>
+                <p>コンポーネントの呼び出し</p>
+                <pre><code class="language-jsx">&lt;Message name=&quot;hogehoge&quot; /&gt;
+                </code></pre>
+                <p>呼び出されるコンポーネント</p>
+                <pre><code class="language-jsx">const Message = (props) =&gt; {
+                  return &lt;h1&gt;Hello, {props.name}&lt;/h1&gt;;
+                }
+                </code></pre>
+                <h3 id="142-関数コンポーネント">1.4.2. 関数コンポーネント</h3>
+                <p>関数コンポーネントはJSXをシンプルに記述したコンポーネントです。
+                クラスコンポーネントと異なり、状態（state）やライフサイクルを持ちません。
+                また<code>render()</code>の記述が省略できます。</p>
+                <p>関数コンポーネントとHooksを組み合わせることで状態(State)とライフサイクルが持てるため、現在はこの<strong>関数コンポーネントとHooksを組み合わせた開発が主流</strong>です。</p>
+                <p>関数宣言による書き方</p>
+                <pre><code class="language-jsx">function App() {
+                  return (
+                    &lt;h1&gt;Hello World&lt;/h1&gt;
+                  );
+                }
+                
+                export default App;
+                </code></pre>
+                <p>アロー関数による書き方(一般的)</p>
+                <pre><code class="language-jsx">const App = () =&gt; {
+                  return (
+                    &lt;h1&gt;Hello World&lt;/h1&gt;
+                  );
+                }
+                
+                export default App;
+                </code></pre>
+                <p>また<code>render</code>メソッドのみ(HTMLのみを返したい)場合は<code>return</code>を省略可能です。</p>
+                <h3 id="143-クラスコンポーネント">1.4.3. クラスコンポーネント</h3>
+                <p>クラスコンポーネントは<code>React.Component</code>を継承したクラスで定義されたコンポーネントです。</p>
+                <p>状態（state）やライフサイクルを元から持つことが可能です。</p>
+                <pre><code class="language-jsx">import React from &#39;react&#39;;
+                
+                class App extends React.Component {  // React.component を継承するクラスの定義
+                  render() {  // React 要素 を返り値とする render メソッドを定義
+                    return (
+                      &lt;h1&gt;Hello World&lt;/h1&gt;
+                    );
+                  }
+                }
+                
+                export default App;
+                </code></pre>
+                <p>React Hooksの登場により、クラスコンポーネント特有機能の大部分が関数コンポーネントでも使用できるようになったので<strong>ほとんど使うことはない</strong>です。</p>
+                <h2 id="15-stateとライフサイクル">1.5. stateとライフサイクル</h2>
+                <h3 id="151-state">1.5.1. State</h3>
+                <p>stateはコンポーネントに持たせられる「状態」を指します。
+                デフォルトの使い方ではクラスコンポーネントのみstateを持たせられますがHooksを使うと関数コンポーネントでも使えます。</p>
+                <p>クラスコンポーネントの利用は2021年現在一般的ではないのでクラスコンポーネントでのState実装例は省略します。</p>
+                <h3 id="152-ライフサイクル">1.5.2. ライフサイクル</h3>
+                <p>ライフサイクルは「コンポーネントが生成され、変化し、消される」までの循環のことです。</p>
+                <img src="https://storage.googleapis.com/zenn-user-upload/t6l9g6zd0qefdn7r749g3482vr0j" width="60%">
+                
+                <p>ライフサイクルには3つのフローがあります。</p>
+                <h3 id="マウントmounting">マウント(Mounting)<!-- omit in toc --></h3>
+                <p>マウントはコンポーネントのインスタンスが生成されてDOMに挿入されるものです。
+                React内部的には以下のメソッドが順に呼び出されます。</p>
+                <ul>
+                <li>1.　constructor()</li>
+                <li>2.　static getDerivedStateFromProps()</li>
+                <li>3.　render()</li>
+                <li>4.　componentDidMount()</li>
+                </ul>
+                <h3 id="更新updating">更新(Updating)<!-- omit in toc --></h3>
+                <p>更新はprops や state の変更があるときに呼び出されるものです。コンポーネントが再レンダリングされることと言えます。
+                React内部的には以下のメソッドが順に呼び出されます。</p>
+                <ul>
+                <li>1.　static getDerivedStateFromProps()</li>
+                <li>2.　shouldComponentUpdate() ... 新しいpropsやstateを受け取ったときに実行</li>
+                <li>3.　render()</li>
+                <li>4.　getSnapshotBeforeUpdate()</li>
+                <li>5.　componentDidUpdate()　更新が行われた直後に実行</li>
+                </ul>
+                <h3 id="アンマウントunmounting">アンマウント(Unmounting)<!-- omit in toc --></h3>
+                <p>コンポーネントが DOM から削除されるときに呼び出されるものです。
+                React内部的には以下のメソッドが呼び出されます。</p>
+                <ul>
+                <li>1.　componentWillUnmount()</li>
+                </ul>
+                <h2 id="16-リストとkey">1.6. リストとkey</h2>
+                <p>配列とmapsを利用したリスト項目の実装例です。
+                Reactではリスト項目それぞれの情報を保持します。
+                そのためリストに変更、追加、削除などがあった時にどのリスト項目が変更になったかを伝えるためにkeyを使います。</p>
+                <p>内部的にはReactはリストが再レンダリングされる際それぞれのリスト項目の key について、前回のリスト項目内に同じ key を持つものがないか探します。その結果によってリスト項目を追加したり、削除したりすることが可能です。</p>
+                <p>keyの設定例</p>
+                <pre><code class="language-jsx">const ListItem = (props) =&gt; {
+                  // ここでは key を指定しない
+                  return &lt;li&gt;{props.value}&lt;/li&gt;;
+                }
+                
+                const NumberList = (props) =&gt; {
+                  const numbers = props.numbers;
+                  const listItems = numbers.map((number) =&gt;
+                    // ここで key を指定
+                    &lt;ListItem
+                      key={number.toString()}
+                      value={number}
+                    /&gt;
+                  );
+                  return (
+                    &lt;ul&gt;
+                      {listItems}
+                    &lt;/ul&gt;
+                  );
+                }
+                </code></pre>
+                <h2 id="17-コンポジション">1.7. コンポジション</h2>
+                <p>コンポジションとはコンポーネント間のコードを再利用するためのReactの機能です。(継承の代わりに使えます)
+                コンポジションではchildrenという特別なPropsを利用して子コンポーネントを出力します。</p>
+                <p>詳細は省きます(各自調べてください)</p>
+                <h2 id="18-react開発のアドバイス">1.8. React開発のアドバイス</h2>
+                <p>Reactでの開発が慣れないうちは以下のステップで作成することを推奨します。</p>
+                <ul>
+                <li>1.　モック(サイトの大まかな見た目)をApp.jsに追加します。returnにカッコを追加し、DOM要素を書いていきます。まずは動かなくていいのでサンプルデータを使って全レイアウトを作成します。</li>
+                <li>2.　パーツ毎にコンポーネント分離しファイル分けを行い、returnの中に書くDOM要素はApp.jsからコピーします。App.jsを修正します。</li>
+                <li>3.　それぞれに動的なパラメータclassコンポーネントならstate等を用いて処理の割り当てを行う。</li>
+                <li>4.　2から3の繰り返しで開発する</li>
+                </ul>
+                <h1 id="2-hooks">2. Hooks</h1>
+                <p>React HooksはReact 16.8より追加された機能です。
+                Hooksを使うことでクラスコンポーネントでしか使うことのできなかった state や ライフサイクルなどの機能を、関数コンポーネントへ付与可能です。
+                <strong>関数コンポーネントでStateとライフサイクルを持たせるためには必須の機能です。</strong></p>
+                <p>フックには2つのルールがあります。</p>
+                <ul>
+                <li>フックは関数のトップレベルのみで呼び出すこと（ループや条件分岐、ネストした関数の中では呼び出さない）</li>
+                <li>フックは React の関数コンポーネントの内部もしくはカスタムフックの内部でのみ呼び出すこと</li>
+                </ul>
+                <p>ESLintでこのルールを設定すると楽にルールを守れます。
+                (Create React App で作った環境の場合、react-scripts の依存関係として導入されます)</p>
+                <p>フックは9種類あり、<strong>useStateとuseEffectは基本的であるためもっとも使うことが多い</strong>です。
+                またHookは自分で独自のものを作ることも可能です。</p>
+                <h2 id="21-usestate">2.1. useState</h2>
+                <p>useStateは <strong>state 機能</strong>を提供するフックです。
+                クラスコンポーネントのthis.stateとthis.setState()の代わりに使えます。
+                <strong>表示したいデータ</strong>の状態(State)管理に使用します。</p>
+                <h3 id="jsx">jsx<!-- omit in toc --></h3>
+                <pre><code class="language-jsx">import { useState } from &#39;react&#39;;
+                const [state, setState] = useState(initialState);
+                </code></pre>
+                <h3 id="tsx">tsx<!-- omit in toc --></h3>
+                <pre><code class="language-tsx">import { useState } from &#39;react&#39;;
+                const [state, setState] = useState&lt;Type&gt;(0);
+                
+                //useStateに複雑な値(要素の多いオブジェクト型など)を使う場合はtypeを使うとよい
+                type Type = {
+                  value : number;
+                };
+                </code></pre>
+                <h3 id="詳細な使い方">詳細な使い方<!-- omit in toc --></h3>
+                <p>stateはコンポーネントが内部で保持する状態であり「画面上に表示されるデータ等、アプリケーションが保持している状態」を指します。
+                この<strong>状態の変更に合わせて再レンダリングを行う</strong>ことが得意です。</p>
+                <p>値の変更はsetState内で行います。</p>
+                <pre><code class="language-jsx">setState(state + 1); //この場合の記述は最新の値を参照できるとは限らない
+                
+                setState((state) =&gt; (state + 1)); //コールバック関数で引数を与えると最新の値を参照する
+                </code></pre>
+                <p>関数内でsetStateを更新しても useStateによる値の更新は<strong>非同期</strong>なため更新後のstateをその続きで参照しても同期しません(即座に更新されない)。</p>
+                <pre><code class="language-jsx">const increment = () =&gt; {
+                  setState(state + 1);
+                  console.log(state); //stateの初期値が0の場合これが実行されても1回目はconsole表示が0のまま
+                };
+                </code></pre>
+                <h2 id="22-useeffect">2.2. useEffect</h2>
+                <p>useEffectは <strong>ライフサイクル 機能</strong>を提供するフックです。
+                クラスコンポーネントの　componentDidMount、componentDidUpdate、componentWillUnmount のメソッドサイクルを利用したい際に使えます。</p>
+                <p>=&gt; <strong>各サイクルの発火タイミング(Mount,Update, Unmount)により値を変化させたいときに使います</strong></p>
+                <p>具体的には<strong>fetch関数を利用して外部のリソースからデータを取得したり、DOMの更新、console.logなどのロギング</strong>などに使います。</p>
+                <p>1つ目の引数として定義した関数の実行が2つ目の引数の値によって変わります。</p>
+                <ul>
+                <li><ol>
+                <li>2つ目の引数の配列が指定されてない場合は、何かのステートが変わる度に実行される</li>
+                </ol>
+                </li>
+                <li><ol start="2">
+                <li>2つ目の引数の配列が空だったら、componentDidMount と同じ動きになる</li>
+                </ol>
+                </li>
+                <li><ol start="3">
+                <li>2つ目の引数の配列に変数を指定すると、その変数に変化があったときに実行される</li>
+                </ol>
+                </li>
+                </ul>
+                <pre><code>import { useEffect } from &#39;react&#39;;
+                useEffect(() =&gt; {
+                    // 実行処理
+                }, []));
+                </code></pre>
+                <h3 id="詳細な使い方-1">詳細な使い方<!-- omit in toc --></h3>
+                <pre><code class="language-jsx">//引数を指定しない場合、「初回レンダリング後(Mount)と再レンダリング(Update)のたびに実行
+                useEffect(() =&gt; {
+                    document.title = `You clicked ${count} times`;
+                  });
+                  
+                //第二引数に空の配列をセットすることで、初回のレンダリング後(Mount)のみ実行
+                useEffect(() =&gt; {
+                 　initilize();
+                }, []); 
+                
+                //第二引数に変数をセットするとその引数に変化があったときのみ実行
+                useEffect(() =&gt; {
+                  document.title = `You clicked ${count} times`;
+                }, [count]);
+                
+                //アンマウント時の処理例
+                useEffect(() =&gt; {
+                 　initilize();
+                　 return()=&gt;{
+                       unMount();
+                     }
+                }, []); 
+                </code></pre>
+                <h2 id="23-usecontext">2.3. useContext</h2>
+                <p>useContextはコンテクスト(props を使わず、コンポーネント間でデータを共有できるもの)オブジェクトを受け取り、そのコンテクストの現在値を返すフックです。言い換えると<strong>異なる階層のコンポーネントとデータの共有を行うことができるフック</strong>です。
+                親コンポーネントから子コンポーネント(孫コンポーネント)にデータを渡すのに便利なフックです。</p>
+                <p>=&gt; <strong>親コンポーネント基準で子や孫にデータを渡せるフック(親からの集中制御管理が可能)</strong></p>
+                <blockquote>
+                <p>実際にアプリに使われるuseContextのデータとしては「ログインに関する情報」や「EC(買い物かご)」などに関する情報などが上げられる。</p>
+                </blockquote>
+                <h3 id="詳細な使い方-2">詳細な使い方<!-- omit in toc --></h3>
+                <p>以下の構造のコンポーネントでの受け渡し例を記述します。</p>
+                <pre><code>App.js (親コンポーネント)
+                └ ComponentA.js (子1)
+                　└ComponentB.js (孫1)
+                 　└ComponentC.js (ひ孫1)
+                </code></pre>
+                <p>・親コンポーネント(App.js)の記述</p>
+                <pre><code class="language-jsx">import { createContext } from &#39;react&#39;;
+                import ComponentA from &#39;./components/ComponentA&#39;
+                
+                export const UserCount = createContext()　//createContext()によりContextオブジェクトの作成
+                
+                function App() {
+                  return (
+                    &lt;div style={{ textAlign: &#39;center&#39; }}&gt;
+                      &lt;h1&gt;Learn useContext&lt;/h1&gt;
+                      &lt;UserCount.Provider value={100}&gt; //数字を渡したいコンポーネント(子など)はUserCount.Providerで囲みvalueに渡したい値を設定
+                      　　&lt;ComponentA/&gt;
+                      &lt;/UserCount.Provider&gt;
+                    &lt;/div&gt;
+                  );
+                }
+                
+                export default App;
+                </code></pre>
+                <p>・値を受け取る子コンポーネントでの記述(例ではコンポーネントC(ひ孫例))</p>
+                <pre><code class="language-jsx">import { useContext} from &#39;react&#39;
+                import { UserCount } from &#39;../App&#39; //App.js(親)でexportしたUserCountはここでimportする必要あり
+                
+                const ComponentC = () =&gt; {
+                    const count = useContext(UserCount) //useContextとUserCountを使ってvalueで設定した値を取り出し変数countに入れる
+                    return (
+                        &lt;div&gt;
+                            &lt;p&gt;Componet C&lt;/p&gt;
+                            &lt;p&gt;{count}&lt;/p&gt;
+                        &lt;/div&gt;
+                    )
+                }
+                
+                export default ComponentC
+                </code></pre>
+                <h3 id="usestateの変数とともに利用する例">UseStateの変数とともに利用する例<!-- omit in toc --></h3>
+                <p>・親コンポーネント</p>
+                <pre><code class="language-jsx">import { createContext, useState } from &#39;react&#39;;
+                import &#39;./App.css&#39;;
+                import ComponentA from &#39;./components/ComponentA&#39;;
+                
+                export const UserCount = createContext();
+                
+                function App() {
+                  const [count, setCount] = useState(100);
+                  const value = {
+                    count,
+                    setCount,
+                  };
+                  return (
+                    &lt;div className=&quot;App&quot;&gt;
+                      &lt;h1&gt;Learn useContext&lt;/h1&gt;
+                      &lt;UserCount.Provider value={value}&gt;
+                        &lt;ComponentA /&gt;
+                      &lt;/UserCount.Provider&gt;
+                    &lt;/div&gt;
+                  );
+                }
+                
+                export default App;
+                </code></pre>
+                <p>・子コンポーネント(例ではひ孫)</p>
+                <pre><code class="language-jsx">import {useContext} from &#39;react&#39;
+                import { UserCount } from &#39;../App&#39;
+                
+                const ComponentC = () =&gt; {
+                
+                    const { count, setCount } = useContext(UserCount);
+                
+                    return (
+                        &lt;div&gt;
+                            &lt;p&gt;Componet C&lt;/p&gt;
+                            &lt;p&gt;{count}&lt;/p&gt;
+                            &lt;button onClick={() =&gt; setCount(count + 1)}&gt;+&lt;/button&gt;
+                        &lt;/div&gt;
+                    )
+                }
+                
+                export default ComponentC
+                </code></pre>
+                <h2 id="24-usereducer">2.4. useReducer</h2>
+                <p>useReducerはuseStateと同じく状態管理のためのフックです。<strong>複雑な state ロジックがある場合</strong>などに使えます。</p>
+                <pre><code class="language-jsx">import React, {useReducer} from &#39;react&#39;
+                
+                const [state, dispatch] = useReducer(reducer,&#39;初期値&#39;)
+                //stateは変数
+                //dispatchはreducerを実行するための呼び出し関数
+                //reducerはstate(変数)を更新するための関数
+                </code></pre>
+                <h3 id="使用例">使用例<!-- omit in toc --></h3>
+                <pre><code class="language-jsx">//useReducerをimport
+                import React, {useReducer} from &#39;react&#39;
+                import Button from &#39;@material-ui/core/Button&#39;;
+                import ButtonGroup from &#39;@material-ui/core/ButtonGroup&#39;;
+                
+                //counterの初期値を0に設定
+                //2つのcountStateを扱う。それぞれのinitialStateを設定
+                const initialState ={
+                  firstCounter: 0,
+                  secondCounter: 100
+                }
+                //reducer関数を作成
+                //countStateとactionを渡して、新しいcountStateを返すように実装する
+                const reducerFunc = (countState, action)=&gt; {
+                //reducer関数にincrement、increment、reset処理を書く
+                //どの処理を渡すかはactionを渡すことによって判断する
+                //switch文のactionをaction.typeに変更
+                //firstCounter、secondCounter用にcaseを設定
+                //複数のcounterStateを持っている場合は、更新前のcounterStateを展開し、オブジェクトのマージを行う
+                  switch (action.type){
+                    case &#39;increment1&#39;:
+                      return {...countState, firstCounter: countState.firstCounter + action.value}
+                    case &#39;decrement1&#39;:
+                      return {...countState, firstCounter: countState.firstCounter - action.value}
+                    case &#39;increment2&#39;:
+                      return {...countState, secondCounter: countState.secondCounter + action.value}
+                    case &#39;decrement2&#39;:
+                      return {...countState, secondCounter: countState.secondCounter - action.value}
+                    case &#39;reset1&#39;:
+                      return {...countState, firstCounter: initialState.firstCounter}
+                    case &#39;reset2&#39;:
+                      return {...countState, secondCounter: initialState.secondCounter}
+                    default:
+                      return countState
+                  }
+                }
+                const Counter2 = () =&gt; {
+                //作成したreducerFunc関数とcountStateをuseReducerに渡す
+                //useReducerはcountStateとdispatchをペアで返すので、それぞれを分割代入
+                  const [count, dispatch] = useReducer(reducerFunc, initialState)
+                //カウント数とそれぞれのactionを実行する&lt;Button/&gt;を設置する
+                //dispatchで渡しているactionをオブジェクトに変更して、typeとvalueを設定
+                  return (
+                    &lt;&gt;
+                      &lt;h2&gt;カウント：{count.firstCounter}&lt;/h2&gt;
+                      &lt;ButtonGroup color=&quot;primary&quot; aria-label=&quot;outlined primary button group&quot;&gt;
+                        &lt;Button onClick={()=&gt;dispatch({type: &#39;increment1&#39;, value: 1})}&gt;increment1&lt;/Button&gt;
+                        &lt;Button onClick={()=&gt;dispatch({type: &#39;decrement1&#39;, value: 1})}&gt;decrement1&lt;/Button&gt;
+                        &lt;Button onClick={()=&gt;dispatch({type: &#39;reset1&#39;})}&gt;reset&lt;/Button&gt;
+                      &lt;/ButtonGroup&gt;
+                      &lt;h2&gt;カウント2：{count.secondCounter}&lt;/h2&gt;
+                      &lt;ButtonGroup color=&quot;secondary&quot; aria-label=&quot;outlined primary button group&quot;&gt;
+                        &lt;Button onClick={()=&gt;dispatch({type: &#39;increment2&#39;, value: 100})}&gt;increment2&lt;/Button&gt;
+                        &lt;Button onClick={()=&gt;dispatch({type: &#39;decrement2&#39;, value: 100})}&gt;decrement2&lt;/Button&gt;
+                        &lt;Button onClick={()=&gt;dispatch({type: &#39;reset2&#39;})}&gt;reset&lt;/Button&gt;
+                      &lt;/ButtonGroup&gt;
+                    &lt;/&gt;
+                  )
+                }
+                
+                export default Counter2
+                </code></pre>
+                <p>参考URL: <a href="https://qiita.com/seira/items/2fbad56e84bda885c84c">https://qiita.com/seira/items/2fbad56e84bda885c84c</a></p>
+                <h2 id="25-usecallback">2.5. useCallback</h2>
+                <p>useCallbackはメモ化されたコールバック<strong>関数</strong>を返すフックです。
+                (依存配列にある値が変化した時のみ再生成するようにするため、<strong>パフォーマンス最適化</strong>に活用)</p>
+                <p>=&gt; 関数をメモ化できます。</p>
+                <p>下記例ではcounterが変化したときに重い関数を実行するできるような記述例です。</p>
+                <pre><code class="language-jsx">const showcount = useCallback(() =&gt; {
+                  //ここに処理の重い関数内容を記述
+                }, [counter]);
+                </code></pre>
+                <h2 id="26-usememo">2.6. useMemo</h2>
+                <p>useMemoはメモ化された<strong>値を返す</strong>フックです。
+                (計算結果などをメモ化。依存配列にある値が変化した時のみ再計算するようにするため、<strong>パフォーマンス最適化</strong>に使います)</p>
+                <p>=&gt; 簡単に言うと<strong>演算回数や多くのデータを処理するような重い処理をuseMemoでラップすることで重い処理を最適化ができる</strong></p>
+                <blockquote>
+                <p>メモ化:同じ結果を返す処理について、初回のみ処理を実行記録(ブラウザのメモリに記録)して値が必要となった2回目以降は前回の処理結果を計算することなく呼び出し値のみを得られるようにすること</p>
+                </blockquote>
+                <h2 id="27-useref">2.7. useRef</h2>
+                <p>useRefはuseStateと似ているフックです。画面上の変化がなくても値の変化を保持することができます。
+                (特定の DOM 要素へのアクセス(refによる)や、置き換え可能な値を保持に使えます)</p>
+                <p>=&gt; <strong>inputタグのref属性の参照(入力値など)の情報取得(保持)に使えるフック</strong></p>
+                <p>useStateではstateの値が更新されるたびにコンポーネントの再レンダリングが行われましたが、<strong>useRefは値が変わってもコンポーネントの再レンダリングは行われません。</strong>
+                つまり<strong>内部に保持している値だけを更新したい場合はuseStateよりuseRefの方が向いていると言えます</strong>。</p>
+                <pre><code class="language-jsx">import { useRef } from &#39;react&#39;;
+                const value = useRef(0);
+                </code></pre>
+                <h2 id="28-useimperativehandle-ほとんど使いません">2.8. useImperativeHandle (ほとんど使いません)</h2>
+                <p>useImperativeHandleは親コンポーネントから渡された ref をカスタマイズするフックです。
+                (ref を通して、子コンポーネントで定義した関数を親コンポーネントから呼び出すのに使えます)</p>
+                <h2 id="29-uselayouteffect-ほとんど使いません">2.9. useLayoutEffect (ほとんど使いません)</h2>
+                <p>useLayoutEffectはuseEffect と類似している呼び出されるタイミングが微妙に異なるフックです。</p>
+                <h2 id="210-usedebugvalue-ほとんど使いません">2.10. useDebugValue (ほとんど使いません)</h2>
+                <p>useDebugValueは React DevTools でカスタムフックのラベル表示ができるフックです。</p>
+                <h1 id="3-react開発のための便利なパッケージモジュール">3. React開発のための便利なパッケージ(モジュール)</h1>
+                <h2 id="31-状態管理stateフレームワーク">3.1. 状態管理(state)フレームワーク</h2>
+                <h3 id="311-redux">3.1.1. redux</h3>
+                <p>reduxはReactが扱うUIのstate(状態)を管理をするためのフレームワークです。</p>
+                <p>公式ドキュメント:<a href="https://redux.js.org/">https://redux.js.org/</a></p>
+                <h3 id="312-recoil">3.1.2. recoil</h3>
+                <p>recoilはReactが扱うUIのstate(状態)を管理をするためのフレームワークです。</p>
+                <p>公式ドキュメント:<a href="https://recoiljs.org/">https://recoiljs.org/</a></p>
+                <h3 id="313-mobx">3.1.3. mobx</h3>
+                <p>mobxはReactが扱うUIのstate(状態)を管理をするためのフレームワークです。</p>
+                <p>個人的には2021年現在mobxよりreduxを使うことを推奨します。</p>
+                <p>公式ドキュメント:<a href="https://mobx.js.org/react-integration.html">https://mobx.js.org/react-integration.html</a></p>
+                <h2 id="32-機能系ライブラリ">3.2. 機能系ライブラリ</h2>
+                <h3 id="321-react-helmet-async">3.2.1. react-helmet-async</h3>
+                <p>HEADER情報(メタ情報)を書き換えるためのライブラリです。
+                OGPもこのライブラリで設定可能です。</p>
+                <h3 id="322-react-router-dom">3.2.2. react-router-dom</h3>
+                <p>複数のページを持つReactアプリケーションを構築する際に使えるライブラリです。
+                複数のページが存在するということはブラウザからアクセスするためのURLが複数存在することとなります。</p>
+                <p><strong>使い方解説記事</strong></p>
+                <table>
+                <thead>
+                <tr>
+                <th>実装内容</th>
+                <th>URL</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>react-rourer-domによるページ遷移1</td>
+                <td><a href="https://dev.classmethod.jp/articles/fix-the-wrong-implementation-of-page-transitions-in-react-app/">https://dev.classmethod.jp/articles/fix-the-wrong-implementation-of-page-transitions-in-react-app/</a></td>
+                </tr>
+                <tr>
+                <td>react-rourer-domによるページ遷移2</td>
+                <td><a href="https://m-kenomemo.com/react-router-dom/#toc15">https://m-kenomemo.com/react-router-dom/#toc15</a></td>
+                </tr>
+                <tr>
+                <td>React router v6でクエリパラメータを渡す</td>
+                <td><a href="https://qiita.com/kuntaro0524/items/1f4bae3f634782ebc030">https://qiita.com/kuntaro0524/items/1f4bae3f634782ebc030</a></td>
+                </tr>
+                <tr>
+                <td>React Router v6の基本的な使い方</td>
+                <td><a href="https://ralacode.com/blog/post/how-to-use-react-router/">https://ralacode.com/blog/post/how-to-use-react-router/</a></td>
+                </tr>
+                </tbody></table>
+                <h2 id="33-react向けのcssフレームワーク">3.3. React向けのCSSフレームワーク</h2>
+                <h3 id="331-material-uimui">3.3.1. Material UI(MUI)</h3>
+                <p>React向けのCSSフレームワーク。</p>
+                <p>イメージ画像</p>
+                <img src="https://v4.mui.com/static/images/themes-light.jpg" width="60%">
+                
+                
+                <p>公式ドキュメント:<a href="https://mui.com/">https://mui.com/</a></p>
+                <h3 id="332-semantic-ui-react">3.3.2. Semantic UI React</h3>
+                <p>React向けのCSSフレームワーク。</p>
+                <p>イメージ画像</p>
+                <img src="https://themeforest.img.customer.envatousercontent.com/files/223595468/prevImg/02_preview.jpg?auto=compress%2Cformat&fit=crop&crop=top&w=590&h=300&s=e78ceadc9b1998ce647c6802a9547e73" width="60%">
+                
+                <p>公式ドキュメント:<a href="https://react.semantic-ui.com/">https://react.semantic-ui.com/</a></p>
+                <h3 id="333-charkra-ui">3.3.3. Charkra UI</h3>
+                <p>React向けのCSSフレームワーク。</p>
+                <p>イメージ画像</p>
+                <img src="https://www.ui-themes.com/content/images/2022/02/argon-dashboard-chakra-dashboard.jpg" width="60%">
+                
+                <p>公式ドキュメント:<a href="https://chakra-ui.com/">https://chakra-ui.com/</a></p>
+                <h3 id="334-ant-design">3.3.4. Ant Design</h3>
+                <p>React向けのCSSフレームワーク。</p>
+                <p>イメージ画像</p>
+                <img src="https://www.creative-tim.com/blog/content/images/2021/08/Screen-Shot-2021-08-03-at-17.32.16--1-.png" width="60%">
+                
+                <p>公式ドキュメント:<a href="https://ant.design/">https://ant.design/</a></p>
+                <h3 id="335-react-bootstrap">3.3.5. React-Bootstrap</h3>
+                <p>React向けのCSSフレームワーク。</p>
+                <h3 id="336-headless-ui">3.3.6. Headless UI</h3>
+                <p>Headless UI はスタイルを排除したコンポーネント集で、Tailwind CSS と相性がいい特徴があります。</p>
+                <p>公式ドキュメント:<a href="https://headlessui.com/">https://headlessui.com/</a></p>
+                <p>イメージ画像</p>
+                <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--qQ2KnlZc--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://graygrids.com/wp-content/uploads/edd/adminkit-screenshot-1-badge.png" width="60%">
+                
+                <p>公式ドキュメント:<a href="https://react-bootstrap.github.io/">https://react-bootstrap.github.io/</a></p>
+                <h2 id="34-その他のライブラリなど">3.4. その他のライブラリなど</h2>
+                <h3 id="341-react-chartjs-2">3.4.1. react-chartjs-2</h3>
+                <p>グラフを描画するライブラリであるchart.jsをReactで使うためのライブラリです。</p>
+                <p>公式ドキュメント:<a href="https://react-chartjs-2.netlify.app/">https://react-chartjs-2.netlify.app/</a></p>
+                <h3 id="342-react-three-fiber">3.4.2. react-three-fiber</h3>
+                <p>three.jsをReactで使うためのライブラリです。</p>
+                <p>公式ドキュメント<a href="https://docs.pmnd.rs/react-three-fiber/getting-started/introduction">https://docs.pmnd.rs/react-three-fiber/getting-started/introduction</a></p>
+                
+
+                <!-- END -->
+
+            </main>
+            <footer class="footer mt-auto py-3 bg-light">
+                <div class="container">
+                    <p class="text-muted text-center">Written by ゆーろん / yuron3141</p>
+                </div>
+            </footer>
+        </body>
+    </body>
+</html>

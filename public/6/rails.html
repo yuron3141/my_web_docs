@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="Ja">
+    <head>
+        <title>ゆーろんのWeb系の学習資料　|　Ruby on Rails基礎</title>
+        <!-- OGP -->
+        <head prefix="og: https://ogp.me/ns#">
+        <meta property="og:url" content="https://yuron3141.github.io/my_web_docs/" />
+        <meta property="og:type" content="Blog" />
+        <meta property="og:title" content="Ruby on Rails基礎" />
+        <meta property="og:description" content="ゆーろんのWeb系学習資料です。皆さんの開発のために役立つことを祈っています。" />
+        <meta property="og:site_name" content="ゆーろんアカデミー　ノート支部" />
+        <!-- DOCUMENTS STYLE -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <!-- ORIGINAL CSS -->
+        <link rel="stylesheet" href="../css/style.css" type="text/css">
+    </head>
+    <body>
+        <body class="d-flex flex-column h-100">
+            <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
+                <div>
+                    <h1 class="m-3">Ruby on Rails基礎</h1>
+                </div>
+            </header>
+            <main class="m-4">
+
+                <!-- Write Text Here-->
+
+                <p>Ruby on Rails(以下Rails)はRuby構成であるWEB開発のためのMVCフレームワークです。環境構築の説明は割愛。</p>
+                <p>なおRailsでの開発方法の解説は<strong>APIモード基準</strong>です。
+                MPAでの設計方法は必要になれば追記予定。</p>
+                <h2 id="目次">目次<!-- omit in toc --></h2>
+                <ul>
+                <li><a href="#1-rails%E3%81%AE%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AD%98%E3%81%A8%E6%A6%82%E5%BF%B5">1. Railsの基本知識と概念</a><ul>
+                <li><a href="#11-%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AD%98%E3%81%A8%E7%89%B9%E5%BE%B4">1.1. 基本知識と特徴</a></li>
+                <li><a href="#12-rails%E3%81%AE%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E3%81%A8%E6%A7%8B%E9%80%A0">1.2. Railsの基本操作と構造</a><ul>
+                <li><a href="#121-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E3%81%A8%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89">1.2.1. 基本操作とコマンド</a></li>
+                <li><a href="#122-%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA%E6%A7%8B%E6%88%90">1.2.2. ディレクトリ構成</a></li>
+                </ul>
+                </li>
+                <li><a href="#13-%E3%83%9E%E3%82%A4%E3%82%B0%E3%83%AC%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3migrate">1.3. マイグレーション(migrate)</a></li>
+                <li><a href="#14-model">1.4. Model</a><ul>
+                <li><a href="#141-%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%84%E5%A4%89%E6%95%B0%E3%81%AA%E3%81%A9%E3%81%AE%E5%91%BD%E5%90%8D%E8%A6%8F%E5%89%87">1.4.1. モデルに関するファイルや変数などの命名規則</a></li>
+                <li><a href="#142-%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E7%94%9F%E6%88%90">1.4.2. モデルの生成</a></li>
+                <li><a href="#143-%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%83%A2%E3%83%87%E3%83%AB%E4%B8%80%E9%83%A8">1.4.3. その他のモデル(一部)</a></li>
+                <li><a href="#144-%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E5%89%8A%E9%99%A4console%E3%81%AB%E3%81%A6">1.4.4. モデルの削除(Consoleにて)</a></li>
+                <li><a href="#145-%E3%83%A2%E3%83%87%E3%83%AB%E3%81%A8%E3%83%9E%E3%82%A4%E3%82%B0%E3%83%AC%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AE%E9%81%95%E3%81%84">1.4.5. モデルとマイグレーションの違い</a></li>
+                </ul>
+                </li>
+                <li><a href="#15-viewerb">1.5. View(erb)</a></li>
+                <li><a href="#16-controller">1.6. Controller</a><ul>
+                <li><a href="#161-controller%E3%81%AE%E5%91%BD%E5%90%8D%E8%A6%8F%E5%89%87">1.6.1. Controllerの命名規則</a></li>
+                <li><a href="#162-%E3%81%B2%E3%81%AA%E5%BD%A2">1.6.2. ひな形</a></li>
+                <li><a href="#163-%E3%82%A2%E3%83%83%E3%83%97%E3%83%AD%E3%83%BC%E3%83%89%E3%81%95%E3%82%8C%E3%81%9F%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E5%8F%96%E5%BE%97">1.6.3. アップロードされたファイルデータの取得</a></li>
+                </ul>
+                </li>
+                <li><a href="#17-routing">1.7. Routing</a><ul>
+                <li><a href="#171-%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9%E3%81%AE%E3%83%AB%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0">1.7.1. リソースのルーティング</a></li>
+                <li><a href="#172-%E3%83%AB%E3%83%BC%E3%83%88%E3%81%AEurl%E3%81%AE%E6%8C%87%E5%AE%9A">1.7.2. ルートのURLの指定</a></li>
+                <li><a href="#173-%E5%90%8D%E5%89%8D%E7%A9%BA%E9%96%93namespace%E3%81%AE%E3%82%B0%E3%83%AB%E3%83%BC%E3%83%97%E5%8C%96%E3%81%AE%E4%BB%98%E4%B8%8E">1.7.3. 名前空間(namespaceのグループ化)の付与</a></li>
+                </ul>
+                </li>
+                <li><a href="#18-gemfile">1.8. GemFile</a></li>
+                <li><a href="#19-rake%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89">1.9. Rakeコマンド</a></li>
+                </ul>
+                </li>
+                <li><a href="#2-%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E5%AE%9F%E8%A3%85">2. その他の実装</a><ul>
+                <li><a href="#21-%E3%82%A2%E3%82%BD%E3%82%B7%E3%82%A8%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3">2.1. アソシエーション</a></li>
+                <li><a href="#22-%E3%82%A2%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%E5%BE%8C%E3%81%AE%E5%87%A6%E7%90%86%E5%AE%9F%E8%A1%8C%E3%81%AE%E5%AE%9F%E8%A3%85">2.2. アクション後の処理実行の実装</a></li>
+                <li><a href="#23-%E3%82%AF%E3%83%83%E3%82%AD%E3%83%BC%E3%82%AD%E3%83%A3%E3%83%83%E3%82%B7%E3%83%A5%E3%81%AE%E6%89%B1%E3%81%84">2.3. クッキー・キャッシュの扱い</a></li>
+                <li><a href="#24-%E3%83%90%E3%83%AA%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AE%E5%AE%9F%E8%A3%85">2.4. バリテーションの実装</a></li>
+                <li><a href="#25-%E3%82%A2%E3%82%AF%E3%83%86%E3%82%A3%E3%83%96%E3%82%B8%E3%83%A7%E3%83%96">2.5. アクティブジョブ</a></li>
+                </ul>
+                </li>
+                <li><a href="#3-rails%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E3%83%86%E3%82%B9%E3%83%88">3. Railsにおけるテスト</a></li>
+                <li><a href="#4-rails%E9%96%8B%E7%99%BA%E3%81%AB%E4%BE%BF%E5%88%A9%E3%81%AAgem%E4%B8%80%E8%A6%A7">4. Rails開発に便利なGem一覧</a></li>
+                <li><a href="#5-api%E3%83%A2%E3%83%BC%E3%83%89%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E5%AE%9F%E8%A3%85%E3%83%A1%E3%83%A2">5. APIモードにおける実装メモ</a><ul>
+                <li><a href="#51-active-recordmodel%E9%96%A2%E4%BF%82">5.1. Active Record(model)関係</a><ul>
+                <li><a href="#511-where%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E6%AF%94%E8%BC%83%E6%BC%94%E7%AE%97---%E3%81%AB%E9%96%A2%E3%81%97%E3%81%A6">5.1.1. whereメソッドにおける比較演算(&lt;, &gt;, &lt;=, &gt;=)に関して</a></li>
+                </ul>
+                </li>
+                <li><a href="#55-%E3%81%9D%E3%81%AE%E4%BB%96rails%E8%A8%AD%E5%AE%9A">5.5. その他rails設定</a><ul>
+                <li><a href="#551-rails%E3%81%A7%E6%99%82%E9%96%93%E6%97%A5%E6%99%82%E3%81%AA%E3%81%A9%E3%82%92%E5%8F%96%E5%BE%97%E3%81%99%E3%82%8B%E5%A0%B4%E5%90%88%E3%81%AB%E9%96%A2%E3%81%97%E3%81%A6">5.5.1. Railsで時間(日時など)を取得する場合に関して</a></li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                </ul>
+                <h2 id="参考資料">参考資料<!-- omit in toc --></h2>
+                <table>
+                <thead>
+                <tr>
+                <th>名称</th>
+                <th>URL</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>Rails ガイド</td>
+                <td><a href="https://railsguides.jp/pro">https://railsguides.jp/pro</a></td>
+                </tr>
+                <tr>
+                <td>Rails ドキュメント(v6.0)</td>
+                <td><a href="https://railsdoc.com/archive/6_0_2_1/">https://railsdoc.com/archive/6_0_2_1/</a></td>
+                </tr>
+                <tr>
+                <td>Rails ガイド API専用アプリケーション</td>
+                <td><a href="https://railsguides.jp/api_app.html">https://railsguides.jp/api_app.html</a></td>
+                </tr>
+                <tr>
+                <td>Rails ガイド migrationによるテーブル作成</td>
+                <td><a href="https://railsdoc.com/page/create_table">https://railsdoc.com/page/create_table</a></td>
+                </tr>
+                <tr>
+                <td>Railsで超簡単API</td>
+                <td><a href="https://qiita.com/k-penguin-sato/items/adba7a1a1ecc3582a9c9">https://qiita.com/k-penguin-sato/items/adba7a1a1ecc3582a9c9</a></td>
+                </tr>
+                <tr>
+                <td>Rails params requireとpermitの違い</td>
+                <td><a href="https://techblog.kyamanak.com/entry/2017/08/29/012909">https://techblog.kyamanak.com/entry/2017/08/29/012909</a></td>
+                </tr>
+                <tr>
+                <td>ActiveJobの基礎  Rails ガイド</td>
+                <td><a href="https://railsguides.jp/active_job_basics.html">https://railsguides.jp/active_job_basics.html</a></td>
+                </tr>
+                <tr>
+                <td>Rails+RSpecで気軽に始めるテスト</td>
+                <td><a href="https://weseek.co.jp/tech/1409/">https://weseek.co.jp/tech/1409/</a></td>
+                </tr>
+                </tbody></table>
+                <h1 id="1-railsの基本知識と概念">1. Railsの基本知識と概念</h1>
+                <h2 id="11-基本知識と特徴">1.1. 基本知識と特徴</h2>
+                <p>Ruby on Railsは2004年にデンマークのプログラマであるデイヴィッド・ハイネマイヤー・ハンソン（通称DHH）氏によって作られたフレームワークです。
+                「MVCアーキテクチャ」に基づいて構築されたフレームワークであることが特徴です。
+                それぞれ、Model（モデル）View（ビュー） Controller（コントローラ）の頭文字をとって名付けられています。</p>
+                <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/t/terakura-aina/20201214/20201214122052.png" width="80%">
+                
+                <h3 id="mvcr含むの解説">MVC(R含む)の解説<!-- omit in toc --></h3>
+                <table>
+                <thead>
+                <tr>
+                <th>モデル</th>
+                <th>説明</th>
+                <th>実装内容</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>Model</td>
+                <td>データベースとのやり取りや処理の管理をする仕組み</td>
+                <td>DBの読み書き, システム処理</td>
+                </tr>
+                <tr>
+                <td>View</td>
+                <td>サイトの見た目(MPA)を提供する仕組み</td>
+                <td>フロントエンド</td>
+                </tr>
+                <tr>
+                <td>Controller</td>
+                <td>Modelからデータを受け取りviewにレンダリングする仕組み</td>
+                <td>ModelとViewの連携</td>
+                </tr>
+                <tr>
+                <td>Routing</td>
+                <td>URLとアプリケーションのパラメータを結びつける仕組み(ルータ)</td>
+                <td>ルーティング構築</td>
+                </tr>
+                </tbody></table>
+                <p>RailsをMPA構成で開発する場合、Routing → Controller → Viewという順で処理が行われます。</p>
+                <h2 id="12-railsの基本操作と構造">1.2. Railsの基本操作と構造</h2>
+                <h3 id="121-基本操作とコマンド">1.2.1. 基本操作とコマンド</h3>
+                <p>Railsプロジェクトの新規作成(APIモード(MPAの場合は--apiを除外))</p>
+                <pre><code class="language-shell">rails new プロジェクト名 --api
+                </code></pre>
+                <table>
+                <thead>
+                <tr>
+                <th>オプション</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>--api</td>
+                <td>APIモード</td>
+                </tr>
+                <tr>
+                <td>-d</td>
+                <td>データベースの指定(ない場合はsqlite3となる):指定可能(mysql, postgresqlなど)</td>
+                </tr>
+                </tbody></table>
+                <p>Railsサーバの起動(注意:<code>rails db:migrate</code>がないと立ち上がりません=&gt; DBを設定する必要がある)</p>
+                <pre><code class="language-shell">rails s オプション
+                </code></pre>
+                <p>立ち上がるポート番号の変更は<code>config/puma.rb</code>で設定する、もしくはオプションで。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>オプション</th>
+                <th>説明</th>
+                <th>使用例</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>-e</td>
+                <td>環境(開発 production/本番 test)の指定</td>
+                <td>rails s -e production</td>
+                </tr>
+                <tr>
+                <td>-p</td>
+                <td>立ち上げるポート番号の指定</td>
+                <td>rails s -p 3001</td>
+                </tr>
+                </tbody></table>
+                <p>DB変更は以下のように実装。</p>
+                <ul>
+                <li>Rails(v 6.0.0系)では以下コマンドでできる(例ではpostgreSQL)</li>
+                </ul>
+                <pre><code>rails db:system:change --to=postgresql
+                </code></pre>
+                <ul>
+                <li>もしくは以下の方法。</li>
+                </ul>
+                <ol>
+                <li>Gemfile内の<code>sqlite3</code>をそれぞれのDBに変更(変更後もちろんbundle install)</li>
+                <li>データベース設定(config/database.yml)で設定</li>
+                </ol>
+                <h3 id="122-ディレクトリ構成">1.2.2. ディレクトリ構成</h3>
+                <table>
+                <thead>
+                <tr>
+                <th>親ディレクトリ</th>
+                <th>サブディレクトリ</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td><strong>app/</strong></td>
+                <td></td>
+                <td>アプリケーションを格納する。主要なプログラムはこの配下に格納。</td>
+                </tr>
+                <tr>
+                <td>├</td>
+                <td>assets/</td>
+                <td>スタイルシートや画像などを格納するディレクトリ</td>
+                </tr>
+                <tr>
+                <td>├</td>
+                <td>assets/images/</td>
+                <td>スタイルシートや画像などを格納する</td>
+                </tr>
+                <tr>
+                <td>├</td>
+                <td>assets/javascript/</td>
+                <td>JavaScriptのスクリプトを格納する</td>
+                </tr>
+                <tr>
+                <td>├</td>
+                <td>assets/stylesheets/</td>
+                <td>スタイルシートを格納する</td>
+                </tr>
+                <tr>
+                <td>├</td>
+                <td><strong>controllers/</strong></td>
+                <td>コントローラを格納する</td>
+                </tr>
+                <tr>
+                <td>├</td>
+                <td>controllers/application_controller.rb</td>
+                <td>アプリケーションで共通のコントローラ</td>
+                </tr>
+                <tr>
+                <td>├</td>
+                <td>helpers/</td>
+                <td>ヘルパーを格納する</td>
+                </tr>
+                <tr>
+                <td>├</td>
+                <td>helpers/application_controller.rb</td>
+                <td>アプリケーションで共通のヘルパー</td>
+                </tr>
+                <tr>
+                <td>├</td>
+                <td><strong>models/</strong></td>
+                <td>モデルを格納</td>
+                </tr>
+                <tr>
+                <td>├</td>
+                <td>viewa/</td>
+                <td>ビューを格納する</td>
+                </tr>
+                <tr>
+                <td>├</td>
+                <td>views/layouts/</td>
+                <td>ビューのレイアウトとして使用するRHTMLテンプレートを格納するディレクトリ</td>
+                </tr>
+                <tr>
+                <td>└</td>
+                <td>views/layouts/application.html.erb</td>
+                <td>アプリケーションで共通のレイアウト</td>
+                </tr>
+                <tr>
+                <td>bin/</td>
+                <td></td>
+                <td>バイナリ実行可能ファイルの格納(触る必要ない)</td>
+                </tr>
+                <tr>
+                <td><strong>config/</strong></td>
+                <td></td>
+                <td>プロジェクトの設定ファイルを格納</td>
+                </tr>
+                <tr>
+                <td>├</td>
+                <td><strong>environments/</strong></td>
+                <td>環境単位の設定ファイルを格納する</td>
+                </tr>
+                <tr>
+                <td>├</td>
+                <td>initializers/</td>
+                <td>初期化ファイルを格納する</td>
+                </tr>
+                <tr>
+                <td>└</td>
+                <td>locales/</td>
+                <td>辞書ファイルを格納する</td>
+                </tr>
+                <tr>
+                <td>db/</td>
+                <td></td>
+                <td>データベースの設定ファイルの格納</td>
+                </tr>
+                <tr>
+                <td>└</td>
+                <td>migrate/</td>
+                <td>マイグレーションファイルを格納</td>
+                </tr>
+                <tr>
+                <td>doc/</td>
+                <td></td>
+                <td>ドキュメントを格納</td>
+                </tr>
+                <tr>
+                <td>lib/</td>
+                <td></td>
+                <td>複数のアプリケーション間で共有するライブラリを格納する</td>
+                </tr>
+                <tr>
+                <td>├</td>
+                <td>assets/</td>
+                <td>自分で生成したライブラリを格納する</td>
+                </tr>
+                <tr>
+                <td>└</td>
+                <td>tasks/</td>
+                <td>自分で生成したRakefileを格納する</td>
+                </tr>
+                <tr>
+                <td><strong>log/</strong></td>
+                <td></td>
+                <td>ログファイルが格納される</td>
+                </tr>
+                <tr>
+                <td><strong>public/</strong></td>
+                <td></td>
+                <td>Web上に公開するファイルを格納する</td>
+                </tr>
+                <tr>
+                <td>script/</td>
+                <td></td>
+                <td>開発に役立つプログラムを格納</td>
+                </tr>
+                <tr>
+                <td><strong>test/</strong></td>
+                <td></td>
+                <td>アプリケーションのテストに使うファイルを格納</td>
+                </tr>
+                <tr>
+                <td>tmp/</td>
+                <td></td>
+                <td>キャッシュなど、一時的なファイルを格納</td>
+                </tr>
+                <tr>
+                <td>vendor/</td>
+                <td></td>
+                <td>ライブラリや他のアプリケーションで共有するような外部ライブラリを格納</td>
+                </tr>
+                <tr>
+                <td>├</td>
+                <td>rails/</td>
+                <td>rails:freeze:gemsタスクでバージョンを固定したRailsを格納</td>
+                </tr>
+                <tr>
+                <td>└</td>
+                <td>plugins/</td>
+                <td>プラグインを格納</td>
+                </tr>
+                <tr>
+                <td>config.ru</td>
+                <td></td>
+                <td>Rackの設定</td>
+                </tr>
+                <tr>
+                <td><strong>Gemfile</strong></td>
+                <td></td>
+                <td>gemの依存関係を指定できる</td>
+                </tr>
+                <tr>
+                <td>Rakefile</td>
+                <td></td>
+                <td>ターミナルから実行可能なタスク</td>
+                </tr>
+                <tr>
+                <td>readme.md</td>
+                <td></td>
+                <td>Read.me</td>
+                </tr>
+                </tbody></table>
+                <h2 id="13-マイグレーションmigrate">1.3. マイグレーション(migrate)</h2>
+                <blockquote>
+                <p>マイグレーション: <strong>直接SQLを使わずにデータベースのテーブルやカラムなどの構造を変更/定義できる</strong>もの</p>
+                </blockquote>
+                <p>マイグレーションファイルは<strong>db/migrate</strong>フォルダの下に作成される。</p>
+                <p>以下コマンドを行うと、マイグレーションファイルに書いてある指示通りにテーブルが作られます。</p>
+                <pre><code>rails db:migrate
+                </code></pre>
+                <p>マイグレーションファイルで指示した構造以外に3つのカラム(id, created_at, updated_at)が自動で生成される。</p>
+                <p>マイグレーションを利用したDB設計/設定の参考URL:<a href="https://railsdoc.com/archive/6_0_2_1/migration">https://railsdoc.com/archive/6_0_2_1/migration</a></p>
+                <p>Railsで生成するDBに初期データを入れる方法:<a href="https://qiita.com/mHadate/items/bc698ce5c126c932487e">https://qiita.com/mHadate/items/bc698ce5c126c932487e</a></p>
+                <h3 id="railsで使用できるデータの型">Railsで使用できるデータの型<!-- omit in toc --></h3>
+                <table>
+                <thead>
+                <tr>
+                <th>型</th>
+                <th>内容</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>string</td>
+                <td>文字列</td>
+                </tr>
+                <tr>
+                <td>text</td>
+                <td>長い文字列</td>
+                </tr>
+                <tr>
+                <td>integer</td>
+                <td>整数</td>
+                </tr>
+                <tr>
+                <td>float</td>
+                <td>浮動小数</td>
+                </tr>
+                <tr>
+                <td>decimal</td>
+                <td>精度の高い小数</td>
+                </tr>
+                <tr>
+                <td>datetime</td>
+                <td>日時</td>
+                </tr>
+                <tr>
+                <td>timestamp</td>
+                <td>タイムスタンプ</td>
+                </tr>
+                <tr>
+                <td>time</td>
+                <td>時間</td>
+                </tr>
+                <tr>
+                <td>date</td>
+                <td>日付</td>
+                </tr>
+                <tr>
+                <td>binary</td>
+                <td>バイナリデータ</td>
+                </tr>
+                <tr>
+                <td>boolean</td>
+                <td>Boolean</td>
+                </tr>
+                </tbody></table>
+                <h2 id="14-model">1.4. Model</h2>
+                <p>モデル(Active Record)はアプリケーションが扱うデータや処理を表現するもの。
+                データベースへの読み書きを行う場合、このModelを使います。</p>
+                <pre><code>rails g model モデル名
+                </code></pre>
+                <h3 id="141-モデルに関するファイルや変数などの命名規則">1.4.1. モデルに関するファイルや変数などの命名規則</h3>
+                <table>
+                <thead>
+                <tr>
+                <th>種類</th>
+                <th>説明</th>
+                <th>例</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>モデル名</td>
+                <td>先頭は大文字で単数形</td>
+                <td>User</td>
+                </tr>
+                <tr>
+                <td>ファイル名</td>
+                <td>先頭は小文字で単数形</td>
+                <td>user.rb</td>
+                </tr>
+                <tr>
+                <td>テーブル名</td>
+                <td>先頭は小文字で複数形</td>
+                <td>users</td>
+                </tr>
+                <tr>
+                <td>テストスクリプト名</td>
+                <td>xxx_test.rb</td>
+                <td>user_test.rb</td>
+                </tr>
+                </tbody></table>
+                <h3 id="142-モデルの生成">1.4.2. モデルの生成</h3>
+                <pre><code class="language-rb">モデル名.new([属性])
+                </code></pre>
+                <p>実装例1(comment.rb)</p>
+                <pre><code class="language-rb">class CommentsController &lt; ApplicationController
+                
+                  def index
+                    @comments = Comment.all.order(&quot;created_at DESC&quot;)
+                    @comment = Comment.new
+                  end
+                
+                  def create
+                    # このcreateアクションの書き方は非推奨です。
+                    @comment = Comment.create!(comment_params)
+                    redirect_to root_path
+                  end
+                
+                  private
+                
+                  def comment_params
+                    params.require(:comment).permit(:text)
+                  end
+                end
+                </code></pre>
+                <h3 id="143-その他のモデル一部">1.4.3. その他のモデル(一部)</h3>
+                <table>
+                <thead>
+                <tr>
+                <th>モデル</th>
+                <th>説明</th>
+                <th>使用例</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td><strong>モデル.find_by(条件)</strong></td>
+                <td>条件に一致した最初の1件を取得(存在しない場合の返り値はnil)</td>
+                <td>Page.find_by(category_id: 1)</td>
+                </tr>
+                <tr>
+                <td><strong>モデル.find(件数)</strong></td>
+                <td>IDを指定してレコードを取得(複数指定も可能)</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>モデル.find_each(オプション) ...</td>
+                <td>大きなデータをもつモデルなどを処理する時に使う</td>
+                <td>詳細はRailsドキュメントにて</td>
+                </tr>
+                <tr>
+                <td>モデル.find_in_bacthes(オプション) ...</td>
+                <td>分割してレコードを処理する</td>
+                <td>詳しくはRailsドキュメントにて</td>
+                </tr>
+                <tr>
+                <td>モデル.find_or_create_by(条件)</td>
+                <td>条件を指定して初めの1件を取得し、1件もなければ作成</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>モデル.find_by_sql(SQL文)</td>
+                <td>SQLを直接使って取得</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>モデル.all</td>
+                <td>すべてのレコードを取得</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>モデル.first(件数)</td>
+                <td>最初のレコードを取得</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>モデル.last(件数)</td>
+                <td>最後のレコードを取得(取得は最後から)</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td><strong>モデル.where(条件)</strong></td>
+                <td>条件に当てはまるレコードを全て取得</td>
+                <td>詳細な使い方はRailsドキュメントにて</td>
+                </tr>
+                <tr>
+                <td>モデル.rewhere(条件)</td>
+                <td>条件に当てはまるレコードを上書き</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>モデル.group(グループ化キー)</td>
+                <td>取得した値をグループ化</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>モデル.order(:キー名 [ :並び順])</td>
+                <td>取得したレコードの並び替え[昇順: ASC, 降順: DESC]</td>
+                <td></td>
+                </tr>
+                </tbody></table>
+                <p>まだまだたくさんあります。
+                詳しくは:<a href="https://railsdoc.com/archive/6_0_2_1/model">https://railsdoc.com/archive/6_0_2_1/model</a></p>
+                <h3 id="144-モデルの削除consoleにて">1.4.4. モデルの削除(Consoleにて)</h3>
+                <pre><code>rails destroy model モデル名
+                </code></pre>
+                <p>Rails Consoleと組み合わせ使用することでConsole上でもModelを使用可能。</p>
+                <h3 id="145-モデルとマイグレーションの違い">1.4.5. モデルとマイグレーションの違い</h3>
+                <ul>
+                <li>migrationファイル→DBに<strong>変更を加える内容</strong></li>
+                <li>modelファイル→<strong>DBとRailsのアプリケーションを繋ぐ</strong></li>
+                </ul>
+                <p>基本モデルの生成には<code>rails g model</code>を途中で生成したDBに変更を加える場合にマイグレーションファイルを使用する。</p>
+                <p>migrateファイルの中の設定例(カラム名は小文字英語)</p>
+                <pre><code class="language-rb">create_table :titles do |t|
+                  t.データ型 :カラム名(, オプション)
+                end
+                </code></pre>
+                <p>なお<code>id</code>とデータ生成時刻<code>created_at(t.timestampsによる)</code>は自動生成される。</p>
+                <p>データ構造に条件を付ける例(デフォルト値やNot nullの設定)</p>
+                <pre><code class="language-rb">create_table :titles do |t|
+                    t.string :name, :null =&gt; false
+                    t.integer :old, :default =&gt; 10
+                    t.string :address, :null =&gt; false, :default =&gt; &#39;Tokyo&#39;
+                end
+                </code></pre>
+                <p>データベースの設定(生成するdbの種類や環境下設定)は<code>intalizers/database.yml</code>で行う。</p>
+                <h2 id="15-viewerb">1.5. View(erb)</h2>
+                <p>ReactのJSXやTSXに似ている。HTMLの中にRubyが埋め込めるもの。</p>
+                <p>ビューからコントローラのインスタンス変数には<code>@変数名</code>でアクセス。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>コード</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>&lt;%  %&gt;</td>
+                <td>出力しないコード</td>
+                </tr>
+                <tr>
+                <td>&lt;%=  %&gt;</td>
+                <td>結果の出力</td>
+                </tr>
+                <tr>
+                <td>&lt;%==  %&gt;</td>
+                <td>結果を<strong>エスケープしないで</strong>出力</td>
+                </tr>
+                <tr>
+                <td>&lt;%  -%&gt;</td>
+                <td>後ろの改行を取り除く</td>
+                </tr>
+                <tr>
+                <td>&lt;%-  %&gt;</td>
+                <td>行頭の空白削除</td>
+                </tr>
+                <tr>
+                <td>&lt;%#  %&gt;</td>
+                <td>コメント</td>
+                </tr>
+                </tbody></table>
+                <h2 id="16-controller">1.6. Controller</h2>
+                <p>コントローラはモデルからデータを受け取りビューにレンダリングするためのもの。</p>
+                <pre><code>rails g controller コントローラ名
+                </code></pre>
+                <p>特徴</p>
+                <ul>
+                <li>コントローラには複数のアクションが含まれている</li>
+                <li>コントローラの名前の付け方には決まりがある</li>
+                </ul>
+                <h3 id="161-controllerの命名規則">1.6.1. Controllerの命名規則</h3>
+                <ul>
+                <li>英大文字から始まる</li>
+                <li>英数字のみ</li>
+                <li>パスカルケース</li>
+                <li>ファイルはapp/controllerディレクトリに格納</li>
+                <li>ファイル名はコントローラ名の単語区切りを「_」にし、すべて小文字</li>
+                </ul>
+                <h3 id="162-ひな形">1.6.2. ひな形</h3>
+                <pre><code class="language-rb">class コントローラ名Controller &lt; ApplicationController
+                  def メソッド名
+                  end
+                edn
+                </code></pre>
+                <p>URLから送られたパラメータは以下で取得(PostとGet(クエリパラメータ)の取得が可能)</p>
+                <pre><code class="language-rb">params[:パラメータ名]
+                </code></pre>
+                <h3 id="163-アップロードされたファイルデータの取得">1.6.3. アップロードされたファイルデータの取得</h3>
+                <pre><code class="language-rb">=begin
+                  ファイル名の取得例
+                =end
+                params[:パラメータ名].original_filename
+                </code></pre>
+                <table>
+                <thead>
+                <tr>
+                <th>付けるもの</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>.original_filename</td>
+                <td>ファイル名</td>
+                </tr>
+                <tr>
+                <td>.content_type</td>
+                <td>コンテンツタイプ</td>
+                </tr>
+                <tr>
+                <td>.size</td>
+                <td>サイズ</td>
+                </tr>
+                <tr>
+                <td>.read</td>
+                <td>ファイル本体の読み込み</td>
+                </tr>
+                </tbody></table>
+                <h2 id="17-routing">1.7. Routing</h2>
+                <p>ルーティングはURLとアプリケーションのパラメータを結びつけるためのもの。
+                <code>config/routes.rb</code>にて設定を行う。優先順位は上に書かれているものから。</p>
+                <p>詳しくは<a href="https://railsdoc.com/archive/6_0_2_1/routes">https://railsdoc.com/archive/6_0_2_1/routes</a></p>
+                <p>下記rakeコマンドでルーティングの確認が可能</p>
+                <pre><code>rake routes
+                </code></pre>
+                <h3 id="171-リソースのルーティング">1.7.1. リソースのルーティング</h3>
+                <pre><code class="language-rb">resources(:リソース名 [, オプション])
+                </code></pre>
+                <table>
+                <thead>
+                <tr>
+                <th>オプション</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>:as</td>
+                <td>ルート名に利用する別名</td>
+                </tr>
+                <tr>
+                <td>:controller</td>
+                <td>コントローラを指定</td>
+                </tr>
+                <tr>
+                <td>:path_names</td>
+                <td>指定したアクションのみ名前の変更</td>
+                </tr>
+                <tr>
+                <td>:path</td>
+                <td>URLを書き換える</td>
+                </tr>
+                <tr>
+                <td>:only</td>
+                <td>生成されるURLを絞り込む(受け付けるHTTPメソッドも指定可能)</td>
+                </tr>
+                <tr>
+                <td>:except</td>
+                <td>指定したURLは生成しない</td>
+                </tr>
+                <tr>
+                <td>:shallow</td>
+                <td>ルーティングを複雑化しない</td>
+                </tr>
+                <tr>
+                <td>:shallow_path</td>
+                <td>指定したパラメータを先頭に追加</td>
+                </tr>
+                <tr>
+                <td>:shallow_prefix</td>
+                <td>指定したパラメータを名前付きルーティングとして先頭に追加</td>
+                </tr>
+                <tr>
+                <td>:format</td>
+                <td>フォーマット指定</td>
+                </tr>
+                <tr>
+                <td>:param</td>
+                <td>パラメータを上書き</td>
+                </tr>
+                </tbody></table>
+                <p>REST APIの例</p>
+                <pre><code class="language-rb">resources :pages
+                #     pages GET    /pages(.:format)          pages#index
+                #           POST   /pages(.:format)          pages#create
+                #  new_page GET    /pages/new(.:format)      pages#new
+                # edit_page GET    /pages/:id/edit(.:format) pages#edit
+                #      page GET    /pages/:id(.:format)      pages#show
+                #           PUT    /pages/:id(.:format)      pages#update
+                #           DELETE /pages/:id(.:format)      pages#destroy
+                </code></pre>
+                <p>処理するコントローラの指定例</p>
+                <pre><code>resources :pages, controller: :mains
+                </code></pre>
+                <h3 id="172-ルートのurlの指定">1.7.2. ルートのURLの指定</h3>
+                <pre><code class="language-rb">root(パス, [オプション])
+                </code></pre>
+                <p>pagesコントローラとindexアクションをroot指定</p>
+                <pre><code class="language-rb">root controller: &#39;pages&#39;, action: &#39;index&#39;
+                # root  / pages#index
+                </code></pre>
+                <h3 id="173-名前空間namespaceのグループ化の付与">1.7.3. 名前空間(namespaceのグループ化)の付与</h3>
+                <pre><code class="language-rb">namespace モジュール名 [, オプション] do
+                  ルート定義
+                end
+                </code></pre>
+                <table>
+                <thead>
+                <tr>
+                <th>オプション</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>:path</td>
+                <td>ルートのパスを指定</td>
+                </tr>
+                <tr>
+                <td>:module</td>
+                <td>namespaceを指定</td>
+                </tr>
+                <tr>
+                <td>:as</td>
+                <td>ルート名に使用する別名</td>
+                </tr>
+                <tr>
+                <td>:shallow_path</td>
+                <td>指定したパラメータを先頭に追加</td>
+                </tr>
+                </tbody></table>
+                <p>userにadminの名前空間の付与例</p>
+                <pre><code class="language-rb">namespace :admin do
+                  resources :user
+                end
+                # admin_user_index GET    /admin/user(.:format)          admin/user#index
+                #                  POST   /admin/user(.:format)          admin/user#create
+                #   new_admin_user GET    /admin/user/new(.:format)      admin/user#new
+                #  edit_admin_user GET    /admin/user/:id/edit(.:format) admin/user#edit
+                #       admin_user GET    /admin/user/:id(.:format)      admin/user#show
+                #                  PUT    /admin/user/:id(.:format)      admin/user#update
+                #                  DELETE /admin/user/:id(.:format)      admin/user#destroy
+                </code></pre>
+                <h2 id="18-gemfile">1.8. GemFile</h2>
+                <p>Railsで使用するGemの依存関係を管理するファイル。</p>
+                <p>詳しくは<a href="https://railsdoc.com/archive/6_0_2_1/gem">https://railsdoc.com/archive/6_0_2_1/gem</a></p>
+                <p>記入例</p>
+                <pre><code class="language-gemfile">gem &#39;rails7&#39;, &#39;3.2.1&#39;
+                </code></pre>
+                <p>開発モードとプロダクションモードでのgemのインストールは下記のように設定。</p>
+                <pre><code class="language-gemfile"># 上が開発モード、下がプロダクションモードでのgem利用
+                gem &#39;sqlite3&#39;, &#39;~&gt; 1.4&#39;, group: :development
+                gem &#39;pg&#39;, group: :production
+                </code></pre>
+                <p>基本的ワークフローとしては
+                Gemfileに必要なgemを追記した場合は<code>bundle install</code>、バージョン変更などをした場合は<code>bundle update</code>。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>コマンド</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>bundle install</td>
+                <td>依存ライブラリのインストール</td>
+                </tr>
+                <tr>
+                <td>bundle update</td>
+                <td>依存ライブラリのアップデート</td>
+                </tr>
+                <tr>
+                <td>bundle package</td>
+                <td>依存ライブラリを「vender/cache」以下にまとめる</td>
+                </tr>
+                <tr>
+                <td>bundle check</td>
+                <td>依存ライブラリがインストールされているかチェック</td>
+                </tr>
+                <tr>
+                <td>bundle list</td>
+                <td>インストールされているライブラリの一覧</td>
+                </tr>
+                <tr>
+                <td>bundle show</td>
+                <td>gemファイルのソースのパスを表示</td>
+                </tr>
+                <tr>
+                <td>bundle init</td>
+                <td>gemを初期化</td>
+                </tr>
+                </tbody></table>
+                <h2 id="19-rakeコマンド">1.9. Rakeコマンド</h2>
+                <p>Rubyで記述されたビルドツール。
+                Rails5以降はrailsコマンドでも呼び出し可能。</p>
+                <h1 id="2-その他の実装">2. その他の実装</h1>
+                <h2 id="21-アソシエーション">2.1. アソシエーション</h2>
+                <p>参照元テーブルから参照先テーブルを参照するための設定</p>
+                <p><a href="https://railsdoc.com/archive/6_0_2_1/association">https://railsdoc.com/archive/6_0_2_1/association</a></p>
+                <h2 id="22-アクション後の処理実行の実装">2.2. アクション後の処理実行の実装</h2>
+                <p>アクションの後に処理を実行</p>
+                <pre><code class="language-rb">after_action(アクション名 [, オプション])
+                </code></pre>
+                <table>
+                <thead>
+                <tr>
+                <th>オプション</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>:only</td>
+                <td>実行するアクション</td>
+                </tr>
+                <tr>
+                <td>:except</td>
+                <td>実行しないアクション</td>
+                </tr>
+                <tr>
+                <td>:if</td>
+                <td>実行する条件を指定</td>
+                </tr>
+                <tr>
+                <td>:unless</td>
+                <td>実行されない条件を指定</td>
+                </tr>
+                </tbody></table>
+                <p>アクション後の処理の実行</p>
+                <pre><code class="language-rb">after_action :store_location
+                def store_location
+                  if request.fullpath !~ Regexp.new(&#39;\\A/users/.*\\z&#39;) &amp;&amp; !request.xhr?
+                    session[:previous_url] = request.fullpath
+                  end
+                end
+                </code></pre>
+                <p><a href="https://railsdoc.com/archive/6_0_2_1/callback">https://railsdoc.com/archive/6_0_2_1/callback</a></p>
+                <h2 id="23-クッキー・キャッシュの扱い">2.3. クッキー・キャッシュの扱い</h2>
+                <h3 id="キャッシュ">キャッシュ<!-- omit in toc --></h3>
+                <p>キャッシュはユーザがアクセスする際のレスポンス最適化に使える。
+                キャッシュには以下の種類がある。</p>
+                <ul>
+                <li>ページキャッシュ</li>
+                <li>アクションキャッシュ</li>
+                <li>フラグメントキャッシュ</li>
+                <li>ロシアンドールキャッシュ</li>
+                <li>低レベルキャッシュ</li>
+                <li>SQLキャッシュ</li>
+                </ul>
+                <p>キャッシュの保存場所</p>
+                <ul>
+                <li>メモリ</li>
+                <li>ファイル</li>
+                <li>memcached</li>
+                </ul>
+                <h4 id="クッキーを保存">クッキーを保存<!-- omit in toc --></h4>
+                <p>Cookieの保存</p>
+                <pre><code class="language-rb">cookies[:クッキー名] = { key: クッキー情報 }
+                </code></pre>
+                <p><a href="https://railsdoc.com/archive/6_0_2_1/cookie_cache">https://railsdoc.com/archive/6_0_2_1/cookie_cache</a></p>
+                <h2 id="24-バリテーションの実装">2.4. バリテーションの実装</h2>
+                <p>データベースへのデータ保存前に保存するデータが要件(正しいもの)かどうかをバリテーションを用いて実装する。</p>
+                <p>属性の値が一意であることをバリデーションできる。
+                バリテーションはmodelまたはmigrationファイルに記載する。</p>
+                <p><a href="https://railsdoc.com/archive/6_0_2_1/validation">https://railsdoc.com/archive/6_0_2_1/validation</a></p>
+                <h2 id="25-アクティブジョブ">2.5. アクティブジョブ</h2>
+                <p>アクティブジョブはジョブを宣言し、それによりバックエンドでさまざまな方法によるキュー操作を実行するための機能。
+                バックグラウンドで実行するジョブの作成、キュー登録 (enqueue)、実行が可能です。</p>
+                <p>参考記事: <a href="https://qiita.com/petertakahashi/items/cb9ae73e5ba3020f4a89">https://qiita.com/petertakahashi/items/cb9ae73e5ba3020f4a89</a></p>
+                <p>アクティブジョブで実装される機能は基本的に<strong>リアルタイム性を伴わない場合や重い処理</strong>に使われることが多い。</p>
+                <ul>
+                <li>メールの送信</li>
+                <li>画像の処理</li>
+                <li>データを集計してCSVに落とす</li>
+                </ul>
+                <p>など</p>
+                <pre><code>rails generate job ジョブ名
+                </code></pre>
+                <p>上記を実行すると<code>app/jobs</code>下にジョブが1つ作成される。
+                --queue urgentをオプションで付けるとジョブが1つ作成される。</p>
+                <p>生成されたジョブの雛型</p>
+                <pre><code class="language-rb">class GuestsCleanupJob &lt; ApplicationJob
+                  queue_as :default
+                
+                  def perform(*guests)
+                    # 後で実行するタスクをここに置く
+                  end
+                end
+                </code></pre>
+                <h3 id="生成されたジョブを実行キュー登録">生成されたジョブを実行(キュー登録)<!-- omit in toc --></h3>
+                <p><code>rails console</code>で行える。
+                上記ジョブ名の場合</p>
+                <pre><code>GuestsCleanupJob.perform_later (引数があればここに記述)
+                </code></pre>
+                <p>各場合</p>
+                <pre><code># 明日正午に実行したいジョブをキューに登録する
+                GuestsCleanupJob.set(wait_until: Date.tomorrow.noon).perform_later
+                # 一週間後に実行したいジョブをキューに登録する
+                GuestsCleanupJob.set(wait: 1.week).perform_later
+                </code></pre>
+                <h3 id="productionモードにおけるアクティブジョブ">productionモードにおけるアクティブジョブ<!-- omit in toc --></h3>
+                <p>Rails自体が提供するのは、ジョブをメモリに保持するインプロセスのキューイングシステムだけです。
+                そのためproductionモードでは別途キューイングのバックエンドを用意する必要があります。</p>
+                <h1 id="3-railsにおけるテスト">3. Railsにおけるテスト</h1>
+                <h2 id="テストの予備知識">テストの予備知識<!-- omit in toc --></h2>
+                <p>テストを行う理由は以下の確認のため。</p>
+                <ul>
+                <li>あるURLにアクセスした際に、予期した画面が表示されるか</li>
+                <li>ある正しい操作をした際に、アプリケーションの状態が正しく変更されるか</li>
+                <li>ある正しくない操作をした際に、適切なエラーメッセージが表示されるか</li>
+                </ul>
+                <p>テストには「<strong>単体テスト(機能テスト)<strong>」、「統合(複合)テスト」、「</strong>総合テスト</strong>」がある。</p>
+                <h3 id="単体テスト機能テスト">単体テスト(機能テスト)<!-- omit in toc --></h3>
+                <p>機能のテスト。</p>
+                <ul>
+                <li>モデルの検索系メソッドが正しい値を取得できるか</li>
+                <li>モデルの更新系メソッドが正しくデータベースを更新できるか</li>
+                <li>モデルの更新系メソッドが不正な入力に対して、適切なエラーを発生させるか</li>
+                <li>更新系のアクションが正しくデータベースを更新されるか</li>
+                </ul>
+                <h3 id="総合テスト">総合テスト<!-- omit in toc --></h3>
+                <ul>
+                <li>ログインして、新しいメンバーを追加して、ログアウトするといった一連の動きをテスト
+                など。</li>
+                </ul>
+                <p>テストツールにはgem「Rspec」を使うことを勧める。</p>
+                <h1 id="4-rails開発に便利なgem一覧">4. Rails開発に便利なGem一覧</h1>
+                <p>よく使いそうなgemを記載しておきます。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>gem名</th>
+                <th>種類</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td><strong>devise</strong></td>
+                <td>認証系</td>
+                <td>ユーザ認証の基本機能を提供</td>
+                </tr>
+                <tr>
+                <td>devise_token_auth</td>
+                <td>認証系</td>
+                <td><strong>トークン認証</strong>を実現するもの</td>
+                </tr>
+                <tr>
+                <td>dotenv-rails</td>
+                <td>未分類</td>
+                <td>環境変数(.env)を扱うことが出来るようになる</td>
+                </tr>
+                <tr>
+                <td>omniauth</td>
+                <td>認証系</td>
+                <td>SNS認証の実装に使える</td>
+                </tr>
+                <tr>
+                <td>rack-cors</td>
+                <td>未分類</td>
+                <td>CORSの制御機能を追加するもの</td>
+                </tr>
+                <tr>
+                <td>rspec-rails</td>
+                <td>ツール</td>
+                <td>テストツール</td>
+                </tr>
+                <tr>
+                <td>cancancan</td>
+                <td>認証系</td>
+                <td>ユーザーの権限管理をしたいときに使える、deviceと混ぜるとよい</td>
+                </tr>
+                <tr>
+                <td>sidekiq-scheduler</td>
+                <td>定期実行系</td>
+                <td>cronのようにジョブを定期的に実行(Sidekiqの拡張)</td>
+                </tr>
+                <tr>
+                <td>whenever</td>
+                <td>定期実行系</td>
+                <td>crontab管理ライブラリ(cron必須)</td>
+                </tr>
+                </tbody></table>
+                <h2 id="deviceで実現できる機能">deviceで実現できる機能<!-- omit in toc --></h2>
+                <ul>
+                <li>ユーザー登録</li>
+                <li>ログイン/ログアウト</li>
+                <li>登録情報の編集</li>
+                <li>パスワード変更、再発行</li>
+                </ul>
+                <h2 id="sidekiq-schedulerに関して">sidekiq-schedulerに関して<!-- omit in toc --></h2>
+                <blockquote>
+                <p>Sidekiq:Rubyとは異なるプロセスをバックグラウンドで実行するためのキューイングジョブ処理の仕組み。</p>
+                </blockquote>
+                <p>sidekiq-schedulerはSidekiqの拡張gemでcronのようにジョブを定期的に実行できる。</p>
+                <p>参考URL:<a href="https://zenn.dev/yoiyoicho/articles/538af41a66867d">https://zenn.dev/yoiyoicho/articles/538af41a66867d</a></p>
+                <h1 id="5-apiモードにおける実装メモ">5. APIモードにおける実装メモ</h1>
+                <h2 id="51-active-recordmodel関係">5.1. Active Record(model)関係</h2>
+                <h3 id="511-whereメソッドにおける比較演算---に関して">5.1.1. whereメソッドにおける比較演算(&lt;, &gt;, &lt;=, &gt;=)に関して</h3>
+                <p>一般的にwhereメソッドにおいて比較によりデータを抽出する場合のパターンをいくつか記載。</p>
+                <p>whereメソッドの返り値は<code>ActiveRecord::Relation</code>なのでチェーン状にメソッドを記述できます。</p>
+                <p>通常の書き方</p>
+                <pre><code class="language-rb">User.where(&#39;id &gt;= ?&#39;, 100)
+                # 100以上のidのレコードを取得
+                </code></pre>
+                <p>範囲演算子を使った書き方(より大きい <code>&gt;</code>のみは範囲オブジェクトで記述不能)</p>
+                <pre><code class="language-rb"># 10以上(&gt;=)のidのレコードを取得
+                User.where(id: 10..)
+                # 10以下(&lt;=)のidのレコードを取得
+                User.where(id: ..10)
+                # 10未満(&lt;)のidのレコードを取得
+                User.where(id: ...10)
+                </code></pre>
+                <h2 id="55-その他rails設定">5.5. その他rails設定</h2>
+                <h3 id="551-railsで時間日時などを取得する場合に関して">5.5.1. Railsで時間(日時など)を取得する場合に関して</h3>
+                <p><code>Date.today</code>はRuby自体のものでENV(環境変数)やシステム(OS)のタイムゾーンを参照する。</p>
+                <p><code>Date.current</code>はapplication.rbのタイムゾーンを用いる =&gt; Railsで設定可能</p>
+                <p><strong>結論Railsで制御が効くので</strong><code>Date.current</code>を使おう。</p>
+                <p>application.rbには以下のように設定すればいい(抜粋)</p>
+                <pre><code class="language-rb"># JPT(東京時刻)に設定
+                config.time_zone = &#39;Tokyo&#39;
+                # データベースへのデータ保存時刻をconfig.time_zoneに合わせる
+                config.active_record.default_timezone = :local
+                </code></pre>
+                
+
+                <!-- END -->
+
+            </main>
+            <footer class="footer mt-auto py-3 bg-light">
+                <div class="container">
+                    <p class="text-muted text-center">Written by ゆーろん / yuron3141</p>
+                </div>
+            </footer>
+        </body>
+    </body>
+</html>

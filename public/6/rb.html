@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="Ja">
+    <head>
+        <title>ゆーろんのWeb系の学習資料　|　Ruby基礎</title>
+        <!-- OGP -->
+        <head prefix="og: https://ogp.me/ns#">
+        <meta property="og:url" content="https://yuron3141.github.io/my_web_docs/" />
+        <meta property="og:type" content="Blog" />
+        <meta property="og:title" content="Ruby基礎" />
+        <meta property="og:description" content="ゆーろんのWeb系学習資料です。皆さんの開発のために役立つことを祈っています。" />
+        <meta property="og:site_name" content="ゆーろんアカデミー　ノート支部" />
+        <!-- DOCUMENTS STYLE -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <!-- ORIGINAL CSS -->
+        <link rel="stylesheet" href="../css/style.css" type="text/css">
+    </head>
+    <body>
+        <body class="d-flex flex-column h-100">
+            <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
+                <div>
+                    <h1 class="m-3">Ruby基礎</h1>
+                </div>
+            </header>
+            <main class="m-4">
+
+                <!-- Write Text Here-->
+
+                <h2 id="目次">目次<!-- omit in toc --></h2>
+                <ul>
+                <li><a href="#1-%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AD%98">1. 基本知識</a></li>
+                <li><a href="#2-%E3%82%B3%E3%83%A1%E3%83%B3%E3%83%88%E3%82%A2%E3%82%A6%E3%83%88">2. コメントアウト</a></li>
+                <li><a href="#3-%E5%A4%89%E6%95%B0%E3%81%A8%E5%AE%A3%E8%A8%80">3. 変数と宣言</a><ul>
+                <li><a href="#31-%E3%83%AD%E3%83%BC%E3%82%AB%E3%83%AB%E5%A4%89%E6%95%B0">3.1. ローカル変数</a></li>
+                <li><a href="#32-%E5%AE%9A%E6%95%B0">3.2. 定数</a></li>
+                <li><a href="#33-%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9%E5%A4%89%E6%95%B0">3.3. インスタンス変数</a></li>
+                <li><a href="#34-%E3%82%AF%E3%83%A9%E3%82%B9%E5%A4%89%E6%95%B0">3.4. クラス変数</a></li>
+                <li><a href="#35-%E3%82%B0%E3%83%AD%E3%83%BC%E3%83%90%E3%83%AB%E5%A4%89%E6%95%B0">3.5. グローバル変数</a></li>
+                </ul>
+                </li>
+                <li><a href="#4-%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E5%9E%8B">4. データの型</a><ul>
+                <li><a href="#41-%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88">4.1. オブジェクト</a></li>
+                <li><a href="#42-%E3%82%B7%E3%83%B3%E3%82%B0%E3%83%AB%E3%82%AF%E3%82%A9%E3%83%BC%E3%83%88%E3%81%A8%E3%83%80%E3%83%96%E3%83%AB%E3%82%AF%E3%82%A9%E3%83%BC%E3%83%88">4.2. シングルクォートとダブルクォート</a></li>
+                <li><a href="#43-%E5%A4%89%E6%95%B0%E3%81%AE%E6%96%87%E5%AD%97%E5%88%97%E4%B8%AD%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E5%87%BA%E5%8A%9B%E3%81%A8%E7%89%B9%E6%AE%8A%E6%96%87%E5%AD%97%E3%81%AE%E5%87%BA%E5%8A%9B">4.3. 変数の文字列中における出力と特殊文字の出力</a></li>
+                <li><a href="#44-%E9%85%8D%E5%88%97">4.4. 配列</a><ul>
+                <li><a href="#441-%E9%85%8D%E5%88%97%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89">4.4.1. 配列メソッド</a><ul>
+                <li><a href="#4411-split%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89">4.4.1.1. splitメソッド</a></li>
+                <li><a href="#4412-join%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89">4.4.1.2. joinメソッド</a></li>
+                <li><a href="#4413-firstlast%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89">4.4.1.3. first/lastメソッド</a></li>
+                <li><a href="#4414-unshiftpush%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89">4.4.1.4. unshift/pushメソッド</a></li>
+                <li><a href="#4415-shiftpop%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89">4.4.1.5. shift/popメソッド</a></li>
+                <li><a href="#4416-sum%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89">4.4.1.6. sumメソッド</a></li>
+                <li><a href="#4417-sample%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89">4.4.1.7. sampleメソッド</a></li>
+                <li><a href="#4418-shuffle%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89">4.4.1.8. shuffleメソッド</a></li>
+                <li><a href="#4419-sord%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89">4.4.1.9. sordメソッド</a></li>
+                <li><a href="#44110-uniq%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89">4.4.1.10. uniqメソッド</a></li>
+                <li><a href="#44111-inject%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89">4.4.1.11. injectメソッド</a></li>
+                <li><a href="#44112-include%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89">4.4.1.12. includeメソッド</a></li>
+                <li><a href="#44113-map%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89">4.4.1.13. mapメソッド</a></li>
+                <li><a href="#44114-select%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89reject%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89">4.4.1.14. selectメソッド/rejectメソッド</a></li>
+                <li><a href="#44115-group_by%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89">4.4.1.15. group_byメソッド</a></li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                <li><a href="#45-%E3%83%8F%E3%83%83%E3%82%B7%E3%83%A5">4.5. ハッシュ</a><ul>
+                <li><a href="#451-%E3%82%B7%E3%83%B3%E3%83%9C%E3%83%AB%E3%82%92%E7%94%A8%E3%81%84%E3%81%9F%E3%83%8F%E3%83%83%E3%82%B7%E3%83%A5%E8%A1%A8%E7%8F%BE">4.5.1. シンボルを用いたハッシュ表現</a></li>
+                <li><a href="#452-length%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89">4.5.2. lengthメソッド</a></li>
+                <li><a href="#453-empty%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89">4.5.3. emptyメソッド</a></li>
+                </ul>
+                </li>
+                <li><a href="#46-%E6%AD%A3%E8%A6%8F%E8%A1%A8%E7%8F%BE">4.6. 正規表現</a><ul>
+                <li><a href="#661-sub">6.6.1. sub</a></li>
+                <li><a href="#452-gsub">4.5.2. gsub</a></li>
+                <li><a href="#453-match">4.5.3. match</a></li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                <li><a href="#5-%E6%BC%94%E7%AE%97%E5%AD%90">5. 演算子</a><ul>
+                <li><a href="#51-%E4%BA%8C%E9%A0%85%E6%BC%94%E7%AE%97%E5%AD%90">5.1. 二項演算子</a></li>
+                <li><a href="#52-%E5%8D%98%E9%A0%85%E6%BC%94%E7%AE%97%E5%AD%90">5.2. 単項演算子</a></li>
+                <li><a href="#53-%E6%AF%94%E8%BC%83%E6%BC%94%E7%AE%97%E5%AD%90">5.3. 比較演算子</a></li>
+                <li><a href="#54-%E3%83%93%E3%83%83%E3%83%88%E6%BC%94%E7%AE%97%E5%AD%90">5.4. ビット演算子</a></li>
+                <li><a href="#55-%E8%AB%96%E7%90%86%E6%BC%94%E7%AE%97%E5%AD%90">5.5. 論理演算子</a></li>
+                <li><a href="#56-%E6%9D%A1%E4%BB%B6%E4%B8%89%E9%A0%85%E6%BC%94%E7%AE%97%E5%AD%90%E3%81%A8">5.6. 条件(三項)演算子(?と:)</a></li>
+                </ul>
+                </li>
+                <li><a href="#6-%E5%9E%8B%E5%A4%89%E6%8F%9B">6. 型変換</a><ul>
+                <li><a href="#61-%E6%9A%97%E9%BB%99%E7%9A%84%E3%81%AA%E5%9E%8B%E5%A4%89%E6%8F%9B">6.1. 暗黙的な型変換</a></li>
+                <li><a href="#62-%E6%98%8E%E7%A4%BA%E7%9A%84%E3%81%AA%E5%9E%8B%E5%A4%89%E6%8F%9B">6.2. 明示的な型変換</a><ul>
+                <li><a href="#621-%E6%96%87%E5%AD%97%E5%88%97--%E6%95%B0%E5%80%A4">6.2.1. 文字列 =&gt; 数値</a></li>
+                <li><a href="#622-%E6%95%B0%E5%80%A4--%E6%96%87%E5%AD%97%E5%88%97">6.2.2. 数値 =&gt; 文字列</a></li>
+                <li><a href="#623-%E6%95%B0%E5%80%A4%E6%95%B4%E6%95%B0--%E6%95%B0%E5%80%A4%E5%B0%8F%E6%95%B0">6.2.3. 数値(整数) =&gt; 数値(小数)</a></li>
+                <li><a href="#624-%E3%83%8F%E3%83%83%E3%82%B7%E3%83%A5%E7%AF%84%E5%9B%B2%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88--%E9%85%8D%E5%88%97">6.2.4. ハッシュ/範囲オブジェクト =&gt; 配列</a></li>
+                <li><a href="#625-%E9%85%8D%E5%88%97--%E3%83%8F%E3%83%83%E3%82%B7%E3%83%A5">6.2.5. 配列 =&gt; ハッシュ</a></li>
+                </ul>
+                </li>
+                <li><a href="#63-%E7%9C%9F%E5%81%BD%E5%88%A4%E5%AE%9A%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89">6.3. 真偽判定メソッド</a><ul>
+                <li><a href="#631-nil%E3%81%8B%E3%81%AE%E5%88%A4%E5%AE%9A">6.3.1. nilかの判定</a></li>
+                <li><a href="#632-%E7%A9%BA%E6%96%87%E5%AD%97%E5%88%97%E7%A9%BA%E9%85%8D%E5%88%97%E3%81%8B%E3%81%AE%E5%88%A4%E5%AE%9A">6.3.2. 空文字列・空配列かの判定</a></li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                <li><a href="#7-%E9%96%A2%E6%95%B0%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E3%81%A8%E5%AE%A3%E8%A8%80">7. 関数(メソッド)と宣言</a></li>
+                <li><a href="#8-%E6%9D%A1%E4%BB%B6%E5%88%86%E5%B2%90">8. 条件分岐</a><ul>
+                <li><a href="#81-if%E6%96%87">8.1. if文</a></li>
+                <li><a href="#82-case%E6%96%87">8.2. case文</a></li>
+                </ul>
+                </li>
+                <li><a href="#9-%E3%83%AB%E3%83%BC%E3%83%97%E3%81%A8%E5%8F%8D%E5%BE%A9%E5%87%A6%E7%90%86">9. ループと反復処理</a><ul>
+                <li><a href="#91-while%E6%96%87">9.1. while文</a></li>
+                <li><a href="#92-until%E6%96%87">9.2. until文</a></li>
+                <li><a href="#93-for%E6%96%87">9.3. for文</a></li>
+                <li><a href="#94-%E7%AF%84%E5%9B%B2%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88">9.4. 範囲オブジェクト</a></li>
+                <li><a href="#95-each%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89">9.5. eachメソッド</a><ul>
+                <li><a href="#951-%E3%81%9D%E3%81%AE%E4%BB%96each%E3%82%92%E6%8B%A1%E5%BC%B5%E3%81%97%E3%81%9F%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89">9.5.1. その他eachを拡張したメソッド</a></li>
+                </ul>
+                </li>
+                <li><a href="#96-loop%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E3%81%A8break">9.6. loopメソッドとbreak</a></li>
+                <li><a href="#97-next%E3%81%A8redo">9.7. nextとredo</a></li>
+                </ul>
+                </li>
+                <li><a href="#10-%E3%82%AF%E3%83%A9%E3%82%B9">10. クラス</a><ul>
+                <li><a href="#101-%E3%82%AF%E3%83%A9%E3%82%B9%E3%81%AE%E5%AE%9A%E7%BE%A9">10.1. クラスの定義</a></li>
+                <li><a href="#102-%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E5%88%86%E5%89%B2require">10.2. ファイル分割(require)</a></li>
+                <li><a href="#103-%E5%85%A5%E5%8A%9B%E5%80%A4%E3%81%AE%E5%8F%97%E3%81%91%E5%8F%96%E3%82%8Agetschomp">10.3. 入力値の受け取り(gets.chomp)</a></li>
+                <li><a href="#104-%E7%B6%99%E6%89%BF">10.4. 継承</a></li>
+                <li><a href="#105-%E3%82%AA%E3%83%BC%E3%83%90%E3%83%A9%E3%82%A4%E3%83%89">10.5. オーバライド</a></li>
+                <li><a href="#106-%E8%A6%AA%E3%82%AF%E3%83%A9%E3%82%B9%E3%81%A7%E9%87%8D%E8%A4%87%E3%81%99%E3%82%8B%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E3%81%AE%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97super">10.6. 親クラスで重複するメソッドの呼び出し（super）</a></li>
+                <li><a href="#107-date%E3%82%AF%E3%83%A9%E3%82%B9">10.7. Dateクラス</a></li>
+                <li><a href="#108-%E3%82%AF%E3%83%A9%E3%82%B9%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89">10.8. クラスメソッド</a></li>
+                </ul>
+                </li>
+                <li><a href="#11-%E3%83%A2%E3%82%B8%E3%83%A5%E3%83%BC%E3%83%AB">11. モジュール</a></li>
+                <li><a href="#12-ruby%E3%81%AE%E6%80%A7%E8%B3%AA%E6%A7%8B%E9%80%A0%E3%81%AA%E3%81%A9">12. Rubyの性質/構造など</a><ul>
+                <li><a href="#121-ruby%E3%81%AE%E4%BA%88%E7%B4%84%E8%AA%9E">12.1. Rubyの予約語</a></li>
+                </ul>
+                </li>
+                <li><a href="#13-%E3%81%9D%E3%81%AE%E4%BB%96ruby%E3%83%A1%E3%83%A2">13. その他Rubyメモ</a><ul>
+                <li><a href="#131-%E7%B0%A1%E6%BD%94%E3%81%AB%E6%9B%B8%E3%81%8F%E3%81%9F%E3%82%81%E3%81%AE%E6%96%B9%E6%B3%95">13.1. 簡潔に書くための方法</a><ul>
+                <li><a href="#1311-%E3%83%96%E3%83%AD%E3%83%83%E3%82%AF%E3%82%92%E7%B0%A1%E6%BD%94%E3%81%AB%E6%9B%B8%E3%81%8F%E3%81%9F%E3%82%81%E3%81%AE%E5%B7%A5%E5%A4%AB%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E5%90%8D%E3%81%AB%E9%96%A2%E3%81%97%E3%81%A6">13.1.1 ブロックを簡潔に書くための工夫(&amp;:メソッド名に関して)</a></li>
+                </ul>
+                </li>
+                <li><a href="#132-%E5%A4%89%E6%95%B0%E3%81%AE%E5%9E%8B%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E3%81%AE%E6%96%B9%E6%B3%95">13.2. 変数の型チェックの方法</a><ul>
+                <li><a href="#1321-is_akind_of%E3%82%92%E7%94%A8%E3%81%84%E3%81%9F%E6%96%B9%E6%B3%95">13.2.1. is_a?(kind_of?)を用いた方法</a></li>
+                <li><a href="#1322-instance_of%E3%82%92%E7%94%A8%E3%81%84%E3%81%9F%E6%96%B9%E6%B3%95">13.2.2. instance_of?を用いた方法</a></li>
+                <li><a href="#1323-%E5%A4%89%E6%95%B0%E5%90%8Dclass%E3%82%92%E7%94%A8%E3%81%84%E3%81%9F%E6%96%B9%E6%B3%95">13.2.3. 変数名.classを用いた方法</a></li>
+                <li><a href="#1324-%E3%82%92%E7%94%A8%E3%81%84%E3%81%9F%E6%96%B9%E6%B3%95">13.2.4. ===を用いた方法</a></li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                </ul>
+                <h2 id="参考記事">参考記事<!-- omit in toc --></h2>
+                <table>
+                <thead>
+                <tr>
+                <th>名称</th>
+                <th>URL</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>Ruby 2.7.0系 リファレンスマニュアル</td>
+                <td><a href="https://docs.ruby-lang.org/ja/2.7.0/doc/index.html">https://docs.ruby-lang.org/ja/2.7.0/doc/index.html</a></td>
+                </tr>
+                <tr>
+                <td>Ruby 2.7.0系 組み込みライブラリ</td>
+                <td><a href="https://docs.ruby-lang.org/ja/2.7.0/library/_builtin.html">https://docs.ruby-lang.org/ja/2.7.0/library/_builtin.html</a></td>
+                </tr>
+                </tbody></table>
+                <h1 id="1-基本知識">1. 基本知識</h1>
+                <p>RubyはWebアプリケーションを作るためのプログラミング言語の1つであり、
+                まつもとゆきひろ氏により1995年に開発されたオブジェクト指向スクリプト言語です。
+                オブジェクト指向言語なので、すべてのデータがオブジェクトとして表現されています。
+                つまり継承などといったオブジェクト指向ならではの機能を使うことができます。
+                Rubyを使うメリットとして一番大きいのは、Ruby on RailsというWebアプリケーションフレームワークを使うことができるということです。</p>
+                <h1 id="2-コメントアウト">2. コメントアウト</h1>
+                <p>Rubyのコメントアウトは以下のように記述します。</p>
+                <pre><code class="language-ruby"># 1行コメント
+                =begin
+                  複数行コメント 
+                =end
+                </code></pre>
+                <h1 id="3-変数と宣言">3. 変数と宣言</h1>
+                <table>
+                <thead>
+                <tr>
+                <th>変数宣言</th>
+                <th>特徴</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>変数名</td>
+                <td>ローカル変数:<strong>宣言と初期化を同時に行う</strong>必要があります</td>
+                </tr>
+                <tr>
+                <td>変数名{大文字}</td>
+                <td>定数:慣習として定数(値を変えない変数)は<strong>すべて大文字</strong>で宣言します</td>
+                </tr>
+                <tr>
+                <td>@変数名</td>
+                <td>インスタンス変数:<strong>インスタンスメソッド内でのみ使用できる</strong>変数です</td>
+                </tr>
+                <tr>
+                <td>@@変数名</td>
+                <td>クラス変数:定義されたクラス内で共有する値を扱うことのできる変数です</td>
+                </tr>
+                <tr>
+                <td>$変数名</td>
+                <td>グローバル変数:<strong>メソッドやクラスを超えて参照できる</strong>変数です</td>
+                </tr>
+                </tbody></table>
+                <h2 id="31-ローカル変数">3.1. ローカル変数</h2>
+                <p>ローカル変数は変数の中で一番よく使われます。宣言と初期化を同時に行う必要があります。慣習として、全て小文字を使います。</p>
+                <pre><code class="language-ruby">test = &quot;ruby&quot;
+                </code></pre>
+                <h3 id="スコープ">スコープ<!-- omit in toc --></h3>
+                <p>メソッド、クラスなどの定義された場所の範囲内でのみ使用可能です。
+                クラスやメソッドを超えての参照はできないので定義された場所以外から参照をするとエラーになります。</p>
+                <h2 id="32-定数">3.2. 定数</h2>
+                <p>慣習として、定数は全て大文字で宣言をします。</p>
+                <pre><code class="language-ruby">TEST = &quot;ruby&quot;
+                </code></pre>
+                <h3 id="スコープ-1">スコープ<!-- omit in toc --></h3>
+                <p>定義されたクラスやモジュール内やクラスを継承しているクラスなどで参照できます。
+                クラスの中で定義可能なので同じ定数名でもクラスごとに違う値を持つことができます。定数はメソッドの中では定義できません。</p>
+                <h2 id="33-インスタンス変数">3.3. インスタンス変数</h2>
+                <p>変数の初めに「@」をつけることで宣言を行うことができます。</p>
+                <pre><code class="language-ruby">@test = &quot;ruby&quot;
+                </code></pre>
+                <h3 id="スコープ-2">スコープ<!-- omit in toc --></h3>
+                <p><strong>インスタンスメソッド内でのみ使用できる</strong>変数です。
+                インスタンスごとに異なる値を持つことができ、メソッドを超えて参照することができます。</p>
+                <pre><code class="language-ruby">class User
+                  def initialize(name)
+                    @name = name
+                  end
+                 
+                  def put_name
+                    p @name
+                  end
+                end
+                 
+                user1 = User.new(&quot;taroo&quot;)
+                user2 = User.new(&quot;hanako&quot;)
+                user1.put_name　
+                user2.put_name
+                </code></pre>
+                <p>実行結果</p>
+                <pre><code class="language-bash">&quot;taroo&quot;
+                &quot;hanako&quot;
+                </code></pre>
+                <h2 id="34-クラス変数">3.4. クラス変数</h2>
+                <p>変数目の初めに「@@」をつけることで宣言できます。</p>
+                <pre><code class="language-ruby">@@test = &quot;ruby&quot;
+                </code></pre>
+                <h3 id="スコープ-3">スコープ<!-- omit in toc --></h3>
+                <p>定義されたクラス内で共有する値を扱うことのできる変数です。
+                他のインスタンスで使用しても同じクラス内であれば共通の値として扱われるのでクラス内では一つの値しか扱うことができません。
+                クラスを継承したクラスからも参照可能です。</p>
+                <pre><code class="language-ruby">class Samurai
+                  @@samurai = 1
+                  def foo
+                    puts @@samurai
+                  end
+                end
+                 
+                person1 = Samurai.new
+                person1.foo
+                </code></pre>
+                <p>実行結果</p>
+                <pre><code class="language-bash">1
+                </code></pre>
+                <h2 id="35-グローバル変数">3.5. グローバル変数</h2>
+                <p>変数名の一番初めに「$」をつけることでグローバル変数は宣言できます。</p>
+                <pre><code class="language-ruby">$test = &quot;ruby&quot;
+                </code></pre>
+                <h3 id="スコープ-4">スコープ<!-- omit in toc --></h3>
+                <p>ローカル変数の逆で、メソッドやクラスを超えて参照できる変数です。
+                定義した場所にとらわれず、プログラムのどこからでも参照や変更ができます。
+                そのため、名前を付ける際には重複しないように注意が必要です。</p>
+                <pre><code class="language-ruby">$global = &quot;global&quot;
+                 
+                def greet
+                  p $global
+                end
+                 
+                greet
+                </code></pre>
+                <p>実行結果</p>
+                <pre><code class="language-bash">&quot;global&quot;
+                </code></pre>
+                <h1 id="4-データの型">4. データの型</h1>
+                <p>Ruby にはいわゆる基本データ型（プリミティブ型）がありません。
+                整数・浮動小数点数・文字列・配列・連想配列・true・false・nil など、
+                すべてがオブジェクト（特定クラスのインスタンス）になります。</p>
+                <h2 id="41-オブジェクト">4.1. オブジェクト</h2>
+                <table>
+                <thead>
+                <tr>
+                <th>オブジェクト名</th>
+                <th>データの型</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>数値</td>
+                <td>Numeric(Integer,Floatなど)数値を表す</td>
+                </tr>
+                <tr>
+                <td>真偽値</td>
+                <td>Boolean(true または false)</td>
+                </tr>
+                <tr>
+                <td>文字列</td>
+                <td>String 文字列を表す</td>
+                </tr>
+                <tr>
+                <td>配列</td>
+                <td>Array 配列を表す</td>
+                </tr>
+                <tr>
+                <td>時間</td>
+                <td>Time 時間を表す</td>
+                </tr>
+                <tr>
+                <td>ハッシュ</td>
+                <td>Hash ハッシュを表す</td>
+                </tr>
+                <tr>
+                <td>ファイル</td>
+                <td>File ファイルのRead/Writeを実行するために使う</td>
+                </tr>
+                <tr>
+                <td>正規表現</td>
+                <td>Regexp 文字列マッチングのためのパターンを表す</td>
+                </tr>
+                </tbody></table>
+                <h2 id="42-シングルクォートとダブルクォート">4.2. シングルクォートとダブルクォート</h2>
+                <p>Rubyにおいて&quot;&quot;は&#39;&#39;は違う意味となります。javascriptにおいては同じです。
+                &quot;や&#39;を出力中に含めるのは\を直前につけます。</p>
+                <pre><code class="language-ruby">puts &quot;\&quot;を出力します\n&quot;
+                </code></pre>
+                <p>実行結果</p>
+                <pre><code class="language-bash">&quot;を出力します
+                </code></pre>
+                <h2 id="43-変数の文字列中における出力と特殊文字の出力">4.3. 変数の文字列中における出力と特殊文字の出力</h2>
+                <p>出力文字列中に変数を含ませたい場合(式展開)やインデントである(\t)などの特殊文字を使いたい場合は&quot;&quot;で囲う必要があります</p>
+                <pre><code class="language-ruby">text = &quot;Ruby&quot;
+                puts &quot;私は#{text}を勉強しています&quot;
+                </code></pre>
+                <p>実行結果</p>
+                <pre><code class="language-bash">私はRubyを勉強しています
+                </code></pre>
+                <h2 id="44-配列">4.4. 配列</h2>
+                <p>配列オブジェクトは[と]で値をカンマ区切りで囲みます。複数の要素を格納するために使用します。</p>
+                <pre><code class="language-ruby">data = [1,2,3]
+                puts data
+                
+                puts data[0]
+                
+                puts data[-1]
+                
+                puts data.size #data.lengthでも良い
+                </code></pre>
+                <p>実行結果</p>
+                <pre><code class="language-bash">1
+                2
+                3
+                
+                1
+                
+                3
+                
+                3
+                </code></pre>
+                <h3 id="441-配列メソッド">4.4.1. 配列メソッド</h3>
+                <p>よく使いそうな配列メソッドを記載(これ以外もあります)。</p>
+                <h4 id="4411-splitメソッド">4.4.1.1. splitメソッド</h4>
+                <p>要素を区切った配列を返す</p>
+                <pre><code class="language-rb">#デフォルト(引数無し)挙動
+                color = &quot;blue yellow red&quot;
+                puts color.split   
+                # [&quot;blue&quot;, &quot;yellow&quot;, &quot;red&quot;]
+                #引数(,)付き挙動
+                color = &quot;blue,yellow,red&quot;
+                puts color.split(&quot;,&quot;) 
+                #[&quot;blue&quot;, &quot;yellow&quot;, &quot;red&quot;]
+                </code></pre>
+                <h4 id="4412-joinメソッド">4.4.1.2. joinメソッド</h4>
+                <p>配列を一つの文字列として連結して返す</p>
+                <pre><code class="language-rb">color = [&quot;blue&quot;, &quot;yellow&quot;, &quot;red&quot;]
+                puts color.join
+                # &quot;blueyellowred&quot;
+                </code></pre>
+                <h4 id="4413-firstlastメソッド">4.4.1.3. first/lastメソッド</h4>
+                <p>配列の先頭/末尾の要素を返す</p>
+                <pre><code class="language-rb">languages = [&quot;Ruby&quot;, &quot;PHP&quot;, &quot;Java&quot;]
+                
+                puts languages.first  # Ruby
+                puts languages.last  # Java
+                </code></pre>
+                <h4 id="4414-unshiftpushメソッド">4.4.1.4. unshift/pushメソッド</h4>
+                <p>引数であるオブジェクトを配列の先頭/末尾に挿入して返す</p>
+                <pre><code class="language-rb">color = [&quot;blue&quot;, &quot;red&quot;, &quot;yellow&quot;]
+                color = color.unshift(&quot;white&quot;)
+                color = color.push(&quot;black&quot;)
+                puts color
+                # [&quot;white&quot;, &quot;blue&quot;, &quot;red&quot;, &quot;yellow&quot;, &quot;black&quot;]
+                </code></pre>
+                <h4 id="4415-shiftpopメソッド">4.4.1.5. shift/popメソッド</h4>
+                <p>引数であるオブジェクトを配列の先頭/末尾を削除して返す</p>
+                <pre><code class="language-rb">color = [&quot;blue&quot;, &quot;red&quot;, &quot;yellow&quot;]
+                color = color.shift
+                color = color.pop
+                puts color
+                # [&quot;red&quot;]
+                </code></pre>
+                <h4 id="4416-sumメソッド">4.4.1.6. sumメソッド</h4>
+                <p>配列の全要素を足した値を返す</p>
+                <pre><code class="language-rb">puts [1, 2, 3].sum
+                # 6
+                
+                a = [1, 2, 3]
+                puts a.sum / a.size
+                # 2
+                </code></pre>
+                <h4 id="4417-sampleメソッド">4.4.1.7. sampleメソッド</h4>
+                <p>配列の要素を1個ランダムに選んで返す</p>
+                <pre><code class="language-rb">puts [1, 2, 3].sample
+                # 1, 2, 3のどれかをランダムに返す
+                </code></pre>
+                <h4 id="4418-shuffleメソッド">4.4.1.8. shuffleメソッド</h4>
+                <p>配列の要素をランダムに並び変えて返す</p>
+                <pre><code class="language-rb">puts [1, 2, 3].shuffle
+                # [3, 2, 1], [3, 1, 2], [2, 1, 3], [2, 3, 1], [1, 2, 3], [1, 3, 2]のどれかを返す
+                </code></pre>
+                <h4 id="4419-sordメソッド">4.4.1.9. sordメソッド</h4>
+                <p>配列の要素を順番に返す(デフォルトはASC(昇順) .reverseをつけるとDESC(降順)で返す) / 文字列(英語)の場合はabc順、大文字優先</p>
+                <pre><code class="language-rb">puts [3, 1, 2].sort  #=&gt; [1, 2, 3]
+                puts [2, 3, 1].sort  #=&gt; [1, 2, 3]
+                puts [2, 1, 3].sort  #=&gt; [1, 2, 3]
+                
+                puts [&quot;aya&quot;, &quot;jun&quot;, &quot;ichiro&quot;].sort  #=&gt; [&quot;aya&quot;, &quot;ichiro&quot;, &quot;jun&quot;]
+                puts [&quot;jun&quot;, &quot;aya&quot;, &quot;ichiro&quot;].sort  #=&gt; [&quot;aya&quot;, &quot;ichiro&quot;, &quot;jun&quot;]
+                puts [&quot;ichiro&quot;, &quot;aya&quot;, &quot;jun&quot;].sort  #=&gt; [&quot;aya&quot;, &quot;ichiro&quot;, &quot;jun&quot;]
+                </code></pre>
+                <h4 id="44110-uniqメソッド">4.4.1.10. uniqメソッド</h4>
+                <p>配列の中の重複要素を削除して返す</p>
+                <pre><code class="language-rb">num = [1, 2, 2, 3, 4, 5, 5]
+                puts num.uniq
+                # [1, 2, 3, 4, 5]
+                </code></pre>
+                <h4 id="44111-injectメソッド">4.4.1.11. injectメソッド</h4>
+                <p>配列要素を用いて繰り返し計算を行うためのメソッド</p>
+                <pre><code class="language-rb">num = [1, 2, 3, 4, 5]
+                puts num.inject() { |sum, n| sum += n } #足すものの初期値はinject()内に書く
+                # 15
+                </code></pre>
+                <h4 id="44112-includeメソッド">4.4.1.12. includeメソッド</h4>
+                <p>配列に渡された引数が含めていたらtrue、そうでないばあいfalseを返す</p>
+                <pre><code class="language-rb">name = [&quot;taro&quot;, &quot;hanako&quot;, &quot;saki&quot;]
+                
+                puts name.include?(&quot;taro&quot;)
+                puts name.include?(&quot;yoshiki&quot;)
+                # true
+                # false
+                </code></pre>
+                <h4 id="44113-mapメソッド">4.4.1.13. mapメソッド</h4>
+                <p>配列の各要素に対して処理をして新しい配列を返す</p>
+                <pre><code class="language-rb">colors = [&quot;blue&quot;, &quot;red&quot;, &quot;yellow&quot;]
+                puts colors.map{ |color| color.upcase }
+                # [&quot;BULUE&quot;, &quot;RED&quot;, &quot;YELLOW&quot;]
+                
+                numbers = [2 ,3 , 4, 5]
+                puts numbers.map{ |num| num * 2 }
+                # [4, 6, 8, 10]
+                </code></pre>
+                <h4 id="44114-selectメソッドrejectメソッド">4.4.1.14. selectメソッド/rejectメソッド</h4>
+                <p>ブロックの戻り値が真/偽のものだけを配列として返す</p>
+                <pre><code class="language-rb">color = [&quot;blue&quot;, &quot;red&quot;, &quot;yellow&quot;, 1, 3]
+                puts color.select { |i| i.class == String }
+                puts color.reject { |i| i.class == String }
+                # [&quot;blue&quot;, &quot;red&quot;, &quot;yellow&quot;]
+                # [ 1, 3 ]
+                </code></pre>
+                <h4 id="44115-group_byメソッド">4.4.1.15. group_byメソッド</h4>
+                <p>各要素ごとにブロックを評価したグループ分けしたものを返します(返り値はハッシュ)</p>
+                <pre><code class="language-rb">score = [70, 100, 90, 95, 80]
+                puts score.group_by {|s| s &gt;= 80}
+                # {false=&gt;[70], true=&gt;[100, 90, 95, 80]}
+                
+                array = [1, 2, 3, 2, 3, 4, 3, 4, 5, 4, 5, 6]
+                puts array.group_by(&amp;:itself)
+                # {1=&gt;[1], 2=&gt;[2, 2], 3=&gt;[3, 3, 3], 4=&gt;[4, 4, 4], 5=&gt;[5, 5], 6=&gt;[6]}
+                </code></pre>
+                <h2 id="45-ハッシュ">4.5. ハッシュ</h2>
+                <p>Hashも配列と同じように複数の要素を格納するために使用します。
+                Hashはインデックスに「キー」と呼ばれる任意の文字列を指定して「バリュー」と呼ばれる要素を指定します
+                次のように作成します。</p>
+                <pre><code class="language-ruby">menu = {&quot;うどん&quot; =&gt; &quot;300円&quot;, &quot;ラーメン&quot; =&gt; &quot;500円&quot;, &quot;パスタ&quot; =&gt; &quot;800円&quot;}
+                #要素の出力
+                puts menu[&quot;うどん&quot;]
+                #要素の追加
+                menu[&quot;そば&quot;] = &quot;600円&quot;
+                puts menu[&quot;そば&quot;]
+                #要素の更新
+                menu[&quot;うどん&quot;] = &quot;400円&quot;
+                puts menu[&quot;うどん&quot;]
+                #要素の削除
+                menu.delete(&quot;うどん&quot;)
+                </code></pre>
+                <p>実行結果</p>
+                <pre><code class="language-bash">300円
+                600円
+                400円
+                </code></pre>
+                <h4 id="451-シンボルを用いたハッシュ表現">4.5.1. シンボルを用いたハッシュ表現</h4>
+                <p>またkeyとvalueはシンボルを用いて以下のようにも記述可能。
+                シンボルを使うとruby的には<strong>メモリ消費が少なく、パフォーマンスが高い</strong>というメリットがあります。</p>
+                <pre><code class="language-ruby">menu = {value: 300, name: &quot;tesla&quot;}
+                menu2 = {:value =&gt; 300, :name =&gt; &quot;tesla&quot;}
+                puts menu[:value]
+                puts menu2[:value]
+                </code></pre>
+                <h4 id="452-lengthメソッド">4.5.2. lengthメソッド</h4>
+                <p>Hashの要素数を調べるにはlengthメソッドを使います。lengthメソッドはHashの要素数を整数で返します。</p>
+                <pre><code class="language-ruby">menu = {&quot;うどん&quot; =&gt; &quot;300円&quot;, &quot;ラーメン&quot; =&gt; &quot;500円&quot;, &quot;パスタ&quot; =&gt; &quot;800円&quot;}
+                puts menu.length
+                </code></pre>
+                <p>実行結果</p>
+                <pre><code class="language-bash">3
+                </code></pre>
+                <h4 id="453-emptyメソッド">4.5.3. emptyメソッド</h4>
+                <p>Hashが空(要素数0)かどうかはempty?メソッドを使って調べることができます。
+                empty?メソッドはHashが空であればtrue、1つ以上の要素があればfalseを返します。</p>
+                <pre><code class="language-ruby">menu = {&quot;うどん&quot; =&gt; &quot;300円&quot;, &quot;ラーメン&quot; =&gt; &quot;500円&quot;, &quot;パスタ&quot; =&gt; &quot;800円&quot;}
+                puts menu.empty?
+                </code></pre>
+                <p>実行結果</p>
+                <pre><code class="language-bash">false
+                </code></pre>
+                <h2 id="46-正規表現">4.6. 正規表現</h2>
+                <p>Rubyで正規表現を扱うためのクラスはRegexpクラスです。
+                正規表現を用いる理由は以下です。</p>
+                <ul>
+                <li>ある文字列が特定のパターンを持っているか調べる</li>
+                <li>ある文字列から特定のパターンを持つ部分を抜き出す</li>
+                <li>ある文字列の特定のパターンを他の文字列で置き換える</li>
+                </ul>
+                <p>Rubyでは正規表現をリテラルで書くことができます。 正規表現リテラルは/（スラッシュ）と/（スラッシュ）で正規表現のパターン文字列を囲みます。</p>
+                <h3 id="661-sub">6.6.1. sub</h3>
+                <p>正規表現のパターン(pattern)にマッチした<strong>最初</strong>の部分を文字列(replacement)に置換します。</p>
+                <pre><code class="language-ruby">文字列.sub(正規表現パターン, 置換文字)
+                </code></pre>
+                <p>使用例</p>
+                <pre><code class="language-ruby">str = &quot;田中さん、こんにちは&quot;
+                str.sub(/さん/, &quot;君&quot;)
+                puts str # =&gt; 田中君、こんにちは
+                </code></pre>
+                <h3 id="452-gsub">4.5.2. gsub</h3>
+                <p>正規表現のパターン(pattern)にマッチした全ての部分を文字列(replacement)に置換します。
+                subとの違いはパターンにマッチしたも全てを置換することです。subは最初だけです。</p>
+                <pre><code class="language-ruby">文字列.gsub(正規表現パターン, 置換文字)
+                </code></pre>
+                <p>使用例</p>
+                <pre><code class="language-ruby">str = &quot;咲いた、咲いた、チューリップが咲いた&quot;
+                str.gsub(/咲いた/, &quot;咲かない&quot;)
+                puts str # =&gt; 咲かない、咲かない、チューリップが咲かない
+                </code></pre>
+                <h3 id="453-match">4.5.3. match</h3>
+                <p>matchメソッドは正規表現にマッチした部分文字列を取得するときに使用します。</p>
+                <pre><code class="language-ruby">文字列.match(正規表現パターン)
+                </code></pre>
+                <p>使用例</p>
+                <pre><code class="language-ruby">string = &quot;Rubyの勉強, Railsの勉強&quot;
+                md = string.match(/.*の勉強/)
+                puts md[0] # =&gt; &quot;Rubyの勉強, Railsの勉強&quot;
+                </code></pre>
+                <h1 id="5-演算子">5. 演算子</h1>
+                <p>演算子はよく利用する演算処理を記号などで表現したものです。 たとえば、足し算をする + も演算子の一種です。これ以外にも演算子には多くの種類があります。
+                演算子は演算する対象を持ちます。この演算子の対象のことを**被演算子(オペランド)**と呼びます。</p>
+                <h2 id="51-二項演算子">5.1. 二項演算子</h2>
+                <table>
+                <thead>
+                <tr>
+                <th>演算子</th>
+                <th>演算した値の結果</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>+</td>
+                <td>2つの数字の和もしくは文字列の結合</td>
+                </tr>
+                <tr>
+                <td>-</td>
+                <td>2つの数字の差</td>
+                </tr>
+                <tr>
+                <td>*</td>
+                <td>2つの数字の積</td>
+                </tr>
+                <tr>
+                <td>/</td>
+                <td>2つの数字の商</td>
+                </tr>
+                <tr>
+                <td>%</td>
+                <td>2つの数字の商をとった余り</td>
+                </tr>
+                <tr>
+                <td>**</td>
+                <td>べき乗の結果</td>
+                </tr>
+                </tbody></table>
+                <h2 id="52-単項演算子">5.2. 単項演算子</h2>
+                <table>
+                <thead>
+                <tr>
+                <th>演算子</th>
+                <th>演算した値の結果</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>+(単項プラス演算子)</td>
+                <td>文字列の数字も数値に変換し演算、数字でない場合も特殊値に変換</td>
+                </tr>
+                <tr>
+                <td>-(単項マイナス演算子)</td>
+                <td>単項プラス演算子のマイナス版</td>
+                </tr>
+                <tr>
+                <td>++(インクリメント演算子)</td>
+                <td>オペランドの値を+1する演算子、前置か後置で評価の順番は変わるが最終的な演算結果は同じ</td>
+                </tr>
+                <tr>
+                <td>--(デクリメント演算子)</td>
+                <td>インクリメント演算子のマイナス版</td>
+                </tr>
+                </tbody></table>
+                <h2 id="53-比較演算子">5.3. 比較演算子</h2>
+                <table>
+                <thead>
+                <tr>
+                <th>演算子</th>
+                <th>演算した値の結果</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>==</td>
+                <td>2つのオペランドを比較し同じ型で同じ値の場合にTrue、そうでない場合Falseを返す</td>
+                </tr>
+                <tr>
+                <td>!=</td>
+                <td>つのオペランドを比較し異なる型または異なる値の場合にTrue、そうでない場合Falseを返す</td>
+                </tr>
+                <tr>
+                <td>&gt;</td>
+                <td>左オペランドが右オペランドより大きいならば、trueを返します</td>
+                </tr>
+                <tr>
+                <td>&gt;=</td>
+                <td>左オペランドが右オペランドより大きいまたは等しいならば、trueを返します</td>
+                </tr>
+                <tr>
+                <td>&lt;</td>
+                <td>右オペランドが左オペランドより大きいならば、trueを返します</td>
+                </tr>
+                <tr>
+                <td>&lt;=</td>
+                <td>右オペランドが左オペランドより大きいまたは等しいならば、trueを返します</td>
+                </tr>
+                </tbody></table>
+                <h2 id="54-ビット演算子">5.4. ビット演算子</h2>
+                <p>表記割愛、必要が生じれば追記</p>
+                <h2 id="55-論理演算子">5.5. 論理演算子</h2>
+                <p>基本的に真偽値を扱う演算子でAND（かつ）、OR（または）、NOT（否定）を表現できます。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>演算子</th>
+                <th>演算した値の結果</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>&amp;&amp;</td>
+                <td>AND</td>
+                </tr>
+                <tr>
+                <td>｜｜</td>
+                <td>OR</td>
+                </tr>
+                <tr>
+                <td>!</td>
+                <td>NOT</td>
+                </tr>
+                </tbody></table>
+                <h2 id="56-条件三項演算子と">5.6. 条件(三項)演算子(?と:)</h2>
+                <p>条件演算子は条件式を評価した結果がtrueならば、Trueのとき処理する式の評価結果を返します。 
+                条件式がfalseである場合は、Falseのとき処理する式の評価結果を返します。</p>
+                <pre><code class="language-bash">条件式 ? Trueのとき処理する式 : Falseのとき処理する式;
+                </code></pre>
+                <p>使用例</p>
+                <pre><code class="language-ruby">result = 80
+                flag = result &gt; 60 ? &quot;合格&quot; : &quot;不合格&quot;
+                puts flag # =&gt; 合格
+                </code></pre>
+                <h1 id="6-型変換">6. 型変換</h1>
+                <h2 id="61-暗黙的な型変換">6.1. 暗黙的な型変換</h2>
+                <p>  処理において、その処理過程で行われる明示的ではない型変換のこと、使用不推奨。
+                 意図しない型変換によるプログラムの予期しない動作やバグの原因となりえる。</p>
+                <h2 id="62-明示的な型変換">6.2. 明示的な型変換</h2>
+                <h3 id="621-文字列--数値">6.2.1. 文字列 =&gt; 数値</h3>
+                <p><strong>.to_i</strong>を使用します。</p>
+                <pre><code class="language-ruby">#文字列 → 数値
+                puts str.to_i
+                </code></pre>
+                <h3 id="622-数値--文字列">6.2.2. 数値 =&gt; 文字列</h3>
+                <p><strong>.to_s</strong>を使用します。</p>
+                <pre><code class="language-ruby">#数値 → 文字列
+                puts int.to_s
+                </code></pre>
+                <h3 id="623-数値整数--数値小数">6.2.3. 数値(整数) =&gt; 数値(小数)</h3>
+                <p>整数から浮動小数への変換には <strong>.to_f</strong> を使用します。</p>
+                <pre><code class="language-ruby">num = 10.to_f
+                # 10 =&gt; 10.0
+                </code></pre>
+                <p>小数から整数への変換には <strong>.to_i</strong> を使用します。</p>
+                <pre><code class="language-ruby">num = 12.67.to_f
+                # 12.67 =&gt; 12
+                </code></pre>
+                <h3 id="624-ハッシュ範囲オブジェクト--配列">6.2.4. ハッシュ/範囲オブジェクト =&gt; 配列</h3>
+                <p>ハッシュ/範囲オブジェクトから配列への変換は<strong>to_a</strong>を使用します。</p>
+                <pre><code class="language-rb">human = {name: &quot;pikawaka&quot;, age: e25}
+                human.to_a
+                # =&gt; [[:name, &quot;pikawaka&quot;], [:age, 25]]
+                </code></pre>
+                <h3 id="625-配列--ハッシュ">6.2.5. 配列 =&gt; ハッシュ</h3>
+                <p>配列からハッシュへの変換は<strong>to_h</strong>を使用します。</p>
+                <pre><code class="language-rb">human = [[&quot;name&quot;, &quot;pikawaka&quot;], [&quot;age&quot;, 25]]
+                human.to_h
+                # =&gt; {&quot;name&quot;=&gt;&quot;pikawaka&quot;, &quot;age&quot;=&gt;25}
+                </code></pre>
+                <h2 id="63-真偽判定メソッド">6.3. 真偽判定メソッド</h2>
+                <h3 id="631-nilかの判定">6.3.1. nilかの判定</h3>
+                <p>変数の値がnilかどうかを判定する場合 <strong>.nil?</strong> を用います。</p>
+                <pre><code class="language-ruby">value = nil
+                if value.nil?
+                  puts &quot;valueはnilです&quot; # =&gt; 実行
+                else
+                  puts &quot;valueはnilではない&quot;
+                end
+                </code></pre>
+                <h3 id="632-空文字列・空配列かの判定">6.3.2. 空文字列・空配列かの判定</h3>
+                <p><strong>.empty?</strong> は空の文字列や空の配列の場合にtrueを返します。
+                nilやbooleanやintegerに対して呼び出すとNoMethodErrorが発生します。</p>
+                <pre><code class="language-ruby">test = &quot;&quot;
+                test.empty? # =&gt; true
+                </code></pre>
+                <h1 id="7-関数メソッドと宣言">7. 関数(メソッド)と宣言</h1>
+                <h2 id="メソッドの宣言">メソッドの宣言<!-- omit in toc --></h2>
+                <p>Rubyでは、メソッドを定義するためにdefキーワードを使います。次のように関数を定義できます。</p>
+                <pre><code class="language-ruby">def メソッドの名前
+                  やりたい処理
+                end
+                </code></pre>
+                <h2 id="デフォルトの引数">デフォルトの引数<!-- omit in toc --></h2>
+                <p>メソッドに対して、何らかの値を渡したい場合は、引数を付けます。
+                引数付きのメソッド定義は、以下の書式を使います。</p>
+                <pre><code class="language-ruby">def hello(name, age)
+                  puts &quot;Hello World! #{name}! You are #{age} years old!&quot;
+                end
+                </code></pre>
+                <h2 id="キーワード引数">キーワード引数<!-- omit in toc --></h2>
+                <p>メソッド定義のところで、変数でなくてキーワードを指定する方法があります。
+                Ruby2.0以降でしか使えませんが、非常に扱いやすいので、Ruby2.0以降では、基本的に以下の手法を用いる方がよいでしょう。</p>
+                <pre><code class="language-ruby">def hello(name:, age:)
+                  puts &quot;Hello World! #{name}, #{age} years old.&quot;
+                end
+                hello(name: &quot;tomochan&quot;, age: 43)
+                </code></pre>
+                <h2 id="返り値のあるメソッド">返り値のあるメソッド<!-- omit in toc --></h2>
+                <pre><code class="language-ruby">def multiple(num)
+                    return num * 2
+                end
+                 
+                #変数numberを定義
+                number = 3
+                 
+                #変数numberをmultipleメソッドで2倍にして戻す
+                number = multiple(number)
+                puts number #=&gt;6
+                </code></pre>
+                <h1 id="8-条件分岐">8. 条件分岐</h1>
+                <h2 id="81-if文">8.1. if文</h2>
+                <pre><code class="language-ruby">if 条件式1
+                  実行する文1
+                elsif 条件式2
+                  実行する文2
+                else
+                  実行する文3
+                end
+                </code></pre>
+                <h2 id="82-case文">8.2. case文</h2>
+                <pre><code class="language-ruby">case 対象オブジェクト
+                when 値1 then
+                  値1と一致する場合に行う処理
+                when 値2 then
+                  値2と一致する場合に行う処理
+                when 値3 then
+                  値3と一致する場合に行う処理
+                else
+                  どの値にも一致しない場合に行う処理
+                end
+                </code></pre>
+                <h1 id="9-ループと反復処理">9. ループと反復処理</h1>
+                <h2 id="91-while文">9.1. while文</h2>
+                <p>「while」文は指定した条件式が真(true)の間、繰り返し処理を行います。</p>
+                <pre><code class="language-ruby">while 条件式
+                  実行する処理1
+                  実行する処理2
+                end
+                </code></pre>
+                <h2 id="92-until文">9.2. until文</h2>
+                <p>「until」文は指定した条件式が偽(false)の間、繰り返し処理を行います。</p>
+                <pre><code class="language-ruby">until 条件式
+                  実行する処理1
+                  実行する処理2
+                end
+                </code></pre>
+                <h2 id="93-for文">9.3. for文</h2>
+                <pre><code class="language-ruby">for 変数 in オブジェクト
+                  実行する処理1
+                  実行する処理2
+                end
+                </code></pre>
+                <h2 id="94-範囲オブジェクト">9.4. 範囲オブジェクト</h2>
+                <p>範囲オブジェクトは指定した最初の値と最後の値の範囲を表すオブジェクトです。
+                範囲オブジェクトを作成するには「..」演算子を使用します。</p>
+                <pre><code class="language-ruby">range1 = 5..10
+                range2 = &quot;d&quot;..&quot;g&quot;
+                </code></pre>
+                <p>変数「range1」には「5」から「10」の範囲を持つ範囲オブジェクトが代入されます。また変数「range2」には&quot;d&quot;から&quot;g&quot;の範囲を持つ範囲オブジェクトが代入されます。</p>
+                <h3 id="rangeクラス">Rangeクラス<!-- omit in toc --></h3>
+                <p>範囲オブジェクトは実際にはRangeクラスのオブジェクトです。「..」演算子や「...」演算子によって範囲オブジェクトを作成できますが、Rangeクラスのクラスメソッドである「new」メソッドでも作成できます。
+                「first」には最初の値を、「last」には最後の値を指定します。また「exclude_end」は最後の値を要素として含めるかどうかを指定します。真の値を指定した場合は最後の値を含めません。省略された場合は最後の値を含めます。</p>
+                <pre><code class="language-ruby">Range.new(first,last[, exclude_end])
+                
+                range1 = Range.new(5, 10)
+                range2 = Range.new(5, 10, true)
+                </code></pre>
+                <h2 id="95-eachメソッド">9.5. eachメソッド</h2>
+                <p>「each」メソッドは配列や範囲オブジェクトなどで用意されているメソッドであり、オブジェクトに含まれている要素を順に取り出します。</p>
+                <pre><code class="language-ruby">オブジェクト.each do |変数|
+                  実行する処理1
+                  実行する処理2
+                end
+                </code></pre>
+                <h3 id="951-その他eachを拡張したメソッド">9.5.1. その他eachを拡張したメソッド</h3>
+                <p>each_with_indexメソッドは各要素とindex番号を扱うことができます。</p>
+                <pre><code class="language-rb">sports=[“サッカー”, “テニス”, “野球”]
+                
+                sports.each_with_index do |item, i|
+                  puts “#{i}番目の要素は#{item}です”
+                end
+                
+                # 0番目の要素はサッカーです
+                # 1番目の要素はテニスです
+                # 2番目の要素は野球です
+                </code></pre>
+                <p>each.with_indexメソッドは始めるインデックス番号を指定可能です。</p>
+                <pre><code class="language-rb">fruits = [&quot;apple&quot;, &quot;banana&quot;, &quot;kiwi&quot;]
+                
+                fruits.each.with_index(2) do | fruit, index |
+                  puts &quot;#{index}番目のフルーツは#{fruit}です&quot;
+                end
+                
+                # 2番目のフルーツはappleです。
+                # 3番目のフルーツはbananaです。
+                # 4番目のフルーツはkiwiです。
+                </code></pre>
+                <p>each_with_objectメソッドは要素を使って何らかのオブジェクト(配列やハッシュなど)を操作するのに使える。</p>
+                <p>詳細: <a href="https://techracho.bpsinc.jp/hachi8833/2021_04_01/58807">https://techracho.bpsinc.jp/hachi8833/2021_04_01/58807</a></p>
+                <h2 id="96-loopメソッドとbreak">9.6. loopメソッドとbreak</h2>
+                <p>「loop」メソッドはKernelクラスで用意されているメソッドです。無限ループを行います。
+                Kernelクラスのメソッドですので組み込み関数のように使用することが出来ます。
+                「loop」メソッド自身に繰り返しを終了する条件は指定できませんので、
+                実行される処理の中で繰り返しを終了するための何らかの処理が必要です。</p>
+                <pre><code class="language-ruby">num = 1
+                loop{
+                  print(&quot;num = &quot;, num, &quot;¥n&quot;)
+                  num += 1
+                  if num &gt; 10 then
+                    break
+                  end
+                }
+                </code></pre>
+                <h2 id="97-nextとredo">9.7. nextとredo</h2>
+                <h3 id="next">next<!-- omit in toc --></h3>
+                <p>繰り返し処理の中で「next」が実行されるとブロック内の「next」以降の処理が行われずに次の繰り返しへ進みます。</p>
+                <h3 id="redo">redo<!-- omit in toc --></h3>
+                <p>繰り返し処理の中で「redo」が実行されると今実行している繰り返しを改めて初めから行います。
+                「next」との違いは「next」は次の繰り返しへ進みますが「redo」は同じ繰り返しを最初から行います。</p>
+                <h1 id="10-クラス">10. クラス</h1>
+                <p>クラス（class）とは、メソッドなどの処理を入れる入れ物のようなものです。
+                Rubyなどのオブジェクト指向型の言語では、この入れ物であるクラスの中に処理を書くことが基本となってきます。</p>
+                <h2 id="101-クラスの定義">10.1. クラスの定義</h2>
+                <p>initialize関数はインスタンス生成時に<strong>自動で実行される関数</strong>です。
+                インスタンス生成時に引数を渡し、インスタンス変数をセットします。
+                またインスタンス変数の定義には<strong>attr_accessor:</strong> を用いて宣言します。
+                インスタンス毎に固有となる値を格納する変数です。</p>
+                <pre><code class="language-ruby">class クラス名
+                  attr_accessor :name
+                  attr_accessor :price
+                  
+                  def initialize(引数名)
+                    処理
+                  end
+                end
+                </code></pre>
+                <h3 id="クラスのインスタンス化">クラスのインスタンス化<!-- omit in toc --></h3>
+                <p>クラスはnew演算子でインスタンスであるオブジェクトを作成できます。
+                class構文で定義したクラスからインスタンスを作成することをインスタンス化と呼びます。</p>
+                <pre><code class="language-ruby">class Product
+                  attr_accessor :name
+                  attr_accessor :price
+                end
+                
+                #インスタンス生成
+                product1 = Product.new
+                </code></pre>
+                <h3 id="クラス名は大文字ではじめる">クラス名は大文字ではじめる<!-- omit in toc --></h3>
+                <p>rubyでは慣習としてクラス名には大文字ではじまる名前をつけます。</p>
+                <pre><code class="language-ruby">class Test
+                  attr_accessor :name
+                  attr_accessor :price
+                end
+                </code></pre>
+                <h3 id="インスタンスメソッドclass内自作関数でインスタンス変数を用いる">インスタンスメソッド(class内自作関数)でインスタンス変数を用いる<!-- omit in toc --></h3>
+                <pre><code class="language-ruby">class Product
+                  attr_accessor :name
+                  attr_accessor :price
+                
+                  def create
+                    puts &quot;製品名は#{self.name}です&quot;
+                    puts &quot;価格は#{self.price}です&quot;
+                  end
+                end
+                
+                #インスタンス生成
+                product1 = Product.new
+                
+                #インスタンス変数に値をセット
+                product1.name = &quot;iphone&quot;
+                product1.price = 100000
+                
+                #インスタンスメソッド実行
+                product1.create
+                </code></pre>
+                <p>実行結果</p>
+                <pre><code class="language-bash">製品名はiphoneです
+                価格は100000です
+                </code></pre>
+                <h3 id="キーワード引数を用いたインスタンス化">キーワード引数を用いたインスタンス化<!-- omit in toc --></h3>
+                <pre><code class="language-ruby">class Product
+                  attr_accessor :name
+                  attr_accessor :price
+                
+                 def initialize(name:,price:)
+                    self.name = name
+                    self.price = price
+                 end
+                
+                 def info
+                   return &quot;製品名：#{self.name}、価格：#{self.price}&quot;
+                 end
+                end
+                
+                #インスタンス生成
+                product1 = Product.new(name:&quot;iphone&quot;, price:100000)
+                
+                puts product1.info # =&gt; 製品名：iphone、価格：100000
+                </code></pre>
+                <h2 id="102-ファイル分割require">10.2. ファイル分割(require)</h2>
+                <p>require &quot;./ファイル名&quot;
+                　└ 拡張子「.rb」は不要</p>
+                <pre><code class="language-ruby">class Product
+                 attr_accessor :name
+                 attr_accessor :price
+                
+                def initialize(name:,price:)
+                   self.name = name
+                   self.price = price
+                end
+                
+                def info
+                  return &quot;製品名：#{self.name}、価格：#{self.price}&quot;
+                end
+                end
+                </code></pre>
+                <pre><code class="language-ruby">#ファイル読み込み
+                require &quot;./product&quot;
+                
+                #読み込んだファイルのクラスでインスタンス生成
+                product1 = Product.new(name:&quot;iphone&quot;, price:100000)
+                puts product1.info
+                
+                #出力
+                製品名：iphone、価格：100000
+                </code></pre>
+                <h2 id="103-入力値の受け取りgetschomp">10.3. 入力値の受け取り(gets.chomp)</h2>
+                <p>コンソールからの入力値は<strong>変数名 = gets.chomp</strong>で受け取ります。
+                変数値は文字列型であるため。数値に等にするには.to_iや.to_fを末尾につけます。</p>
+                <h2 id="104-継承">10.4. 継承</h2>
+                <p>親クラスのインスタンス変数とインスタンスメソッドを引き継ぎます。
+                クラスの継承には以下のようなメリットがあります。</p>
+                <ul>
+                <li>機能の流用</li>
+                <li>親クラスの機能をそのまま子クラスで流用すること。</li>
+                <li>機能の変更</li>
+                <li>ポリモルフィズム（多様性）と言い、同じメソッドを使い子クラスでメソッド動作内容を変更することで、親クラスとは違う機能を提供すること。</li>
+                <li>機能の追加</li>
+                <li>差分プログラミングといい、親クラスにない機能を子クラスのメソッドで追加こと。</li>
+                </ul>
+                <p>class 子クラス名 &lt; 親クラス名
+                　└ 冒頭は大文字
+                　└ 最後にend必須
+                　└ 親クラスが上にある（or 別ファイルで読み込み済み）</p>
+                <pre><code class="language-ruby">class 子クラス名 &lt; 親クラス名
+                
+                end
+                </code></pre>
+                <h2 id="105-オーバライド">10.5. オーバライド</h2>
+                <p>インスタンス変数・メソッドの上書きのこと。
+                （親クラスで既に定義されているものならオーバーライドになる）</p>
+                <h2 id="106-親クラスで重複するメソッドの呼び出し（super）">10.6. 親クラスで重複するメソッドの呼び出し（super）</h2>
+                <p>initializeで既に定義済みのメソッドを呼び出す。
+                super(引数:親クラスの変数)
+                親クラス</p>
+                <pre><code class="language-ruby">class Product
+                  attr_accessor :name
+                  attr_accessor :price
+                
+                #オーバーライドで呼び出す箇所
+                 def initialize(name:,price:)
+                    self.name = name
+                    self.price = price
+                 end
+                
+                 def info
+                   return &quot;製品名：#{self.name}、価格：#{self.price}&quot;
+                 end
+                end
+                </code></pre>
+                <p>子クラス</p>
+                <pre><code class="language-ruby">require &quot;./product&quot;
+                
+                class Phone &lt; Product
+                   attr_accessor :weight
+                
+                   #initializeのオーバーライド（既存部呼び出し）
+                   def initialize(name:, price:, weight:)
+                      super(name: name, price: price)      
+                      self.weight = weight
+                   end
+                
+                   #オーバーライド
+                   def info
+                      return &quot;製品名：#{self.name}、価格：#{self.price}円、重さ：#{self.weight}&quot;
+                   end     
+                end
+                </code></pre>
+                <h2 id="107-dateクラス">10.7. Dateクラス</h2>
+                <p>日付を扱うにはDateクラスを用います。
+                requireを用いて使用可能です。</p>
+                <pre><code class="language-ruby">require &quot;date&quot;
+                </code></pre>
+                <p>使用方法</p>
+                <pre><code class="language-ruby">require &quot;date&quot;
+                
+                date1 = Date.new(2022, 2, 22)
+                puts date1 #=&gt; 2022-02-22
+                </code></pre>
+                <h4 id="今日の日付のdateインスタンスの取得">今日の日付のDateインスタンスの取得<!-- omit in toc --></h4>
+                <p><strong>Date.today</strong>とすることで今日の日付のインスタンスが作成可能です。</p>
+                <h2 id="108-クラスメソッド">10.8. クラスメソッド</h2>
+                <p>クラス名に対して呼び出すメソッドはクラスメソッドと呼ばれます。
+                クラスメソッドの定義方法は以下の通りです。</p>
+                <pre><code class="language-ruby">class クラス名
+                  def クラス名.メソッド名
+                  　# 処理
+                  end
+                end
+                </code></pre>
+                <h1 id="11-モジュール">11. モジュール</h1>
+                <p>モジュールは<strong>インスタンス化能力はないが、メソッドを格納できるもの</strong>である。
+                モジュールは 「module」から「end」 を一つの塊として定義できます。moduleの後にはモジュール名を与えます。
+                Rubyは単一継承と呼ばれる言語設計になっています。要はクラスを一つしか継承できないという設計です。
+                クラスと合わせて、モジュールを使用するすることで、<strong>擬似的に多重継承を行っているように</strong>コードを書くことができます。</p>
+                <pre><code class="language-ruby">module Number
+                  def plus(num1, num2)
+                    num1 + num2
+                  end
+                end
+                </code></pre>
+                <h2 id="モジュールの使用">モジュールの使用<!-- omit in toc --></h2>
+                <pre><code class="language-ruby">module TestModule
+                  def Min(x, y)
+                    if x &lt; y
+                      return x
+                    else
+                      return y
+                    end
+                  end
+                 
+                  def Max(x, y)
+                    if x &gt; y
+                      return x
+                    else
+                      return y
+                    end
+                  end
+                 
+                  module_function :Min
+                  module_function :Max
+                end
+                 
+                puts TestModule.Min(1, 5)
+                puts TestModule.Max(1, 5)
+                </code></pre>
+                <p>実行結果</p>
+                <pre><code class="language-bash">1
+                5
+                </code></pre>
+                <h1 id="12-rubyの性質構造など">12. Rubyの性質/構造など</h1>
+                <h2 id="121-rubyの予約語">12.1. Rubyの予約語</h2>
+                <p>Rubyの予約語は以下の通り(変数名として使用できません)</p>
+                <pre><code>BEGIN    class    ensure   nil      self     when
+                END      def      false    not      super    while
+                alias    defined? for      or       then     yield
+                and      do       if       redo     true     __LINE__
+                begin    else     in       rescue   undef    __FILE__
+                break    elsif    module   retry    unless   __ENCODING__
+                case     end      next     return   until
+                </code></pre>
+                <h1 id="13-その他rubyメモ">13. その他Rubyメモ</h1>
+                <p>12までの目次で書く枠のない、もしくは実装時で使えそうなメモなど</p>
+                <h2 id="131-簡潔に書くための方法">13.1. 簡潔に書くための方法</h2>
+                <h3 id="1311-ブロックを簡潔に書くための工夫メソッド名に関して">13.1.1 ブロックを簡潔に書くための工夫(&amp;:メソッド名に関して)</h3>
+                <p>mapメソッドやselectメソッドなどにブロックを渡す代わりに、map(&amp;:メソッド名) といった引数を渡せばブロックを簡潔に書くことが可能。</p>
+                <p>ただし、使用可能条件は以下の通り</p>
+                <ul>
+                <li>ブロック引数が1個のみ</li>
+                <li>ブロック中で呼び出すメソッドには引数がない</li>
+                <li>ブロック中でブロック引数に対してメソッドを1回呼び出す以外の処理がない</li>
+                </ul>
+                <pre><code class="language-rb">[1, 2, 3, 4, 5, 6].select { |n| n.odd? }
+                #=&gt; [1, 3, 5]
+                
+                # 書き換えたもの
+                [1, 2, 3, 4, 5, 6].select(&amp;:odd?)
+                #=&gt; [1, 3, 5]
+                </code></pre>
+                <h2 id="132-変数の型チェックの方法">13.2. 変数の型チェックの方法</h2>
+                <p>方法はいくつかある。</p>
+                <p>確認&amp;参考までに型/クラス一覧</p>
+                <table>
+                <thead>
+                <tr>
+                <th>型/クラス</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>Numeric</td>
+                <td>数値(integer, floatなどを含む)</td>
+                </tr>
+                <tr>
+                <td>Integer</td>
+                <td>整数(4, 0, -78, 239など)</td>
+                </tr>
+                <tr>
+                <td>Float</td>
+                <td>浮動小数点数(1.354, 1.5e4(=&gt;1.5 × 10^4)など)</td>
+                </tr>
+                <tr>
+                <td>Boolean</td>
+                <td>真偽値(true/false)</td>
+                </tr>
+                <tr>
+                <td>String</td>
+                <td>文字列(&quot;&quot;, &#39;&#39;で囲まれたもの)</td>
+                </tr>
+                <tr>
+                <td>Array</td>
+                <td>配列</td>
+                </tr>
+                <tr>
+                <td>Hash</td>
+                <td>ハッシュ</td>
+                </tr>
+                <tr>
+                <td>Range</td>
+                <td>範囲オブジェクト</td>
+                </tr>
+                </tbody></table>
+                <h3 id="1321-is_akind_ofを用いた方法">13.2.1. is_a?(kind_of?)を用いた方法</h3>
+                <p>この手法では自分のクラス、親のクラス、インクルードしているモジュールについてチェックできます。</p>
+                <p>返り値は真偽値型(true/false)</p>
+                <pre><code class="language-rb">&quot;文字列です。&quot;.kind_of?(String)
+                # true
+                </code></pre>
+                <h3 id="1322-instance_ofを用いた方法">13.2.2. instance_of?を用いた方法</h3>
+                <p>この手法では自分のクラスについてのみのチェックできます。
+                自分のクラス内で厳密なチェックをしたい場合に使用を推奨。</p>
+                <pre><code class="language-rb">n = 3
+                puts n.instance_of?(Integer)
+                # true
+                </code></pre>
+                <h3 id="1323-変数名classを用いた方法">13.2.3. 変数名.classを用いた方法</h3>
+                <p>instance_of?と同様な使用方法が可能。</p>
+                <pre><code class="language-rb">n = 4
+                puts n.class == Integer
+                # true
+                </code></pre>
+                <h3 id="1324-を用いた方法">13.2.4. ===を用いた方法</h3>
+                <p>is_a?(kind_of?)と同様な使用方法が可能。
+                <code>クラス === チェック対象変数名</code>で記述する。</p>
+                <pre><code class="language-rb">n = 3.4
+                puts Numeric === n
+                # true
+                </code></pre>
+                
+
+                <!-- END -->
+
+            </main>
+            <footer class="footer mt-auto py-3 bg-light">
+                <div class="container">
+                    <p class="text-muted text-center">Written by ゆーろん / yuron3141</p>
+                </div>
+            </footer>
+        </body>
+    </body>
+</html>

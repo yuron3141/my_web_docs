@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="Ja">
+    <head>
+        <title>ゆーろんのWeb系の学習資料　|　通信ネットワーク基礎</title>
+        <!-- OGP -->
+        <head prefix="og: https://ogp.me/ns#">
+        <meta property="og:url" content="https://yuron3141.github.io/my_web_docs/" />
+        <meta property="og:type" content="Blog" />
+        <meta property="og:title" content="通信ネットワーク基礎" />
+        <meta property="og:description" content="ゆーろんのWeb系学習資料です。皆さんの開発のために役立つことを祈っています。" />
+        <meta property="og:site_name" content="ゆーろんアカデミー　ノート支部" />
+        <!-- DOCUMENTS STYLE -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <!-- ORIGINAL CSS -->
+        <link rel="stylesheet" href="../css/style.css" type="text/css">
+    </head>
+    <body>
+        <body class="d-flex flex-column h-100">
+            <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
+                <div>
+                    <h1 class="m-3">通信ネットワーク基礎</h1>
+                </div>
+            </header>
+            <main class="m-4">
+
+                <!-- Write Text Here-->
+
+                <p>TCP/IP・プロトコル・セキュリティ</p>
+                <p>この項目を学ぶことで現代のコンピュータ間における通信の方法や関連する各技術に関する基礎知識を学習することができます。</p>
+                <h2 id="目次">目次<!-- omit in toc --></h2>
+                <ul>
+                <li><a href="#1-%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E5%9F%BA%E7%A4%8E%E6%A6%82%E8%AB%96">1. ネットワーク基礎概論</a><ul>
+                <li><a href="#11-%E3%83%97%E3%83%AD%E3%83%88%E3%82%B3%E3%83%AB">1.1. プロトコル</a></li>
+                <li><a href="#12-%E3%83%97%E3%83%AD%E3%83%88%E3%82%B3%E3%83%AB%E3%81%AE%E9%9A%8E%E5%B1%A4%E5%8C%96%E3%81%A8osi%E5%8F%82%E7%85%A7%E3%83%A2%E3%83%87%E3%83%AB">1.2. プロトコルの階層化とOSI参照モデル</a></li>
+                <li><a href="#13-%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F%E3%81%AE%E7%A8%AE%E9%A1%9E">1.3. 通信方式の種類</a><ul>
+                <li><a href="#131-%E3%82%B3%E3%83%8D%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%E5%9E%8B%E9%80%9A%E4%BF%A1">1.3.1. コネクション型通信</a></li>
+                <li><a href="#132-%E3%82%B3%E3%83%8D%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%E3%83%AC%E3%82%B9%E5%9E%8B%E9%80%9A%E4%BF%A1">1.3.2. コネクションレス型通信</a></li>
+                <li><a href="#133-%E3%83%91%E3%82%B1%E3%83%83%E3%83%88%E4%BA%A4%E6%8F%9B%E6%96%B9%E5%BC%8F%E3%81%A8%E5%9B%9E%E7%B7%9A%E4%BA%A4%E6%8F%9B%E6%96%B9%E5%BC%8F">1.3.3. パケット交換方式と回線交換方式</a></li>
+                </ul>
+                </li>
+                <li><a href="#14-%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9">1.4. アドレス</a><ul>
+                <li><a href="#141-mac%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9media-access-control-address">1.4.1. MACアドレス(Media Access Control address）</a></li>
+                <li><a href="#142-ip%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9internet-protocol-address">1.4.2. IPアドレス（Internet Protocol Address）</a></li>
+                </ul>
+                </li>
+                <li><a href="#15-%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E3%81%AE%E6%A7%8B%E6%88%90%E8%A6%81%E7%B4%A0">1.5. ネットワークの構成要素</a><ul>
+                <li><a href="#151-%E9%80%9A%E4%BF%A1%E5%AA%92%E4%BD%93%E3%81%A8%E3%83%87%E3%83%BC%E3%82%BF%E3%83%AA%E3%83%B3%E3%82%AF">1.5.1. 通信媒体とデータリンク</a></li>
+                <li><a href="#152-%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%95%E3%82%A7%E3%83%BC%E3%82%B9nic">1.5.2. ネットワークインタフェース(NIC)</a></li>
+                <li><a href="#153-%E3%83%AA%E3%83%94%E3%83%BC%E3%82%BF">1.5.3. リピータ</a></li>
+                <li><a href="#154-%E3%83%96%E3%83%AA%E3%83%83%E3%82%B8%E3%82%B9%E3%82%A4%E3%83%83%E3%83%81%E3%83%AC%E3%82%A4%E3%83%A42%E3%82%B9%E3%82%A4%E3%83%83%E3%83%81">1.5.4. ブリッジ(スイッチ)/レイヤ2スイッチ</a></li>
+                <li><a href="#155-%E3%83%AB%E3%83%BC%E3%82%BF%E3%83%AC%E3%82%A4%E3%83%A43%E3%82%B9%E3%82%A4%E3%83%83%E3%83%81">1.5.5. ルータ/レイヤ3スイッチ</a></li>
+                <li><a href="#156-%E3%82%B2%E3%83%BC%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A4">1.5.6. ゲートウェイ</a></li>
+                </ul>
+                </li>
+                <li><a href="#16-%E8%BF%91%E4%BB%A3%E3%81%AE%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E5%83%8F">1.6. 近代のネットワーク像</a><ul>
+                <li><a href="#161-lanlocal-area-network">1.6.1. LAN(Local Area Network)</a></li>
+                <li><a href="#162-wanworld-area-network">1.6.2. WAN(World Area Network)</a></li>
+                <li><a href="#163-%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E3%81%AE%E4%BB%AE%E6%83%B3%E5%8C%96">1.6.3. ネットワークの仮想化</a></li>
+                <li><a href="#164-%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89">1.6.4. クラウド</a></li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                <li><a href="#2-tcpip%E5%9F%BA%E7%A4%8E">2. TCP/IP基礎</a><ul>
+                <li><a href="#21-tcpip%E3%81%AE%E8%83%8C%E6%99%AF%E3%81%A8%E6%AD%B4%E5%8F%B2">2.1. TCP/IPの背景と歴史</a></li>
+                <li><a href="#22-tcpip%E3%81%AE%E6%A8%99%E6%BA%96%E5%8C%96">2.2. TCP/IPの標準化</a></li>
+                <li><a href="#23-%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%8D%E3%83%83%E3%83%88%E3%81%AE%E5%9F%BA%E7%A4%8E%E7%9F%A5%E8%AD%98">2.3. インターネットの基礎知識</a></li>
+                <li><a href="#24-tcpip%E3%81%AE%E9%9A%8E%E5%B1%A4%E3%83%A2%E3%83%87%E3%83%AB">2.4. TCP/IPの階層モデル</a></li>
+                </ul>
+                </li>
+                <li><a href="#3-%E3%83%87%E3%83%BC%E3%82%BF%E3%83%AA%E3%83%B3%E3%82%AF">3. データリンク</a><ul>
+                <li><a href="#31-%E3%83%87%E3%83%BC%E3%82%BF%E3%83%AA%E3%83%B3%E3%82%AF%E3%81%AE%E5%BD%B9%E5%89%B2%E3%81%A8%E6%8A%80%E8%A1%93">3.1. データリンクの役割と技術</a></li>
+                <li><a href="#32-%E3%82%A4%E3%83%BC%E3%82%B5%E3%83%8D%E3%83%83%E3%83%88">3.2. イーサネット</a></li>
+                <li><a href="#33-%E7%84%A1%E7%B7%9A%E9%80%9A%E4%BF%A1">3.3. 無線通信</a><ul>
+                <li><a href="#331-%E7%84%A1%E7%B7%9A%E9%80%9A%E4%BF%A1%E3%81%AE%E7%A8%AE%E9%A1%9E">3.3.1. 無線通信の種類</a></li>
+                <li><a href="#332-wifiieee80211">3.3.2. WIFI(IEEE802.11)</a></li>
+                <li><a href="#333-wimax">3.3.3. WIMAX</a></li>
+                <li><a href="#334-bluetooth">3.3.4. BlueTooth</a></li>
+                <li><a href="#335-zigbee">3.3.5. ZigBee</a></li>
+                <li><a href="#336-lpwa">3.3.6. LPWA</a></li>
+                </ul>
+                </li>
+                <li><a href="#34-ppppointtopoint-protocol">3.4. PPP(PointtoPoint-Protocol)</a></li>
+                <li><a href="#35-%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%83%87%E3%83%BC%E3%82%BF%E3%83%AA%E3%83%B3%E3%82%AF">3.5. その他のデータリンク</a><ul>
+                <li><a href="#351-atmasynchronous-transfer-mode">3.5.1. ATM(Asynchronous Transfer Mode)</a></li>
+                <li><a href="#352-pospacket-over-sonet">3.5.2. POS(Packet over SONET)</a></li>
+                <li><a href="#353-%E3%83%95%E3%82%A1%E3%82%A4%E3%83%90%E3%83%BC%E3%83%81%E3%83%A3%E3%83%8D%E3%83%AB">3.5.3. ファイバーチャネル</a></li>
+                <li><a href="#354-iscsi">3.5.4. ISCSI</a></li>
+                <li><a href="#355-ieee1394">3.5.5. IEEE1394</a></li>
+                <li><a href="#356-hdmi">3.5.6. HDMI</a></li>
+                <li><a href="#357-docsis">3.5.7. DOCSIS</a></li>
+                <li><a href="#358-%E9%AB%98%E9%80%9Fplc">3.5.8. 高速PLC</a></li>
+                </ul>
+                </li>
+                <li><a href="#36-%E5%85%AC%E8%A1%86%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E7%B6%B2">3.6. 公衆アクセス網</a></li>
+                </ul>
+                </li>
+                <li><a href="#4-ip">4. IP</a><ul>
+                <li><a href="#41-ip%E3%81%AE%E5%9F%BA%E7%A4%8E%E7%9F%A5%E8%AD%98">4.1. IPの基礎知識</a></li>
+                <li><a href="#42-ip%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9%E3%81%AE%E5%9F%BA%E7%A4%8E%E7%9F%A5%E8%AD%98">4.2. IPアドレスの基礎知識</a><ul>
+                <li><a href="#421-ip%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9%E3%81%A8%E3%81%AF">4.2.1. IPアドレスとは</a></li>
+                <li><a href="#422-%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E9%83%A8%E3%81%A8%E3%83%9B%E3%82%B9%E3%83%88%E9%83%A8">4.2.2. ネットワーク部とホスト部</a></li>
+                <li><a href="#423-%E3%83%96%E3%83%AD%E3%83%BC%E3%83%89%E3%82%AD%E3%83%A3%E3%82%B9%E3%83%88%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9">4.2.3. ブロードキャストアドレス</a></li>
+                <li><a href="#424-%E3%82%B5%E3%83%96%E3%83%8D%E3%83%83%E3%83%88%E3%83%9E%E3%82%B9%E3%82%AF">4.2.4. サブネットマスク</a></li>
+                <li><a href="#425-cidr%E3%81%A8vlsm">4.2.5. CIDRとVLSM</a></li>
+                <li><a href="#426-%E3%82%B0%E3%83%AD%E3%83%BC%E3%83%90%E3%83%ABip%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9%E3%81%A8%E3%83%97%E3%83%A9%E3%82%A4%E3%83%99%E3%83%BC%E3%83%88ip%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9">4.2.6. グローバルIPアドレスとプライベートIPアドレス</a></li>
+                <li><a href="#427-%E3%82%B0%E3%83%AD%E3%83%BC%E3%83%90%E3%83%ABip%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9%E3%81%AE%E7%AE%A1%E7%90%86%E8%80%85">4.2.7. グローバルIPアドレスの管理者</a></li>
+                </ul>
+                </li>
+                <li><a href="#43-%E7%B5%8C%E8%B7%AF%E5%88%B6%E5%BE%A1%E3%83%AB%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0">4.3. 経路制御(ルーティング)</a><ul>
+                <li><a href="#431-ip%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9%E3%81%A8%E7%B5%8C%E8%B7%AF%E5%88%B6%E5%BE%A1">4.3.1. IPアドレスと経路制御</a></li>
+                <li><a href="#432--%E7%B5%8C%E8%B7%AF%E5%88%B6%E5%BE%A1%E8%A1%A8%E3%81%AE%E9%9B%86%E7%B4%84">4.3.2.  経路制御表の集約</a></li>
+                </ul>
+                </li>
+                <li><a href="#44-ip%E3%81%AE%E5%88%86%E5%89%B2%E5%87%A6%E7%90%86%E3%81%A8%E5%86%8D%E6%A7%8B%E7%AF%89%E5%87%A6%E7%90%86">4.4. IPの分割処理と再構築処理</a><ul>
+                <li><a href="#441-mtu">4.4.1. MTU</a></li>
+                <li><a href="#442-ip%E3%83%87%E3%83%BC%E3%82%BF%E3%82%B0%E3%83%A9%E3%83%A0%E3%81%AE%E5%88%86%E5%89%B2%E5%87%A6%E7%90%86%E3%81%A8%E5%86%8D%E6%A7%8B%E7%AF%89%E5%87%A6%E7%90%86">4.4.2. IPデータグラムの分割処理と再構築処理</a></li>
+                <li><a href="#443-%E7%B5%8C%E8%B7%AFmtu%E6%8E%A2%E7%B4%A2">4.4.3. 経路MTU探索</a></li>
+                </ul>
+                </li>
+                <li><a href="#45-ipv6">4.5. IPv6</a></li>
+                </ul>
+                </li>
+                <li><a href="#5-ip%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E6%8A%80%E8%A1%93">5. IPに関する技術</a><ul>
+                <li><a href="#51-dnsdomain-name-sysytem">5.1. DNS(Domain-Name-Sysytem)</a></li>
+                <li><a href="#52-arpaddress-resolution-protocol">5.2. ARP(Address-Resolution-Protocol)</a></li>
+                <li><a href="#53-icmpinternet-control-message-protocol">5.3. ICMP(Internet-Control-Message-Protocol)</a></li>
+                <li><a href="#54-dhcpdynamic-host-configuration-protocol">5.4. DHCP(Dynamic-Host-Configuration-Protocol)</a></li>
+                <li><a href="#55-natnetwork-address-translator">5.5. NAT(Network-Address-Translator)</a></li>
+                <li><a href="#56-ip%E3%83%88%E3%83%B3%E3%83%8D%E3%83%AA%E3%83%B3%E3%82%B0">5.6. IPトンネリング</a></li>
+                </ul>
+                </li>
+                <li><a href="#6-tcpip">6. TCP/IP</a><ul>
+                <li><a href="#61-%E3%83%88%E3%83%A9%E3%83%B3%E3%82%B9%E3%83%9D%E3%83%BC%E3%83%88%E5%B1%A4">6.1. トランスポート層</a></li>
+                <li><a href="#62-%E3%83%9D%E3%83%BC%E3%83%88%E7%95%AA%E5%8F%B7">6.2. ポート番号</a></li>
+                <li><a href="#63-udpuser-datagram-protocol">6.3. UDP(User-Datagram-Protocol)</a></li>
+                <li><a href="#64-tcptransmission-control-protocol">6.4. TCP(Transmission-Control-Protocol)</a></li>
+                <li><a href="#65-%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%83%88%E3%83%A9%E3%83%B3%E3%82%B9%E3%83%9D%E3%83%BC%E3%83%88%E3%83%97%E3%83%AD%E3%83%88%E3%82%B3%E3%83%AB">6.5. その他のトランスポートプロトコル</a></li>
+                </ul>
+                </li>
+                <li><a href="#7-%E7%B5%8C%E8%B7%AF%E5%88%B6%E5%BE%A1%E3%83%97%E3%83%AD%E3%83%88%E3%82%B3%E3%83%AB">7. 経路制御プロトコル</a><ul>
+                <li><a href="#71-%E3%83%AB%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0">7.1. ルーティング</a></li>
+                <li><a href="#72-%E7%B5%8C%E8%B7%AF%E5%88%B6%E5%BE%A1%E3%81%AE%E7%AF%84%E5%9B%B2">7.2. 経路制御の範囲</a></li>
+                <li><a href="#73-%E7%B5%8C%E8%B7%AF%E5%88%B6%E5%BE%A1%E3%82%A2%E3%83%AB%E3%82%B4%E3%83%AA%E3%82%BA%E3%83%A0">7.3. 経路制御アルゴリズム</a></li>
+                <li><a href="#74-riprouting-information-protocol">7.4. RIP(Routing-Information-Protocol)</a></li>
+                <li><a href="#75-ospfopen-shortest-path-first">7.5. OSPF(Open-Shortest-Path-First)</a></li>
+                <li><a href="#76-bgpborder-gateway-protocol">7.6. BGP(Border-Gateway-Protocol)</a></li>
+                <li><a href="#77-mplsmulti-protocol-label-switching">7.7. MPLS(Multi-Protocol-Label-Switching)</a></li>
+                </ul>
+                </li>
+                <li><a href="#8-%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%83%97%E3%83%AD%E3%83%88%E3%82%B3%E3%83%AB">8. アプリケーションプロトコル</a><ul>
+                <li><a href="#81-%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%83%97%E3%83%AD%E3%83%88%E3%82%B3%E3%83%AB%E6%A6%82%E8%A6%81">8.1. アプリケーションプロトコル概要</a></li>
+                <li><a href="#82-%E9%81%A0%E9%9A%94%E3%83%AD%E3%82%B0%E3%82%A4%E3%83%B3ssh%E3%81%A8telnet">8.2. 遠隔ログイン(SSHとTELNET)</a><ul>
+                <li><a href="#821-telenet">8.2.1. Telenet</a></li>
+                <li><a href="#822-ssh">8.2.2. SSH</a></li>
+                </ul>
+                </li>
+                <li><a href="#83-%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E8%BB%A2%E9%80%81ftp">8.3. ファイル転送(FTP)</a></li>
+                <li><a href="#84-%E9%9B%BB%E5%AD%90%E3%83%A1%E3%83%BC%E3%83%ABmimesmtppopimap">8.4. 電子メール(MIME,SMTP,POP,IMAP)</a></li>
+                <li><a href="#85-wwwworld-wide-web">8.5. WWW(World-Wide-Web)</a></li>
+                <li><a href="#86-%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E7%AE%A1%E7%90%86snmp">8.6. ネットワーク管理(SNMP)</a></li>
+                </ul>
+                </li>
+                <li><a href="#9-%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3">9. セキュリティ</a><ul>
+                <li><a href="#91-%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3%E3%81%AE%E9%87%8D%E8%A6%81%E6%80%A7">9.1. セキュリティの重要性</a></li>
+                <li><a href="#92-%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3%E3%81%AE%E6%A7%8B%E6%88%90%E8%A6%81%E7%B4%A0">9.2. セキュリティの構成要素</a><ul>
+                <li><a href="#921-%E3%83%95%E3%82%A1%E3%82%A4%E3%83%A4%E3%83%BC%E3%82%A6%E3%82%A9%E3%83%BC%E3%83%AB">9.2.1. ファイヤーウォール</a></li>
+                <li><a href="#922-idsips%E4%BE%B5%E5%85%A5%E6%A4%9C%E7%9F%A5%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E4%BE%B5%E5%85%A5%E9%98%B2%E6%AD%A2%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0">9.2.2. IDS/IPS(侵入検知システム/侵入防止システム)</a></li>
+                <li><a href="#923-%E3%83%91%E3%83%BC%E3%82%BD%E3%83%8A%E3%83%AB%E3%83%95%E3%82%A1%E3%82%A4%E3%82%A2%E3%82%A6%E3%82%A9%E3%83%BC%E3%83%AB">9.2.3. パーソナルファイアウォール</a></li>
+                </ul>
+                </li>
+                <li><a href="#93-%E6%9A%97%E5%8F%B7%E5%8C%96%E6%8A%80%E8%A1%93%E5%9F%BA%E7%A4%8E">9.3. 暗号化技術基礎</a><ul>
+                <li><a href="#931-%E5%85%B1%E9%80%9A%E9%8D%B5%E6%9A%97%E5%8F%B7%E6%96%B9%E5%BC%8F%E3%81%A8%E5%85%AC%E9%96%8B%E9%8D%B5%E6%9A%97%E5%8F%B7%E6%96%B9%E5%BC%8F">9.3.1. 共通鍵暗号方式と公開鍵暗号方式</a></li>
+                <li><a href="#932-%E8%AA%8D%E8%A8%BC%E6%8A%80%E8%A1%93">9.3.2. 認証技術</a></li>
+                </ul>
+                </li>
+                <li><a href="#94-%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3%E3%81%AE%E3%81%9F%E3%82%81%E3%81%AE%E3%83%97%E3%83%AD%E3%83%88%E3%82%B3%E3%83%AB">9.4. セキュリティのためのプロトコル</a><ul>
+                <li><a href="#ipsec%E3%81%A8vpn">IPsecとVPN</a></li>
+                <li><a href="#934-tlsssl%E3%81%A8https">9.3.4. TLS/SSLとHTTPS</a></li>
+                <li><a href="#ieee8021x">IEEE802.1X</a></li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                </ul>
+                <h2 id="1-ネットワーク基礎概論">1. ネットワーク基礎概論</h2>
+                <h3 id="11-プロトコル">1.1. プロトコル</h3>
+                <p>プロトコルはコンピュータでデータをやりとりするために定められた手順や規約、信号の電気的規則、通信における送受信の手順などを定めた規格を指します。
+                異なるメーカーのソフトウェアやハードウエア同士でも、共通のプロトコルに従うことによって正しい通信が可能になる。</p>
+                <p>代表的なプロトコルには以下のようなものがあります。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>名称</th>
+                <th>概要</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>IP</td>
+                <td>インターネット上でコンピューター同士が通信を行うためのプロトコル</td>
+                </tr>
+                <tr>
+                <td>FTP</td>
+                <td>ファイルを受け渡しするときのプロトコル</td>
+                </tr>
+                <tr>
+                <td>SMTP</td>
+                <td>メールを送るときのプロトコル</td>
+                </tr>
+                <tr>
+                <td>POP</td>
+                <td>メールを見るときのプロトコル</td>
+                </tr>
+                <tr>
+                <td>IMAP</td>
+                <td>メールを見るときのプロトコル</td>
+                </tr>
+                <tr>
+                <td>HTTP</td>
+                <td>ホームページを見るときのプロトコル</td>
+                </tr>
+                <tr>
+                <td>TCP</td>
+                <td>安全性・正確性重視で通信するときのプロトコル</td>
+                </tr>
+                <tr>
+                <td>UDP</td>
+                <td>スピード重視で通信するときのプロトコル</td>
+                </tr>
+                <tr>
+                <td>NTP</td>
+                <td>ネットワーク経由で時刻を合わせるときのプロトコル</td>
+                </tr>
+                </tbody></table>
+                <p>プロトコルは国際的にルールを標準化する団体により規格化されます。</p>
+                <p><strong>IETF</strong> ・・・ インターネットで使用される技術(TCP/IP等)の標準化を行う団体</p>
+                <p><strong>IEEE</strong> ・・・ ハードウェア系の技術(LANの規格)などの標準化を行う団体</p>
+                <h4 id="rfc-・・・-標準化された技術は文書にされrfcとして固有番号が付きます">RFC ・・・ 標準化された技術は文書にされRFCとして固有番号が付きます<!-- omit in toc --></h4>
+                <p>有名なRFCは以下の通りです。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>番号</th>
+                <th>プロトコル</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>RFC791</td>
+                <td>IP</td>
+                </tr>
+                <tr>
+                <td>RFC792</td>
+                <td>ICMP</td>
+                </tr>
+                <tr>
+                <td>RFC768</td>
+                <td>UDP</td>
+                </tr>
+                <tr>
+                <td>RFC793</td>
+                <td>TCP</td>
+                </tr>
+                </tbody></table>
+                <h3 id="12-プロトコルの階層化とosi参照モデル">1.2. プロトコルの階層化とOSI参照モデル</h3>
+                <p>OSI参照モデルは国際標準化機構（ISO）により策定されたコンピュータなどの通信機器の通信機能を、階層構造に分割したモデル。</p>
+                <img src="https://www.itmanage.co.jp/column/tcp-ip-protocol/img/tcpip.png" width="100%">
+                
+                <p>TCP/IPの階層は、上から「アプリケーション層」「トランスポート層」「インターネット層」「ネットワークインターフェイス層」の4層に分かれている。
+                TCP/IPは4つの階層のプロトコルが正常に機能して初めて通信ができる。
+                またOSI参照モデルでは7つの層に分けて通信するときのプロトコルを考える。</p>
+                <img src="https://www.sbbit.jp/article/image/12099/l_bit202006151641249159.jpg" width="100%">
+                
+                <h4 id="アプリケーション層4層">アプリケーション層(4層)<!-- omit in toc --></h4>
+                <p>アプリケーション層は<strong>アプリケーションで扱うデータのフォーマットや手順を決める役割</strong>を担う。
+                アプリケーションは基本的には人間が扱うため、文字や画像など人間が認識できるようにデータを表現する。
+                主なプロトコルは「HTTP」「SMTP」「POP3」「IMAP4」「DHCP」「DNS」などです。</p>
+                <img src="https://www.itmanage.co.jp/column/tcp-ip-protocol/img/apprication.png" width="100%">
+                
+                <h4 id="トランスポート層3層">トランスポート層(3層)<!-- omit in toc --></h4>
+                <p>トランスポート層の役割は<strong>データを適切なアプリケーションに振り分けること</strong>である。
+                最下層からトランスポート層まで正しく機能すると、送信元と宛先のアプリケーション間でデータの送受信ができるようになる。</p>
+                <img src="https://www.itmanage.co.jp/column/tcp-ip-protocol/img/transport.png" width="100%">
+                
+                <h4 id="インターネット層2層">インターネット層(2層)<!-- omit in toc --></h4>
+                <p>インターネット層は<strong>複数のネットワーク間のデータ転送を行う役割</strong>を持っています。
+                多数のネットワーク同士を接続してデータ転送を行っているのは「ルータ」である。
+                ルータによるネットワーク間のデータ転送を指して「ルーティング」と呼ぶ。
+                また、ネットワーク間のデータ転送を指して「エンドツーエンド通信」と呼ばれる。</p>
+                <img src="https://www.itmanage.co.jp/column/tcp-ip-protocol/img/internet.png" width="100%">
+                
+                <h4 id="ネットワークインターフェイス層1層">ネットワークインターフェイス層(1層)<!-- omit in toc --></h4>
+                <p>ネットワークインターフェイス層の役割は、<strong>同一のネットワーク内でデータを転送すること</strong>です。
+                技術的な観点から言えば、1つのネットワークは、ルータやレイヤ3スイッチで区切られる範囲、またはレイヤ2スイッチで構成する範囲です。</p>
+                <img src="https://www.itmanage.co.jp/column/tcp-ip-protocol/img/network_interface.png" width="100%">
+                
+                <h3 id="13-通信方式の種類">1.3. 通信方式の種類</h3>
+                <h4 id="131-コネクション型通信">1.3.1. コネクション型通信</h4>
+                <p>コネクション型通信は<strong>データ転送前に通信相手と正常に接続できているか確認したうえで通信を行う方式</strong>である。
+                代表的なプロトコルにはTCPが上げられる。</p>
+                <h4 id="132-コネクションレス型通信">1.3.2. コネクションレス型通信</h4>
+                <p>コネクションレス型通信は<strong>事前の接続確認を行わずいきなりデータ転送を始める通信方式</strong>である。
+                コネクションレス型通信はコネクション型通信とは異なり、事前にコネクションの確立を行いません。
+                したがって、転送元のコンピュータは好きなタイミングで好きなだけデータを転送することが可能です。
+                代表的なプロトコルにはUDPやIPが上げられる。</p>
+                <h4 id="133-パケット交換方式と回線交換方式">1.3.3. パケット交換方式と回線交換方式</h4>
+                <p>回線交換方式は<strong>１対１の通信を行う場合において回線を占有しながら通信</strong>を行う通信方式です。代表的なものには「電話」があります。
+                この方式では１つの回線を占有して通信を行うため、その間他の機器とは通信を行うことができません。</p>
+                <p>パケット交換方式は<strong>複数：複数で回線を共有して通信を行う方式</strong>のことです。
+                パケット交換方式では、データを１つ１つの小さな小包（＝パケット）に分けて、郵便配達のようにデータを届けます。</p>
+                <p>特徴をまとめると以下の通りです。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>通信方式</th>
+                <th>概要</th>
+                <th>例</th>
+                <th>特徴</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>回線交換方式</td>
+                <td>1:1で回線を占有して通信を行う</td>
+                <td>電話</td>
+                <td>通信速度は安定するが通信効率が悪い</td>
+                </tr>
+                <tr>
+                <td>パケット交換方式</td>
+                <td>複数：複数で回線を共有して通信を行う</td>
+                <td>メール/インターネット</td>
+                <td>通信速度が遅くなる場合もあるが通信効率・耐障害性に強い</td>
+                </tr>
+                </tbody></table>
+                <h3 id="14-アドレス">1.4. アドレス</h3>
+                <p>ネットワークにおける代表的なアドレスには<strong>IPアドレス</strong>や<strong>MACアドレス</strong>があります。
+                いずれもネットワークを利用するためにコンピュータに&quot;一意&quot;に割り当てられた識別子であり、これらのアドレスには一意性や階層性があります。</p>
+                <h4 id="141-macアドレスmedia-access-control-address）">1.4.1. MACアドレス(Media Access Control address）</h4>
+                <p>ネットワークにつながるすべての機器に割り当てられている識別番号のことで、イーサネットや無線LANなどに接続されているノードを一意に識別するために利用されます。
+                MACアドレスは以下のように 0～9、A～Fの16進数・12桁で表されます。この番号は、世界中で一意の番号となります。
+                隣接するコンピュータ間の通信を可能にするアドレスといえます。</p>
+                <img src="https://it-biz.online/wp-content/uploads/2021/07/image-2.png" width="60%">
+                
+                <h4 id="142-ipアドレス（internet-protocol-address）">1.4.2. IPアドレス（Internet Protocol Address）</h4>
+                <p>IPにおいてパケットを送受信する機器を判別するための識別番号のことであり、MACアドレスと同様に世界中で一意の番号となる。
+                IPアドレスは「ネットワーク上の住所」と説明されるように、MACアドレスとIPアドレスは別物である。</p>
+                <img src="https://it-biz.online/wp-content/uploads/2020/06/image-26.png" width="60%">
+                
+                <p>2つのアドレスはまとめるとこのように考えることができます。
+                MACアドレス =&gt; <strong>機器の識別番号</strong>
+                IPアドレス =&gt; <strong>機器の住所情報</strong></p>
+                <h3 id="15-ネットワークの構成要素">1.5. ネットワークの構成要素</h3>
+                <h4 id="151-通信媒体とデータリンク">1.5.1. 通信媒体とデータリンク</h4>
+                <p>データリンクプロトコルは直接接続された機器間で通信するプロトコルである。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>データリンク名</th>
+                <th>規模</th>
+                <th>通信媒体</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>Ethernet</td>
+                <td>LAN</td>
+                <td>同軸、ツイストペアケーブル、光ファイバ</td>
+                </tr>
+                <tr>
+                <td>Fast Ethernet</td>
+                <td>LAN</td>
+                <td>ツイストペアケーブル、光ファイバ</td>
+                </tr>
+                <tr>
+                <td>Gigabit Ethernet</td>
+                <td>LAN</td>
+                <td>光ファイバ</td>
+                </tr>
+                <tr>
+                <td>FDDI</td>
+                <td>LAN～WAN</td>
+                <td>光ファイバ、ツイストペアケーブル</td>
+                </tr>
+                <tr>
+                <td>ATM</td>
+                <td>LAN～WAN</td>
+                <td>光ファイバ、ツイストペアケーブル</td>
+                </tr>
+                <tr>
+                <td>X.25</td>
+                <td>WAN</td>
+                <td>ツイストペアケーブル</td>
+                </tr>
+                <tr>
+                <td>Frame Relay</td>
+                <td>WAN</td>
+                <td>ツイストペアケーブル、光ファイバ</td>
+                </tr>
+                <tr>
+                <td>ISDN</td>
+                <td>WAN</td>
+                <td>ツイストペアケーブル、光ファイバ</td>
+                </tr>
+                </tbody></table>
+                <table>
+                <thead>
+                <tr>
+                <th>機器</th>
+                <th>概要</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>ネットワークインタフェース</td>
+                <td>コンピュータをネットワークに接続するための装置</td>
+                </tr>
+                <tr>
+                <td>リピータ</td>
+                <td>ネットワークを物理的に延長する装置</td>
+                </tr>
+                <tr>
+                <td>ブリッジ</td>
+                <td>データリンク層で延長する装置</td>
+                </tr>
+                <tr>
+                <td>ルータ</td>
+                <td>ネットワーク層のパケットを転送する装置</td>
+                </tr>
+                <tr>
+                <td>ゲートウェイ</td>
+                <td>プロトコルの変換をする装置</td>
+                </tr>
+                </tbody></table>
+                <h4 id="152-ネットワークインタフェースnic">1.5.2. ネットワークインタフェース(NIC)</h4>
+                <p>ネットワークインタフェースはコンピュータをネットワークに接続するための装置です。</p>
+                <img src="https://media.fs.com/images/community/uploads/post/202104/13/post35-nic-9.png" width="60%">
+                
+                <h4 id="153-リピータ">1.5.3. リピータ</h4>
+                <p>リピータはネットワークを延長する装置です。
+                ケーブル上に流れてきた電機や光の信号を増幅や波形整形などを行います。
+                これらの信号はあくまで信号を整形するだけであるため、エラーフレームもそのまま再送されます。
+                ネットワークの延長では<strong>リピータの段数制限がある</strong>場合があります。これは少しずつ波長が乱れ信号を正しく識別できなくなるためです。</p>
+                <h4 id="154-ブリッジスイッチレイヤ2スイッチ">1.5.4. ブリッジ(スイッチ)/レイヤ2スイッチ</h4>
+                <p>ブリッジはネットワーク同士を接続する装置です。
+                ブリッジはフレーム(パケット)を認識蓄積し接続された新たなセグメントに新たなフレームとして出力します。
+                リピータのような段数接続制限はありません。<strong>伝達速度の異なる媒体間の接続も可能</strong>です。</p>
+                <h4 id="155-ルータレイヤ3スイッチ">1.5.5. ルータ/レイヤ3スイッチ</h4>
+                <p>ルータはネットワーク層の処理を行い、ネットワーク間の接続をしパケット転送を中継する装置です。
+                イーサネット同士の接続もでき、イーサネットとFDDIを接続することができます。</p>
+                <h4 id="156-ゲートウェイ">1.5.6. ゲートウェイ</h4>
+                <p>ゲートウェイはOSI参照モデルにおけるトランスポート層からアプリケーション層までの階層においてデータを中継する装置です。
+                ゲートウェイは互いに直接通信できない2つの異なるプロトコルの翻訳作業を行い互いに通信可能にするものです。</p>
+                <h3 id="16-近代のネットワーク像">1.6. 近代のネットワーク像</h3>
+                <p>現在のネットワークはパソコン、スマホなどの通信端末や各種サーバーの間を有線や無線でつなぎ、情報の伝送を行うための通信設備のことであり、通信回線と通信機器から構成される。現代のネットワークは複数のLANやWANが複雑に繋がれている。</p>
+                <h4 id="161-lanlocal-area-network">1.6.1. LAN(Local Area Network)</h4>
+                <p>LANはローカルエリア(限られた範囲)のネットワークを指し、ネットワーク構築は個人が行います。</p>
+                <h4 id="162-wanworld-area-network">1.6.2. WAN(World Area Network)</h4>
+                <p>WANは広域情報通信網を指し、複数のLANの集合体のようなものとなります。
+                ネットワーク構築は通信事業者が行い、プロバイダ契約をすることでWANへのアクセスが可能となる。</p>
+                <h4 id="163-ネットワークの仮想化">1.6.3. ネットワークの仮想化</h4>
+                <p>仮想化とは、サーバーなどのハードウエアリソース（CPU、メモリ、ディスクなど）を抽象化し、物理的な制限にとらわれず、ソフトウエア的に統合・分割できるようにする技術です。
+                サーバーを仮想化することで、1台の物理サーバーの上に複数の仮想サーバーをソフトウエア的に作成し、同時に動かすことができるようになりました。
+                サーバーの仮想化を行うには、専用の仮想化ソフトウエアが必要になります。仮想化ソフトウエアとしては、主にPCで利用されているオラクルの「Virtualbox」、ニフクラで採用しているVMwareの「VMware vSphere®」、Microsoftの「Hyper-V」などが有名です。</p>
+                <h4 id="164-クラウド">1.6.4. クラウド</h4>
+                <p>「クラウド」とは、ユーザーがインターネットなどのネットワーク越しにサーバー・ストレージなどのコンピューティングリソースやアプリケーションソフトウエアなどを利用する形態のサービス全般を指す言葉です。
+                クラウドはユーザの利用形態により<strong>IaaS/PaaS/SaaS</strong>の3種類に分類されます。
+                一般的にサーバーやストレージ、ネットワークなどのインフラをユーザーが自由に組み合わせてシステムを構築できるIaaSのことを指して、単に「クラウド」と呼ぶこともあります。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>種類</th>
+                <th>有名なサービス</th>
+                <th>概要</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>IaaS</td>
+                <td>AWS,GCP,Azure</td>
+                <td>クラウドにあるネットワークやサーバ（CPU・メモリ・ストレージ）などのリソースを利用するサービス</td>
+                </tr>
+                <tr>
+                <td>PaaS</td>
+                <td>Heroku</td>
+                <td>アプリケーションソフトが稼動するためのハードウェアや OS などのプラットフォーム一式を提供するサービス</td>
+                </tr>
+                <tr>
+                <td>SaaS</td>
+                <td>Gmail, Office</td>
+                <td>パッケージ製品として提供されていたソフトウェアを、インターネット経由で提供するサービス</td>
+                </tr>
+                </tbody></table>
+                <h2 id="2-tcpip基礎">2. TCP/IP基礎</h2>
+                <h3 id="21-tcpipの背景と歴史">2.1. TCP/IPの背景と歴史</h3>
+                <p>インターネットの構想は軍事技術の応用から始まりました。
+                冷戦下である1960年代、ネットワークの一部に故障が起きても、別の経路を通して情報が伝送され、通信が停止しないようなネットワークの考えのもとアメリカで実用実験され生まれたのが、<strong>ARPANET</strong>と呼ばれるネットワークです。
+                インターネットの起源とも言われています。
+                この後ARPANET研究グループによって<strong>TCP/IP</strong>が開発され、ARPANETへの接続プロトコルとしてTCP/IPが採用されました。また、インターネットの普及には<strong>UNIX</strong>が一役買いました。
+                限られた人達だけが使っていたTCP/IPは、大学や研究所で広く使われていたコンピュータOSのBSD　UNIXに実装されたことで一般に広く広まることになりました。またその後の1990年代に商用インターネットサービスが開始され、PCや携帯端末の技術の向上とともに現代のインターネットの姿へと発展していきました。</p>
+                <img src="https://www.soumu.go.jp/johotsusintokei/whitepaper/ja/h11/gif/B1Z20001.gif" width="80%">
+                
+                <h3 id="22-tcpipの標準化">2.2. TCP/IPの標準化</h3>
+                <p>TCP/IPプロトコルの標準化については、インターネット上で開発される様々な新しい技術を標準化するIETFによって標準化され、<strong>RFC</strong>と呼ばれるドキュメントになり、インターネット上で公開されています。</p>
+                <h3 id="23-インターネットの基礎知識">2.3. インターネットの基礎知識</h3>
+                <p>インターネットは世界中のコンピュータなどの情報機器を接続するネットワークです。 1990年ごろから世界的に広く使われ始め、近年はその利活用が目覚しく進展してきました。
+                TCP/IPの開発はARPANETで使われていたNCPに替わるプロトコルとして1973年に始まりました。
+                TCP/IPには代表的な4つとして、 オープン、パケット通信、エンドツーエンドと呼ばれる特徴があります。
+                オープンは、TCP/IP規格そのものを誰でも無償で自由に参照できることです。 仕様が公開されない独自規格や、参照に費用のかかる規格に比べると、 開発・実装のハードルが下がります。
+                パケット通信はデータを複数に分割したパケットの形でやり取りする方法です。 通信中に回線を占有する回線交換方式に比べると、 一つの回線を複数の通信で同時に使えて回線の利用効率が高まる、 ネットワークそのものの堅牢性も向上するといったメリットがあります。 デメリットとしては、通信を制御するためのオーバーヘッドが大きい、 帯域保証が難しいといった点が挙げられます。
+                エンドツーエンドは、複雑なことはなるべく端末側で行い、 ネットワークはシンプルに保つという原理、原則です。 ネットワークを高機能にすると作るのが大変ですし、 使わない機能満載ということにもなりかねません。</p>
+                <h3 id="24-tcpipの階層モデル">2.4. TCP/IPの階層モデル</h3>
+                <p>ネットワーク上で接続されたコンピュータ同士が通信をするためには、通信規約が必要です。通信規約とは、通信相手のコンピュータをどのように指定するか、データをどのように送信するかなどの約束事で、これは<strong>プロトコル</strong>と呼ばれます。
+                プロトコルはOSIに基づき、7階層に分割した「OSI基本参照モデル」を形成しています。</p>
+                <img src="https://takaq1.plala.jp/contents/jitaku_server/network/network2-2.GIF" width="80%">
+                
+                <h2 id="3-データリンク">3. データリンク</h2>
+                <h3 id="31-データリンクの役割と技術">3.1. データリンクの役割と技術</h3>
+                <p>データリンクは回線やネットワークで物理的に繋がれた二台の機器の間でデータの受け渡しを行うものである。
+                この層ではパケット交換の技術を実現しています。</p>
+                <h4 id="macアドレス">MACアドレス<!-- omit in toc --></h4>
+                <p>MACアドレス（Media Access Control Address）とは、ハードウェア固有の識別子であり、48bitのアドレスである。
+                隣接機器を識別し、主に隣接した機器同士で通信するために用いられる。
+                MACアドレスの上位24ビットはベンダーコードと呼ばれており、各メーカーに割り振られた番号。下位24ビットはシリアル番号と呼ばれ、各メーカーが重複しないように、端末固有に割り振った番号というルールがあります。</p>
+                <h4 id="媒体共有型ネットワーク">媒体共有型ネットワーク<!-- omit in toc --></h4>
+                <p>媒体共有型ネットワークとは、通信機器と通信機器をつなぐ媒体（＝ケーブル）を共有するネットワークのことです。
+                媒体共有型ネットワークでは、例えば１つのコンピュータがデータを送ろうとした場合、もしまた別のコンピュータがデータを送っている最中だった場合、データ（＝電気信号の波）同士が衝突（＝コリジョン）してしまいます。
+                そのため、媒体共有型ネットワークではこの衝突を回避するための仕組みが必要となります。この衝突回避の仕組みとして有名なのが<strong>コンテンション方式・CSMA/CD方式・トークンパッシング方式</strong>です。</p>
+                <img src="https://it-biz.online/wp-content/uploads/2022/01/image-41.png" width="60%">
+                
+                <h4 id="媒体非共有型ネットワーク">媒体非共有型ネットワーク<!-- omit in toc --></h4>
+                <p>媒体非共有型ネットワークとは、各通信機器が媒体を共有せず占有するネットワークです。
+                各通信機器はスイッチと呼ばれる機器に直接接続され、そのスイッチがデータを整理・転送することでデータの衝突を避ける仕組みです。
+                この方式は現在のイーサネットで広く活用されている方式で多くの家庭や会社ではこの方式のネットワークが主流です。</p>
+                <img src="https://it-biz.online/wp-content/uploads/2022/01/image-43.png" width="60%">
+                
+                <h4 id="vlanvirtual-lan">VLAN(Virtual LAN)<!-- omit in toc --></h4>
+                <p>VLAN（ Virtual LAN ）とは、物理的な接続形態とは独立して、<strong>仮想的なLANセグメントを作る技術</strong>です。
+                VLANはスイッチ内部で論理的にLANセグメントを分割するために使用されます。VLANを使用することで
+                ルータやL3スイッチと同じようにL2スイッチでもブロードキャストドメイン(一斉同報通信できるネットワーク範囲)の分割を行うことができます。</p>
+                <h3 id="32-イーサネット">3.2. イーサネット</h3>
+                <h4 id="イーサネットの接続形態">イーサネットの接続形態<!-- omit in toc --></h4>
+                <p>イーサネットでよく出てくる言葉に「トポロジー」という言葉があります。これはネットワークの解説で出てくる言葉で、ネットワークの通信路の構成のことを言います。大別すると、バス型、スター型、リング型の３つになります。
+                現在のイーサネットのトポロジーは下図のようにバス型とスター型の組合せで構成されています。</p>
+                <img src="http://www.picfun.com/lan/topology.gif" width="40%">
+                
+                <h4 id="イーサネットの種類">イーサネットの種類<!-- omit in toc --></h4>
+                <p>イーサネットの中で身近だといえるのはLANケーブルですが、それ以外にも様々な種類があります。用途や特徴は異なるので、使用する場面に合わせて使い分ける必要があります。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>種類</th>
+                <th>概要</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>LANケーブル</td>
+                <td>LANケーブルというのは、インターネット接続に使われるスター型のイーサネットです。有線接続によってパソコンでインターネットを利用するためには、LANケーブルが欠かせません。</td>
+                </tr>
+                <tr>
+                <td>同軸ケーブル</td>
+                <td>同軸ケーブルとは、「バス型」というネットワークで使用されるイーサネットです。映像などを伝達するもので、テレビのアンテナ線やCATVのインターネット接続などに使われています。</td>
+                </tr>
+                <tr>
+                <td>光ファイバ</td>
+                <td>光ファイバーは、大容量のデータを高速で送受信することができます。そのため従来の方式よりも高速通信が可能です。</td>
+                </tr>
+                </tbody></table>
+                <h4 id="イーサネットの歴史">イーサネットの歴史<!-- omit in toc --></h4>
+                <p>イーサネットの生みの親は、米国Xerox社のパロアルト研究所で、考えだ出されたのは1972年から1973年頃で、正式に発表されたのが1976年のことです。その後1980年になってDEC、Intel、Xeroxの3社の協力で統合規格「DIXイーサネット」として実用化されることになりました。
+                やがて、これを正式な国際標準規格として定める動きが始まり、1983年に「IEEE802.3」として規格化されました。これが10BASE5と呼ばれている規格です。</p>
+                <h3 id="33-無線通信">3.3. 無線通信</h3>
+                <h4 id="331-無線通信の種類">3.3.1. 無線通信の種類</h4>
+                <img src="https://techweb.rohm.co.jp/iot/upload/2016/09/kinkyorispec.gif" width="80%">
+                
+                <h4 id="332-wifiieee80211">3.3.2. WIFI(IEEE802.11)</h4>
+                <p>「IEEE802.11」とはWi-Fiの通信規格です。
+                家庭用に普及しているWi-Fiルーターで利用できる通信規格には、「11b」・「11g」・「11a」・「11n」・「11ac」があり、 新しい規格の「11ad」・「11ax」を搭載した商品の開発や普及が進められています。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>世代</th>
+                <th>規格名</th>
+                <th>最大通信速度</th>
+                <th>周波数帯</th>
+                <th>呼称</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>第1世代</td>
+                <td>IEEE.802.11</td>
+                <td>2Mbps</td>
+                <td>2.4GHz帯</td>
+                <td>-</td>
+                </tr>
+                <tr>
+                <td>第2世代</td>
+                <td>IEEE.82.11a</td>
+                <td>54Mbps</td>
+                <td>5GHz帯</td>
+                <td>-</td>
+                </tr>
+                <tr>
+                <td>第2世代</td>
+                <td>IEEE.82.11b</td>
+                <td>11Mbps</td>
+                <td>2.4GHz帯</td>
+                <td>-</td>
+                </tr>
+                <tr>
+                <td>第3世代</td>
+                <td>IEEE.802.11g</td>
+                <td>54Mbps</td>
+                <td>2.4GHz帯</td>
+                <td>-</td>
+                </tr>
+                <tr>
+                <td>第4世代</td>
+                <td>IEEE.802.11n</td>
+                <td>600Mbps</td>
+                <td>2.4GHz/5GHz帯</td>
+                <td>Wi-Fi4</td>
+                </tr>
+                <tr>
+                <td>第5世代</td>
+                <td>IEEE.902.11ac</td>
+                <td>6.9Gbps</td>
+                <td>5GHz帯</td>
+                <td>Wi-Fi5</td>
+                </tr>
+                <tr>
+                <td>第6世代</td>
+                <td>IEEE.802.11ax</td>
+                <td>9.6Gbps</td>
+                <td>2.4GHz/5GHz帯</td>
+                <td>Wi-Fi6</td>
+                </tr>
+                </tbody></table>
+                <h4 id="333-wimax">3.3.3. WIMAX</h4>
+                <p>WIMAXはマイクロ波を利用した世界標準の通信方式です。
+                WiMAXは、当初は例えばユーザ宅と基地局間の長距離の固定の無線通信を目的としていました。</p>
+                <p>WiMAXの技術に移動体を想定したハンドオーバー（ 接続する基地局を切り替えること ）の仕様を追加した規格のことをモバイルWiMAXと言います。IEEE802.16e-2005で策定されています。</p>
+                <h4 id="334-bluetooth">3.3.4. BlueTooth</h4>
+                <p>Bluetoothとは10m～100ｍ以内の近距離で端末同士を1対1でワイヤレス接続することを想定して作られた無線通信技術である。</p>
+                <img src="https://e-earphone.blog/wp-content/uploads/2019/04/4cb87ac6472db6a6fec01019b7415e4b.jpg" width="80%">
+                
+                <h4 id="335-zigbee">3.3.5. ZigBee</h4>
+                <p>ZigBeeとは、IoTやセンサーネットワーク、家電の遠隔制御などに用いられる近距離無線通信規格の一つ。通信速度は遅いが低消費電力で、多数の装置がバケツリレー式にデータを運ぶメッシュネットワークに対応している。
+                組み込み系の機器の通信によく使われる。</p>
+                <h4 id="336-lpwa">3.3.6. LPWA</h4>
+                <p>LPWAとは「Low Power Wide Area」の略で、「低消費電力で長距離の通信」ができる無線通信技術の総称のことで、最大伝送速度は100bps程度、伝送距離は最大50 km程度です。
+                他の通信方式と比べて、特性が「IoT/M2M」に非常に適しているため、IoT分野の通信に広く利用されています。</p>
+                <h3 id="34-ppppointtopoint-protocol">3.4. PPP(PointtoPoint-Protocol)</h3>
+                <h4 id="pppとは">PPPとは<!-- omit in toc --></h4>
+                <p>PPPとは、標準的な通信プロトコルの一つで、2台の機器の間で仮想的な専用の伝送路を確立し、相互に安定的にデータの送受信を行うことができるようにするものです。
+                PPPは、大きく２つのプロトコルから構成されます。
+                １つが「どのようにコネクションを確立するか？」を定める<strong>LCP</strong>。もう１つが、確立されたコネクション上で「どのようにデータを運ぶか？」を定める<strong>NCP</strong>です。</p>
+                <h4 id="lcpとncp">LCPとNCP<!-- omit in toc --></h4>
+                <p>LCP (Link Control Protocol) はコネクションを確立したり切断したり、認証プロトコル（PAP or CHAP）の設定、パケット長の設定などを制御するプロトコルです。
+                NCP (Network Control Protocol) は、確立したコネクション上で「どのような通信を行うのか？」を制御します。</p>
+                <h4 id="pppoeppp-over-ethernet">PPPoE(PPP over Ethernet)<!-- omit in toc --></h4>
+                <p>PPPoEとはPPP (Point-to-Point Protocol)というプロトコルの機能を、 Ethernet上で利用できるようにしたプロトコルです。 PPPoEは、PPPをカプセル化してEthernet上で伝送します。</p>
+                <h3 id="35-その他のデータリンク">3.5. その他のデータリンク</h3>
+                <h4 id="351-atmasynchronous-transfer-mode">3.5.1. ATM(Asynchronous Transfer Mode)</h4>
+                <p>ATMとは、広域通信網などで利用される通信プロトコルの一つで、データを53バイトの固定長のセル（cell）と呼ばれる単位に分割して伝送する方式である。</p>
+                <h4 id="352-pospacket-over-sonet">3.5.2. POS(Packet over SONET)</h4>
+                <p>POSとは、パケットを、ATMを使わずに直接SONET/SDHフレームに格納して転送する通信の総称。略称は「POS」。
+                ATMを用いる従来のIP over ATMなどと比べて、オーバーヘッドが小さいが、ATMのQoSなどの機能が利用できないという欠点もある。</p>
+                <h4 id="353-ファイバーチャネル">3.5.3. ファイバーチャネル</h4>
+                <p>ファイバチャネルとは、コンピュータと周辺機器間のデータ転送方式のひとつです。「FC」と略されることもあります。
+                接続には最大転送速度32Gbit/sの光ファイバーや同軸ケーブルなどを使用し、最大伝送距離 10kmと、長距離区間の高速データ転送を実現します。</p>
+                <h4 id="354-iscsi">3.5.4. ISCSI</h4>
+                <p>iSCSIとは、コンピュータ本体とストレージ（外部記憶装置）の通信に用いられるSCSIコマンドを、IPネットワーク経由で送受信する通信規約（プロトコル）。TCP/IPベースのコンピュータネットワークにストレージ装置を直に接続することができるようになる。</p>
+                <h4 id="355-ieee1394">3.5.5. IEEE1394</h4>
+                <p>IEEE 1394とは、コンピュータと周辺機器やデジタル家電などをケーブルで接続するための通信規格の一つ。最大で63台の機器をデイジーチェーン（数珠つなぎ）接続またはツリー接続することができる。転送速度は初期の規格では100Mbpsだったが、その後3.2Gbps（3200Mbps）まで高速化されている。</p>
+                <h4 id="356-hdmi">3.5.6. HDMI</h4>
+                <p>HDMIとは、「High-Definition Multimedia Interface」の略で、映像・音声・制御信号を1本のケーブルにまとめて送ることができる通信規格のことです。今までは音声・映像信号ごとに色分けされたケーブルが何本か束になったオーディオケーブルを使用していましたが、HDMIでは映像・音声の両方を1本のケーブルで送ることができます。配線がシンプルなため、テレビやパソコン、ゲーム機など様々な機器で使われています。</p>
+                <h4 id="357-docsis">3.5.7. DOCSIS</h4>
+                <p>DOCSISとは、ケーブルテレビ（CATV）の回線を利用して高速なデータ通信を行うための規格。もともと北米の業界団体などが推進していもので、ITU-TS（国際電気通信連合）によってJ.112として標準化された。仕様の検討や製品の認証などは業界団体のCableLabsが行なっている。</p>
+                <h4 id="358-高速plc">3.5.8. 高速PLC</h4>
+                <p>電力線を通信回線としても利用する技術。 450kHz以下の周波数を用いるものを低速PLC、2-30MHzを用いるものを高速PLCと呼ぶこともある。</p>
+                <h3 id="36-公衆アクセス網">3.6. 公衆アクセス網</h3>
+                <h4 id="アナログ電話回線">アナログ電話回線<!-- omit in toc --></h4>
+                <p>アナログ回線とはアナログ信号によって通信する電話回線です。昔から家庭にあるごくごく一般的な電話回線のことを言います。
+                アナログ回線にはダイヤル回線とプッシュ回線の2種類あります。</p>
+                <h4 id="モバイル通信サービス">モバイル通信サービス<!-- omit in toc --></h4>
+                <p>モバイルデータ通信とは、携帯電話会社の回線を使った通信です。4G回線、LTE回線とも呼ばれます。ガラケー時代はパケット通信と呼ばれていました。</p>
+                <h4 id="adsl">ADSL<!-- omit in toc --></h4>
+                <p>ADSLとは、一般電話回線を使って高速なデータ通信を行う技術のことです。 電話音声よりも、高い周波数の信号を使ってデータ通信を行います。 従来のインターネット接続方式よりも高速で大容量の通信が行え、定額・常時接続で提供されました。</p>
+                <h4 id="ftth">FTTH<!-- omit in toc --></h4>
+                <p>FTTHとは、光ファイバーによる家庭向けのデータ通信サービスのこと。もとは、一般家庭に光ファイバーを引き、電話、インターネット、テレビなどのサービスを統合して提供する構想の名称だったが、転じて、そのための通信サービスの総称として用いられるようになった。</p>
+                <h4 id="専用回線">専用回線<!-- omit in toc --></h4>
+                <p>通信業者から借り受ける専用の通信回線。 一般的なインターネット回線として使われている電話網やISDN、CATV、光回線といった公衆回線とは異なり、契約者が独占的に使用する。 ほかのユーザーのトラフィックを受けないため、安定した大容量のデータ伝送が行えるのが特徴。</p>
+                <h4 id="vpn">VPN<!-- omit in toc --></h4>
+                <p>VPNとは「Virtual Private Network （仮想プライベートネットワーク）」の頭文字をとった略語で、インターネット接続とオンラインのプライバシーを保護する仕組みです。VPN接続は、仮想的な専用線（トンネル）を構築することで確立されます。</p>
+                <h2 id="4-ip">4. IP</h2>
+                <h3 id="41-ipの基礎知識">4.1. IPの基礎知識</h3>
+                <p>IP(Internet Protocol)は、TCP/IPの IP のことです。OSI参照モデルではネットワーク層で動作するプロトコルです。
+                IPプロトコルには特筆すべき3つの特徴があります。以下の通り、IPプロトコル自体には信頼性のあるものではありません。信頼性のある通信にするかどうかは上位層に任せています。TCPを使用すれば信頼性の高いTCP/IPの通信となります。UDPを使用した場合は、信頼性のある通信にはなりませんが、効率性の高いUDP/IPの通信となります。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>特徴</th>
+                <th>概要</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>コネクションレス型通信</td>
+                <td>事前にコンピュータ間でコネクションを確立しないでいきなりデータ伝送をはじめる通信のこと</td>
+                </tr>
+                <tr>
+                <td>ベストエフォート型通信</td>
+                <td>最善の努力（ベストエフォート）は尽くすが、必ずしも十分な品質は保証しない通信のこと</td>
+                </tr>
+                <tr>
+                <td>階層型アドレッシング</td>
+                <td>IPアドレスはネットワーク部とホスト部の2階層により構成されるということ</td>
+                </tr>
+                </tbody></table>
+                <h3 id="42-ipアドレスの基礎知識">4.2. IPアドレスの基礎知識</h3>
+                <h4 id="421-ipアドレスとは">4.2.1. IPアドレスとは</h4>
+                <p>IPアドレスは32bitのアドレスで構成され、<strong>ネットワーク部とホスト部</strong>で構成されます。
+                ネットワーク部は機器が集まったネットワーク自体に割れ振られるアドレスでホストアドレスは1つのネットワーク中で各機器に割り振られるアドレスです。
+                IPアドレスは<strong>グローバルIPアドレス</strong>と<strong>プライベートIPアドレス</strong>があり、グローバルIPアドレスはインターネット上に公開されるアドレスであり、プライベートIPアドレスはLAN内で自由に設定可能なアドレスです。</p>
+                <h4 id="422-ネットワーク部とホスト部">4.2.2. ネットワーク部とホスト部</h4>
+                <p>ネットワーク部とホスト部ネットワーク部の関係は「東京都」のような地域エリアを表し、ホスト部は個々の家を表す。
+                Pアドレスはネットワーク部とホスト部とから構成されているが、32ビットの内どこからどこまでネットワーク部でどこからどこまでがホスト部なのかは固定されておらず、IPアドレスによって異なる。
+                以下の2種類の区別方法が存在している。</p>
+                <ol>
+                <li>クラスによる分類（クラスフルアドレス）</li>
+                <li>サブネットマスクによる分類（クラスレスアドレス）</li>
+                </ol>
+                <h4 id="423-ブロードキャストアドレス">4.2.3. ブロードキャストアドレス</h4>
+                <p>ブロードキャストアドレスとは、同一ネットワーク上のすべてのコンピュータに対する同報通知を行うためのアドレスです。
+                ブロードキャストアドレスは、IPアドレスのホスト部に全て「1」を指定したアドレスを用います。</p>
+                <h4 id="424-サブネットマスク">4.2.4. サブネットマスク</h4>
+                <p>サブネットマスクとは、IPアドレスのネットワーク部を切り出すための32ビットのマスク値です。
+                言い換えるとサブネットマスクはネットワークを小さく区切ることのできる仕組みで無駄を小さくすることができます。</p>
+                <h4 id="425-cidrとvlsm">4.2.5. CIDRとVLSM</h4>
+                <p>CIDRはIPネットワークの経路情報を集約する際にクラスの概念をなくした技術のことです。
+                CIDRでは、クラスを使わずに任意のブロック単位で区切ることができるため、IPアドレス空間を効率的に利用することができます。
+                VLSM(可変長サブネットマスク)は1つのIPネットワークをサブネットに分割する際に、複数の長さのサブネットマスクを利用する技術です。</p>
+                <h4 id="426-グローバルipアドレスとプライベートipアドレス">4.2.6. グローバルIPアドレスとプライベートIPアドレス</h4>
+                <p>グローバルIPアドレスはインターネットを利用するときに割り振られるIPアドレスのこと。
+                インターネットプロバイダに割り振られているIPアドレスが、インターネットに接続するパソコンなどの機器に割り振られます。
+                プライベートIPアドレスはインターネットのようなグローバルなものではなく、社内LANなど小規模なネットワークで使用されるIPアドレスです。</p>
+                <h4 id="427-グローバルipアドレスの管理者">4.2.7. グローバルIPアドレスの管理者</h4>
+                <p>グローバルIPアドレスは、住んでいる国や使っているプロバイダによってあらかじめ利用できる範囲が決められています。
+                各機関のトップに立って世界中のグローバルIPアドレスを管理しているのがICANNという国際的な機関です。
+                ICANNからまた、細かい組織に順番に割り振りを引き継いでいく形をとっています。</p>
+                <h3 id="43-経路制御ルーティング">4.3. 経路制御(ルーティング)</h3>
+                <h4 id="431-ipアドレスと経路制御">4.3.1. IPアドレスと経路制御</h4>
+                <p>インターネット(IP)は、<strong>経路制御（ルーティング）</strong> というバケツリレーの方式を採用しています。
+                この形式では宛先となるホストまでパケットを送信する時に最適な経路を選択して転送されます。
+                ルーティングは、ルータやL3スイッチなどのレイヤ3で動作するネットワーク機器によって行われます。
+                ルータは最適な経路を決定するためにルーティングテーブルを参照します。ルーティングテーブルは、受信したパケットをどこへ転送するべきかを決定するための宛先ルートの一覧情報です。重要な点は、ルータはルーティングテーブルを参照し、ルーティングの際に受信パケットの<strong>宛先アドレス</strong>を見て転送していること。</p>
+                <img src="https://www.infraexpert.com/studygif/routing.gif" width="80%">
+                
+                <h4 id="432--経路制御表の集約">4.3.2.  経路制御表の集約</h4>
+                <p>経路制御表はTCP/IPネットワークにおいてルータがパケットの転送先を決定するために記録しているネットワークの経路情報の一覧表のことである。
+                ルータに到着したパケットはこの経路制御表に基づいて次のノードへと転送される、宛先アドレスを見て経路が不明なパケットが見つかった場合はルータはパケットをデフォルトゲートウェイに転送する。</p>
+                <h3 id="44-ipの分割処理と再構築処理">4.4. IPの分割処理と再構築処理</h3>
+                <h4 id="441-mtu">4.4.1. MTU</h4>
+                <p>MTU (Maximum Transmission Unit)とは、ノードが隣接したネットワークへ、1回の通信で転送可能な最大のデータグラムサイズです。MTUは物理媒体ごとに異なり、イーサネットのMTUは1500バイトで、光ファイバ（FDDI）は4352バイトとなる。
+                MTUの値を超えたパケットを送信する場合、MTUに合わせてパケットを分割する。この分割作業を「IPフラグメンテーション」と呼び、ルータを経由する際に自動的に行われる。
+                TCP/IPのMTUの最小サイズは576バイトと、Ethernetよりも遥かに小さいサイズが設定されており、IPフラグメンテーションが発生する可能性は高い。</p>
+                <h4 id="442-ipデータグラムの分割処理と再構築処理">4.4.2. IPデータグラムの分割処理と再構築処理</h4>
+                <p>IPパケットの分割をフラグメンテーションといい、送信元のホスト、中継するルータで行われる。
+                実際には通信経路上のルータの負荷を軽減するため、IPパケットのフラグメント化は送信元ホストだけで行われることが多い。このとき分割サイズを決めるのに「経路MTU探索」という技術が使われる。
+                IPパケットの再構築処理をリアセンブルといい、宛先のホストで行われる。</p>
+                <h4 id="443-経路mtu探索">4.4.3. 経路MTU探索</h4>
+                <p>経路MTU探索はパケットを経路途中で分割せずに送れる最大サイズを調べる仕組みである。
+                経路MTU探索によって得られた値を経路MTU（PMTU：Path MTU、パスMTU）と呼び、その値より小さいサイズのパケットなら、経路上のどの回線でも分割（断片化）されないため、効率的にデータ転送を行うことができる。</p>
+                <h3 id="45-ipv6">4.5. IPv6</h3>
+                <h4 id="ipv6の特徴">IPv6の特徴<!-- omit in toc --></h4>
+                <p>IPv6アドレスはIPv4アドレスと同じく、機器そのものにではなく、機器の持つネットワークインタフェースに付与されます。
+                IPv6はIPv4のアドレスの絶対数である約43億個のIPアドレスでは不足することが予測されたため開発されたものです。
+                IPv4が32bit幅なのに対し、IPv6は128bit幅となっており、今後のインターネットの発展による接続機器の増大にも十分に耐えられるよう考慮され設計されました。</p>
+                <h4 id="ipv6でのipアドレスの表記方法">IPv6でのIPアドレスの表記方法<!-- omit in toc --></h4>
+                <p>IPv6アドレスは、128ビットを16ビットずつ8つに“:” (コロン)で区切った数値列を、16進数で表記します。</p>
+                <p>例：2001:0DB8:0:CD30:123:4567:89AB:CDEF/60</p>
+                <h4 id="グローバルユニキャストアドレス">グローバルユニキャストアドレス<!-- omit in toc --></h4>
+                <p>グローバルユニキャストアドレスとは、IPv6アドレスの種類の一つで、インターネット上で一意に識別されるアドレスのこと。最も一般的なアドレス種別で、インターネットで一対一の通信を行うことができる。</p>
+                <h4 id="リンクローカルユニキャストアドレス">リンクローカルユニキャストアドレス<!-- omit in toc --></h4>
+                <p>リンクローカルユニキャストアドレスとは、IPv6アドレスの種類の一つで、同一セグメント上の端末と通信する場合に使用するアドレスのこと。ルータを超えた通信は行うことができない。</p>
+                <h4 id="ユニークローカルアドレス">ユニークローカルアドレス<!-- omit in toc --></h4>
+                <p>IPv4のプライベートIPアドレスに相当する。異なるセグメント上の端末と通信できるが組織内ネットワークでのみ有効なアドレス。</p>
+                <h2 id="5-ipに関する技術">5. IPに関する技術</h2>
+                <h3 id="51-dnsdomain-name-sysytem">5.1. DNS(Domain-Name-Sysytem)</h3>
+                <p>DNSとは、インターネットなどのIPネットワーク上でドメイン名（ホスト名）とIPアドレスの対応関係を管理するシステム。
+                利用者が単なる番号列であるIPアドレスではなく、日常使っている言語の文字を組み合わせた認識しやすいドメイン名でネットワーク上の資源にアクセスできるようにする仕組みである。
+                各ドメイン名について、ホスト名とIPアドレスの対応関係や管理情報などを記録し、一定の通信手順に基づいてどこからでも容易に参照できるようにした世界規模の世界規模の分散型データベースがDNSであると言える。</p>
+                <img src="https://www.cpi.ad.jp/dns/images/img_dns.png" width="80%">
+                
+                <h3 id="52-arpaddress-resolution-protocol">5.2. ARP(Address-Resolution-Protocol)</h3>
+                <p>　ARPは、IPアドレスからEthernetのMACアドレスの情報を得られるプロトコルです。
+                 LANに接続されたコンピュータ間で通信するためには、IPパケットは下位のレイヤでL2ヘッダが付加された上で伝送されることからMACアドレスの情報が必要となります。しかしこれらのIPアドレスとMACアドレスは自動的な関連づけがないので、ARPでMACアドレスを得る必要があります。</p>
+                <p>ARPには<strong>ARPリクエストとARPリプライ</strong>という2種類のパケットがあります。ARPは、これら2種類のパケットを利用し、宛先となるIPアドレスを持つノードのMACアドレスの情報を得ます。</p>
+                <h3 id="53-icmpinternet-control-message-protocol">5.3. ICMP(Internet-Control-Message-Protocol)</h3>
+                <p>ICMPは、IPプロトコルのエラー通知や制御メッセージを転送するためのプロトコルです。
+                TCP/IPが実装されたコンピュータ間で、通信状態を確認するために使用されます。
+                よくあるpingコマンドも<strong>ICMPプロトコルを利用したネットワーク疎通診断プログラム</strong>です。</p>
+                <h3 id="54-dhcpdynamic-host-configuration-protocol">5.4. DHCP(Dynamic-Host-Configuration-Protocol)</h3>
+                <p>DHCPとは、インターネットなどのIPネットワークに新たに接続した機器に、IPアドレスなど通信に必要な設定情報を自動的に割り当てるためのプロトコルです。
+                一般にIPv4での通信を行う際には、個々のホストに最低でも自身のIPv4アドレス、 サブネットマスク、デフォルトゲートウェイ、DNSサーバのアドレスを設定する必要がありますが、DHCPを利用すると、個々のホストはDHCPサーバに問い合わせをすることで各種設定に必要な情報を入手して自動的に設定を行えるようになります。</p>
+                <h3 id="55-natnetwork-address-translator">5.5. NAT(Network-Address-Translator)</h3>
+                <p>NATは<strong>IPアドレスを変換する技術</strong>です。一般的には、プライベートIPアドレスをグローバルIPアドレスに変換する技術です。NATでは一般的にIPパケットのヘッダ内にある送信元IPアドレスを変換します。</p>
+                <p>NATは「動的NAT」「動的NAPT」「静的NAT」「静的NAPT」の4種類に分けられます。
+                「動的NAT」とは、NATプールと言う変換後アドレスリストを使用し、送信元IPアドレスを未使用アドレスに変換することです。NATプールを使い切った後は、クライアントは接続できなくなります。
+                「動的NAPT」は、送信元IPアドレスを、グローバルIPアドレスに変換することです。送信元のポート番号を、使用していないポート番号に変換します。大企業や一般家庭でも使う一般的な方法です。
+                「静的NAT」はIPアドレス1つを、別のIPアドレス１つに変えています。具体的にはグローバルIPをプライベートIPに変換することです。
+                「静的NAPT」は、IPアドレス１つに対して、別のIPアドレスとポート番号に変えられます。ポート番号を指定する必要があり、番号に対して１対１で変換する決まりです。</p>
+                <h3 id="56-ipトンネリング">5.6. IPトンネリング</h3>
+                <p>IPトンネリングはVPNなどにおいて通信プロトコルをカプセル化して他のプロトコルのデータとして通信する技術です。
+                カプセル化すると同時にセキュリティを高める。IPを使用して到達可能な2つのノード間で仮想リンクを提供します。</p>
+                <h2 id="6-tcpip">6. TCP/IP</h2>
+                <h3 id="61-トランスポート層">6.1. トランスポート層</h3>
+                <p>この層では、TCPまたはUDPのプロトコルを使用します。TCPを使用する場合、信頼性の高い通信を実現して
+                UDPを使用する場合、信頼性ではなく効率重視のデータ転送を実現することになります。</p>
+                <p>トランスポート層で使用されるTCPとUDPはクライアントとサーバ間での通信チャネルの提供、通信管理を行うプロコトルである。
+                通信チャネルというのはいわゆる “ポート” というもので、1 番から 65535 番までの番号が使用できます。同じ IP アドレスであってもTCPやUDPのポートが異なれば、提供されるサービスが異なります。</p>
+                <h3 id="62-ポート番号">6.2. ポート番号</h3>
+                <p>ポート番号とは、TCP/IP通信において、 コンピュータが通信に使用するプログラムを識別するための番号です。
+                ポート番号は16ビットの整数であり0番～65535番まであります。</p>
+                <p>ポート番号の範囲</p>
+                <table>
+                <thead>
+                <tr>
+                <th>名称</th>
+                <th>番号範囲</th>
+                <th>意味</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>ウェルノウンポート</td>
+                <td>0-1023</td>
+                <td>サーバアプリ用に予約されているポート番号</td>
+                </tr>
+                <tr>
+                <td>登録済みポート</td>
+                <td>1024～49151</td>
+                <td>利用されるアプリケーションのサーバ側のポート番号</td>
+                </tr>
+                <tr>
+                <td>ダイナミック/プライベートポート</td>
+                <td>49152-65535</td>
+                <td>クライアントアプリケーション用のポート番号(誰でも設定できるポート)</td>
+                </tr>
+                </tbody></table>
+                <p>ウェルノウンポート番号は、あらかじめ決められています。サーバアプリケーションを起動すると、ウェルノウンポート番号でクライアントアプリケーションからの要求を待ち受けます。</p>
+                <p>ウェルノウンポート番号の表</p>
+                <table>
+                <thead>
+                <tr>
+                <th>プロトコル</th>
+                <th>TCP</th>
+                <th>UDP</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>HTTP</td>
+                <td>80</td>
+                <td>ー</td>
+                </tr>
+                <tr>
+                <td>HTTPS</td>
+                <td>442</td>
+                <td>ー</td>
+                </tr>
+                <tr>
+                <td>SMTP</td>
+                <td>25</td>
+                <td>ー</td>
+                </tr>
+                <tr>
+                <td>DNS</td>
+                <td>53</td>
+                <td>53</td>
+                </tr>
+                <tr>
+                <td>FTP</td>
+                <td>20/21</td>
+                <td>ー</td>
+                </tr>
+                <tr>
+                <td>DHCP</td>
+                <td>ー</td>
+                <td>67/68</td>
+                </tr>
+                <tr>
+                <td>SSH</td>
+                <td>22</td>
+                <td>ー</td>
+                </tr>
+                </tbody></table>
+                <h3 id="63-udpuser-datagram-protocol">6.3. UDP(User-Datagram-Protocol)</h3>
+                <p>UDPはTCPと比べて信頼性が高くはないが速さやリアルタイム性を求める通信に使用されるプロトコルである。
+                またUDPヘッダサイズ（8byte）が少ない事からその分アプリケーションのデータを多く送受信することができます。</p>
+                <p><strong>UDPの用途</strong></p>
+                <p>①音声や映像などのリアルタイム性のあるデータの転送</p>
+                <p>②複数の相手に同じデータを同時に転送する場合</p>
+                <p>③信頼性が必要なく少量のデータ転送をしたい場合</p>
+                <h3 id="64-tcptransmission-control-protocol">6.4. TCP(Transmission-Control-Protocol)</h3>
+                <p>TCPは高信頼性(3wayハンドシェイクによる通信前の打診、ACKによる相手の受信確認や再送処理等)や通信効率の最適化機能(Windowによるフロー制御や輻輳制御)を提供します。そのためUDPと比べて負荷がかかります。</p>
+                <h3 id="65-その他のトランスポートプロトコル">6.5. その他のトランスポートプロトコル</h3>
+                <table>
+                <thead>
+                <tr>
+                <th>プロトコル</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>QUIC</td>
+                <td>UDPを用いて高速化しつつTCPのような通信の信頼性を提供するトランスポートプロトコル</td>
+                </tr>
+                <tr>
+                <td>SCTP</td>
+                <td>TCPとUDPの中間的な性質と独特の仕様や機能を併せ持っているプロトコル</td>
+                </tr>
+                <tr>
+                <td>UDP-Lite</td>
+                <td>UDP-LiteはUDP(RFC 768)の拡張で可変長のチェックサムをサポートしている</td>
+                </tr>
+                </tbody></table>
+                <h2 id="7-経路制御プロトコル">7. 経路制御プロトコル</h2>
+                <h3 id="71-ルーティング">7.1. ルーティング</h3>
+                <h3 id="72-経路制御の範囲">7.2. 経路制御の範囲</h3>
+                <h3 id="73-経路制御アルゴリズム">7.3. 経路制御アルゴリズム</h3>
+                <h3 id="74-riprouting-information-protocol">7.4. RIP(Routing-Information-Protocol)</h3>
+                <h3 id="75-ospfopen-shortest-path-first">7.5. OSPF(Open-Shortest-Path-First)</h3>
+                <h3 id="76-bgpborder-gateway-protocol">7.6. BGP(Border-Gateway-Protocol)</h3>
+                <h3 id="77-mplsmulti-protocol-label-switching">7.7. MPLS(Multi-Protocol-Label-Switching)</h3>
+                <h2 id="8-アプリケーションプロトコル">8. アプリケーションプロトコル</h2>
+                <h3 id="81-アプリケーションプロトコル概要">8.1. アプリケーションプロトコル概要</h3>
+                <p>アプリケーションプロトコルは具体的な用途やソフトウェア、サービスなどの種類に応じて個別に制定されたプロトコルの分類。</p>
+                <img src="http://peace3110.oops.jp/wp-content/uploads/2017/07/Untitled33-300x165.png" width="40%">
+                
+                <h3 id="82-遠隔ログインsshとtelnet">8.2. 遠隔ログイン(SSHとTELNET)</h3>
+                <h4 id="821-telenet">8.2.1. Telenet</h4>
+                <p>Telnetはネットワークに接続された機器を遠隔操作するために使用するアプリケーション層プロトコル。
+                クラウド上にあるサーバやルータ等の機器をパソコン上で操作できます。
+                TelnetクライアントがTelnetサーバにアクセスする際、宛先ポート番号にTCPポート番号23を使用します。</p>
+                <h4 id="822-ssh">8.2.2. SSH</h4>
+                <p>SSH(Secure SHell)とはネットワークに接続された機器を遠隔操作するために使用するアプリ層のプロトコルです。
+                ネットワークに接続された機器を遠隔操作するために使用するアプリ層のプロトコルです。
+                Telnetの場合パスワード情報を含め全てのデータが暗号化されずに送信されるのに対して、SSHではパスワード情報を含めて全てのデータが暗号化されて送信されます。
+                SSHクライアントがSSHサーバにアクセスする際、宛先ポート番号としてTCPのポート番号22を使用。</p>
+                <p><strong>SSHの種類</strong></p>
+                <table>
+                <thead>
+                <tr>
+                <th>Version</th>
+                <th>認証方式</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>SSH1</td>
+                <td>RSA公開鍵暗号</td>
+                <td>UDPを用いて高速化しつつTCPのような通信の信頼性を提供するトランスポートプロトコル</td>
+                </tr>
+                <tr>
+                <td>SSH2</td>
+                <td>DSA公開鍵暗号</td>
+                <td>TCPとUDPの中間的な性質と独特の仕様や機能を併せ持っているプロトコル</td>
+                </tr>
+                </tbody></table>
+                <p>SSH1に比較してSSH2の方がより安全性が高いという違いがあります。</p>
+                <h3 id="83-ファイル転送ftp">8.3. ファイル転送(FTP)</h3>
+                <p>FTPとは「File Transfer Protocol」のことでありファイルを転送するための通信規格です。
+                クライアントとサーバ間でファイルのアップロードやダウンロードを行うときに使われるプロトコルです。
+                <img src="https://static.it-trend.jp/article/img/file_transfer_104-0004_1.png" width="70%"></p>
+                <p>FTPはPIとDTPの２つのプログラムが使われています。
+                PIはProtocol Interpreterの略でコマンドの指示をプロトコルに合わせて変換するものです。
+                DTPはData Transfer Processの略でデータを転送するプロセスのことです。</p>
+                <p>FTPはクライアントとサーバ間でファイル転送のやり取りを行いますが、その通信は暗号化されていません。
+                SSHというプロトコルを使って暗号化された通信を利用するSFTPであれば安全性が高いです。</p>
+                <h3 id="84-電子メールmimesmtppopimap">8.4. 電子メール(MIME,SMTP,POP,IMAP)</h3>
+                <h4 id="mimemultipurpose-internet-mail-extensions">MIME(Multipurpose Internet Mail Extensions)<!-- omit in toc --></h4>
+                <p>MIMEはSMTPに加えて設定されるメッセージ送信標準のひとつでEメールに画像、動画、音声などのファイルを添付できる機能のためのプロトコル。
+                MIMEではメールヘッダ中で内容のデータ型を指定するための標準形式であるMIMEタイプ（メディアタイプ）を定めており、“Content-Type:” ヘッダの中で「type/subtype」の形式でデータ形式を指定する。例えば、プレーンテキストは「text/plain」、HTML文書は「text/html」、JPEG画像は「image/jpeg」などと定められている。この仕組みはHTTPなどにも流用され、伝送内容のメディアの種類やデータ形式を指定する標準として広く用いられている。</p>
+                <h4 id="smtp">SMTP<!-- omit in toc --></h4>
+                <p>SMTP(Simple Mail Transfer Protocol)は電子メール(eメール)を送信、転送するための通信手順(プロトコル)。
+                SMTPは標準ではTCPの25番ポートを用いるが、インターネットサービスプロバイダ（ISP）などのSMTPサーバでは登録利用者以外の不正利用を防止するため、利用者からの接続に専用のポートを利用する。標準ではTCPの587番ポートが用いられ、これを「サブミッションポート」などと呼ぶ。
+                SMTPサーバはメールアドレスの「@」以降の部分であるドメイン名ごとに存在し（複数のドメインの管理を一台が兼ねる場合もある）、送信者は自分のアドレスのドメインを管理するSMTPサーバにアクセスしてメールを送信する。サーバは受け取ったメールの宛先のアドレスを見て、宛先のドメインを管理するSMTPサーバにメールを転送する。</p>
+                <h3 id="85-wwwworld-wide-web">8.5. WWW(World-Wide-Web)</h3>
+                <p>WWWはインターネットを通じて公開されたウェブページが相互に接続されたシステムのことです。
+                WWWはHTMLと呼ばれるマークアップ言語やURI(Uniform Resource Identifier)などで構成されている。</p>
+                <h3 id="86-ネットワーク管理snmp">8.6. ネットワーク管理(SNMP)</h3>
+                <p>SNTPとはTCP/IPネットワークを通じて現在時刻の情報を送受信してコンピュータの時刻を合わせるためのプロトコル(通信規約)。
+                クライアントから時刻サーバ(タイムサーバ)へ接続し、現在の時刻を問い合わせる用途に特化しておりパソコンなどの時刻同期ソフトウェアの多くはNTPではなくSNTPを利用してサーバとの通信を行う。</p>
+                <h2 id="9-セキュリティ">9. セキュリティ</h2>
+                <h3 id="91-セキュリティの重要性">9.1. セキュリティの重要性</h3>
+                <p>サイバーセキュリティはデジタル化された情報の改ざんや漏えいを防ぐ手段である。
+                情報セキュリティの3要素である「CIA」の“脅威となる原因”に対処します。</p>
+                <p>情報セキュリティの3要素である「CIA」を脅かす脅威は以下なようなものがあります。</p>
+                <ul>
+                <li>コンピューターウィルス</li>
+                <li>外部からの不正アクセス</li>
+                <li>内部からの不正アクセス</li>
+                <li>ソフトウェアの脆弱性</li>
+                <li>ネットワークセキュリティの脆弱性</li>
+                <li>ID/パスワードの漏えい</li>
+                <li>従業員などによる情報の持ち出し</li>
+                </ul>
+                <h3 id="92-セキュリティの構成要素">9.2. セキュリティの構成要素</h3>
+                <h4 id="921-ファイヤーウォール">9.2.1. ファイヤーウォール</h4>
+                <p>ファイアウォールはネットワークの通信において、その通信をさせるかどうかを判断し許可するまたは拒否する仕組みです。
+                その通信をどう扱うかの判断は通信の送信元とあて先の情報を見て決めており、通信の内容は見ていません。</p>
+                <p>企業などのネットワークに使用するファイアウォールはインターネットと社内のLANとの間に設置するものです。
+                この場合のファイアウォールの基本的な機能は外部からの不正なアクセスを社内のネットワークに侵入させないことです。
+                具体的には外部からの不正なパケットを遮断する機能や、許可されたパケットだけを通過させる機能を持っています。</p>
+                <h4 id="922-idsips侵入検知システム侵入防止システム">9.2.2. IDS/IPS(侵入検知システム/侵入防止システム)</h4>
+                <p>IDSが検知した結果を通知するまでなのに対しIPSは必要に応じて通信を遮断する防御機能を有している点に違いがあります。</p>
+                <img src="https://cybersecurity-jp.com/wp-content/uploads/2021/07/img_56491_11_02.jpg" width="80%">
+                
+                <p><strong>IDS(Intrusion Detection System)</strong></p>
+                <p>IDSはネットワーク上の通信を監視して不正なアクセスやその兆候を検知し管理者などに通知するシステムである。
+                <strong>IPS(Intrusion Prevention System)</strong></p>
+                <p>IPSはネットワーク上の通信を監視して不正なアクセスをブロックするシステムである。</p>
+                <p>IDS/IPSはシステム障害の未然防止に役立ちます。
+                DoS/DDoS攻撃やSynフラッド攻撃、バッファーオーバーフロー攻撃といった、OS/Webサーバーの脆弱性を突いた攻撃や負荷を掛ける攻撃への対策として有効です。</p>
+                <p>またIDS/IPSは「検知方法」と「監視対象」ごとに2つの種類があります。</p>
+                <ul>
+                <li>検知方法</li>
+                </ul>
+                <p>IDS/IPSの検知方法はシグネチャ型とアノマリ型の2種類に分けられます。
+                シグネチャ型とは不正なパターンをあらかじめ登録しパターンと合致する通信のみを検知する手法です。
+                誤検知は少ないですが、未知のパターンには対応できません。
+                アノマリ型とは正常なパターンを登録し未登録パターンの通信をすべて検知する手法です。
+                未知の不正通信も防げる一方でシグネチャ型よりも誤検知が多い傾向があります。</p>
+                <ul>
+                <li>監視対象</li>
+                </ul>
+                <p>IDS/IPSの監視対象はネットワーク型とホスト型の2つに分かれます。
+                ネットワーク型のIDS/IPSはネットワーク上に設置しネットワーク内を通るデータを監視します。監視対象になるのはIDS/IPSを設置したネットワークのみです。
+                ホスト型は監視対象のサーバーに設置するIDS/IPSです。サーバーに直接インストールするので不正侵入検知の他にサーバー内の不審な動きやファイル改ざんの監視も行います。</p>
+                <h4 id="923-パーソナルファイアウォール">9.2.3. パーソナルファイアウォール</h4>
+                <p>パーソナルファイアウォールとはパソコンにインストールするタイプのファイアウォールです。
+                パーソナルファイアウォールはハードウェアだったファイアウォールの機能を個々のパソコンにインストールして動作させます。</p>
+                <p>パーソナルファイアウォールにはパケット整合性管理（ステートフル・インスペクション）の機能を兼ね備えています。これはパソコンからインターネットへ向けて送信されたパケットを記録しておき、インターネットから戻ってきたパケットを照合します。</p>
+                <h3 id="93-暗号化技術基礎">9.3. 暗号化技術基礎</h3>
+                <h4 id="931-共通鍵暗号方式と公開鍵暗号方式">9.3.1. 共通鍵暗号方式と公開鍵暗号方式</h4>
+                <p>暗号化方式には<strong>共通鍵暗号</strong>と<strong>公開鍵暗号</strong>の2つがあります。</p>
+                <ul>
+                <li>共通鍵暗号</li>
+                </ul>
+                <p>共通鍵暗号では暗号化と復号に同じ鍵を使用します。共通鍵暗号で使用するアルゴリズムには「RC4、DES、3DES、AES」などがあります。
+                現在主流な暗号化方式は「<strong>AES</strong>」です。AESは無線LANのWPA2でも採用されている暗号化方式です。
+                共通鍵暗号では通信接続先ごとに共通鍵を生成する必要があり、また鍵交換を盗聴されないよう安全に行う必要があります。</p>
+                <p>メリット：ファイルやデータの暗号化にかかる処理速度が早い</p>
+                <p>デメリット：データを送る人の数だけ管理する鍵が増える。送信した鍵が第三者に盗まれる危険がある</p>
+                <ul>
+                <li>公開鍵暗号</li>
+                </ul>
+                <p>公開鍵暗号では暗号化と復号に別の鍵を使用します。暗号化に使用する鍵は<strong>公開鍵</strong>と言い、復号に使用する鍵は<strong>秘密鍵</strong>と言います。
+                公開鍵暗号では受信者側にて公開鍵と秘密鍵を生成します。暗号データは秘密鍵でしか復号することができません。
+                公開鍵だけを送信側の暗号鍵として公開して、その公開鍵で暗号化されたデータを秘密鍵を使用して復号します。
+                公開鍵暗号で使用するアルゴリズムには<strong>RSA</strong>とElGamalがあります。</p>
+                <p>メリット：作る鍵が1つで済むので管理が楽。鍵を盗まれる危険がない</p>
+                <p>デメリット：データの暗号化にかかる処理速度が遅い</p>
+                <img src="https://www.infraexpert.com/studygif/security12x.gif" width="50%">
+                
+                <h4 id="932-認証技術">9.3.2. 認証技術</h4>
+                <p><strong>パスワード認証</strong></p>
+                <p>ユーザーを「ID」と「パスワード」により認証するもので、インターネットの初期から使われている認証方式です。
+                ほかの認証方式に比べて突破しやすいため、パスワード認証方式を対象とするサイバー攻撃は数多くあります。</p>
+                <p>パスワードの設定時に、「英字（大文字／小文字）、数字、記号を混在させること」、「6文字以上にすること」などの規定を設けて、複雑なパスワードの設定を促します。単純なパスワードを使えなくすることでブルートフォースアタックを防ぎ、認証を強化します。</p>
+                <ul>
+                <li>パスワード認証に関連する技術</li>
+                </ul>
+                <table>
+                <thead>
+                <tr>
+                <th>名称</th>
+                <th>内容</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>PINコード</td>
+                <td>いわゆる暗証番号で「数桁の数字の組み合わせ」を認証に利用します。突破されやすいため他の認証を組み合されます。</td>
+                </tr>
+                <tr>
+                <td>ワンタイムパスワード</td>
+                <td>1回しか使えないパスワードです。流出しても再利用はできないため不正アクセスを防ぐことができます。</td>
+                </tr>
+                <tr>
+                <td>ニーモニック認証</td>
+                <td>写真の組み合わせを使った認証方式です。</td>
+                </tr>
+                <tr>
+                <td>秘密の質問</td>
+                <td>あらかじめ決めておいた質問とその回答による認証方式です。</td>
+                </tr>
+                </tbody></table>
+                <p><strong>CAPTURE認証</strong></p>
+                <p>CAPTURE認証はコンピューター(プログラム)と人間を識別するためのテストです。
+                画面に「判別しにくい歪んだ文字列の画像」を表示しその文字を入力させるのが代表的です。パズルを完成させるケースもあります。
+                近年ではAIが歪んだ文字列を認識できるようになっているためあまり使われなくなってきました。</p>
+                <p><strong>SNS認証</strong></p>
+                <p>SNSのアカウントを利用して認証します。Facebook、Twitterなどのアカウントで他のWebサイトにログインできるようになります。
+                「OpenID」という認証を行うためのプロトコルや、「<strong>OAuth</strong>」と呼ばれる別のサービスに特定の権限のみ与える仕組みを利用して実装されます。</p>
+                <p><strong>生体認証</strong></p>
+                <p>生体そのものが持っている特徴を利用して本人確認を行う認証を指します。
+                指紋認証、顔認証、虹彩認証など様々な種類があるため、パスワード認証と比べると盗用のリスクが低くユーザーはIDやパスワードを覚えたり、カードを持ち歩いたりする必要が無いので利便性も高くなります。
+                しかしけがや事故により認証できなくなる可能性があります。</p>
+                <p><strong>その他の認証</strong></p>
+                <p>・リスクベース認証</p>
+                <p>普段とは異なる端末やブラウザからアクセスした際に、通常の端末やブラウザにアラートを発信する認証方式です。普段使用していない環境からのアクセスにアラートを出すことで、「不正アクセス」や「なりすまし」に気づきやすくなります。</p>
+                <p>・プッシュ通知</p>
+                <p>パソコンで認証するだけでなく、SMS（ショートメッセージサービス）やモバイルアプリへのプッシュ通知を併用することで二段階認証を実現し、より強固な認証になります。</p>
+                <h3 id="94-セキュリティのためのプロトコル">9.4. セキュリティのためのプロトコル</h3>
+                <h4 id="ipsecとvpn">IPsecとVPN</h4>
+                <p><strong>IPsec(Security Architecture for Internet Protocol)</strong> は暗号化によってパケットの秘匿や改ざん検知を実現するプロトコルです。
+                これは公共ネットワーク上で送信されるデータを安全に保つために使用されます。</p>
+                <p><strong>VPN(Virtual Private Network)</strong> は2台以上のコンピュータ間で行われる暗号化接続です。
+                VPN接続は公共のネットワークを通して行われますが、VPN上でやり取りされるデータは暗号化され秘匿化されたものです。</p>
+                <p><strong>IPsec VPN</strong></p>
+                <p>IPsec VPNとはIPsecを使ったVPNで構築される専用回線のことである。</p>
+                <h4 id="934-tlssslとhttps">9.3.4. TLS/SSLとHTTPS</h4>
+                <p><strong>SSL(Secure Socket Layer)</strong> はインターネット上でデータを暗号化して送受信する暗号化プロトコルである。
+                WEBサイトの今見ているページがSSL化されているかどうかは、URLが「http」ではなく「https」になっているかどうかで見分けることができます。</p>
+                <img src="https://www.idcf.jp/rentalserver/aossl/wp-content/uploads/about-https-01.png" width="80%">
+                
+                <p><strong>TLS(Transport Layer Security)</strong> は重大な脆弱性が見つかった旧来のSSLを設計し直した新しい仕組み(SSLの次世代規格)の暗号化プロトコルである。
+                現在、実際に用いられてSSLと呼ばれている暗号化技術のほとんどは実は『TLS』である場合が多いです。</p>
+                <p>HTTPSはHTTPで行われるWeb通信に「SSL/TLS」を加えてウェブ上で安全に情報交換する仕組みにしたものである。</p>
+                <h4 id="ieee8021x">IEEE802.1X</h4>
+                <p>IEEE802.1Xとは、有線LANや無線LANにおけるユーザ認証の規格である。
+                IEEE802.1X認証を行うためにはサプリカント、認証装置、認証サーバの3つの構成要素が必要となります。</p>
+                
+
+                <!-- END -->
+
+            </main>
+            <footer class="footer mt-auto py-3 bg-light">
+                <div class="container">
+                    <p class="text-muted text-center">Written by ゆーろん / yuron3141</p>
+                </div>
+            </footer>
+        </body>
+    </body>
+</html>

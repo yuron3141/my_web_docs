@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="Ja">
+    <head>
+        <title>ゆーろんのWeb系の学習資料　|　JavaScript基礎(メモ)</title>
+        <!-- OGP -->
+        <head prefix="og: https://ogp.me/ns#">
+        <meta property="og:url" content="https://yuron3141.github.io/my_web_docs/" />
+        <meta property="og:type" content="Blog" />
+        <meta property="og:title" content="JavaScript基礎(メモ)" />
+        <meta property="og:description" content="ゆーろんのWeb系学習資料です。皆さんの開発のために役立つことを祈っています。" />
+        <meta property="og:site_name" content="ゆーろんアカデミー　ノート支部" />
+        <!-- DOCUMENTS STYLE -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <!-- ORIGINAL CSS -->
+        <link rel="stylesheet" href="../css/style.css" type="text/css">
+    </head>
+    <body>
+        <body class="d-flex flex-column h-100">
+            <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
+                <div>
+                    <h1 class="m-3">JavaScript基礎(メモ)</h1>
+                </div>
+            </header>
+            <main class="m-4">
+
+                <!-- Write Text Here-->
+
+                <p>JavaScript(ES2015以降)に関して。</p>
+                <p>基本はこのドキュメントと参照URLを参照し、気になる実装方法やメモがあれば追記します。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>詳細</th>
+                <th>URL</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>MDN JavaScript ガイド</td>
+                <td><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Guide">https://developer.mozilla.org/ja/docs/Web/JavaScript/Guide</a></td>
+                </tr>
+                <tr>
+                <td>JavaScript Primer</td>
+                <td><a href="https://jsprimer.net/basic/">https://jsprimer.net/basic/</a></td>
+                </tr>
+                </tbody></table>
+                <h2 id="目次">目次<!-- omit in toc --></h2>
+                <ul>
+                <li><a href="#1-%E3%82%88%E3%81%8F%E4%BD%BF%E3%81%84%E3%81%8C%E3%81%A1%E3%81%AA%E9%85%8D%E5%88%97%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89">1. よく使いがちな配列メソッド</a><ul>
+                <li><a href="#11-map">1.1. map</a></li>
+                <li><a href="#12-filter">1.2. filter</a></li>
+                <li><a href="#13-foreach">1.3. forEach</a></li>
+                <li><a href="#14-some">1.4. some</a></li>
+                <li><a href="#15-every">1.5. every</a></li>
+                <li><a href="#16-reduce">1.6. reduce</a></li>
+                <li><a href="#17-includes">1.7. includes</a></li>
+                <li><a href="#18-concat">1.8. concat</a></li>
+                <li><a href="#19-entries">1.9. entries</a></li>
+                <li><a href="#110-fill">1.10. fill</a></li>
+                <li><a href="#111-find">1.11. find</a></li>
+                <li><a href="#112-flat">1.12. flat</a></li>
+                <li><a href="#113-indexof">1.13. indexof</a></li>
+                <li><a href="#114-join">1.14. join</a></li>
+                </ul>
+                </li>
+                <li><a href="#2-json%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89">2. JSONメソッド</a><ul>
+                <li><a href="#21-jsonparse">2.1. JSON.parse()</a></li>
+                <li><a href="#22-jsonstringify">2.2. JSON.stringify()</a></li>
+                </ul>
+                </li>
+                <li><a href="#3-%E5%90%8C%E6%9C%9F%E9%9D%9E%E5%90%8C%E6%9C%9F%E9%96%A2%E9%80%A3">3. 同期・非同期関連</a><ul>
+                <li><a href="#31-javascript%E3%81%AE%E5%90%8C%E6%9C%9F%E9%9D%9E%E5%90%8C%E6%9C%9F%E3%81%AE%E6%89%B1%E3%81%84">3.1. JavaScriptの同期・非同期の扱い</a></li>
+                <li><a href="#32-promise">3.2. Promise</a><ul>
+                <li><a href="#321-promise%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89all-race-allsettled-any">3.2.1. Promiseメソッド(all, race, allSettled, any)</a></li>
+                </ul>
+                </li>
+                <li><a href="#33-asyncawait">3.3. async/await</a></li>
+                <li><a href="#34-%E4%BE%8B%E5%A4%96%E5%87%A6%E7%90%86try-catch">3.4. 例外処理(try, catch)</a></li>
+                </ul>
+                </li>
+                <li><a href="#4-%E3%81%9D%E3%81%AE%E4%BB%96%E5%AE%9F%E8%A3%85%E6%B3%A8%E6%84%8F">4. その他実装注意</a><ul>
+                <li><a href="#41-%E5%B0%8F%E6%95%B0%E3%81%AE%E6%95%B4%E6%95%B0%E5%8C%96%E3%81%AB%E3%81%AFmathtrunc%E3%82%92%E4%BD%BF%E7%94%A8%E3%81%9B%E3%82%88">4.1. 小数の整数化にはMath.truncを使用せよ</a><ul>
+                <li><a href="#411-parseint%E3%81%AE%E4%BB%A3%E3%82%8F%E3%82%8A%E3%81%ABmathtrunc%E3%82%92">4.1.1. parseIntの代わりにMath.truncを</a></li>
+                <li><a href="#412-parsefloat%E3%81%AE%E4%BB%A3%E3%82%8F%E3%82%8A%E3%81%ABnumber%E3%82%92">4.1.2. parseFloatの代わりにNumber()を</a></li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                </ul>
+                <h2 id="1-よく使いがちな配列メソッド">1. よく使いがちな配列メソッド</h2>
+                <h3 id="11-map">1.1. map</h3>
+                <p>与えられた関数を<strong>配列のすべての要素に対して呼び出し</strong>、その結果からなる<strong>新しい配列を生成</strong>します。
+                =&gt; <strong>元の配列の内容から新しい配列を作りたいときに使用</strong></p>
+                <h4 id="例">例<!-- omit in toc --></h4>
+                <pre><code class="language-js">const array1 = [1, 4, 9, 16];
+                
+                // pass a function to map
+                const map1 = array1.map(x =&gt; x * 2);
+                
+                console.log(map1);
+                // expected output: Array [2, 8, 18, 32]
+                </code></pre>
+                <h3 id="12-filter">1.2. filter</h3>
+                <p>引数として与えられたテスト関数を各配列要素に対して実行し、それに合格したすべての配列要素からなる新しい配列を生成します。
+                =&gt; <strong>元の配列に対して、条件を満たした要素のみの配列にしたい場合に使用</strong></p>
+                <pre><code class="language-js">const items = [
+                  { name: &#39;Bike&#39;, price: 100 },
+                  { name: &#39;TV&#39;, price: 200 },
+                  { name: &#39;Album&#39;, price: 10 },
+                  { name: &#39;Book&#39;, price: 5 },
+                  { name: &#39;Phone&#39;, price: 500 },
+                  { name: &#39;Computer&#39;, price: 1000 },
+                  { name: &#39;Keyboard&#39;, price: 25 },
+                ]
+                
+                //filterメソッド
+                const filterdItems = items.filter((item) =&gt; {
+                  return item.price &lt;= 100
+                })
+                console.log(filterdItems)
+                </code></pre>
+                <h3 id="13-foreach">1.3. forEach</h3>
+                <p>与えられた関数を、配列の各要素に対して一度ずつ実行します。
+                配列の1つ1つの要素に対して処理したい(独立処理)ものを中に記述します。(<strong>配列の中身の値変換では使わない(&lt;=これはmapで行う)</strong>)</p>
+                <h3 id="14-some">1.4. some</h3>
+                <p>配列の<strong>少なくとも 1 つの要素</strong>が渡された関数によって実施されるテストに通るかどうかをテストします。
+                返り値は<code>真偽値(true/false)</code>。
+                =&gt; その配列の中身が条件を満たしているかを調べるのに使用</p>
+                <pre><code class="language-js">const checkArrayHaveitem = array.some((item) =&gt; {
+                  return item.exist === true;
+                })
+                //array中のobjectのexistキーにtrueが1つでもあれば、この場合はtrueを返す
+                </code></pre>
+                <h3 id="15-every">1.5. every</h3>
+                <p>与えられた関数によって実行されるテストに、配列の<strong>すべての要素</strong>が通るかどうかをテストします。
+                everyは最低1つだが、everyは全て。</p>
+                <h3 id="16-reduce">1.6. reduce</h3>
+                <p>配列の各要素に対して（引数で与えられた）reducer 関数を実行して、単一の値にします。
+                =&gt; <strong>配列内のすべての値に対して演算して、新しい値(単一の値)を得たいときに使用</strong></p>
+                <pre><code class="language-js">const array1 = [1, 2, 3, 4];
+                
+                // 0 + 1 + 2 + 3 + 4
+                const initialValue = 10;
+                const sumWithInitial = array1.reduce(
+                  (accumulator, currentValue) =&gt; accumulator + currentValue,
+                  initialValue
+                );
+                
+                console.log(sumWithInitial);
+                // expected output: 10
+                </code></pre>
+                <h3 id="17-includes">1.7. includes</h3>
+                <p>特定の要素が配列に含まれているかどうかを true または false で返します。
+                =&gt; <strong>配列に特定の値が含まれているか調べたいときに使用</strong></p>
+                <pre><code class="language-js">const numbers = [1, 2, 3, 4, 5]
+                
+                // includesメソッド
+                const includesNumber = numbers.includes(7)
+                console.log(includesNumber)
+                // false
+                </code></pre>
+                <h3 id="18-concat">1.8. concat</h3>
+                <p>2 つ以上の配列を結合するために使用します。
+                このメソッドは<strong>既存の配列を変更せず、新しい配列を返します</strong>。</p>
+                <pre><code class="language-js">const array1 = [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;];
+                const array2 = [&#39;d&#39;, &#39;e&#39;, &#39;f&#39;];
+                const array3 = array1.concat(array2);
+                
+                console.log(array3);
+                // expected output: Array [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;]
+                </code></pre>
+                <h3 id="19-entries">1.9. entries</h3>
+                <p>配列内の各要素に対する<strong>キー/値のペアを含む新しい Array 反復子オブジェクト</strong>を返します。</p>
+                <pre><code class="language-js">const array1 = [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;];
+                
+                const iterator1 = array1.entries();
+                
+                console.log(iterator1.next().value);
+                // expected output: Array [0, &quot;a&quot;]
+                
+                console.log(iterator1.next().value);
+                // expected output: Array [1, &quot;b&quot;]
+                </code></pre>
+                <h3 id="110-fill">1.10. fill</h3>
+                <p>開始位置（既定値は 0）から終了位置（既定値は array.length）までのすべての要素を、静的な値に変更した配列を返します。</p>
+                <pre><code class="language-js">const array1 = [1, 2, 3, 4];
+                
+                // fill with 0 from position 2 until position 4
+                console.log(array1.fill(0, 2, 4));
+                // expected output: [1, 2, 0, 0]
+                
+                // fill with 5 from position 1
+                console.log(array1.fill(5, 1));
+                // expected output: [1, 5, 5, 5]
+                
+                console.log(array1.fill(6));
+                // expected output: [6, 6, 6, 6]
+                </code></pre>
+                <h3 id="111-find">1.11. find</h3>
+                <p>与えられたテスト関数を満たす配列内の<strong>最初の要素</strong>を返します。
+                テスト関数を満たす値がない場合は、 <strong>undefined</strong> を返します。</p>
+                <pre><code class="language-js">const array1 = [5, 12, 8, 130, 44];
+                
+                const found = array1.find(element =&gt; element &gt; 10);
+                
+                console.log(found);
+                // expected output: 12
+                </code></pre>
+                <h3 id="112-flat">1.12. flat</h3>
+                <p>すべてのサブ配列の要素を指定した深さで再帰的に結合した新しい配列を生成します。</p>
+                <pre><code class="language-js">const arr1 = [0, 1, 2, [3, 4]];
+                
+                console.log(arr1.flat());
+                // expected output: [0, 1, 2, 3, 4]
+                
+                const arr2 = [0, 1, 2, [[[3, 4]]]];
+                
+                console.log(arr2.flat(2));
+                // expected output: [0, 1, 2, [3, 4]]
+                </code></pre>
+                <h3 id="113-indexof">1.13. indexof</h3>
+                <p>引数に<strong>与えられた内容と同じ内容を持つ最初の配列要素の添字</strong>を返します。存在しない場合は <strong>-1</strong> を返します。</p>
+                <pre><code class="language-js">const beasts = [&#39;ant&#39;, &#39;bison&#39;, &#39;camel&#39;, &#39;duck&#39;, &#39;bison&#39;];
+                
+                console.log(beasts.indexOf(&#39;bison&#39;));
+                // expected output: 1
+                
+                // start from index 2
+                console.log(beasts.indexOf(&#39;bison&#39;, 2));
+                // expected output: 4
+                
+                console.log(beasts.indexOf(&#39;giraffe&#39;));
+                // expected output: -1
+                </code></pre>
+                <h3 id="114-join">1.14. join</h3>
+                <p>配列（または配列風オブジェクト）の全要素を順に連結した文字列を新たに作成して返します。</p>
+                <pre><code class="language-js">const elements = [&#39;Fire&#39;, &#39;Air&#39;, &#39;Water&#39;];
+                
+                console.log(elements.join());
+                // expected output: &quot;Fire,Air,Water&quot;
+                
+                console.log(elements.join(&#39;&#39;));
+                // expected output: &quot;FireAirWater&quot;
+                
+                console.log(elements.join(&#39;-&#39;));
+                // expected output: &quot;Fire-Air-Water&quot;
+                </code></pre>
+                <h2 id="2-jsonメソッド">2. JSONメソッド</h2>
+                <h3 id="21-jsonparse">2.1. JSON.parse()</h3>
+                <p>文字列をJSONとして解析し、文字列によって記述されている JavaScript の値やオブジェクトを構築するメソッド。</p>
+                <pre><code class="language-js">const json = &#39;{&quot;result&quot;:true, &quot;count&quot;:42}&#39;;
+                const obj = JSON.parse(json);
+                
+                console.log(obj.count);
+                // expected output: 42
+                
+                console.log(obj.result);
+                // expected output: true
+                </code></pre>
+                <h3 id="22-jsonstringify">2.2. JSON.stringify()</h3>
+                <p>JavaScript のオブジェクトや値を JSON 文字列に変換するメソッド。
+                置き換え関数を指定して値を置き換えたり、置き換え配列を指定して指定されたプロパティのみを含むようにしたりすることも可能。</p>
+                <pre><code class="language-js">console.log(JSON.stringify({ x: 5, y: 6 }));
+                // expected output: &quot;{&quot;x&quot;:5,&quot;y&quot;:6}&quot;
+                
+                console.log(JSON.stringify([new Number(3), new String(&#39;false&#39;), new Boolean(false)]));
+                // expected output: &quot;[3,&quot;false&quot;,false]&quot;
+                
+                console.log(JSON.stringify({ x: [10, undefined, function(){}, Symbol(&#39;&#39;)] }));
+                // expected output: &quot;{&quot;x&quot;:[10,null,null,null]}&quot;
+                
+                console.log(JSON.stringify(new Date(2006, 0, 2, 15, 4, 5)));
+                // expected output: &quot;&quot;2006-01-02T15:04:05.000Z&quot;&quot;
+                </code></pre>
+                <h2 id="3-同期・非同期関連">3. 同期・非同期関連</h2>
+                <h3 id="31-javascriptの同期・非同期の扱い">3.1. JavaScriptの同期・非同期の扱い</h3>
+                <p>nミリ秒後に実行する関数である<code>setTimeout(() =&gt; (), 1000)</code>を使ったコード例です。</p>
+                <pre><code>console.log(&quot;1番目&quot;);
+                
+                // 1秒後に実行する処理
+                setTimeout(() =&gt; {
+                  console.log(&quot;2番目(1秒後に実行)&quot;);
+                }, 1000);
+                
+                console.log(&quot;3番目&quot;);
+                </code></pre>
+                <p>このコードでの実行フローは「1番目」=&gt;「3番目」=&gt;「2番目(1秒後に実行)」となります。</p>
+                <p>これは<strong>JavaScriptが非同期言語</strong>であるため、一つ前の実行に時間がかかった場合、実行完了をまたずに次の処理が行われるためです。</p>
+                <blockquote>
+                <p>Web開発における非同期処理はfetchなどを使って外部サーバからデータを取得する(APIなど)やn秒後に実行するといった処理となることが多いです。</p>
+                </blockquote>
+                <p>JavaScriptによる非同期処理と同期処理を扱うための書き方や関数には古いもの(ES2015以降)だと「setTimeout」「Promise」、新しいもの(ES2017以降)には「async/await」があります。</p>
+                <h3 id="32-promise">3.2. Promise</h3>
+                <p>Promiseは非同期処理と同期処理の流れを扱うための<strong>JavaScriptのオブジェクト</strong>です。</p>
+                <p>Promiseは以下の3状態を持ちます。</p>
+                <ul>
+                <li>pending ... 非同期処理の実行中の状態</li>
+                <li>fulfilled ... 非同期処理の完了状態</li>
+                <li>rejected ... 非同期処理が異常終了した状態</li>
+                </ul>
+                <p><strong>Promiseの記法例1</strong></p>
+                <pre><code class="language-js">const exPromise = new Promise((resolve, reject) =&gt; {
+                  //実行される関数がここに入る(関数1)
+                );
+                
+                exPromise.then(funcA, funcB); //funcAには試される関数が入る(fetchなど...),
+                </code></pre>
+                <p><code>exPromise.then(funcA, funcB);</code>はこの場合以下のような挙動をします。</p>
+                <ol>
+                <li>funcAが成功(実行されたら)したら、その後に(関数1)が実行される (この処理の流れは同期的 funcA -&gt; 関数1)</li>
+                <li>funcAが失敗したら、funcBが実行される</li>
+                </ol>
+                <p><strong>Promiseの記述例2</strong></p>
+                <pre><code class="language-js">const myPromise = new Promise(
+                  //関数1がここに入る
+                );
+                
+                
+                myPromise
+                .then(funcA)
+                .then(funcB)
+                .then(funcC)
+                .catch(failedFunc);
+                </code></pre>
+                <p>上記の場合、funcAが成功(実効できたら)したら関数1が実行され、その後funcBが成功したら再び関数1が実行されます。またその後funcCが成功したら再び関数1が実行されます。なおいずれも途中で失敗した場合はfailedFuncが実行されます。</p>
+                <h4 id="promiseオブジェクト内の同期非同期の関係">Promiseオブジェクト内の同期非同期の関係<!-- omit in toc --></h4>
+                <pre><code class="language-js">new Promise((resolve, reject) =&gt; {
+                  // 同期処理
+                }).then(() =&gt; {
+                  // resolveの実行を待って非同期処理
+                }).catch(() =&gt; {
+                  // rejectの実行を待って非同期処理
+                }).finally({
+                  // resolveかrejectの実行を待って非同期処理
+                });
+                </code></pre>
+                <h4 id="thenメソッドに関して">thenメソッドに関して<!-- omit in toc --></h4>
+                <p>thenメソッドはPromise オブジェクトに渡されたコールバック関数の処理結果を取得するインスタンスメソッドです。
+                =&gt; thenメソッドによりPromise に渡されたコールバック関数の<strong>処理結果を受け取ることが可能</strong></p>
+                <h4 id="321-promiseメソッドall-race-allsettled-any">3.2.1. Promiseメソッド(all, race, allSettled, any)</h4>
+                <ul>
+                <li>Promise.all()</li>
+                </ul>
+                <p>引数に指定した全てのPromiseオブジェクトを実行するメソッド。
+                全てのPromiseが履行されるか、または1つでも拒否(rejected)になった時点で処理が終了になる。</p>
+                <p><a href="https://lab.syncer.jp/Web/JavaScript/Reference/Global_Object/Promise/all/">https://lab.syncer.jp/Web/JavaScript/Reference/Global_Object/Promise/all/</a></p>
+                <ul>
+                <li>Promise.race()</li>
+                </ul>
+                <p>反復可能オブジェクトの中のPromiseのうちの 1 つが履行されるか拒否されると、
+                そのプロミスの値または理由で履行または拒否されるプロミスを返します。</p>
+                <ul>
+                <li>Promise.allSettled()</li>
+                </ul>
+                <p>与えられたすべてのプロミスが履行されたか拒否された後に、それぞれのプロミスの結果を記述した配列オブジェクトで解決されるプロミスを返します。
+                =&gt; <strong>複数の非同期タスクがあり、お互いに依存せずに正常に完了する場合や、各プロミスの結果を常に知りたい場合に使用</strong></p>
+                <ul>
+                <li>Promise.any()</li>
+                </ul>
+                <h3 id="33-asyncawait">3.3. async/await</h3>
+                <p>async/awaitはPromiseの上位互換的なものと言えます。</p>
+                <h4 id="async">async<!-- omit in toc --></h4>
+                <p>asyncを使って宣言された関数は、Promiseオブジェクトを返却する。
+                =&gt; asyncをつけるとPromiseオブジェクトのreturnの担保となる</p>
+                <ul>
+                <li>asyncは関数コンテクストにしか使えない</li>
+                </ul>
+                <h4 id="await">await<!-- omit in toc --></h4>
+                <p>awaitはPromiseを返却する関数の<strong>非同期処理が終わるのを待つ（制御する）記述</strong>。
+                awaitで受けられるものはPromiseのインスタンスであるため、関数の中でawaitが記載されている場合<strong>必ずasyncを関数の先頭に書く必要</strong>がある。</p>
+                <h3 id="34-例外処理try-catch">3.4. 例外処理(try, catch)</h3>
+                <p>多言語のtry, catchと基本は同じ。
+                try内でエラーが起きたらcatchを実行するというもの。</p>
+                <pre><code>try {
+                  throw new Error();
+                } catch (e) {
+                  // エラーハンドリング
+                } finally {
+                  // 終了処理
+                }
+                </code></pre>
+                <h2 id="4-その他実装注意">4. その他実装注意</h2>
+                <h3 id="41-小数の整数化にはmathtruncを使用せよ">4.1. 小数の整数化にはMath.truncを使用せよ</h3>
+                <p>JavaScriptにおいて<code>parseInt</code>を用いて整数化してしまいがちですが、これは<strong>文字列を引数にすることを前提にしている</strong>ため、小数値を整数値にするために使用するのは不適切です。</p>
+                <p>結論から言うと<strong>JavaScriptでparseInt / parseFloat を使わない方が良い</strong>です。</p>
+                <p>理由: <a href="http://nmi.jp/2022-02-03-dont-use-parseInt">http://nmi.jp/2022-02-03-dont-use-parseInt</a></p>
+                <h4 id="411-parseintの代わりにmathtruncを">4.1.1. parseIntの代わりにMath.truncを</h4>
+                <h4 id="412-parsefloatの代わりにnumberを">4.1.2. parseFloatの代わりにNumber()を</h4>
+                
+
+                <!-- END -->
+
+            </main>
+            <footer class="footer mt-auto py-3 bg-light">
+                <div class="container">
+                    <p class="text-muted text-center">Written by ゆーろん / yuron3141</p>
+                </div>
+            </footer>
+        </body>
+    </body>
+</html>

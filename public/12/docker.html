@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="Ja">
+    <head>
+        <title>ゆーろんのWeb系の学習資料　|　Docker入門</title>
+        <!-- OGP -->
+        <head prefix="og: https://ogp.me/ns#">
+        <meta property="og:url" content="https://yuron3141.github.io/my_web_docs/" />
+        <meta property="og:type" content="Blog" />
+        <meta property="og:title" content="Docker入門" />
+        <meta property="og:description" content="ゆーろんのWeb系学習資料です。皆さんの開発のために役立つことを祈っています。" />
+        <meta property="og:site_name" content="ゆーろんアカデミー　ノート支部" />
+        <!-- DOCUMENTS STYLE -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <!-- ORIGINAL CSS -->
+        <link rel="stylesheet" href="../css/style.css" type="text/css">
+    </head>
+    <body>
+        <body class="d-flex flex-column h-100">
+            <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
+                <div>
+                    <h1 class="m-3">Docker入門</h1>
+                </div>
+            </header>
+            <main class="m-4">
+
+                <!-- Write Text Here-->
+
+                <p>DockerはDocker社が開発している<strong>コンテナ型仮想化技術を実現する</strong>ためのプラットフォームの1つです。 
+                DockerではホストOSの上に動作しているDocker Engineからコンテナと呼ばれるミドルウェアの環境構築がされた実行環境を作成し、その中でアプリケーションを動作させます。
+                そのためホスト型仮想化よりも圧倒的に軽量に動作する特徴がコンテナ型仮想化技術にはあります。</p>
+                <p>Dockerを使う最大のメリットは以下の通りです。 ソフトウェアの実行環境を複雑なアーキテクチャであっても、Dockerを使って管理することで簡単にどんなマシンにでも共有できる点です。</p>
+                <ul>
+                <li>コード化されたファイルを共有することでどこでも誰でも同じ環境が作れる</li>
+                <li>作成した環境を配布しやすい。</li>
+                <li>スクラップ＆ビルドが容易にできる。</li>
+                </ul>
+                <h2 id="dockerとvmの違い">DockerとVMの違い<!-- omit in toc --></h2>
+                <img src="https://gray-code.com/wp-content/uploads/2019/07/pic01.png" width="60%">
+                
+                <p>Dockerは1度に1つのコンテナしか操作できないため、<strong>同時に複数のコンテナを操作したい場合はDocker-Compose</strong>を用います。
+                複数のDockerコンテナを定義し実行するができる特徴があります。</p>
+                <p>LinuxにおいてはDLや作成したdocker imageはデフォルトでは <code>/var/lib/docker/</code> 配下に保存される。</p>
+                <h2 id="参考資料">参考資料<!-- omit in toc --></h2>
+                <table>
+                <thead>
+                <tr>
+                <th>名称</th>
+                <th>URL</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>Dockerイメージ内のコードを直接編集する方法</td>
+                <td><a href="https://blog.yfsakai.com/posts/2021-08-16-change-code-in-docker-image-directly/">https://blog.yfsakai.com/posts/2021-08-16-change-code-in-docker-image-directly/</a></td>
+                </tr>
+                </tbody></table>
+                <h2 id="目次">目次<!-- omit in toc --></h2>
+                <ul>
+                <li><a href="#1-docker%E3%81%AE%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AD%98">1. Dockerの基本知識</a><ul>
+                <li><a href="#11-%E5%8B%95%E4%BD%9C%E7%A2%BA%E8%AA%8D%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89">1.1. 動作確認コマンド</a></li>
+                <li><a href="#12-%E5%9F%BA%E6%9C%AC%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89">1.2. 基本コマンド</a></li>
+                <li><a href="#13-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C">1.3. 基本操作</a><ul>
+                <li><a href="#docker%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E3%81%AE%E8%B5%B7%E5%8B%95%E6%96%B9%E6%B3%95">Dockerコンテナの起動方法</a></li>
+                </ul>
+                </li>
+                <li><a href="#14-docker%E5%9F%BA%E6%9C%AC%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB">1.4. Docker基本ファイル</a><ul>
+                <li><a href="#141-docker-composeyml">1.4.1. Docker-Compose.yml</a></li>
+                <li><a href="#142-dockerfile">1.4.2. DockerFile</a></li>
+                <li><a href="#143-docker-image">1.4.3. Docker Image</a></li>
+                </ul>
+                </li>
+                <li><a href="#15-docker%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9windows%E7%A7%81%E3%81%AE%E5%A0%B4%E5%90%88%E5%85%A5%E3%82%8Alinux%E3%81%AB%E3%82%88%E3%82%8B%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95">1.5. Dockerの使い方(windows(私の場合)入りLinuxによる使用方法)</a></li>
+                </ul>
+                </li>
+                <li><a href="#2-docker%E3%81%AB%E3%82%88%E3%82%8B%E5%90%84%E6%8A%80%E8%A1%93%E3%81%AE%E5%AE%9F%E8%A3%85%E6%96%B9%E6%B3%95">2. Dockerによる各技術の実装方法</a><ul>
+                <li><a href="#21">2.1.</a></li>
+                </ul>
+                </li>
+                </ul>
+                <h1 id="1-dockerの基本知識">1. Dockerの基本知識</h1>
+                <p>各OSへのDockerのインストール方法や起動方法の説明は割愛します。</p>
+                <h2 id="11-動作確認コマンド">1.1. 動作確認コマンド</h2>
+                <pre><code class="language-bash">docker version #インストールされたDockerのバージョンを確認する
+                docker ps #動作しているコンテナを確認する
+                docker ps -a #取得済みのイメージを一覧表示する
+                docker images #ダウンロードしたDockerイメージを一覧表示する
+                docker rmi イメージID #dockerイメージの削除
+                </code></pre>
+                <h2 id="12-基本コマンド">1.2. 基本コマンド</h2>
+                <ul>
+                <li>Dockerコンテナ作成用コマンド</li>
+                </ul>
+                <pre><code class="language-bash">docker run コンテナ名 #コンテナを起動状態で作成するコマンド
+                docker create コンテナ名 #コンテナを停止状態で作成するコマンド
+                </code></pre>
+                <ul>
+                <li>その他の基本コマンド</li>
+                </ul>
+                <pre><code class="language-bash">docker search [OPTIONS] 
+                #イメージ名//キーワードからオンライン上のDockerイメージを探す
+                 
+                docker pull [OPTIONS] 
+                #イメージ名:[TAG]//イメージをダウンロードする
+                 
+                docker images [OPTIONS]
+                #// ダウンロードしたDockerイメージを一覧表示する
+                 
+                docker inspect [OPTIONS] 
+                #イメージID//イメージを確認する
+                 
+                docker rmi [OPTIONS] 
+                #イメージID//イメージを削除する
+                 
+                docker history [OPTIONS] 
+                #イメージID//ヒストリーを確認する
+                </code></pre>
+                <ul>
+                <li>コンテナに関するコマンド</li>
+                </ul>
+                <pre><code class="language-bash">docker run [OPTIONS]  イメージ名[:TAG] [ARG]
+                #コンテナを起動する 
+                 
+                docker ps [OPTIONS]
+                #稼働コンテナを一覧表示
+                 
+                docker stop [OPTIONS]  コンテナID
+                #コンテナを停止する
+                 
+                docker kill [OPTIONS]  コンテナID 
+                #コンテナを終了する
+                 
+                docker rm [OPTIONS]  コンテナID
+                #コンテナを削除する
+                 
+                docker restart [OPTIONS]  コンテナID
+                #コンテナを再起動する
+                </code></pre>
+                <ul>
+                <li>その他のコマンド</li>
+                </ul>
+                <pre><code class="language-bash">docker info
+                #システム情報を表示する
+                
+                docker help
+                #ヘルプを表示する
+                </code></pre>
+                <ul>
+                <li>オプション</li>
+                </ul>
+                <pre><code class="language-bash">-d #:バックグラウンドで実行
+                
+                –name #コンテナ名：コンテナに名前をつける
+                
+                -v #：ホストとコンテナ間でディレクトリやファイルを共有する
+                
+                –rm #: コンテナ終了時にコンテナを削除するため、コマンドを試したい時にオススメ
+                
+                -a #:停止中のコンテナまで含めて表示する
+                
+                –filter “status=exited” #：停止中のコンテナのみ表示するオプション。
+                
+                -i #: コンテナの標準入力を開くことができ、コマンドが打てる
+                
+                -t #: ttyを利用する
+                
+                #上記2つを合わせて、-itとすることが多い
+                </code></pre>
+                <h2 id="13-基本操作">1.3. 基本操作</h2>
+                <h3 id="dockerコンテナの起動方法">Dockerコンテナの起動方法</h3>
+                <ol>
+                <li>Docker-compose.ymlのあるディレクトリ(Dockerコンテナ構成のルートディレクトリ)に移動し以下コマンドを実行</li>
+                </ol>
+                <pre><code class="language-bash">docker-compose build
+                </code></pre>
+                <ol start="2">
+                <li>以下コマンドを実行することでdocker projectが生成されバックグラウンドで起動する(オプション等要注意)</li>
+                </ol>
+                <pre><code class="language-bash"># -d オプションをつけることでバックグラウンドで container が稼働するようになります。
+                # -d をつけないとメインスレッド処理となってしまうため注意しますしょう。
+                docker-compose up -d
+                </code></pre>
+                <h2 id="14-docker基本ファイル">1.4. Docker基本ファイル</h2>
+                <h3 id="141-docker-composeyml">1.4.1. Docker-Compose.yml</h3>
+                <p>Docker-Compose.ymlはDocker Projectで作成する container と Host OS の関連付け、
+                つまり<strong>container の初期設定を定義する</strong>ファイルです。</p>
+                <p>サンプル</p>
+                <pre><code class="language-yml">version: &#39;3.3&#39; # Docker-Compose.yml を実行するにあたっての docker build の version 指定
+                
+                services: # コンテナを定義する親要素
+                  app:
+                    container_name: sample_web_app # コンテナ名の設定
+                    build: ./docker/app # DockerFile の参照先
+                    volumes: # HostOS のディレクトリやファイルとコンテナ内でシンボリックリンクを繋げる
+                    - ./www:/var/www
+                    networks: # ローカルネットワークにおける IP アドレスの指定
+                      web_segment:
+                        ipv4_address: 172.240.0.2
+                
+                  gw:
+                    image: nginx # DockerFile を使用しない場合は Docker-Compose.yml で直接 image を指定できる。
+                    container_name: sample_web_gw
+                    ports: # ポートフォワーディング この例なら HostOS への 10080 ポートアクセスをこのコンテナの 80 番ポートにフォワードする。
+                    - 10080:80
+                    volumes:
+                    - ./www:/var/www
+                    - ./docker/gw/default.conf:/etc/nginx/conf.d/default.conf # conf ファイルの紐付け
+                    depends_on: # 依存関係の定義 この例なら app container が作成されてから構築の意味
+                    - app
+                    networks:
+                      web_segment:
+                        ipv4_address: 172.240.0.3
+                
+                  db:
+                    build:
+                      context: .
+                      dockerfile: docker/mysql/Dockerfile
+                    volumes:
+                      - ./docker/mysql/db:/docker-entrypoint-initdb.d
+                      - db-store:/var/lib/mysql # DB データの永続化。本ファイルの例の場合、末尾の「volumes: db-store:」を使用している。詳しい解説はそこで。
+                      - ./logs:/var/log/mysql
+                      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+                    ports:
+                      - &quot;33306:3306&quot; 
+                    environment: # MySQL の場合初期 DB の作成と root password 及び mysql user account の登録が可能
+                      MYSQL_ROOT_PASSWORD: password
+                      MYSQL_USER: administrator
+                      MYSQL_PASSWORD: password
+                      MYSQL_DATABASE: default_database
+                      TZ: &quot;Asia/Tokyo&quot;
+                    networks:
+                      web_segment:
+                        ipv4_address: 172.240.0.4
+                
+                networks: # docker 仮想ネットワークの作成
+                  web_segment:
+                    driver: bridge # driver の選択
+                    ipam:
+                      config:
+                      - subnet: 172.240.0.0/24 # subnet mask の指定。 この例なら、この Docker Project に所属する container は 172.240.0.0~254 の範囲を同一ネットワークとして判定可能となる。
+                
+                volumes: # Docker MySQL のデータは再起動で消えてしまいます。そのため他の container と同じく volume 定義を皆試すと思いますが、Docker の仕様上エラーになります。Docker の「名前付きボリューム」と呼ばれる領域を構築し、データの永続化を行います。
+                  db-store:
+                </code></pre>
+                <h3 id="142-dockerfile">1.4.2. DockerFile</h3>
+                <p>Docker FileにはLinux で環境を構築する時と同じようなコマンドをいくつか記述したり、環境変数などの定義が可能なファイルです。
+                内部の実装は通常のサーバ構築(EC2やLinux)とほぼ同じでような記述を行います。</p>
+                <h3 id="143-docker-image">1.4.3. Docker Image</h3>
+                <p>Docker ImageはDocker container の構築を想定し最適化されたcontainerのtemplateファイルです。</p>
+                <h2 id="15-dockerの使い方windows私の場合入りlinuxによる使用方法">1.5. Dockerの使い方(windows(私の場合)入りLinuxによる使用方法)</h2>
+                <ol>
+                <li>WSL2をONにしてインストールしたUbuntuにコマンドラインで入る</li>
+                <li><code>Docker -v</code>でDocker使用可能か確認</li>
+                <li>起動したコマンドラインで使う</li>
+                </ol>
+                <h1 id="2-dockerによる各技術の実装方法">2. Dockerによる各技術の実装方法</h1>
+                <h2 id="21">2.1.</h2>
+                
+                <!-- END -->
+
+            </main>
+            <footer class="footer mt-auto py-3 bg-light">
+                <div class="container">
+                    <p class="text-muted text-center">Written by ゆーろん / yuron3141</p>
+                </div>
+            </footer>
+        </body>
+    </body>
+</html>

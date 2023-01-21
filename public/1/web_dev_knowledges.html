@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="Ja">
+    <head>
+        <title>ゆーろんのWeb系の学習資料　|　各種開発ツールとホスティングサービス・用語など</title>
+        <!-- OGP -->
+        <head prefix="og: https://ogp.me/ns#">
+        <meta property="og:url" content="https://yuron3141.github.io/my_web_docs/" />
+        <meta property="og:type" content="Blog" />
+        <meta property="og:title" content="各種開発ツールとホスティングサービス・用語など" />
+        <meta property="og:description" content="ゆーろんのWeb系学習資料です。皆さんの開発のために役立つことを祈っています。" />
+        <meta property="og:site_name" content="ゆーろんアカデミー　ノート支部" />
+        <!-- DOCUMENTS STYLE -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <!-- ORIGINAL CSS -->
+        <link rel="stylesheet" href="../css/style.css" type="text/css">
+    </head>
+    <body>
+        <body class="d-flex flex-column h-100">
+            <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
+                <div>
+                    <h1 class="m-3">各種開発ツールとホスティングサービス・用語など</h1>
+                </div>
+            </header>
+            <main class="m-4">
+
+                <!-- Write Text Here-->
+
+                <p>各種ツールやWEB系の各種用語、クラウドサービスなどをまとめました。</p>
+<p>開発やデプロイ、実装する際やツールが必要な場合のリファレンスとしても利用できます。</p>
+<h2 id="目次">目次<!-- omit in toc --></h2>
+<ul>
+<li><a href="#1-%E5%90%84%E7%A8%AE%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9cms%E3%83%95%E3%83%AC%E3%83%BC%E3%83%A0%E3%83%AF%E3%83%BC%E3%82%AF%E3%81%AA%E3%81%A9">1. 各種サービス・CMS・フレームワークなど</a><ul>
+<li><a href="#11-paasbaas%E5%90%AB%E3%82%80">1.1. PaaS(BaaS含む)</a><ul>
+<li><a href="#111-netify">1.1.1. Netify</a></li>
+<li><a href="#112-vercel">1.1.2. Vercel</a></li>
+<li><a href="#114-flyio">1.1.4. Fly.io</a></li>
+<li><a href="#115-firebase">1.1.5. FireBase</a></li>
+<li><a href="#116-github-pages">1.1.6. GitHub Pages</a></li>
+<li><a href="#117-subabase">1.1.7. subabase</a></li>
+<li><a href="#118-deta-cloud">1.1.8. Deta Cloud</a></li>
+</ul>
+</li>
+<li><a href="#12-iaas">1.2. IaaS</a><ul>
+<li><a href="#121-aws">1.2.1. AWS</a></li>
+<li><a href="#122-gcp">1.2.2. GCP</a></li>
+<li><a href="#123-azure">1.2.3. Azure</a></li>
+<li><a href="#124-alibaba-cloud">1.2.4. Alibaba Cloud</a></li>
+</ul>
+</li>
+<li><a href="#13-cmsphp%E3%83%99%E3%83%BC%E3%82%B9">1.3. CMS(PHPベース)</a><ul>
+<li><a href="#131-wordpress">1.3.1. Wordpress</a></li>
+<li><a href="#132-drupal">1.3.2. Drupal</a></li>
+<li><a href="#133-ec-cube">1.3.3. EC-CUBE</a></li>
+</ul>
+</li>
+<li><a href="#14-%E3%83%95%E3%83%AC%E3%83%BC%E3%83%A0%E3%83%AF%E3%83%BC%E3%82%AF">1.4. フレームワーク</a><ul>
+<li><a href="#141-javascript%E3%83%99%E3%83%BC%E3%82%B9">1.4.1. JavaScriptベース</a></li>
+<li><a href="#142-ruby%E3%83%99%E3%83%BC%E3%82%B9">1.4.2. Rubyベース</a></li>
+<li><a href="#143-php%E3%83%99%E3%83%BC%E3%82%B9">1.4.3. PHPベース</a></li>
+<li><a href="#144-python%E3%83%99%E3%83%BC%E3%82%B9">1.4.4. Pythonベース</a></li>
+<li><a href="#145-go%E3%83%99%E3%83%BC%E3%82%B9">1.4.5. Goベース</a></li>
+</ul>
+</li>
+<li><a href="#15-rdb">1.5. RDB</a><ul>
+<li><a href="#151-mysql">1.5.1. MySQL</a></li>
+<li><a href="#152-postgresql">1.5.2. PostgreSQL</a></li>
+<li><a href="#153-sqlite">1.5.3. SQLite</a></li>
+</ul>
+</li>
+<li><a href="#16-git%E3%83%9B%E3%82%B9%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9">1.6. Gitホスティングサービス</a><ul>
+<li><a href="#161-github">1.6.1. GitHub</a></li>
+<li><a href="#162-gitlab">1.6.2. GitLab</a></li>
+<li><a href="#163-bitbucket">1.6.3. BitBucket</a></li>
+</ul>
+</li>
+<li><a href="#17-cdn%E6%8F%90%E4%BE%9B%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9">1.7 CDN提供サービス</a><ul>
+<li><a href="#171-cloudflare">1.7.1. CloudFlare</a></li>
+<li><a href="#172-amazon-cloudfront">1.7.2. Amazon CloudFront</a></li>
+<li><a href="#173-akamai">1.7.3. Akamai</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#2-%E5%90%84%E7%A8%AE%E3%83%84%E3%83%BC%E3%83%AB%E3%83%9F%E3%83%89%E3%83%AB%E3%82%A6%E3%82%A7%E3%82%A2%E3%81%AA%E3%81%A9">2. 各種ツール・ミドルウェアなど</a><ul>
+<li><a href="#21-%E3%82%B3%E3%83%BC%E3%83%89%E3%82%A8%E3%83%87%E3%82%A3%E3%82%BF%E3%81%A8ide">2.1. コードエディタとIDE</a><ul>
+<li><a href="#211-visual-studio-codevscode">2.1.1. Visual Studio Code(VSCode)</a></li>
+<li><a href="#212-visual-studio">2.1.2. Visual Studio</a></li>
+<li><a href="#213-vim">2.1.3. Vim</a></li>
+<li><a href="#214-atom">2.1.4. Atom</a></li>
+</ul>
+</li>
+<li><a href="#22-api%E8%A8%AD%E8%A8%88%E3%81%A8%E3%83%86%E3%82%B9%E3%83%88">2.2. API設計とテスト</a><ul>
+<li><a href="#221-postman">2.2.1. Postman</a></li>
+</ul>
+</li>
+<li><a href="#23-%E3%83%9F%E3%83%89%E3%83%AB%E3%82%A6%E3%82%A7%E3%82%A2">2.3. ミドルウェア</a><ul>
+<li><a href="#231-nginx">2.3.1. Nginx</a></li>
+<li><a href="#232-apache">2.3.2. Apache</a></li>
+<li><a href="#233-litespeed">2.3.3. LiteSpeed</a></li>
+<li><a href="#234-gunicorn">2.3.4. Gunicorn</a></li>
+</ul>
+</li>
+<li><a href="#24-%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3%E3%82%B5%E3%82%A4%E3%83%88%E8%A7%A3%E6%9E%90">2.4. セキュリティ・サイト解析</a><ul>
+<li><a href="#241-owasp-zap">2.4.1. OWASP ZAP</a></li>
+<li><a href="#242-wapplyzer">2.4.2. Wapplyzer</a></li>
+<li><a href="#243-acunetix">2.4.3. Acunetix</a></li>
+<li><a href="#244-nessus">2.4.4. Nessus</a></li>
+</ul>
+</li>
+<li><a href="#25-cicd%E3%83%84%E3%83%BC%E3%83%AB">2.5. CI/CDツール</a><ul>
+<li><a href="#251-circleci">2.5.1. CircleCI</a></li>
+<li><a href="#252-github-actions">2.5.2. GitHub Actions</a></li>
+<li><a href="#253-pipecd">2.5.3. PipeCD</a></li>
+</ul>
+</li>
+<li><a href="#26-iac%E3%83%84%E3%83%BC%E3%83%AB">2.6. IaCツール</a><ul>
+<li><a href="#261-terraform">2.6.1. Terraform</a></li>
+</ul>
+</li>
+<li><a href="#27-%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E4%BB%AE%E6%83%B3%E5%8C%96%E6%8A%80%E8%A1%93">2.7. コンテナ仮想化技術</a><ul>
+<li><a href="#271-docker">2.7.1. Docker</a></li>
+<li><a href="#272-kubernetes">2.7.2. kubernetes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#3-%E3%81%9D%E3%81%AE%E4%BB%96%E5%90%84%E7%A8%AE%E6%8A%80%E8%A1%93%E3%81%A8%E7%94%A8%E8%AA%9E">3. その他各種技術と用語</a><ul>
+<li><a href="#31-spampa">3.1. SPA/MPA</a></li>
+<li><a href="#32-ssrcsrssg">3.2. SSR/CSR/SSG</a></li>
+<li><a href="#33-nosql">3.3. NoSQL</a></li>
+<li><a href="#34-altjs">3.4. AltJS</a><ul>
+<li><a href="#341-typescript">3.4.1. TypeScript</a></li>
+<li><a href="#342-jsx">3.4.2. JSX</a></li>
+<li><a href="#343-dart">3.4.3. Dart</a></li>
+</ul>
+</li>
+<li><a href="#35-%E3%82%A2%E3%83%BC%E3%82%AD%E3%83%86%E3%82%AF%E3%83%81%E3%83%A3">3.5. アーキテクチャ</a><ul>
+<li><a href="#351-%E3%83%9E%E3%82%A4%E3%82%AF%E3%83%AD%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E3%82%A2%E3%83%BC%E3%82%AD%E3%83%86%E3%82%AF%E3%83%81%E3%83%A3">3.5.1. マイクロサービスアーキテクチャ</a></li>
+<li><a href="#352-%E3%82%B5%E3%83%BC%E3%83%90%E3%83%AC%E3%82%B9%E3%82%A2%E3%83%BC%E3%82%AD%E3%83%86%E3%82%AF%E3%83%81%E3%83%A3">3.5.2. サーバレスアーキテクチャ</a></li>
+<li><a href="#353-jamstack">3.5.3. Jamstack</a></li>
+</ul>
+</li>
+<li><a href="#36-%E3%82%B3%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0%E5%AE%9F%E8%A3%85%E5%8E%9F%E5%89%87">3.6. コーディング・実装原則</a><ul>
+<li><a href="#361-yagni%E5%8E%9F%E5%89%87">3.6.1. YAGNI原則</a></li>
+<li><a href="#362-dry%E5%8E%9F%E5%89%87">3.6.2. DRY原則</a></li>
+<li><a href="#363-kiss%E3%81%AE%E5%8E%9F%E5%89%87">3.6.3. KISSの原則</a></li>
+</ul>
+</li>
+<li><a href="#37-webrtc">3.7. WebRTC</a></li>
+<li><a href="#38-cdncontents-delivery-network">3.8. CDN(Contents Delivery Network)</a></li>
+<li><a href="#39-%E3%82%B5%E3%83%BC%E3%83%89%E3%83%91%E3%83%BC%E3%83%86%E3%82%A3cookie">3.9. サードパーティCookie</a></li>
+<li><a href="#310-sso">3.10. SSO</a></li>
+<li><a href="#311-%E3%82%B5%E3%83%BC%E3%83%90%E3%83%AC%E3%82%B9db">3.11. サーバレスDB</a></li>
+<li><a href="#312-ormobject-relational-mapping">3.12. ORM(Object-Relational Mapping)</a></li>
+<li><a href="#313-rpc">3.13. RPC</a><ul>
+<li><a href="#3131-trpc">3.13.1. tRPC</a></li>
+<li><a href="#3132-grpc">3.13.2. gRPC</a></li>
+</ul>
+</li>
+<li><a href="#314-webassembly">3.14. WebAssembly</a></li>
+<li><a href="#315-open-api">3.15. Open API</a></li>
+</ul>
+</li>
+<li><a href="#4-%E3%81%9D%E3%81%AE%E4%BB%96%E9%80%9A%E4%BF%A1%E3%83%97%E3%83%AD%E3%83%88%E3%82%B3%E3%83%AB">4. その他通信プロトコル</a><ul>
+<li><a href="#41-sdpsession-description-protocol">4.1. SDP(Session Description Protocol)</a></li>
+<li><a href="#42-iceinteractive-connectivity-establishment">4.2. ICE(Interactive Connectivity Establishment)</a></li>
+</ul>
+</li>
+</ul>
+<p><strong>参考URL</strong></p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MDN Web docs</td>
+<td><a href="https://developer.mozilla.org/ja/">https://developer.mozilla.org/ja/</a></td>
+</tr>
+<tr>
+<td>とほほのWWW入門</td>
+<td><a href="https://www.tohoho-web.com/www.htm">https://www.tohoho-web.com/www.htm</a></td>
+</tr>
+</tbody></table>
+<h1 id="1-各種サービス・cms・フレームワークなど">1. 各種サービス・CMS・フレームワークなど</h1>
+<h2 id="11-paasbaas含む">1.1. PaaS(BaaS含む)</h2>
+<h3 id="111-netify">1.1.1. Netify</h3>
+<p>NetlifyはWEBサイトのホスティングが簡単にできるサービスの1つです。
+<strong>フロントエンド系のFWを使ったWEBアプリケーションや静的なサイトをデプロイ</strong>できます。CI/CDが既に組み込まれているためGitHubなどと連携可能です。具体的にはReact(Next), Vue.js(Nuxt)のデプロイに強いです。(頑張ればNode.jsベース(Expresなど)の構築も可能)
+netlify-plugin-nextjsを使えばNext.jsでSSR対応したアプリを動かせます。</p>
+<p><a href="https://www.netlify.com/">https://www.netlify.com/</a></p>
+<h4 id="特徴2020時点">特徴(2020時点)<!-- omit in toc --></h4>
+<ul>
+<li>無料SSL</li>
+<li>転送量: 100GB/月</li>
+<li>ストレージ: 100GB</li>
+<li>リクエスト制限: 500 requests/分</li>
+</ul>
+<h4 id="プラン2022時点">プラン(2022時点)<!-- omit in toc --></h4>
+<table>
+<thead>
+<tr>
+<th>プラン名</th>
+<th>料金(月額)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Starter(無料枠)</td>
+<td>$0.0</td>
+</tr>
+<tr>
+<td>Pro</td>
+<td>$19.0</td>
+</tr>
+<tr>
+<td>Business</td>
+<td>$99.0</td>
+</tr>
+</tbody></table>
+<h3 id="112-vercel">1.1.2. Vercel</h3>
+<p>VercelはNetlifyはWEBサイトのホスティングが簡単にできるサービスの1つです。
+<strong>フロントエンド系のFWを使ったWEBアプリケーションや静的なサイトをデプロイ</strong>できます。CI/CDが既に組み込まれているためGitHubなどと連携可能です。具体的にはReact(Next), Vue.js(Nuxt)のデプロイに強いです。(頑張ればNode.jsベース(Expresなど)の構築も可能)
+VercelはNext.jsなら特に設定しなくともSSRができる状態でデプロイできる特徴があります。
+builderが用意されていないフレームワーク（Nuxt)でSSRを行うにはデプロイ周りで少々設定をする必要があります。</p>
+<p><a href="https://vercel.com/">https://vercel.com/</a></p>
+<h4 id="特徴2020時点-1">特徴(2020時点)<!-- omit in toc --></h4>
+<ul>
+<li>無制限の Webサイト と API</li>
+<li>HTTPS 対応のカスタムドメイン</li>
+<li>Node.js や Go を使用したサーバレス関数</li>
+</ul>
+<h4 id="プラン2022時点-1">プラン(2022時点)<!-- omit in toc --></h4>
+<table>
+<thead>
+<tr>
+<th>プラン名</th>
+<th>料金(月額)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Hobby(無料枠)</td>
+<td>$0.0</td>
+</tr>
+<tr>
+<td>Pro</td>
+<td>$20.0</td>
+</tr>
+</tbody></table>
+<h3 id="113-heroku">1.1.3. Heroku<!-- omit in toc --></h3>
+<p>HerokuはWEBサイトのホスティングが簡単にできるサービスの1つです。
+Heorkuでは<strong>フロントエンドやバックエンドを問わずデプロイ</strong>できます。またデータベース(PostgeSQL)も利用可能です。
+具体的にはNode.js、Ruby(Rails), Java, PHP, Python, Goなど様々な言語に対応しています。
+CI/CDが既に組み込まれているためGitHubなどと連携可能です。</p>
+<p>様々な環境でホスティングできるので人気のPaaSでしたが、2022/11/26に<strong>有料化</strong>しました。</p>
+<h4 id="プラン2022時点-2">プラン(2022時点)<!-- omit in toc --></h4>
+<table>
+<thead>
+<tr>
+<th>プラン名</th>
+<th>料金(月額)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Eco dyno</td>
+<td>$5.0</td>
+</tr>
+<tr>
+<td>Basic Dyno</td>
+<td>$7.0</td>
+</tr>
+<tr>
+<td>Mini postgres(データベース)</td>
+<td>$5.0</td>
+</tr>
+<tr>
+<td>Basic postgres(データベース)</td>
+<td>$9.0</td>
+</tr>
+</tbody></table>
+<h3 id="114-flyio">1.1.4. Fly.io</h3>
+<p>Fly.ioは静的サイトからRailsやLaravel、Node.jsなどのWebアプリ、PostgreSQLデータベースまでフルスタックなアプリをデプロイできる<strong>AltHeroku</strong>のプラットフォームです。
+ただしデプロイする際は**CLIしか対応していません(CI/CDが使えない)**。</p>
+<p><a href="https://fly.io">https://fly.io</a></p>
+<h4 id="特徴2022時点">特徴(2022時点)<!-- omit in toc --></h4>
+<ul>
+<li>Herokuで廃止された無料枠(アプリは3つが目安)がある</li>
+<li>PostgreSQLに対応・データベースがインターネットと繋がっていない(セキュア)</li>
+<li>無料SSL可能</li>
+<li>無料プランでもアプリのスリープがない</li>
+<li>日本リージョンがある</li>
+</ul>
+<h4 id="プラン2022時点-3">プラン(2022時点)<!-- omit in toc --></h4>
+<p>料金は使うリソースごとに支払う形態です。
+無料枠で使用できるのは以下のようなものです。(クレジットカード登録必要)</p>
+<table>
+<thead>
+<tr>
+<th>リソース</th>
+<th>スペックと個数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>仮想マシン</td>
+<td>共有CPU1つ・RAM256MBのマシン(最大3つ)</td>
+</tr>
+<tr>
+<td>データベース</td>
+<td>合計3GBまで</td>
+</tr>
+<tr>
+<td>IPアドレス</td>
+<td>エニーキャストIPv4アドレス1つと無制限のエニーキャストIPv6アドレス</td>
+</tr>
+<tr>
+<td>SSL証明書</td>
+<td>最大10個まで</td>
+</tr>
+<tr>
+<td>データ転送量</td>
+<td>アウトバウンドは合計160GBまで・インバウンドは無制限</td>
+</tr>
+</tbody></table>
+<h3 id="115-firebase">1.1.5. FireBase</h3>
+<p>FirebaseはGoogleが提供するクラウドサービスMBaaS(Mobile Backend as a Service)です。
+MBaaSとはモバイルアプリケーションのサーバーサイドで使われるロジックを提供するサービスです。</p>
+<p>Firebaseには<strong>サーバーの開発が不要でフロント側だけでアプリ開発ができる</strong>という特徴があります。</p>
+<p>メリットは以下のようなものがあります。</p>
+<ul>
+<li>サーバーサイドの開発コスト・設計・工数などを削減可能</li>
+<li>モバイルアプリ開発に特化している</li>
+</ul>
+<p>デメリットとしては <strong>データが複雑だったり大規模なサービスだと扱いづらい(DBはNoSQL)</strong> という点があります。</p>
+<h3 id="116-github-pages">1.1.6. GitHub Pages</h3>
+<p>Git PagesはGitHubの提供する静的サイト ホスティングサービスです。※商用利用不可
+基本静的サイト(HTML/CSS/フロントエンドJs)に対応していますが、<strong>ReactやVue.jsで作ったアプリ(フロントエンド)</strong> もデプロイ可能です。</p>
+<p>使用制限としては、ソースリポジトリには1GBの推奨上限があり、月当たり 100GB のソフトな帯域幅制限があります。
+そのため簡単でシンプルなWEBアプリ(JavaScriptベース)や静的サイトのデプロイに使用用途は限られます。</p>
+<h3 id="117-subabase">1.1.7. subabase</h3>
+<p>subabaseは認証やデータべースといったバックエンドに必要な機能を提供するBaaSの1つであり、Firebaseの互換になりえるサービスです。
+FireBaseとの違いはデータベースが<strong>PostgreベースのRDB</strong>であることです。
+とはいってもFirebaseの機能数の方が多いのでデータベースをPosgreSQLのRDBで使用したい場合の検討の1つであると言えます。</p>
+<h3 id="118-deta-cloud">1.1.8. Deta Cloud</h3>
+<p>Detaの提供するPaaSです。完全無料で以下サービスを利用できます。</p>
+<ul>
+<li>Deta Base: NoSQLデータベース (保存容量は無制限)</li>
+<li>Deta Micros: PythonまたはNode.jsの実行環境 (AWS API Gateway + Lambdaが利用されている)</li>
+<li>Deta Drive: 保存容量は10GB</li>
+</ul>
+<p>公式サイト:<a href="https://www.deta.sh/">https://www.deta.sh/</a></p>
+<h2 id="12-iaas">1.2. IaaS</h2>
+<p>IaaS(Infrastructure as a Service)はクラウドコンピューティングのうちの1つで、仮想化技術を利用してハードウェアリソース（CPU／メモリ／ストレージ）などのデジタルインフラをインターネット経由でオンデマンドで提供するサービスです。
+有名どころが提供しているサービスとしてはAmazonの運営するAWSやGoogleの運営するGCPなどがあります。</p>
+<h3 id="121-aws">1.2.1. AWS</h3>
+<p>AWS(Amazon Web Service)はAmazonが運営するIaaSサービスです。
+AWSではインフラストラクチャーを構築するための様々なサービスが提供されています。</p>
+<blockquote>
+<p>VPC, S3, API GateWay, Lambda, EC2, ECS, EKS, Fargate, Route53, IAM, Cloud Watchなど</p>
+</blockquote>
+<p>Webアプリケーション開発には近年Dockerなどのコンテナ型仮想化技術が注目されて一般化され始めています。</p>
+<p>EC2などのサーバ仮想化技術はGPUが必要な特殊な処理が必要なサーバ等の構築以外で今後選択されることは減ることが推測されます。</p>
+<p>コンテナ型仮想化技術(Dockerの場合)でAWSでインフラを構築する際に必要になるメインのサービス</p>
+<h4 id="ecs">ECS<!-- omit in toc --></h4>
+<p>ECSはフルマネージドコンテナオーケストレーションサービスです。
+コンテナ化されたアプリケーションを簡単にデプロイ、管理、およびスケーリング可能です。
+ECSによりクラスター上のコンテナを実行、停止、管理できます。</p>
+<h4 id="faragate">Faragate<!-- omit in toc --></h4>
+<p>FargateはECSやEKSで動作するホストマシンを意識せずにコンテナを実行できる環境を提供するサービスです。
+コンテナ向けのサーバーレスコンピューティングと言えます。</p>
+<p>Fargateを用いることで、EC2インスタンスやそのスケーリング、インスタンスの集合体であるクラスターを管理する必要がなくなるため管理の効率化を図れます。
+FargateはSSHによるコンテナへのアクセスを許可していませんが、ECS Execという機能を用いることで直接コンテナに直接ログイン可能である。</p>
+<h3 id="122-gcp">1.2.2. GCP</h3>
+<p>GCP(Google Cloud Platform)はGoogleが運営するIaaSサービスです。
+Googleではインフラストラクチャーを構築するための様々なサービスが提供されています。</p>
+<blockquote>
+<p>VPC, GCS, Cloud Functions, GCE, GKE, Cloud Run, IAM, IPM, Firebaseなど</p>
+</blockquote>
+<p>コンテナ型仮想化技術(Dockerの場合)でGCPでインフラを構築する際に必要になるメインのサービス</p>
+<h4 id="cloud-run">Cloud Run<!-- omit in toc --></h4>
+<p>AWSで言うFargateのような機能を提供するサービス</p>
+<h4 id="gke">GKE<!-- omit in toc --></h4>
+<p>GKEはGoogleが開発したKubernetesを用いたマネージドサービス。</p>
+<p>AWSでいうECS,EKSに相当する。KubernetesのコンテナだけではなくDockerコンテナにもサポートしている。</p>
+<h3 id="123-azure">1.2.3. Azure</h3>
+<p>Microsoftの管理するクラウドコンピューティングサービスです。
+お堅い企業が使っているイメージがあります(偏見)。</p>
+<h3 id="124-alibaba-cloud">1.2.4. Alibaba Cloud</h3>
+<p>Alibaba が提供するクラウドコンピューティングサービスです。
+アジア太平洋地域のIaaS市場で占有率1位(2019)。</p>
+<h2 id="13-cmsphpベース">1.3. CMS(PHPベース)</h2>
+<h3 id="131-wordpress">1.3.1. Wordpress</h3>
+<p>WordPressはサイトの作成やブログの作成などができるOSSのCMS(コンテンツ管理システム)です。
+ブログ投稿管理システムとしては最も有名であり、企業のコーポーレートサイトや個人ブログなど様々な形で利用可能です。
+全世界の4分の1を超えるサイトがWordPressで作られており、圧倒的なシェアを誇っています。</p>
+<p>サイトやページ制作に必須となるHTML/CSSやPHPなどのWeb関連技術が無い人でもサイト管理や記事投稿ができるため、個人のブロガーから企業、官公庁まで幅広く使用されています。
+DBはMy SQLを使用しています。</p>
+<h3 id="132-drupal">1.3.2. Drupal</h3>
+<p>DrupalはOSSののモジュラー式フレームワークであるCMS(コンテンツ管理システム)です。
+Drupalは非常に柔軟で拡張性の高いプラットフォームのため、単に通常のウェブサイトを公開するだけではなく、<strong>多言語でさまざななデバイスに向けた情報の配信が可能</strong>です。</p>
+<p>多言語化の対応のしやすさやカスタマイズの容易さ、堅牢なセキュリティがあることも特徴です。</p>
+<h3 id="133-ec-cube">1.3.3. EC-CUBE</h3>
+<p>EC-CUBEは日本の企業である株式会社イーシーキューブが開発するOSSのEC向けCMS(コンテンツ管理システム)です。</p>
+<p>特徴として、企業や店が商品紹介を行うページや、ユーザーが実際に商品の注文を行うページの制作など、ECサイトに不可欠なWebページを作るための機能が網羅されています。 このほか、EC-CUBEには商品別の売上集計や在庫管理といった、製作したECサイトを管理するための機能があります。</p>
+<h2 id="14-フレームワーク">1.4. フレームワーク</h2>
+<h3 id="141-javascriptベース">1.4.1. JavaScriptベース</h3>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Node.js</td>
+<td>サーバーサイドでJavaScriptを使うための環境です。フロントエンドもバックエンドも構築可能で、以下の5つのフレームワーク(Node.jsから見ればライブラリ)を使うためのベースとなります</td>
+</tr>
+<tr>
+<td>React</td>
+<td>Meta(旧 FaceBook)により開発されたフロントエンドのフレームワークです。SPAが構築可能です。</td>
+</tr>
+<tr>
+<td>Vue.js</td>
+<td>Evan Youが中心となって開発されたフロントエンドのフレームワークです。SPAが構築可能です。</td>
+</tr>
+<tr>
+<td>Angular</td>
+<td>Googleと各コミュニティによって開発されたTypeScriptベースのOSSのフロントエンドフレームワークです。SPAが構築可能です。</td>
+</tr>
+<tr>
+<td>Next.js</td>
+<td>Reactをベースに開発されたフロントエンドフレームワークでReactと異なり<strong>サーバー機能があります</strong>。またSSGが可能です。</td>
+</tr>
+<tr>
+<td>Nuxt.js</td>
+<td>Vue.jsをベースに開発されたフロントエンドフレームワークでVue.jsと異なり<strong>サーバー機能があります</strong>。またSSGが可能です。</td>
+</tr>
+<tr>
+<td><strong>Astro</strong></td>
+<td>高速でコンテンツにフォーカスしたWebサイトを構築するためのオールインワンのWebフレームワーク(Nodeベース)</td>
+</tr>
+<tr>
+<td><strong>Vite</strong></td>
+<td>高速動作するフロントエンドのビルドツール(Nodeベース)、サポート対象はVue.js・React・Svelteなど</td>
+</tr>
+</tbody></table>
+<h3 id="142-rubyベース">1.4.2. Rubyベース</h3>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ruby on Rails</td>
+<td>RubyベースかつOSSのWebアプリケーション構築フレームワークである。MPAまたはAPIでアプリケーションを構築可能です。</td>
+</tr>
+</tbody></table>
+<h3 id="143-phpベース">1.4.3. PHPベース</h3>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Laravel</td>
+<td>PHPベースかつOSSのWebアプリケーション構築フレームワークである。MPAまたはAPIでアプリケーションを構築可能です。</td>
+</tr>
+<tr>
+<td>CakePHP</td>
+<td>PHPベースかつOSSのWebアプリケーション構築フレームワークである。構築のコンセプトとしてRailsの影響を受けている。</td>
+</tr>
+</tbody></table>
+<h3 id="144-pythonベース">1.4.4. Pythonベース</h3>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Django</td>
+<td>PythonベースのWEBアプリケーションフレームワーク。APIでもアプリケーションを構築可能。</td>
+</tr>
+<tr>
+<td>Flask</td>
+<td>Djangoよりも軽量なWEBアプリケーションフレームワーク。APIでもアプリケーションを構築可能。</td>
+</tr>
+</tbody></table>
+<h3 id="145-goベース">1.4.5. Goベース</h3>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Gin</td>
+<td>Goベースのフル機能の最速Webアプリケーションフレームワーク。APIでもアプリケーションを構築可能。</td>
+</tr>
+<tr>
+<td>Revel</td>
+<td>GoベースのWebアプリケーションフレームワーク。</td>
+</tr>
+</tbody></table>
+<h2 id="15-rdb">1.5. RDB</h2>
+<h3 id="151-mysql">1.5.1. MySQL</h3>
+<p>MySQLはOSSのRDB(リレーショナルデータベース管理システム)です。</p>
+<h3 id="152-postgresql">1.5.2. PostgreSQL</h3>
+<p>PostgreSQLとはOSSのORDBMS(オブジェクトリレーショナルデータベース管理システム)です。大規模または複雑なデータ管理が得意で、Excelのような表敬式で保存したデータを一つの箱とし、別の箱と関連付けて大量のデータを扱えるようにします。</p>
+<p>PostgreSQLはRDBMSとして基本的な機能を備えており、SQL言語を使ったデータの作成や編集というようなデータ管理機能や、サブクエリ、トリガー、バックアップなどの障害回復機能、同時実行制御などに対応しています。拡張性が高く、インデックスやデータ型など様々な要素のユーザ定義ができます。</p>
+<p>PostgreSQLは多機能でPostgreSQLはMySQLに比べてカスタマイズ性が高く膨大なデータのソートが得意という特徴があります。</p>
+<blockquote>
+<p>ORBMSはオブジェクト単位でデータの管理を行う方式でオブジェクト指向のプログラミング言語で操作・参照できるのが特徴</p>
+</blockquote>
+<h3 id="153-sqlite">1.5.3. SQLite</h3>
+<p>SQLiteはパブリックドメインの軽量なRDBS(リレーショナルデータベース管理システム)です。</p>
+<p>SQLiteのデータ保存は<strong>ファイル形式</strong>であることが特徴です。またセキュリティ機能がないことがデメリットとしてあげられます。
+超小規模なアプリのデータ保存には向いていますが、規模の大きいアプリや企業がサービスを構築する際のデータベースとは不適切と言えます。</p>
+<h2 id="16-gitホスティングサービス">1.6. Gitホスティングサービス</h2>
+<h3 id="161-github">1.6.1. GitHub</h3>
+<p>GitHubはソフトウェア開発のプラットフォームであり、ソースコードをホスティングできるサービスです。
+最もメジャーなGitホスティングサービスであるためGitHub/Gitを使えることはITの開発者としては基礎中の基礎と言えます。</p>
+<h3 id="162-gitlab">1.6.2. GitLab</h3>
+<p>バージョン管理システムを主体としたRudy on Railas製のソースコードをホスティングできるアプリケーション開発支援ツールです。
+GitHubと異なり、OSSであることが特徴です。</p>
+<p>GitHubと異なるのはGitHubはクラウド上に展開されるGitホスティングサービスであるのに対し、GitLabは<strong>サーバにインストールして使う</strong>必要があります。</p>
+<h3 id="163-bitbucket">1.6.3. BitBucket</h3>
+<p>BitBucketはソフトウェア開発のプラットフォームであり、ソースコードをホスティングできるサービスです。
+日本と言うよりも海外のIT企業や開発者が使用している印象があります。</p>
+<h2 id="17-cdn提供サービス">1.7 CDN提供サービス</h2>
+<h3 id="171-cloudflare">1.7.1. CloudFlare</h3>
+<p>Cloudflare社が提供しているCDNを提供するサービスです。
+値段が安いことと、機能がかなり制限されますがFreeプランもあるのが特徴です。</p>
+<p>CloudflareにはプランによってはWAFや負荷分散サービスを利用可能です。
+それらを利用することによりある程度のセキュリティ攻撃などには十分に耐えるアプリケーションを構築可能です。</p>
+<h3 id="172-amazon-cloudfront">1.7.2. Amazon CloudFront</h3>
+<p>Amazonが提供するCDNサービスです。</p>
+<h3 id="173-akamai">1.7.3. Akamai</h3>
+<p>世界最大規模のCDNを提供しているサービスです。</p>
+<h1 id="2-各種ツール・ミドルウェアなど">2. 各種ツール・ミドルウェアなど</h1>
+<h2 id="21-コードエディタとide">2.1. コードエディタとIDE</h2>
+<h3 id="211-visual-studio-codevscode">2.1.1. Visual Studio Code(VSCode)</h3>
+<p>マイクロソフトが開発しているWindows、Linux、macOS、web用のソースコードエディタです。
+最もポピュラーで多くの開発者が使用しているコードエディタなので基本的にこれを使ってください。
+また開発をサポートする便利な拡張機能もいろいろあります。</p>
+<h3 id="212-visual-studio">2.1.2. Visual Studio</h3>
+<p>Visual Studioはマイクロソフトが開発している統合開発環境(IDE)です。
+ソフトウェアやアプリを開発することができます。
+またチーム開発やC, C++, C#などのコンパイラ言語により開発に強いです。</p>
+<h3 id="213-vim">2.1.3. Vim</h3>
+<p>VimはUnix系ユーザー(Macユーザ)にはなじみの深い「vi」の操作性と機能を受け継ぐ高機能なテキストエディターです。
+MacやUnix系OSで開発を行うエンジニアが使用しています。</p>
+<h3 id="214-atom">2.1.4. Atom</h3>
+<p>AtomはGitHubが開発したオープンソースのテキストエディタです。</p>
+<h2 id="22-api設計とテスト">2.2. API設計とテスト</h2>
+<h3 id="221-postman">2.2.1. Postman</h3>
+<p>PostmanはAPIを設計、構築、テスト、反復するためのAPIプラットフォームです。
+PostmanではTokenなどを設定しAPIのエンドポイントにリクエストを投げ込めば Response（レスポンス）を確認することができます。
+現在HTTP や REST、SOAP、GraphQLなどのリクエストテストや、API design、API documentation、API detection、Mock Server、Monitors、Workspaces などの機能が存在します。</p>
+<h2 id="23-ミドルウェア">2.3. ミドルウェア</h2>
+<h3 id="231-nginx">2.3.1. Nginx</h3>
+<p>Nginxは無料かつオープンソースなWebサーバソフトウェアであり、SMTP, POP3, IMAPのリバースプロキシの機能や、ロードバランサ、HTTPキャッシュなどの機能も持つ特徴があります。</p>
+<p>また以下のような特徴があるため世界中のWEBサーバにおける使用シェアは1位です。</p>
+<ul>
+<li>処理速度が高い</li>
+<li>メモリ消費量を抑えやすい</li>
+<li>大量の同時接続処理を素早く処理しやすい</li>
+</ul>
+<p>しかし他のWEBサーバソフトに比べて、以下のようなデメリットも存在します。</p>
+<ul>
+<li>動画を多く扱うコンテンツの処理は不得意</li>
+<li>機能追加がしずらい</li>
+</ul>
+<h3 id="232-apache">2.3.2. Apache</h3>
+<p>Apacheは無料かつオープンソースなWebサーバソフトウェアであり、高い性能と優れた動作性から人気なWebサーバです。
+少し前まで世界中のWEBサーバにおける使用シェアは1位でした。</p>
+<p>ApacheのWEBサーバは以下のような特徴があります。</p>
+<ul>
+<li>OSに依存せずに動作する</li>
+<li>処理速度が速い</li>
+<li>機能が豊富</li>
+<li>ネット上に情報が多い</li>
+</ul>
+<p>しかし他のWEBサーバソフトに比べて、以下のようなデメリットも存在します。</p>
+<ul>
+<li>複数のデータ処理を実行するとメモリを大量に消費してしまう</li>
+<li>多人数が同時に使用するWEBサイト構築には不向き</li>
+</ul>
+<p>以上の点から、Apacheは小規模なブログやホームページやECサイト(データ量が多くても処理速度が速いため)には向いていますが、大人数が利用するようなWEBアプリケーションの構築には不向きと言えるでしょう。</p>
+<h3 id="233-litespeed">2.3.3. LiteSpeed</h3>
+<p>LiteSpeedは無料かつオープンソースなWebサーバソフトウェアであり、Apacheの機能と互換性が多いWebサーバです。</p>
+<p>LiteSpeedのWEBサーバは以下のような特徴があります。</p>
+<ul>
+<li>Nginxと同じく大量のリクエストを高速に処理することが可能</li>
+<li>HTTP/3がサポートされている</li>
+</ul>
+<p>また以下のような特徴があります。</p>
+<ul>
+<li>商用ライセンスのWEBサーバアプリで有償版と無償版がある</li>
+<li>日本語情報が少ない</li>
+</ul>
+<h3 id="234-gunicorn">2.3.4. Gunicorn</h3>
+<p>PythonのWeb Server Gateway Interfaceを実装するためのWebサーバソフトウェア</p>
+<h2 id="24-セキュリティ・サイト解析">2.4. セキュリティ・サイト解析</h2>
+<h3 id="241-owasp-zap">2.4.1. OWASP ZAP</h3>
+<p>OWASP ZAPはOSSのWebアプリケーションセキュリティスキャンツールです。
+様々な種類の攻撃をシミュレートし、Webアプリケーションの脆弱性を検出することができます。
+ほとんどのプログラミング言語やフレームワークをサポートしているため使いやすのが特徴です。</p>
+<p>OWASP ZAPには以下のような機能があります。</p>
+<ul>
+<li>脆弱性スキャン ... SQLインジェクション、クロスサイトスクリプティング（XSS）などの脆弱性を検出します</li>
+<li>脆弱性修復支援 ... 検出された脆弱性の修復方法を提供します</li>
+<li>プロキシサポート ... Webアプリケーションのトラフィックをプロキシしトラフィックを詳細に記録することができます</li>
+</ul>
+<h3 id="242-wapplyzer">2.4.2. Wapplyzer</h3>
+<p>WappalyzerはWebサイトの技術的な情報を収集するためのChromeブラウザの拡張機能です。
+Webサイトが使用しているプログラミング言語やフレームワーク、CMS、その他の技術的な情報を簡単に見つけることができます。
+Wappalyzerには、検出された技術の詳細な情報を表示する機能があります。この機能を使用すると、Webサイトが使用している技術のバージョンや、その他の詳細な情報を確認することができます。</p>
+<h3 id="243-acunetix">2.4.3. Acunetix</h3>
+<p>AcunetixはWebアプリケーションの脆弱性をスキャンして検出するためのツールです。
+Webアプリケーションが、SQLインジェクションやクロスサイトスクリプティング（XSS）などの攻撃から守られているかを簡単に確認することができます。
+Acunetixは、世界中で広く使用されているセキュリティスキャンツールの1つです。</p>
+<ul>
+<li>脆弱性スキャン ... Webアプリケーションをスキャンして脆弱性を検出します</li>
+<li>脆弱性修復支援 ... 検出された脆弱性を修復するための具体的な手順を提供します</li>
+<li>レポート機能 ... 脆弱性スキャンの結果を簡単にレポートすることができます</li>
+</ul>
+<h3 id="244-nessus">2.4.4. Nessus</h3>
+<p>Nessusはコンピュータネットワークやサーバーの脆弱性をスキャンして検出するためのセキュリティツールの1つです。</p>
+<h2 id="25-cicdツール">2.5. CI/CDツール</h2>
+<p>CI/CDツールはCIとCDが同時にできるツールを指します。</p>
+<blockquote>
+<p>CI(継続的インティグレーション) ・・・ <strong>テストや静的コード解析などの作業を自動化し、継続的に実行する手法</strong></p>
+</blockquote>
+<blockquote>
+<p>CD(継続的デリバリー) ・・・ <strong>各環境へのデプロイ作業を自動化し継続的に実行する手法</strong></p>
+</blockquote>
+<p>CI/CDで行うことは以下の3つです。</p>
+<h3 id="ビルドの自動化">ビルドの自動化<!-- omit in toc --></h3>
+<p>ソースコードから実行可能なアプリケーションを構築します。
+具体的には、Dockerイメージのpull、依存パッケージのインストール、コンパイルなどです。</p>
+<h3 id="テストの自動化">テストの自動化<!-- omit in toc --></h3>
+<p>UTなどのテストコードを実行して動作確認をしたり、Rubocop(Ruby)などのコードスタイルチェックなどを行います。</p>
+<h3 id="デプロイの自動化">デプロイの自動化<!-- omit in toc --></h3>
+<p>ビルドしてテストが通ったものを本番環境や検証環境などに自動デプロイします。</p>
+<h3 id="251-circleci">2.5.1. CircleCI</h3>
+<p>CircleCIはCI/CDツールの１つでありテスト・ビルド・デプロイなどの自動化を行うことができるツールです。
+Saas型のCI/CDサービスでありSaas型であるという点が特徴です。また、Dockerもサポートしています。
+CI/CDツールとしては最も一般的です。</p>
+<h3 id="252-github-actions">2.5.2. GitHub Actions</h3>
+<p>GitHub ActionsはCI / CDですべてのソフトウェアワークフローを簡単に自動化できるCI/CDツールです。
+GitHubから直接コードをビルド、テスト、デプロイでき、コードレビュー、ブランチ管理、問題のトリアージを希望どおりに機能させられます。</p>
+<p>公式ドキュメント:<a href="https://docs.github.com/ja/actions">https://docs.github.com/ja/actions</a></p>
+<h3 id="253-pipecd">2.5.3. PipeCD</h3>
+<p>PipeCDはKubernetesやGoogle Cloud Run、Amazon ECS、 AWS Lambdaといったさまざまなプラットフォームに対応するCDツールです。
+Terraformにも対応しているのでインフラの構築・運用にも活用可能です。</p>
+<p>公式ドキュメント:<a href="https://pipecd.dev/docs/">https://pipecd.dev/docs/</a></p>
+<h2 id="26-iacツール">2.6. IaCツール</h2>
+<p>IaC(Infrastructure as Code)はインフラストラクチャーをコードで構成することのできるものです。</p>
+<p>Iacのメリットの1つはAWSやGCPなどのIaaSサービスを手動でサイトにアクセスしてひとつひとつ設定する必要がないことです。
+またインフラストラクチャーを1つのプロバイダ(AWSやGCPなど)に限定せず、ほとんどすべてのタイプのインフラをTerraformのリソースとして表すことが可能なことは大きなメリットです。
+ただし管理できるのはインフラ構成であって、サーバー内のユーザー設定やライブラリのインストールなどはサポートしていません。</p>
+<h3 id="261-terraform">2.6.1. Terraform</h3>
+<p>TerraformはHashiCorp社が開発した<strong>インフラストラクチャーをソースコードで管理できるツール</strong>です。
+2021年現在モダンなWEB系企業の使う技術としてデファクトスタンダードになりつつあります。</p>
+<h2 id="27-コンテナ仮想化技術">2.7. コンテナ仮想化技術</h2>
+<h3 id="271-docker">2.7.1. Docker</h3>
+<p>DockerはDocker社が開発している<strong>コンテナ型仮想化技術</strong>を実現するためのプラットフォームの1つです。
+DockerではホストOSの上に動作しているDocker Engineからコンテナと呼ばれるミドルウェアの環境構築がされた実行環境を作成し、その中でアプリケーションを動作させます。
+そのためホスト型仮想化よりも圧倒的に<strong>軽量に動作</strong>する特徴がコンテナ型仮想化技術にはあります。</p>
+<img src="https://camo.qiitausercontent.com/e1829a8f27e2a0656d1d7bdfea06fc98b0b565b8/68747470733a2f2f71696974612d696d6167652d73746f72652e73332e616d617a6f6e6177732e636f6d2f302f3230393930392f39393631326331312d343262302d393438352d376261342d3230336231313862393534352e706e67" width="50%">
+
+<p>Dockerを使う最大のメリットは以下の通りです。
+<strong>ソフトウェアの実行環境を複雑なアーキテクチャであっても、Dockerを使って管理することで簡単にどんなマシンにでも共有できる</strong>点。</p>
+<ul>
+<li>コード化されたファイルを共有することでどこでも誰でも同じ環境が作れる</li>
+<li>作成した環境を配布しやすい。</li>
+<li>スクラップ＆ビルドが容易にできる。</li>
+</ul>
+<p>以上の点もDockerを使うことメリットです。</p>
+<h3 id="272-kubernetes">2.7.2. kubernetes</h3>
+<p>Kubernetesはオーケーストレーションツールの一つであり、コンテナの運用管理と自動化を実現するオープンソースソフトウェアです。
+Kubernetesは、Google社が社内で利用していたコンテナ管理ツールが汎用化され、オープンソースソフトウェアとなったものであり、複数のコンテナを統合的に管理しつつ、スケールイン・アウトなども自動化することが可能です。</p>
+<blockquote>
+<p>オーケストレーション:コンピュータシステム、アプリケーション、およびサービスにおける、設定、管理、調整の自動化すること</p>
+</blockquote>
+<p>コンテナ仮想化技術とマイクロサービスアーキテクチャは相性が良いため注目されています。</p>
+<h1 id="3-その他各種技術と用語">3. その他各種技術と用語</h1>
+<h2 id="31-spampa">3.1. SPA/MPA</h2>
+<h3 id="spa">SPA<!-- omit in toc --></h3>
+<p>SPA(Single Page Application)は単一のWebページで構成するアプリケーションです。
+ページ遷移を行わずにページやコンテンツの切り替えが可能なのが特徴です。
+言い換えると、<strong>他のページへ移動せずにコンテンツの切り替えができる技術</strong>です。
+具体的にはユーザーがひとつのサービスを通じて得られる体験であるUXの向上に効果があり、ブラウザの挙動に縛られることがないUIの実現が可能です。</p>
+<img src="https://engineer-life.dev/wp-content/uploads/2019/07/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88-2019-07-27-17.31.53.png" width="60%">
+
+<p>SPAの開発はJavaScript(フロントエンド)により実現します。
+オープンソースで提供されているSPAを構築可能なフレームワークは以下のようなものがあります.</p>
+<ul>
+<li><strong>React</strong> ・・・ Facebook主導のフレームワーク、UIデザインの知識がなくても最先端のフロントエンドが作れる、スマホアプリにも拡張可能</li>
+<li><strong>Vue</strong> ・・・ シンプルなフレームワークで使いやすい、日本語のドキュメントが充実している、学習コストが低い</li>
+<li><strong>Angular</strong> ・・・ Google主導のフレームワーク、動作端末を考慮する必要がなく汎用性が高い、機能が多いため大規模開発に向いている</li>
+</ul>
+<h3 id="mpa">MPA<!-- omit in toc --></h3>
+<p>MPA(Multiple Page Application)は複数のページで構成されるアプリケーションです。
+HTTP GETが来たら、リクエストに応じたHTMLを1つ1つ組み上げてブラウザに返すオーソドックスで昔ながらの特徴があります。
+Railsやlaravelなどのサーバサイドフレームワークを公式ドキュメント通り作るとこの設計になります。
+またWordPressなどのCMSもMPA構成となっています。</p>
+<h2 id="32-ssrcsrssg">3.2. SSR/CSR/SSG</h2>
+<h2 id="ssr">SSR<!-- omit in toc --></h2>
+<p>SSR(Server Side Rendering)はページ遷移のたびサーバーにリクエストが走り、そのままサーバー側でAPIと連携をしてレンダリングが行われ、生成されたHTMLをブラウザに返すアーキテクチャのことである。
+サーバー側でレンダリングが行われることを特徴である。</p>
+<img src="https://storage.googleapis.com/zenn-user-upload/f7fef7675d04-20220206.png" width="60%">
+
+<p>サーバーサイドレンダリング(SSR)は、その名の通りサーバー側でアプリケーションの HTML を生成しレスポンスとして返すことを言います。
+一般的に利用されている MPA(Multiple Page Application)では言うまでもなく行われていることなので、SSR というワードは自ずと SPA(Single Page Application)を構築する際のオプション機能を指します。</p>
+<p>SSRのメリットを整理すると、まず一番に挙がるのはレンダリングをサーバー側で行えるので、通常のSPAと比べて初回読み込みに時間がかからないということである。
+厄介なレンダリング処理をサーバー側で行えるので、ブラウザの負担が減り、すなわちブラウザのスペックの高くない機器（スマホなど）でも安定した表示速度を保つことが可能です。</p>
+<h2 id="csr">CSR<!-- omit in toc --></h2>
+<p>CSR(Client Side Rendering)は、クライアント側のJavaScriptを使用し直接ブラウザでページをレンダリングすることを言います。</p>
+<p>大きいアプリケーションの場合クライアントで処理するJavascriptの量も増えます(クライアントで処理する情報量が増加する)。</p>
+<p>SEO的には弱い。</p>
+<h2 id="ssg">SSG<!-- omit in toc --></h2>
+<p>SSG(Static Site Generation)はビルド時に、サーバー側で、APIからのデータ取得とそれに伴ったHTMLの構築を終わらせておき、ユーザーからリクエストされた際にこの事前につくっておいたHTMLを渡すアーキテクチャです。</p>
+<p>Next.jsやNuxt.jsなどを利用することで構築できます。</p>
+<p>SEO対策が可能。</p>
+<h2 id="33-nosql">3.3. NoSQL</h2>
+<p>NoSQL(Not Only SQL)は非リレーショナルデータベース(RDB)なデータベースの総称のことである。
+近年RDBでは対応できないケースが増えてきたことから、昨今ではNoSQLが注目されています。</p>
+<img src="https://www.pasonatech.co.jp/workstyle/column/media/9063_tn_1.png" width="60%">
+
+<p>NoSQLでは音声や画像など、Excelのセルに入らないデータも扱えます。
+速度を優先する構造であるためビッグデータなど大量データの処理に向くことも注目を集める大きな要因である。</p>
+<p>NoSQLは4種類に分類される。</p>
+<ul>
+<li>キーバリュー型</li>
+<li>ワイドカラムストア型</li>
+<li>ドキュメント型</li>
+<li>グラフ型</li>
+</ul>
+<h3 id="nosqlが適するケース">NoSQLが適するケース<!-- omit in toc --></h3>
+<ul>
+<li>非構造化データや半構造化データを扱うとき</li>
+<li>スピードが第一に要求されるシステム</li>
+<li>拡張する可能性が高いシステム</li>
+</ul>
+<h2 id="34-altjs">3.4. AltJS</h2>
+<p>Alt JSは<strong>型定義が可能な（静的型付け）</strong> JavaScriptを拡張して作られた言語です。</p>
+<h3 id="341-typescript">3.4.1. TypeScript</h3>
+<p>2014年頃にMicrosoftによって開発されたAltJSの言語(JavaScriptの拡張版)です。
+型チェックなどの機能があるためコンパイルに時間がかかる特徴があります。</p>
+<p>TypeScriptが注目されているのは、JavaScriptによるシステム開発がある程度規模が大きくなると実装・保守の効率が非常に悪くためです。</p>
+<ul>
+<li>型の定義がないので、意図しない値が入ることがある。</li>
+<li>null safety でないので、意図しない null や undefined が入ることがある。</li>
+<li>オブジェクト指向言語だが、インターフェースやクラス定義がなく、プロパティ名を間違っていても実行時までエラーにならず、エラーになっても原因の解析に時間がかかることが多い。</li>
+<li>型やインターフェース、クラス定義がないので、エディタによる入力補完があまり受けられない。</li>
+</ul>
+<p>JavaScriptを使ったことがあれば、TypeScriptの学習コストは低いのが特徴です。
+近年(2021年時点)ではType Scriptを実務で使う機会は増えていってます。
+特にSPA構成のReactやVue、AngularJSとセットで使われることが多い。</p>
+<h3 id="342-jsx">3.4.2. JSX</h3>
+<p>DeNAが開発したオブジェクト指向言語です。
+文法がJavaScriptと似ているため、JavaSCriptを触った人ならば学習コストが低いです。
+大規模な開発に向いています。</p>
+<h3 id="343-dart">3.4.3. Dart</h3>
+<p>Googleによって開発された、大規模なウェブ・アプリーケーションの開発に対応できるオブジェクト指向言語です。
+<strong>標準仕様としては動的型付け</strong>ですが、オプションとして静的型付けもできることが特徴です。</p>
+<h2 id="35-アーキテクチャ">3.5. アーキテクチャ</h2>
+<h3 id="351-マイクロサービスアーキテクチャ">3.5.1. マイクロサービスアーキテクチャ</h3>
+<p>マイクロサービスアーキテクチャはアプリケーションを一枚岩の「モノリシック」なプログラムとしてではなく、複数のサービスや機能を疎結合させて構築するアーキテクチャです。
+マイクロサービスのアーキテクチャでは、大規模で複雑なアプリケーションを提供する際のスピードと信頼性が向上することがメリットです。</p>
+<p>マイクロサービスをWeb系システムで組むための関連技術としては、Go言語やKubernetesなどが注目されています。</p>
+<h3 id="352-サーバレスアーキテクチャ">3.5.2. サーバレスアーキテクチャ</h3>
+<p>サーバーレスアーキテクチャーは常時稼働するサーバー（仮想マシン）を極力使わずにアプリを構築するアーキテクチャーです。
+AWSのECSやEKS基盤で構成されるようなアプリケーションはサーバレスアーキテクチャと言えます。</p>
+<h3 id="353-jamstack">3.5.3. Jamstack</h3>
+<p>Jamstackとはウェブサーバーを存在させずにサイトを運用する構成のこと。</p>
+<p>下記の頭文字からつけられた名称となっています。</p>
+<ul>
+<li>JavaScriptのJ - プログラミング言語</li>
+<li>APIのA - データをやりとりするための仕組み</li>
+<li>MarkupのM - おおまかにはウェブページを表示するためのHTMLの一種</li>
+</ul>
+<p>近年(2022頃)から注目されているWebサイトの構成系技術です。</p>
+<p>構成図</p>
+<img src="https://images.blog.microcms.io/assets/f5d83e38f9374219900ef1b0cc4d85cd/f702788b869043639b2831922cc2b973/figure3.png" width="60%">
+
+<p>コンテンツ配信図</p>
+<img src="https://images.blog.microcms.io/assets/f5d83e38f9374219900ef1b0cc4d85cd/d15fa6674ef8481a968963c7b24dc4ba/figure4.png" width="60%">
+
+<p>詳細な解説: <a href="https://blog.microcms.io/jamstack-introduction/">https://blog.microcms.io/jamstack-introduction/</a></p>
+<h2 id="36-コーディング・実装原則">3.6. コーディング・実装原則</h2>
+<h3 id="361-yagni原則">3.6.1. YAGNI原則</h3>
+<p>後で使うと設計した機能は後から使わないという原則。</p>
+<h3 id="362-dry原則">3.6.2. DRY原則</h3>
+<p>重複管理を避けて1か所で管理するというルール。</p>
+<h3 id="363-kissの原則">3.6.3. KISSの原則</h3>
+<p>複雑にせず単純にする。</p>
+<h2 id="37-webrtc">3.7. WebRTC</h2>
+<p>webRTC(Web Real-Time Communication)は<strong>Webブラウザ間で音声やビデオ、データなどをリアルタイムにやり取りする際に用いられる技術</strong>です。
+対応ブラウザは「Google Chrome, Microsoft Edge, Safariなど」。
+WebRTCは様々なサーバ基盤となって構築されており代表的なものには「WebRTC SFU」,「WebRTC P2P」があります。</p>
+<p>詳細な解説ドキュメント:<a href="https://developer.mozilla.org/ja/docs/Web/API/WebRTC_API/Protocols">https://developer.mozilla.org/ja/docs/Web/API/WebRTC_API/Protocols</a></p>
+<h3 id="webrtc-sfu">WebRTC SFU<!-- omit in toc --></h3>
+<p>WebRTC SFUは<strong>サーバー経由</strong>で音声や映像といったデータを共有するWebRTC技術です。
+SFUサーバを使うことでメディアの容量の大きさや配信時の視聴者の数による負担を大幅に減らすことが可能という特徴があります。</p>
+<h3 id="webrtc-p2p">WebRTC P2P<!-- omit in toc --></h3>
+<p>WebRTC P2Pは<strong>P2P</strong>で音声や映像といったデータを共有するWebRTC技術です。
+それをwebブラウザで実現するためにSDPとICEというプロトコルが、情報のやり取りのためにはシグナリングサーバー、STUNサーバ・TURNサーバが用いられます。</p>
+<h3 id="シグナリングサーバ">シグナリングサーバ<!-- omit in toc --></h3>
+<p>シグナリングサーバはP2P通信を行う場合に仲介役を担うサーバーです。
+通信する相手のデータを取得するために使われます。</p>
+<p>関係技術:<code>Socket.io, FireBase</code></p>
+<h3 id="stunサーバ">STUNサーバ<!-- omit in toc --></h3>
+<p>STUNサーバは外部から見た自分のIPアドレスを教えてくれるサーバです。
+<strong>NAT越え</strong>のために使います。</p>
+<img src="https://camo.qiitausercontent.com/091cb5584c8d89f5d44caa93eeec2d78f8c6c51d/68747470733a2f2f71696974612d696d6167652d73746f72652e73332e616d617a6f6e6177732e636f6d2f302f3134303237302f34663861366334362d373265632d653934642d356237352d3464616365666536366361622e706e67" width="60%">
+
+<p>STUNサーバ構築のためのコードなどはネット上に探せばあります(Google codeなどにある)。</p>
+<h3 id="turnサーバ">TURNサーバ<!-- omit in toc --></h3>
+<p>TURNサーバはP2P通信したいPCの間に立ってデータをリレーするためのサーバです。</p>
+<p>図で言うと、TURNサーバにそれぞれ代理人(PC1&#39;, PC4&#39;)を立てて、代理人同士がデータのやり取りを行うことで、PC1-PC4間の擬似的な直接通信を行います。</p>
+<img src="https://camo.qiitausercontent.com/0e8da15494790f728a209d0e4d28020b5c151f2f/68747470733a2f2f71696974612d696d6167652d73746f72652e73332e616d617a6f6e6177732e636f6d2f302f3134303237302f33393836373166342d396438382d326361662d643630302d3732643639303938316633392e706e67" width="60%">
+
+<p>関連技術:<code>coturn</code></p>
+<h3 id="mcuサーバ">MCUサーバ<!-- omit in toc --></h3>
+<p>MCU(多地点接続)は3端末以上を同時接続する際に使用されるサーバです。</p>
+<p>クライアントから受け取ったデータをそのまま転送するのではなく、合成・変換してから送ります。</p>
+<h2 id="38-cdncontents-delivery-network">3.8. CDN(Contents Delivery Network)</h2>
+<p>CDNはユーザーになるべく近い場所でコンテンツを配信することにより、高速かつ信頼性の高いサービス提供するというものです。
+CDNは分散されたキャッシュサーバー群によるネットワークともいえるでしょう。
+具体的にはWebアプリケーションで表示する画像や文章を世界中のサーバにキャッシュすることで実現します。</p>
+<p>また以下の問題を解決できます。</p>
+<ul>
+<li>世界中からアクセスのあるWEBアプリケーションやWEBサイトのレスポンスの改善</li>
+<li>Webサーバがダウンした際でもWebアプリケーションの機能の一部が提供できる</li>
+<li>ユーザが直接サーバにアクセスしないのでDDosやWebサイト改竄の被害をほとんど押さえれる</li>
+</ul>
+<h2 id="39-サードパーティcookie">3.9. サードパーティCookie</h2>
+<p>サードパーティクッキーは「訪れたサイト以外のドメインから(第三者)から発行されたクッキー」であり、ドメインを横断したトラッキングができるのでWEB広告で広く活用されています。</p>
+<p>Googleにより、2024年に<strong>廃止が決定されました。
+個人情報保護の観点からクッキーへの規制を強める動きがあるため</strong>廃止される可能性が高い**です。</p>
+<h3 id="前提知識">前提知識<!-- omit in toc --></h3>
+<blockquote>
+<p>Cookie: サイト訪問者のユーザ情報をブラウザに一時保存(キャッシュ)する仕組み</p>
+</blockquote>
+<blockquote>
+<p>ファーストパーティ: 通常のログインに関する情報やショッピングカートの中身などの1つのサイト用のCookie</p>
+</blockquote>
+<h2 id="310-sso">3.10. SSO</h2>
+<p>シングルサインオン(Single Sign-On)は「シングル 」と「サインオン」を組み合わせたものです。</p>
+<p>「1度システム利用開始のユーザー認証 (ログイン) を行うと複数のシステムを利用開始する際に、都度認証を行う必要がない仕組み」や「1度の認証で、以後その認証に紐づけられている複数のシステムやアプリ・サービスにも、追加の認証なしで利用できる製品・システム・ツール」を指します。</p>
+<h2 id="311-サーバレスdb">3.11. サーバレスDB</h2>
+<p>サーバ管理や検討が不要なDB。
+Amazon Lambda(NoSQL), <strong>PlanetScale</strong>, Firestore(NoSQL)など。</p>
+<h2 id="312-ormobject-relational-mapping">3.12. ORM(Object-Relational Mapping)</h2>
+<p>ORM(オブジェクト関係マッピング)はオブジェクトと関係(RDB)とのマッピングを行うもの。</p>
+<p>ORMを使うと<strong>SQLを直接書くことなく、オブジェクトのメソッドでDB操作ができる</strong>と言う特徴があります。</p>
+<h3 id="フレームワークごとのorm">フレームワークごとのORM<!-- omit in toc --></h3>
+<table>
+<thead>
+<tr>
+<th>言語</th>
+<th>ORM</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ruby</td>
+<td><strong>ActiveRecord</strong></td>
+<td>RailsのORM</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>Django ORM</td>
+<td>DjangoのORM</td>
+</tr>
+<tr>
+<td>Node.js</td>
+<td><strong>Prisma</strong>, TypeORM</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="313-rpc">3.13. RPC</h2>
+<p>RPC(遠隔手続き呼出し)はコンピュータで動作するソフトウェアから、通信回線やコンピュータネットワークを通じて別のコンピュータ上で動作するための規格であり、互いに互換性がない場合があることからプロトコルというほどの堅い規約というよりも分類である。</p>
+<blockquote>
+<p>有名どころ: XML-RPC, JSON-RPC, <strong>tRPC</strong>, <strong>gRPC</strong></p>
+</blockquote>
+<h3 id="3131-trpc">3.13.1. tRPC</h3>
+<p>簡単に言うと、server側で定義したInterfaceをそのままclient側で取り込んで繋ぎ込みができるもの
+<strong>Node.js（Type Script）向きのRPC実装</strong>。</p>
+<p>公式ドキュメント:<a href="https://trpc.io/">https://trpc.io/</a></p>
+<p>関連するパッケージ<code>yarn add @trpc/server zod</code></p>
+<h3 id="3132-grpc">3.13.2. gRPC</h3>
+<p>Googleが開発したRPC実装。
+<strong>マイクロサービスアーキテクチャと相性が良い</strong>。</p>
+<p>公式ドキュメント:<a href="https://grpc.io/">https://grpc.io/</a></p>
+<h2 id="314-webassembly">3.14. WebAssembly</h2>
+<p>WebAssemblyは仮想マシン上で動作するバイナリ形式の命令です。
+WebAssemblyには2つのフォーマットがあり、「Binary Format(WASM)」と「Teaxt Format(WAT)」があります。</p>
+<p>公式ドキュメント:<a href="https://webassembly.org/getting-started/developers-guide/">https://webassembly.org/getting-started/developers-guide/</a></p>
+<p>WebAssemblyはCやC++、Rust、Goなどの様々な言語から上記のWebAssemblyの命令形式へコンパイルして利用します。</p>
+<p>WebAssemblyを用いることにより得られるメリットは以下の3つ。</p>
+<ul>
+<li>JavaScriptではできなかった負荷の大きな処理をブラウザで実行可能</li>
+<li><strong>C/C++など既存のソースコードをブラウザで実行可能</strong></li>
+<li>フロントとバックの処理を同じ言語で記述できる</li>
+</ul>
+<h3 id="webassemblyが適用できる場面ユースケース">WebAssemblyが適用できる場面(ユースケース)<!-- omit in toc --></h3>
+<p><strong>負荷の大きな処理をブラウザで実装したいとき</strong>に役に立ちます。</p>
+<ul>
+<li>動画、画像編集</li>
+<li>画像認識</li>
+<li>低遅延のVR・AR</li>
+<li>CAD</li>
+<li>ゲーム開発</li>
+<li>圧縮や暗号化など</li>
+</ul>
+<p>Qiitaの解説記事:<a href="https://qiita.com/t_katsumura/items/ff379aaaba6931aad1c4">https://qiita.com/t_katsumura/items/ff379aaaba6931aad1c4</a></p>
+<h2 id="315-open-api">3.15. Open API</h2>
+<p>言語に依存しない標準の RESTful API へのインターフェイス仕様。
+関連するものにswaggerがある。
+API設計が巨大化したときに使える。</p>
+<blockquote>
+<p>swagger: Open API Specific を記述するための、オープンソースのツール
+<a href="https://swagger.io/docs/specification/about/">https://swagger.io/docs/specification/about/</a></p>
+</blockquote>
+<h1 id="4-その他通信プロトコル">4. その他通信プロトコル</h1>
+<h2 id="41-sdpsession-description-protocol">4.1. SDP(Session Description Protocol)</h2>
+<p>P2P通信のための基本情報をWebブラウザ間で共有しあうために決められた情報交換用のプロトコル。</p>
+<p>SDPで共有される情報は以下の通りです。</p>
+<table>
+<thead>
+<tr>
+<th>情報</th>
+<th>詳細</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>使用できる動画や音声の情報</td>
+<td>それぞれのブラウザが扱うことのできるコーデックの情報</td>
+</tr>
+<tr>
+<td>ネットワーク情報</td>
+<td>それぞれのブラウザのIPアドレスやポート番号などの情報</td>
+</tr>
+</tbody></table>
+<h2 id="42-iceinteractive-connectivity-establishment">4.2. ICE(Interactive Connectivity Establishment)</h2>
+<p>通信可能な経路を確認するためのプロトコル。
+SDPによりお互いのネットワーク情報を確認した後、ブラウザ同士が通信するために利用できる通信経路をピックアップするために使われます。
+WebRTCではICEにより見つかった接続経路を順に接続を試み、最初につながった通信経路を使って通信を行います。</p>
+<p>ICEを使うことでネットワークアドレストランスレーター (NAT) を使用してそれぞれのローカルネットワーク上の他のデバイスとグローバル IP アドレスを共有していても、2 つのピアが相互に接続を見つけて確立することができます。</p>
+
+
+                <!-- END -->
+
+            </main>
+            <footer class="footer mt-auto py-3 bg-light">
+                <div class="container">
+                    <p class="text-muted text-center">Written by ゆーろん / yuron3141</p>
+                </div>
+            </footer>
+        </body>
+    </body>
+</html>

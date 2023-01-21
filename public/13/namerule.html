@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="Ja">
+    <head>
+        <title>ゆーろんのWeb系の学習資料　|　命名/コーディング規則に関するメモ</title>
+        <!-- OGP -->
+        <head prefix="og: https://ogp.me/ns#">
+        <meta property="og:url" content="https://yuron3141.github.io/my_web_docs/" />
+        <meta property="og:type" content="Blog" />
+        <meta property="og:title" content="命名/コーディング規則に関するメモ" />
+        <meta property="og:description" content="ゆーろんのWeb系学習資料です。皆さんの開発のために役立つことを祈っています。" />
+        <meta property="og:site_name" content="ゆーろんアカデミー　ノート支部" />
+        <!-- DOCUMENTS STYLE -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <!-- ORIGINAL CSS -->
+        <link rel="stylesheet" href="../css/style.css" type="text/css">
+    </head>
+    <body>
+        <body class="d-flex flex-column h-100">
+            <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
+                <div>
+                    <h1 class="m-3">命名/コーディング規則に関するメモ</h1>
+                </div>
+            </header>
+            <main class="m-4">
+
+                <!-- Write Text Here-->
+
+                <h2 id="目次">目次<!-- omit in toc --></h2>
+                <ul>
+                <li><a href="#1-%E5%91%BD%E5%90%8D%E8%A6%8F%E5%89%87">1. 命名規則</a><ul>
+                <li><a href="#11-%E3%82%AD%E3%83%A3%E3%83%A1%E3%83%AB%E3%82%B1%E3%83%BC%E3%82%B9">1.1. キャメルケース</a></li>
+                <li><a href="#12-%E3%83%91%E3%82%B9%E3%82%AB%E3%83%AB%E3%82%B1%E3%83%BC%E3%82%B9">1.2. パスカルケース</a></li>
+                <li><a href="#13-%E3%82%B9%E3%83%8D%E3%83%BC%E3%82%AF%E3%82%B1%E3%83%BC%E3%82%B9">1.3. スネークケース</a></li>
+                <li><a href="#14-%E3%82%B1%E3%83%90%E3%83%96%E3%82%B1%E3%83%BC%E3%82%B9">1.4. ケバブケース</a></li>
+                </ul>
+                </li>
+                <li><a href="#2-%E5%A4%89%E6%95%B0%E5%90%8D%E3%81%AB%E9%96%A2%E3%81%97%E3%81%A6">2. 変数名に関して</a><ul>
+                <li><a href="#21-%E5%BA%83%E3%81%84%E6%84%8F%E5%91%B3%E3%81%AE%E8%A8%80%E8%91%89%E3%82%92%E3%81%A4%E3%81%91%E3%81%AA%E3%81%84">2.1. 広い意味の言葉をつけない</a></li>
+                <li><a href="#22-%E5%BF%85%E8%A6%81%E6%83%85%E5%A0%B1%E3%82%92%E5%A4%89%E6%95%B0%E5%90%8D%E5%90%AB%E3%82%81%E3%82%8B">2.2. 必要情報を変数名含める</a></li>
+                <li><a href="#23-%E8%AA%A4%E8%A7%A3%E3%81%95%E3%82%8C%E3%81%AA%E3%81%84%E5%90%8D%E5%89%8D%E3%81%AB%E3%81%99%E3%82%8B">2.3. 誤解されない名前にする</a></li>
+                </ul>
+                </li>
+                <li><a href="#3%E5%A4%89%E6%95%B0%E3%81%AB%E9%96%A2%E3%81%97%E3%81%A6">3.変数に関して</a><ul>
+                <li><a href="#31-%E5%AE%9A%E6%95%B0%E3%81%AB%E3%81%AF%E3%82%B3%E3%83%A1%E3%83%B3%E3%83%88%E3%82%92%E3%81%A4%E3%81%91%E3%82%8B">3.1. 定数にはコメントをつける</a></li>
+                <li><a href="#32-%E9%85%8D%E5%88%97%E3%82%84%E3%82%B3%E3%83%AC%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AF%E8%A4%87%E6%95%B0%E5%BD%A2%E3%81%AB%E3%81%99%E3%82%8B">3.2. 配列やコレクションは複数形にする</a></li>
+                <li><a href="#33-boolean%E7%9C%9F%E5%81%BD%E5%9C%B0%E5%9E%8B%E3%81%AFishascanshoud%E3%81%AA%E3%81%A9%E3%82%92%E3%81%A4%E3%81%91%E3%82%8B">3.3. Boolean(真偽地)型は「is」「has」「can」「shoud」などをつける</a></li>
+                </ul>
+                </li>
+                <li><a href="#4-%E3%82%B3%E3%83%A1%E3%83%B3%E3%83%88%E3%81%AB%E9%96%A2%E3%81%97%E3%81%A6">4. コメントに関して</a><ul>
+                <li><a href="#41-%E3%82%B3%E3%83%A1%E3%83%B3%E3%83%88%E3%81%AB%E6%9B%B8%E3%81%8F%E3%81%B9%E3%81%8D%E3%81%93%E3%81%A8">4.1. コメントに書くべきこと</a></li>
+                <li><a href="#42-%E3%82%B3%E3%83%A1%E3%83%B3%E3%83%88%E3%81%AB%E6%9B%B8%E3%81%8F%E3%81%B9%E3%81%8D%E3%81%A7%E3%81%AF%E3%81%AA%E3%81%84%E3%81%93%E3%81%A8">4.2. コメントに書くべきではないこと</a></li>
+                </ul>
+                </li>
+                </ul>
+                <h2 id="参考資料">参考資料<!-- omit in toc --></h2>
+                <table>
+                <thead>
+                <tr>
+                <th>参考URL</th>
+                <th>URL</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>リーダーブルコード要約</td>
+                <td><a href="https://qiita.com/AKB428/items/20e81ccc8d9998b5535d">https://qiita.com/AKB428/items/20e81ccc8d9998b5535d</a></td>
+                </tr>
+                </tbody></table>
+                <h1 id="1-命名規則">1. 命名規則</h1>
+                <h2 id="11-キャメルケース">1.1. キャメルケース</h2>
+                <p>例: <code>currentUserItem</code></p>
+                <h2 id="12-パスカルケース">1.2. パスカルケース</h2>
+                <p>例: <code>CurrentUserItem</code></p>
+                <h2 id="13-スネークケース">1.3. スネークケース</h2>
+                <p>例: <code>current_user_item</code></p>
+                <h2 id="14-ケバブケース">1.4. ケバブケース</h2>
+                <p>例: <code>current-user-item</code></p>
+                <h1 id="2-変数名に関して">2. 変数名に関して</h1>
+                <p>基本英語</p>
+                <h2 id="21-広い意味の言葉をつけない">2.1. 広い意味の言葉をつけない</h2>
+                <p>基本的にはname, tmp, valueなど端的な名前は避けるが、
+                スコープが小さければ短い名前でも良い。</p>
+                <p>基本的にはuser_name, input_valueなど意味が分かるように組み合わせる。</p>
+                <h2 id="22-必要情報を変数名含める">2.2. 必要情報を変数名含める</h2>
+                <p>必要な情報を変数名に入れる。</p>
+                <ul>
+                <li>tmpやretvalなどの汎用的すぎる名前は避ける</li>
+                <li>i,j,k などはループの変数として理解できるため使ってもよい</li>
+                <li>長い名前を入力するのは問題じゃない(今はIDEやエディタが補完するため）</li>
+                <li>stringをstr、documentをdocと省略するのは問題ないが、チーム独自の省略規則はやめるべし</li>
+                </ul>
+                <h2 id="23-誤解されない名前にする">2.3. 誤解されない名前にする</h2>
+                <ul>
+                <li>限界値を示すときは min_ max_を使う</li>
+                <li>範囲を示すときは first_ last_を使う</li>
+                <li>包括的範囲には begin_ end_　を使う</li>
+                </ul>
+                <h1 id="3変数に関して">3.変数に関して</h1>
+                <h2 id="31-定数にはコメントをつける">3.1. 定数にはコメントをつける</h2>
+                <h2 id="32-配列やコレクションは複数形にする">3.2. 配列やコレクションは複数形にする</h2>
+                <h2 id="33-boolean真偽地型は「is」「has」「can」「shoud」などをつける">3.3. Boolean(真偽地)型は「is」「has」「can」「shoud」などをつける</h2>
+                <h1 id="4-コメントに関して">4. コメントに関して</h1>
+                <h2 id="41-コメントに書くべきこと">4.1. コメントに書くべきこと</h2>
+                <ul>
+                <li><p>監督コメンタリーを入れる（「ここのコードは◯◯という背景でこうなったのだ」という説明を入れる。なんらかのロジックと比較した結果こちらのほうがよいと判断してこうなったと書くのもいい.要は他の人が見た時に「別の方法があるのになんでこうしたんだろうか？」という疑問をもたせないようにする）</p>
+                </li>
+                <li><p>コードに欠陥あることを認める（パフォーマンスやアルゴリズムの選定、ロジックがスマートでない）があることを認めており、いつか直さないといけないことをコメントしておく</p>
+                </li>
+                </ul>
+                <h2 id="42-コメントに書くべきではないこと">4.2. コメントに書くべきではないこと</h2>
+                <ul>
+                <li>コードからすぐに分かることをコメントに書かない</li>
+                <li>関数名が変だとか変数名が変だとか修正可能なものを補うコメント</li>
+                </ul>
+                
+
+                <!-- END -->
+
+            </main>
+            <footer class="footer mt-auto py-3 bg-light">
+                <div class="container">
+                    <p class="text-muted text-center">Written by ゆーろん / yuron3141</p>
+                </div>
+            </footer>
+        </body>
+    </body>
+</html>

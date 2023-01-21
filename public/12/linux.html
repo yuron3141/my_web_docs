@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="Ja">
+    <head>
+        <title>ゆーろんのWeb系の学習資料　|　Linux基礎</title>
+        <!-- OGP -->
+        <head prefix="og: https://ogp.me/ns#">
+        <meta property="og:url" content="https://yuron3141.github.io/my_web_docs/" />
+        <meta property="og:type" content="Blog" />
+        <meta property="og:title" content="Linux基礎" />
+        <meta property="og:description" content="ゆーろんのWeb系学習資料です。皆さんの開発のために役立つことを祈っています。" />
+        <meta property="og:site_name" content="ゆーろんアカデミー　ノート支部" />
+        <!-- DOCUMENTS STYLE -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <!-- ORIGINAL CSS -->
+        <link rel="stylesheet" href="../css/style.css" type="text/css">
+    </head>
+    <body>
+        <body class="d-flex flex-column h-100">
+            <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
+                <div>
+                    <h1 class="m-3">Linux基礎</h1>
+                </div>
+            </header>
+            <main class="m-4">
+
+                <!-- Write Text Here-->
+
+                <p>Linux系のディストリビューションで使えるコマンドと基礎知識を記載します。</p>
+                <h2 id="目次">目次<!-- omit in toc --></h2>
+                <ul>
+                <li><a href="#linux%E6%93%8D%E4%BD%9C%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%81%A8%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8">Linux操作コマンドとパッケージ</a><ul>
+                <li><a href="#1%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E7%B3%BB%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89">1.基本操作系コマンド</a></li>
+                <li><a href="#2%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%82%84%E6%A8%A9%E9%99%90%E7%B3%BB%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89">2.アカウントや権限系コマンド</a></li>
+                <li><a href="#3-%E3%81%9D%E3%81%AE%E4%BB%96%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89">3. その他コマンド</a></li>
+                <li><a href="#4vi%E3%81%AE%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%95">4.viのコマンド(操作方法)</a></li>
+                <li><a href="#5-linuxcui%E7%89%88%E3%81%AE%E3%82%88%E3%81%8F%E4%BD%BF%E3%81%86%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%8C%E5%BF%85%E8%A6%81">5. Linux(CUI版)のよく使うパッケージ(インストールが必要)</a><ul>
+                <li><a href="#51-vim">5.1. Vim</a></li>
+                <li><a href="#52-git">5.2. Git</a></li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                <li><a href="#linux%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E5%91%A8%E8%BE%BA%E7%9F%A5%E8%AD%98">Linuxに関する周辺知識</a><ul>
+                <li><a href="#1-%E3%83%87%E3%82%A3%E3%82%B9%E3%83%88%E3%83%AA%E3%83%93%E3%83%A5%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3">1. ディストリビューション</a><ul>
+                <li><a href="#11-redhat">1.1. RedHat</a></li>
+                <li><a href="#12-fedora">1.2. Fedora</a></li>
+                <li><a href="#13-debian">1.3. Debian</a></li>
+                <li><a href="#14-ubuntu">1.4. Ubuntu</a></li>
+                <li><a href="#15-centos">1.5. CentOS</a></li>
+                <li><a href="#16-amazon-linux%E7%95%AA%E5%A4%96">1.6. Amazon Linux(番外)</a></li>
+                </ul>
+                </li>
+                <li><a href="#2-%E3%83%87%E3%82%A3%E3%82%B9%E3%83%88%E3%83%AA%E3%83%93%E3%83%A5%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%94%E3%81%A8%E3%81%AE%E7%89%B9%E5%BE%B4%E3%81%A8%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E7%AE%A1%E7%90%86">2. ディストリビューションごとの特徴とパッケージ管理</a><ul>
+                <li><a href="#21-centos%E3%81%A8ubuntu%E3%81%AE%E6%AF%94%E8%BC%83%E3%81%A8%E7%89%B9%E5%BE%B4">2.1. CentOSとUbuntuの比較と特徴</a></li>
+                <li><a href="#22-apt-yum%E5%AF%BE%E5%BF%9C%E8%A1%A8">2.2. apt-yum対応表</a><ul>
+                <li><a href="#221-%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E6%AF%94%E8%BC%83">2.2.1. オプション比較</a></li>
+                <li><a href="#222-%E3%82%B5%E3%83%96%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E6%AF%94%E8%BC%83">2.2.2. サブコマンド比較</a></li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                <li><a href="#linux%E7%B3%BBos%E3%82%92gui%E4%B8%BB%E3%81%ABwindows%E3%81%A7%E6%93%8D%E4%BD%9C%E3%81%99%E3%82%8B%E3%81%9F%E3%82%81%E3%81%AEssh%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E4%BA%88%E5%82%99%E9%8C%B2">Linux系OSをGUI(主にwindows)で操作するためのSSHソフトウェアに関する予備録</a><ul>
+                <li><a href="#1-teraterm">1. TeraTerm</a></li>
+                <li><a href="#2-windows-powershell">2. Windows PowerShell</a></li>
+                <li><a href="#3-%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%83%97%E3%83%AD%E3%83%B3%E3%83%97%E3%83%88">3. コマンドプロンプト</a></li>
+                </ul>
+                </li>
+                </ul>
+                <h1 id="linux操作コマンドとパッケージ">Linux操作コマンドとパッケージ</h1>
+                <h2 id="1基本操作系コマンド">1.基本操作系コマンド</h2>
+                <table>
+                <thead>
+                <tr>
+                <th>コマンド</th>
+                <th>説明</th>
+                <th>使用例</th>
+                <th>オプション</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>pwd</td>
+                <td>現在のディレクトリの位置を表示</td>
+                <td>pwd</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>cd</td>
+                <td>ディレクトリ移動</td>
+                <td>cd 移動フォルダ名</td>
+                <td>-で直前のディレクトリ移動, ~でホームディレクトリに移動</td>
+                </tr>
+                <tr>
+                <td>ls</td>
+                <td>現在のディレクトリにあるファイル群を表示</td>
+                <td>ls</td>
+                <td>-a, -l, -d --time-style:ファイル更新年月表示</td>
+                </tr>
+                <tr>
+                <td>mv</td>
+                <td>ファイルを移動させる/ディレクトリ名変更</td>
+                <td>mv 移動元 移動先</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>mkdir</td>
+                <td>フォルダの作成</td>
+                <td>mkdir 名称</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>touch</td>
+                <td>ファイルを作成する</td>
+                <td>touch フォルダ名</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>rmdir</td>
+                <td>空のフォルダを削除する</td>
+                <td>rmdir 名称</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>rm</td>
+                <td>ファイルやフォルダを削除</td>
+                <td>rm 名称</td>
+                <td>-r オプションでディレクトリ内のファイルを全て削除(確認なし), -rfで完全削除</td>
+                </tr>
+                <tr>
+                <td>find</td>
+                <td>ファイルの検索</td>
+                <td>find /-name ファイル名</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>cat</td>
+                <td>ファイルの中身表示</td>
+                <td>cat ファイル名</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>history</td>
+                <td>コマンド履歴の表示</td>
+                <td>history</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>vi</td>
+                <td>Linux標準エディタでファイル作成(記入可能)</td>
+                <td>vi ファイル名</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>view</td>
+                <td>ファイルを開く(中身の確認/読み取り)</td>
+                <td>view ファイル名</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>grep</td>
+                <td>検索対象のファイルから指定した文字列を含む行を表示する</td>
+                <td>grep オプション 検索文字列 対象ファイル</td>
+                <td></td>
+                </tr>
+                </tbody></table>
+                <h2 id="2アカウントや権限系コマンド">2.アカウントや権限系コマンド</h2>
+                <table>
+                <thead>
+                <tr>
+                <th>コマンド</th>
+                <th>説明</th>
+                <th>使用例</th>
+                <th>オプション</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>chmod</td>
+                <td>ファイルやフォルダのアクセス権限変更</td>
+                <td>chmod モード ファイルやディレクリ名</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>sudo</td>
+                <td>root権限(管理者権限)になってコマンドを実行する</td>
+                <td>sudo オプション コマンド</td>
+                <td>-i,-lなど</td>
+                </tr>
+                <tr>
+                <td>su</td>
+                <td>他ユーザーで実行するコマンド</td>
+                <td></td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>passwd</td>
+                <td>ユーザのパスワードを変えることのできるコマンド</td>
+                <td><code>sudo passwd root</code>ルート権限にパスワード設定</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>useradd</td>
+                <td>ユーザの追加</td>
+                <td>useradd -m 新規ユーザ名</td>
+                <td>-m, -M</td>
+                </tr>
+                <tr>
+                <td>usermod</td>
+                <td>RHEL上でユーザー名に対して sudo を有効にする</td>
+                <td>usermod -G wheel ユーザ</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>sudo -u ユーザ</td>
+                <td>ユーザ権限でコマンドを実行する</td>
+                <td>sudo -u ユーザ コマンド</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>exit</td>
+                <td>管理者権限状態のログアウト</td>
+                <td></td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>su</td>
+                <td>ユーザ切り替え</td>
+                <td>su ユーザ名</td>
+                <td></td>
+                </tr>
+                </tbody></table>
+                <h4 id="私がよく使う権限系コマンド">私がよく使う権限系コマンド<!-- omit in toc --></h4>
+                <table>
+                <thead>
+                <tr>
+                <th>コマンド</th>
+                <th>説明</th>
+                <th>使用例</th>
+                <th>オプション</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>sudo su</td>
+                <td>管理者権限への切り替え</td>
+                <td></td>
+                <td>-をつけるとログインシェルとして実行できる</td>
+                </tr>
+                </tbody></table>
+                <h3 id="sudoコマンド">sudoコマンド<!-- omit in toc --></h3>
+                <p>root権限(管理者権限)になってコマンドを実行するためのコマンド。</p>
+                <h4 id="sudoのオプション一部">sudoのオプション(一部)<!-- omit in toc --></h4>
+                <table>
+                <thead>
+                <tr>
+                <th>オプション</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>-s</td>
+                <td>環境変数「SHELL」に設定されているシェルで実行</td>
+                </tr>
+                <tr>
+                <td>-i</td>
+                <td>ログインシェルとして実行</td>
+                </tr>
+                <tr>
+                <td>-l</td>
+                <td>実行したユーザに対する権限を表示</td>
+                </tr>
+                </tbody></table>
+                <h3 id="chmodコマンド">chmodコマンド<!-- omit in toc --></h3>
+                <p>例:<code> chmod 777 ファイル名</code></p>
+                <p>chmodコマンドにおける指定するパラメータであるモードは「所有者」「所有グループ」「それ以外（他人）」のアクセス権を表します
+                アクセス権の番号はパーミッションの和をとることで算出できます。</p>
+                <h4 id="パーミッション">パーミッション<!-- omit in toc --></h4>
+                <p>ファイルやディレクトリのパーミッションは、「r（読み出し可能）」「w（書き込み可能）」「x（実行可能）」の3つのアルファベットで表します。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>パーミッション</th>
+                <th>数値</th>
+                <th>意味</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>r</td>
+                <td>4</td>
+                <td>読み出し可能（ディレクトリの場合は、ファイル一覧の表示の許可）</td>
+                </tr>
+                <tr>
+                <td>w</td>
+                <td>2</td>
+                <td>書き込み可能（ディレクトリの場合は、ファイルの追加／削除の許可）</td>
+                </tr>
+                <tr>
+                <td>x</td>
+                <td>1</td>
+                <td>実行可能（ディレクトリの場合は、cdコマンドでそのディレクトリに入れるか）</td>
+                </tr>
+                <tr>
+                <td>-</td>
+                <td>0</td>
+                <td>許可がない</td>
+                </tr>
+                </tbody></table>
+                <h4 id="よく使うアクセス権モードパラメータ">よく使うアクセス権(モード)パラメータ<!-- omit in toc --></h4>
+                <table>
+                <thead>
+                <tr>
+                <th>数値</th>
+                <th>内容</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>7</td>
+                <td>読み書き実行など<strong>全て可能</strong></td>
+                </tr>
+                <tr>
+                <td>5</td>
+                <td>読み取りと実行が可能</td>
+                </tr>
+                <tr>
+                <td>4</td>
+                <td>読み取り専用</td>
+                </tr>
+                <tr>
+                <td>0</td>
+                <td>全て不許可</td>
+                </tr>
+                </tbody></table>
+                <h2 id="3-その他コマンド">3. その他コマンド</h2>
+                <p>ネットワーク(接続)系やメディア処理(圧縮)、各種設定のためのコマンドなども含む。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>コマンド</th>
+                <th>説明</th>
+                <th>使用例</th>
+                <th>オプション</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>curl</td>
+                <td>様々な通信プロトコルでデータの送受信を行うことができる</td>
+                <td>curl <a href="http://example.com">http://example.com</a></td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>wget</td>
+                <td>HTTPアクセスをしてコンテンツをファイルに保存可能</td>
+                <td></td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>tar</td>
+                <td>複数のファイルをまとめて1つのアーカイブファイルとして作成する(圧縮ファイル生成.zipなどに関連)</td>
+                <td></td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>netstat</td>
+                <td>ネットワークの接続状況などを表示する</td>
+                <td>netstat オプション</td>
+                <td>-a, -i など</td>
+                </tr>
+                <tr>
+                <td>nslookup</td>
+                <td>DNSサーバに名前解決を問い合わせをする(DNSサーバが正常に動作しているのかを調べる際に使用)</td>
+                <td>nslookup オプション ドメイン名 DNSサーバ</td>
+                <td>-port 番号など</td>
+                </tr>
+                <tr>
+                <td>kill</td>
+                <td>プロセスを終了させる</td>
+                <td>kill -シグナル名またはシグナルID PID</td>
+                <td></td>
+                </tr>
+                </tbody></table>
+                <h3 id="curlに関して">curlに関して<!-- omit in toc --></h3>
+                <p><a href="https://tech-lab.sios.jp/archives/29999">https://tech-lab.sios.jp/archives/29999</a></p>
+                <h3 id="wgetに関して">wgetに関して<!-- omit in toc --></h3>
+                <p><a href="https://hydrocul.github.io/wiki/commands/wget.html">https://hydrocul.github.io/wiki/commands/wget.html</a></p>
+                <h3 id="killに関して">killに関して<!-- omit in toc --></h3>
+                <p><a href="https://engineer-ninaritai.com/linux-kill/">https://engineer-ninaritai.com/linux-kill/</a></p>
+                <h2 id="4viのコマンド操作方法">4.viのコマンド(操作方法)</h2>
+                <p>viはLinux標準搭載のコマンドライン型テキストエディタです。</p>
+                <p>viにはノーマルモード(ESCキー)と入力モード(iキー)があります。
+                入力モードはファイル本体データの記述
+                ノーマルモードではコマンドが使用可能です。</p>
+                <p><strong>操作系</strong></p>
+                <table>
+                <thead>
+                <tr>
+                <th>コマンド</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>h</td>
+                <td>左に移動</td>
+                </tr>
+                <tr>
+                <td>j</td>
+                <td>先頭に移動</td>
+                </tr>
+                <tr>
+                <td>k</td>
+                <td>上に移動</td>
+                </tr>
+                <tr>
+                <td>l</td>
+                <td>右に移動</td>
+                </tr>
+                <tr>
+                <td>l</td>
+                <td>右に移動</td>
+                </tr>
+                <tr>
+                <td>w</td>
+                <td>ワード単位で右に移動</td>
+                </tr>
+                <tr>
+                <td>b</td>
+                <td>ワード単位で左に移動</td>
+                </tr>
+                <tr>
+                <td>e</td>
+                <td>現ワードの最後の文字に移動</td>
+                </tr>
+                <tr>
+                <td>a</td>
+                <td>カーソルの右にテキストを追加</td>
+                </tr>
+                <tr>
+                <td>x</td>
+                <td>カーソルの文字を削除</td>
+                </tr>
+                </tbody></table>
+                <p><strong>保存・終了系</strong></p>
+                <table>
+                <thead>
+                <tr>
+                <th>コマンド</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>:wq</td>
+                <td>上書き保存(保存して終了)</td>
+                </tr>
+                <tr>
+                <td>:q!</td>
+                <td>変更内容を破棄して保存(保存せずに終了)</td>
+                </tr>
+                <tr>
+                <td>:w ファイル名</td>
+                <td>ファイルを別名で保存</td>
+                </tr>
+                </tbody></table>
+                <h2 id="5-linuxcui版のよく使うパッケージインストールが必要">5. Linux(CUI版)のよく使うパッケージ(インストールが必要)</h2>
+                <h3 id="51-vim">5.1. Vim</h3>
+                <p>viの進化版(拡張版)のCUIテキストエディターです。
+                コマンドや使い方は以下URLより。</p>
+                <p><a href="http://motw.mods.jp/Vim/command.html">http://motw.mods.jp/Vim/command.html</a></p>
+                <h3 id="52-git">5.2. Git</h3>
+                <p>皆おなじみのGitです。叩き方は他のOSで叩くgitコマンドと同じです。</p>
+                <h1 id="linuxに関する周辺知識">Linuxに関する周辺知識</h1>
+                <h2 id="1-ディストリビューション">1. ディストリビューション</h2>
+                <p>ディストリビューションとは「流通・配布」という意味でLinuxが配布される形態のことです。</p>
+                <p>一般的にLinuxという言葉はLinuxカーネルのことを意味します。</p>
+                <p>カーネルだけではOSとして手軽に使うことはできないため、利用しやすいようにアプリケーションなどをパッケージにしてすぐに使える状態にしたものがディストリビューションという訳です。</p>
+                <h3 id="11-redhat">1.1. RedHat</h3>
+                <p>Red Hat(RHEL)はアメリカのRedHat社が開発した商用向けのLinuxディストリビューションです。</p>
+                <p>クライアントPC用途ではなく大規模システムのサーバーに利用されることが多いです。</p>
+                <h3 id="12-fedora">1.2. Fedora</h3>
+                <p>FedoraはRedHat社が支援しているディストリビューションです。</p>
+                <p>RHELは商用向けで有料なのに対しFedoraは無料で使うことができます。</p>
+                <h3 id="13-debian">1.3. Debian</h3>
+                <p>Debianは世界中のOSS参加開発者が集結して作り上げた、完全フリーで使うことができるLinuxディストリビューションです。</p>
+                <p>さまざまなCPU上での動作サポートと数万にもおよぶ膨大なアプリケーション数が特徴です。</p>
+                <h3 id="14-ubuntu">1.4. Ubuntu</h3>
+                <p>Ubuntuは<strong>Debianをベースに作られた</strong>世界的な人気を持つディストリビューションです。</p>
+                <p>設定ファイルなどの配置、設定のしかたなどはDebianと共通していることが多い。</p>
+                <p>UbuntuはLinuxのディストリビューションで最も先進的であると言える。</p>
+                <p>Debian自体の方向性は比較的に保守的であると同時に、ある程度デファクトスタンダードなものに近いものを採用するが、Ubuntuの場合、過去InitとしてUpstartを採用するなど独自の路線をたどるためである。</p>
+                <h3 id="15-centos">1.5. CentOS</h3>
+                <p>CentOSは<strong>RedHatをベースに作られた</strong>RedHatの商用部分を取り除いたディストリビューションと言えます。</p>
+                <p>安定性も比較的高く商用でも使われる機会も増えています。</p>
+                <h3 id="16-amazon-linux番外">1.6. Amazon Linux(番外)</h3>
+                <p>AWSのEC2などで導入可能なディストリビューションである。</p>
+                <p>ベースはRedHat / CentOS 7系のディストリビューションであると言われています。
+                つまり<strong>Cent OSと同じように</strong>使えます。</p>
+                <h2 id="2-ディストリビューションごとの特徴とパッケージ管理">2. ディストリビューションごとの特徴とパッケージ管理</h2>
+                <h3 id="21-centosとubuntuの比較と特徴">2.1. CentOSとUbuntuの比較と特徴</h3>
+                <h4 id="パッケージ管理の違い">パッケージ管理の違い<!-- omit in toc --></h4>
+                <table>
+                <thead>
+                <tr>
+                <th>種類</th>
+                <th>パッケージ</th>
+                <th>統合管理</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>CentOS</td>
+                <td>RPM</td>
+                <td><strong>yum</strong></td>
+                </tr>
+                <tr>
+                <td>Ubuntu</td>
+                <td>deb</td>
+                <td><strong>apt</strong></td>
+                </tr>
+                </tbody></table>
+                <h4 id="エディションの違い">エディションの違い<!-- omit in toc --></h4>
+                <p>Ubuntuにはデスクトップエディションとサーバエディションが存在するが、CentOSはそういった区分けをしていない。</p>
+                <p>知名度としてデスクトップ(クライアントサイド)ではUbuntu、サーバではCentOSという構図が強い。</p>
+                <h3 id="22-apt-yum対応表">2.2. apt-yum対応表</h3>
+                <h4 id="221-オプション比較">2.2.1. オプション比較</h4>
+                <h5 id="apt-getコマンドオプション">apt-getコマンドオプション<!-- omit in toc --></h5>
+                <blockquote>
+                <p><code>apt-get</code>コマンドは、Debian系のディストリビューションのパッケージ管理システムであるAPTライブラリを利用してパッケージを操作・管理するコマンドです</p>
+                </blockquote>
+                <table>
+                <thead>
+                <tr>
+                <th>apt-getコマンドのオプション</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>-d</td>
+                <td>ダウンロードのみ行う</td>
+                </tr>
+                <tr>
+                <td>-s</td>
+                <td>システムは変更せず、表示のみを行う</td>
+                </tr>
+                <tr>
+                <td>--purge</td>
+                <td>設定ファイルごとパッケージ削除（removeコマンドと一緒に指定）</td>
+                </tr>
+                </tbody></table>
+                <h5 id="yumコマンドオプション">yumコマンドオプション<!-- omit in toc --></h5>
+                <table>
+                <thead>
+                <tr>
+                <th>yumコマンドのオプション</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>-y</td>
+                <td>すべての質問に yes と回答</td>
+                </tr>
+                </tbody></table>
+                <h4 id="222-サブコマンド比較">2.2.2. サブコマンド比較</h4>
+                <h5 id="apt-getとyum">apt-getとyum<!-- omit in toc --></h5>
+                <table>
+                <thead>
+                <tr>
+                <th>apt-getサブコマンド</th>
+                <th>yumサブコマンド</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>clean</td>
+                <td></td>
+                <td>パッケージファイルの削除</td>
+                </tr>
+                <tr>
+                <td>dist-upgrade</td>
+                <td></td>
+                <td>Debianのシステムを最新にアップグレードする</td>
+                </tr>
+                <tr>
+                <td>install</td>
+                <td>install</td>
+                <td>パッケージをインストール</td>
+                </tr>
+                <tr>
+                <td>remove</td>
+                <td>remove</td>
+                <td>パッケージのアンイストール</td>
+                </tr>
+                <tr>
+                <td>update</td>
+                <td></td>
+                <td>インストール可能なパッケージの「一覧」を更新</td>
+                </tr>
+                <tr>
+                <td>upgrade</td>
+                <td>update</td>
+                <td>システムの全パッケージを最新版にアップグレードする</td>
+                </tr>
+                </tbody></table>
+                <h5 id="apt-cacheとyum">apt-cacheとyum<!-- omit in toc --></h5>
+                <table>
+                <thead>
+                <tr>
+                <th>apt-cacheサブコマンド</th>
+                <th>yumサブコマンド</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td></td>
+                <td>check-update</td>
+                <td>アップデート対象となるパッケージ一覧を表示</td>
+                </tr>
+                <tr>
+                <td>show</td>
+                <td>info</td>
+                <td>パッケージ詳細情報の表示</td>
+                </tr>
+                <tr>
+                <td></td>
+                <td>list</td>
+                <td>パッケージ情報をリスト表示</td>
+                </tr>
+                <tr>
+                <td></td>
+                <td>repolist</td>
+                <td>リポジトリ一覧の表示</td>
+                </tr>
+                <tr>
+                <td>search</td>
+                <td>search,search all</td>
+                <td>パッケージ情報をキーワードで検索</td>
+                </tr>
+                <tr>
+                <td></td>
+                <td>grouplist</td>
+                <td>パッケージグループのリスト表示</td>
+                </tr>
+                <tr>
+                <td></td>
+                <td>groupinstall</td>
+                <td>指定したグループのパッケージをインストール</td>
+                </tr>
+                <tr>
+                <td>showpkg</td>
+                <td></td>
+                <td>パッケージのバージョン、依存関係を表示</td>
+                </tr>
+                <tr>
+                <td>depends</td>
+                <td></td>
+                <td>パッケージが依存するパッケージの一覧を表示</td>
+                </tr>
+                </tbody></table>
+                <h1 id="linux系osをgui主にwindowsで操作するためのsshソフトウェアに関する予備録">Linux系OSをGUI(主にwindows)で操作するためのSSHソフトウェアに関する予備録</h1>
+                <h2 id="1-teraterm">1. TeraTerm</h2>
+                <p>Windows上で動作する多機能端末であり、WindowsからLinuxなどにリモート接続をするときによく使われる。</p>
+                <p>TeraTerm上のCUIでのコピペは、「Alt+c」でコピー、「Alt+v」でペーストである。</p>
+                <h2 id="2-windows-powershell">2. Windows PowerShell</h2>
+                <p>PowerShellはマイクロソフトが開発した拡張可能なCUIです。windowsに標準搭載されています。</p>
+                <p>PowerShell(windows)でのコピペは以下の通りです。
+                コピーしたい範囲をマウスでドラッグ(範囲選択)してEnter(または右クリック) でコピー。
+                PowerShellの画面を選択して右クリックする事でクリップボードの内容をペースト。</p>
+                <h2 id="3-コマンドプロンプト">3. コマンドプロンプト</h2>
+                <p>コマンドプロンプトはWindowsに搭載されているCUIのシステムツールです。</p>
+                <p>コピペは通常の「ctrl + v」で貼り付け可能です。</p>
+                
+
+                <!-- END -->
+
+            </main>
+            <footer class="footer mt-auto py-3 bg-light">
+                <div class="container">
+                    <p class="text-muted text-center">Written by ゆーろん / yuron3141</p>
+                </div>
+            </footer>
+        </body>
+    </body>
+</html>

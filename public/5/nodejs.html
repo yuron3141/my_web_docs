@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="Ja">
+    <head>
+        <title>ゆーろんのWeb系の学習資料　|　Node.js入門</title>
+        <!-- OGP -->
+        <head prefix="og: https://ogp.me/ns#">
+        <meta property="og:url" content="https://yuron3141.github.io/my_web_docs/" />
+        <meta property="og:type" content="Blog" />
+        <meta property="og:title" content="Node.js入門" />
+        <meta property="og:description" content="ゆーろんのWeb系学習資料です。皆さんの開発のために役立つことを祈っています。" />
+        <meta property="og:site_name" content="ゆーろんアカデミー　ノート支部" />
+        <!-- DOCUMENTS STYLE -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <!-- ORIGINAL CSS -->
+        <link rel="stylesheet" href="../css/style.css" type="text/css">
+    </head>
+    <body>
+        <body class="d-flex flex-column h-100">
+            <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
+                <div>
+                    <h1 class="m-3">Node.js入門</h1>
+                </div>
+            </header>
+            <main class="m-4">
+
+                <!-- Write Text Here-->
+
+                <p>Node.jsはJavaScriptを<strong>サーバサイドで動かすための実行環境</strong>である。</p>
+                <p>また他の環境としてはDenoやBunがあります。</p>
+                <p>静的サイトで用いるフロントエンドの生JavaScript(HTML/CSSとセットで使うJQueryのような)と異なり、自由なファイルの読み書きやネットワーク通信など扱えること多いです。</p>
+                <p>またWEBアプリケーションだけではなく、スマホアプリやデスクトップアプリも作ることができます。</p>
+                <h2 id="目次">目次<!-- omit in toc --></h2>
+                <ul>
+                <li><a href="#1-%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E7%AE%A1%E7%90%86%E3%83%84%E3%83%BC%E3%83%AB">1. パッケージ/バージョン管理ツール</a><ul>
+                <li><a href="#11-%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%83%9E%E3%83%8D%E3%83%BC%E3%82%B8%E3%83%A3">1.1. パッケージマネージャ</a><ul>
+                <li><a href="#111-npmnpx">1.1.1. npm/npx</a></li>
+                <li><a href="#112-yarn">1.1.2. yarn</a></li>
+                <li><a href="#113-pnpm">1.1.3. pnpm</a></li>
+                </ul>
+                </li>
+                <li><a href="#12-%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%83%9E%E3%83%8D%E3%83%BC%E3%82%B8%E3%83%A3">1.2. バージョンマネージャ</a><ul>
+                <li><a href="#121-nvm">1.2.1. nvm</a></li>
+                <li><a href="#122-nvsfnm">1.2.2. nvs/fnm</a></li>
+                <li><a href="#123-nodebrew">1.2.3. nodebrew</a></li>
+                <li><a href="#124-volta">1.2.4. volta</a></li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                <li><a href="#2-%E9%96%8B%E7%99%BA%E3%81%AB%E3%82%88%E3%81%8F%E4%BD%BF%E3%81%86%E4%BE%BF%E5%88%A9%E3%81%AA%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%83%A2%E3%82%B8%E3%83%A5%E3%83%BC%E3%83%AB">2. 開発によく使う＆便利なパッケージ(モジュール)</a><ul>
+                <li><a href="#21-%E3%83%95%E3%83%AC%E3%83%BC%E3%83%A0%E3%83%AF%E3%83%BC%E3%82%AF">2.1. フレームワーク</a><ul>
+                <li><a href="#211-express">2.1.1. Express</a></li>
+                <li><a href="#212-react">2.1.2. React</a></li>
+                <li><a href="#213-vuejs">2.1.3. Vue.js</a></li>
+                <li><a href="#214-nextjs">2.1.4. Next.js</a></li>
+                <li><a href="#215-nuxtjs">2.1.5. Nuxt.js</a></li>
+                <li><a href="#216-angularjs">2.1.6. Angular.js</a></li>
+                <li><a href="#217-electron">2.1.7. Electron</a></li>
+                <li><a href="#218-react-native">2.1.8. React Native</a></li>
+                <li><a href="#219-nestjs">2.1.9. Nest.js</a></li>
+                <li><a href="#2110-astro">2.1.10. Astro</a></li>
+                <li><a href="#2111-fastify">2.1.11. Fastify</a></li>
+                <li><a href="#2112-vite">2.1.12. Vite</a></li>
+                </ul>
+                </li>
+                <li><a href="#22-%E3%83%A2%E3%82%B8%E3%83%A5%E3%83%BC%E3%83%AB%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA%E7%B3%BB%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8">2.2. モジュール(ライブラリ)系パッケージ</a><ul>
+                <li><a href="#221-request">2.2.1. request</a></li>
+                <li><a href="#222-socketio">2.2.2. socket.io</a></li>
+                <li><a href="#223-axios">2.2.3. axios</a></li>
+                <li><a href="#224-async">2.2.4. async</a></li>
+                <li><a href="#225-moment">2.2.5. moment</a></li>
+                <li><a href="#226-helmet">2.2.6. helmet</a></li>
+                <li><a href="#227-bluebird">2.2.7. bluebird</a></li>
+                </ul>
+                </li>
+                <li><a href="#23-%E3%83%84%E3%83%BC%E3%83%AB%E7%B3%BB%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8">2.3. ツール系パッケージ</a><ul>
+                <li><a href="#231-eslint--prettier">2.3.1. eslint / prettier</a></li>
+                <li><a href="#232-nodemon">2.3.2. nodemon</a></li>
+                <li><a href="#233-ejs">2.3.3. ejs</a></li>
+                <li><a href="#234-webpack">2.3.4. webpack</a></li>
+                <li><a href="#235-turbopack">2.3.5. turbopack</a></li>
+                <li><a href="#236-babel">2.3.6. babel</a></li>
+                <li><a href="#237-gulp">2.3.7. gulp</a></li>
+                <li><a href="#238-pug">2.3.8. pug</a></li>
+                <li><a href="#239-mocha">2.3.9. mocha</a></li>
+                <li><a href="#2310-prisma">2.3.10. prisma</a></li>
+                <li><a href="#2311-zod">2.3.11. zod</a></li>
+                <li><a href="#2312-jest">2.3.12. jest</a></li>
+                <li><a href="#2313-sequelize">2.3.13. Sequelize</a></li>
+                </ul>
+                </li>
+                <li><a href="#24-javascript%E6%8B%A1%E5%BC%B5altjs">2.4. JavaScript拡張(AltJS)</a><ul>
+                <li><a href="#241-typescript">2.4.1. TypeScript</a></li>
+                <li><a href="#242-jsxtsx">2.4.2. JSX(TSX)</a></li>
+                <li><a href="#243-coffeescript">2.4.3. CoffeeScript</a></li>
+                <li><a href="#244-dart">2.4.4. Dart</a></li>
+                </ul>
+                </li>
+                <li><a href="#25-%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9%E7%B3%BB%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8">2.5. データベース系パッケージ</a><ul>
+                <li><a href="#251-mongod">2.5.1. mongod</a></li>
+                <li><a href="#252-sqlite3">2.5.2. sqlite3</a></li>
+                <li><a href="#253-mysql">2.5.3. mysql</a></li>
+                <li><a href="#254-pg">2.5.4. pg</a></li>
+                <li><a href="#255-redis">2.5.5. redis</a></li>
+                </ul>
+                </li>
+                <li><a href="#26-%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E9%9D%9E%E5%88%86%E9%A1%9E">2.6. その他のパッケージ(非分類)</a></li>
+                </ul>
+                </li>
+                <li><a href="#3-nodejs%E3%81%AE%E5%9F%BA%E6%9C%AC">3. Node.jsの基本</a><ul>
+                <li><a href="#31-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C">3.1. 基本操作</a></li>
+                <li><a href="#32-nodejs%E3%81%A7%E4%BD%9C%E6%88%90%E3%81%95%E3%82%8C%E3%82%8B%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA%E6%A7%8B%E6%88%90">3.2. Node.jsで作成されるファイル/ディレクトリ構成</a><ul>
+                <li><a href="#321-%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA%E6%A7%8B%E6%88%90">3.2.1. ファイル/ディレクトリ構成</a></li>
+                <li><a href="#322-packagejson">3.2.2. package.json</a></li>
+                </ul>
+                </li>
+                <li><a href="#33-nodejs%E3%81%AE%E6%A8%99%E6%BA%96%E3%83%A2%E3%82%B8%E3%83%A5%E3%83%BC%E3%83%AB%E4%B8%80%E8%A6%A7">3.3. Node.jsの標準モジュール一覧</a></li>
+                </ul>
+                </li>
+                </ul>
+                <h2 id="参考url">参考URL<!-- omit in toc --></h2>
+                <table>
+                <thead>
+                <tr>
+                <th>名称</th>
+                <th>URL</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>Node.js公式ドキュメント</td>
+                <td><a href="https://nodejs.org/ja/docs/">https://nodejs.org/ja/docs/</a></td>
+                </tr>
+                <tr>
+                <td>npm公式サイト</td>
+                <td><a href="https://www.npmjs.com/">https://www.npmjs.com/</a></td>
+                </tr>
+                <tr>
+                <td>npm trends</td>
+                <td><a href="https://npmtrends.com/">https://npmtrends.com/</a></td>
+                </tr>
+                <tr>
+                <td>MDN web docs</td>
+                <td><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript">https://developer.mozilla.org/ja/docs/Web/JavaScript</a></td>
+                </tr>
+                <tr>
+                <td>TypeScriptで始めるNode.js入門</td>
+                <td><a href="https://ics.media/entry/4682/">https://ics.media/entry/4682/</a></td>
+                </tr>
+                </tbody></table>
+                <h2 id="情報提供アドバイザ">情報提供アドバイザ</h2>
+                <table>
+                <thead>
+                <tr>
+                <th>名前</th>
+                <th>GitHub URL</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>MainOx</td>
+                <td><a href="https://github.com/MainOx480854119">https://github.com/MainOx480854119</a></td>
+                </tr>
+                </tbody></table>
+                <h1 id="1-パッケージバージョン管理ツール">1. パッケージ/バージョン管理ツール</h1>
+                <p>Node.jsのバージョンやパッケージを管理するシステムはいくつかあります。
+                パッケージ管理の有名どころとしては<strong>npm/yarn</strong>などです。
+                バージョン管理の有名どころとしては<strong>nvm/volta</strong>など。</p>
+                <h2 id="11-パッケージマネージャ">1.1. パッケージマネージャ</h2>
+                <h3 id="111-npmnpx">1.1.1. npm/npx</h3>
+                <h4 id="npmnode-package-manager">npm(node Package Manager)<!-- omit in toc --></h4>
+                <p>最もポピュラーで有名どころなNode.jsパッケージマネージャです。</p>
+                <h4 id="基本npmコマンド">基本npmコマンド<!-- omit in toc --></h4>
+                <table>
+                <thead>
+                <tr>
+                <th>コマンド</th>
+                <th>説明</th>
+                <th>オプション</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>npm install オプション パッケージ名</td>
+                <td>パッケージのインストール</td>
+                <td>-s, -d ,-g, --save, -devなど</td>
+                </tr>
+                <tr>
+                <td>npm uninstall オプション パッケージ名</td>
+                <td>パッケージをアンインストール</td>
+                <td>-g</td>
+                </tr>
+                <tr>
+                <td>npm -v</td>
+                <td>バージョン確認</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>npm init</td>
+                <td>初期化(package.jsonの作成)</td>
+                <td>-y</td>
+                </tr>
+                <tr>
+                <td>npm list オプション</td>
+                <td>インストールリストを表示</td>
+                <td>-g:グローバルインストールのリスト表示</td>
+                </tr>
+                <tr>
+                <td>npm help</td>
+                <td>ヘルプ機能</td>
+                <td></td>
+                </tr>
+                </tbody></table>
+                <h3 id="112-yarn">1.1.2. yarn</h3>
+                <p>Facebookが開発したJavaScriptのパッケージマネージャーです。
+                一時期npmよりもyarnの方がインストール速度が速いと言われていましたが現在(2022年)ではほとんど違いがありません。</p>
+                <p>yarnのインストールはnpm経由でインストールします。</p>
+                <pre><code>npm install -g yarn
+                
+                yarn -h
+                </code></pre>
+                <h4 id="基本npmコマンド-1">基本npmコマンド<!-- omit in toc --></h4>
+                <table>
+                <thead>
+                <tr>
+                <th>コマンド</th>
+                <th>説明</th>
+                <th>オプション</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>yarn オプション パッケージ名</td>
+                <td>パッケージのインストール</td>
+                <td>-s, -d ,-g:グローバルインストール</td>
+                </tr>
+                <tr>
+                <td>yarn remove オプション パッケージ名</td>
+                <td>パッケージをアンインストール</td>
+                <td>-g</td>
+                </tr>
+                <tr>
+                <td>yarn -v</td>
+                <td>バージョン確認</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>yarn</td>
+                <td>package.jsonの記述をもとにパッケージインストール</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>yarn upgrade</td>
+                <td>カレントディレクトリの全パッケージを更新</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>yarn init</td>
+                <td>初期化(package.jsonの作成)</td>
+                <td>-y</td>
+                </tr>
+                <tr>
+                <td>yarn list オプション</td>
+                <td>インストールリストを表示</td>
+                <td>-g:グローバルインストールのリスト表示</td>
+                </tr>
+                <tr>
+                <td>yarn help</td>
+                <td>ヘルプ機能</td>
+                <td></td>
+                </tr>
+                </tbody></table>
+                <h3 id="113-pnpm">1.1.3. pnpm</h3>
+                <p>npmの代替として開発されているパッケージマネージャーです。
+                インストールの速さと効率性に主眼を置いています。
+                pnpmには同じファイルを複数のプロジェクト間でシンボリックリンクやハードリンクで管理する特徴があります。</p>
+                <h2 id="12-バージョンマネージャ">1.2. バージョンマネージャ</h2>
+                <h3 id="121-nvm">1.2.1. nvm</h3>
+                <p>nvm(Node Version Manager)はNode.jsの管理ツールで複数のNode.jsのバージョンをインストールして切り替えなどが可能です。</p>
+                <h4 id="基本nvmコマンド">基本nvmコマンド<!-- omit in toc --></h4>
+                <table>
+                <thead>
+                <tr>
+                <th>コマンド</th>
+                <th>説明</th>
+                <th>オプション</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>nvm current</td>
+                <td>現在アクティブにしている Node.js のバージョン確認</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>nvm install バージョン</td>
+                <td>nvmを経由してNode.jsのインストール</td>
+                <td>--lts(LTS版), node(最新版インストール)</td>
+                </tr>
+                <tr>
+                <td>nvm uninstall バージョン</td>
+                <td>nvmを経由してNode.jsのアンインストール</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>nvm use バージョン</td>
+                <td>Node.js のバージョンを切り替え(バージョンにsystemを指定するとOS内のNode.jsに切り替え)</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>nvm ls</td>
+                <td>Node.jsのバージョンごとのインストールリストを表示</td>
+                <td></td>
+                </tr>
+                </tbody></table>
+                <h3 id="122-nvsfnm">1.2.2. nvs/fnm</h3>
+                <p>nvs(Node Version Switcher)はNode.jsの管理ツールで複数のNode.jsのバージョンをインストールして切り替えなどが可能です。
+                fnmも同様です。</p>
+                <h3 id="123-nodebrew">1.2.3. nodebrew</h3>
+                <p>nodebrewは<strong>MacOS向け</strong>のNode.jsのバージョンを管理するためのツール。
+                クックパッドのエンジニアが中心となって作成されてるバージョン管理ツールのようです。</p>
+                <h3 id="124-volta">1.2.4. volta</h3>
+                <p>Rust製のNode.jsのバージョン管理ツール。
+                今後伸びるかも。</p>
+                <h1 id="2-開発によく使う＆便利なパッケージモジュール">2. 開発によく使う＆便利なパッケージ(モジュール)</h1>
+                <h2 id="21-フレームワーク">2.1. フレームワーク</h2>
+                <h3 id="211-express">2.1.1. Express</h3>
+                <p>ExpressはWebアプリケーションを構築するためのフレームワークです。
+                SPA／MPA／混在のWebアプリケーションが作成できるようにデザインされています。</p>
+                <p>公式ドキュメント:<a href="https://expressjs.com/ja/">https://expressjs.com/ja/</a></p>
+                <h3 id="212-react">2.1.2. React</h3>
+                <p>ReactはWEBアプリケーションのフロントエンドを構築するためのフレームワークの1つです。
+                Meta(旧 FaceBook)により開発されました。また<strong>SPA構築可能</strong>です。</p>
+                <p>公式ドキュメント:<a href="https://ja.reactjs.org/">https://ja.reactjs.org/</a></p>
+                <p>ReactとNext.jsのGist: <a href="https://gist.github.com/yuron3141/3ebadf109ae85646e614aa09155b9a91">https://gist.github.com/yuron3141/3ebadf109ae85646e614aa09155b9a91</a></p>
+                <h3 id="213-vuejs">2.1.3. Vue.js</h3>
+                <p>Vue.jsはWEBアプリケーションのフロントエンドを構築するためのフレームワークの1つです。
+                Googleの元エンジニアであるエヴァン・ヨー氏により開発されました。また<strong>SPA構築可能</strong>です。
+                学習難易度はReactよりは低いです。</p>
+                <p>公式ドキュメント:<a href="https://ja.vuejs.org/">https://ja.vuejs.org/</a></p>
+                <h3 id="214-nextjs">2.1.4. Next.js</h3>
+                <p>Next.jsはReactをベースに開発されたフロントエンドフレームワークです。
+                React の機能をサーバサイドでレンダリングできる(SSG)ように作成されました。</p>
+                <p>Next.jsは「URLルーティング」と呼ばれるリクエストされたURLに対して呼び出すアクションを決定する仕組みや、Webアプリ開発を効率よくするための機能が多く含まれているのが特長です。</p>
+                <p>Reactと違ってNext.jsは<strong>サーバ機能</strong>があります。そのためNext.jsは単体でWebアプリを動作させることが可能です。</p>
+                <p>画像・レンダリングの最適化、ファイルベースルーティング機能などがあります。</p>
+                <p>公式ドキュメント:<a href="https://nextjs.org/">https://nextjs.org/</a></p>
+                <p>ReactとNext.jsのGist: <strong>もうしばらくお待ちください</strong></p>
+                <h3 id="215-nuxtjs">2.1.5. Nuxt.js</h3>
+                <p>Nuxt.jsはVue.jsをベースに開発されたフロントエンドフレームワークです。
+                Vue.jsの機能をサーバサイドでレンダリングできる(SSG)ように作成されました。
+                Vue.jsと違ってNuxt.jsは<strong>サーバ機能</strong>があります。そのためNuxt.jsは単体でWebアプリを動作させることが可能です。</p>
+                <p>公式ドキュメント:<a href="https://nuxtjs.org/ja/">https://nuxtjs.org/ja/</a></p>
+                <h3 id="216-angularjs">2.1.6. Angular.js</h3>
+                <p>Angular.jsは、Googleと個人や企業のコミュニティによって開発されたTypeScriptベースのフロントエンドWebアプリケーションフレームワークです。大規模開発に向いています。</p>
+                <p>公式ドキュメント:<a href="https://angularjs.org/">https://angularjs.org/</a></p>
+                <h3 id="217-electron">2.1.7. Electron</h3>
+                <p>ElectronはGitHubが開発と管理をしているフリーでOSSのソフトウェアフレームワークです。
+                Web技術を用いたデスクトップGUIアプリケーションの開発が可能が可能です。
+                JavaScriptでデスクトップアプリを作成する場合に真っ先に使用を検討すべきフレームワークと言えます。</p>
+                <p>公式ドキュメント:<a href="https://www.electronjs.org/ja/docs/latest">https://www.electronjs.org/ja/docs/latest</a></p>
+                <h3 id="218-react-native">2.1.8. React Native</h3>
+                <p>React NativeはIOS(Iphone端末)とAndroidどちらでも動かすことができるモバイルアプリ開発用フレームワークです。
+                クロスプラットフォームなアプリケーションを開発することが可能です。</p>
+                <p>公式ドキュメント:<a href="https://reactnative.dev/">https://reactnative.dev/</a></p>
+                <h3 id="219-nestjs">2.1.9. Nest.js</h3>
+                <p>Nest.jsはバックエンド開発フレームワークです。
+                TypeScriptと相性がいいのが特徴です。</p>
+                <p>公式ドキュメント:<a href="https://docs.nestjs.com/">https://docs.nestjs.com/</a></p>
+                <h3 id="2110-astro">2.1.10. Astro</h3>
+                <p>高速でコンテンツにフォーカスしたWebサイトを構築するためのWebフレームワーク。
+                立ち位置は Alt wordpressと言えそう。</p>
+                <p>公式ドキュメント:<a href="https://docs.astro.build/en/getting-started/">https://docs.astro.build/en/getting-started/</a></p>
+                <h3 id="2111-fastify">2.1.11. Fastify</h3>
+                <p>Web フレームワーク。
+                高速かつ低オーバーヘッドになるように設計されており、パフォーマンスと柔軟性がある。</p>
+                <p>hapi と Express.js  の特徴を受け継いでいる。</p>
+                <p>公式ドキュメント:<a href="https://www.fastify.io/docs/latest/">https://www.fastify.io/docs/latest/</a></p>
+                <h3 id="2112-vite">2.1.12. Vite</h3>
+                <p>2020年登場の新しいフロントエンドのビルドツール。</p>
+                <p>公式ドキュメント:<a href="https://ja.vitejs.dev/">https://ja.vitejs.dev/</a></p>
+                <h2 id="22-モジュールライブラリ系パッケージ">2.2. モジュール(ライブラリ)系パッケージ</h2>
+                <h3 id="221-request">2.2.1. request</h3>
+                <p>requestは標準のhttpモジュールを使うよりも簡単で理解しやすい記述でHTTP通信を行うことができるモジュールです。
+                2021年現在requestは<strong>使用非推奨</strong>になっているため、代わりのモジュールとしてaxiosを使うことを勧めます。</p>
+                <p>axiosを選択しない場合はnode-fetchやNode.js 18.0より導入されている標準fetch、undiciなどでもHTTP通信可能です。</p>
+                <pre><code>npm install request
+                </code></pre>
+                <h3 id="222-socketio">2.2.2. socket.io</h3>
+                <p>socket.ioはWebSocket通信を可能にするモジュールです。
+                Socket通信では安定かつ簡潔に双方向通信することが可能です。</p>
+                <blockquote>
+                <p>WebSocket: 単一のTCPコネクション上に双方向通信のチャンネルを提供する通信プロコトル</p>
+                </blockquote>
+                <pre><code>npm install socket.io
+                </code></pre>
+                <p>またWebSocket通信のための他のライブラリとしては ws などがあります。</p>
+                <h3 id="223-axios">2.2.3. axios</h3>
+                <p>axiosはブラウザやNode.js上で動く Promise ベースの HTTP クライアントです。
+                RESTAPIを実行したいときには欠かせません。またrequestの代わりのモジュールとして使えます。</p>
+                <pre><code>npm install axios --save
+                </code></pre>
+                <h3 id="224-async">2.2.4. async</h3>
+                <p>asyncは非同期処理を効率よく記述できるパッケージです。</p>
+                <pre><code>npm install async
+                </code></pre>
+                <h3 id="225-moment">2.2.5. moment</h3>
+                <p>momentはDate型を扱いやすくするパッケージです。
+                momentの代用として day というのもあります。(momentより軽量)</p>
+                <pre><code>npm install moment
+                
+                npm install day
+                </code></pre>
+                <h3 id="226-helmet">2.2.6. helmet</h3>
+                <p>helmetはwebアプリケーションをセキュリティ的に堅牢化するパッケージです。
+                具体的にはHTTP ヘッダを設定することでセキュリティを強化できます。</p>
+                <p>それぞれのフレームワーク用にパッケージがあるのでそれに沿ってインストールします。</p>
+                <h3 id="227-bluebird">2.2.7. bluebird</h3>
+                <p>bluebirdはPromiseを実装したJavaScriptのライブラリです。
+                このパッケージによりIEなどの未対応の環境(Promiseがサポートされいないブラウザ)でも、bluebirdを利用するPromiseを使えるようになります。</p>
+                <pre><code>npm install bluebird
+                </code></pre>
+                <h2 id="23-ツール系パッケージ">2.3. ツール系パッケージ</h2>
+                <h3 id="231-eslint--prettier">2.3.1. eslint / prettier</h3>
+                <h4 id="eslint">eslint<!-- omit in toc --></h4>
+                <p>ESlintはJavaScript のコードを静的に分析して構文エラーや慣習的な問題を見つけることができるパッケージ。リンカー。</p>
+                <p>ESLintでは様々なルールを使って、コードを自動的にチェックし問題を検出することが可能(自分で設定も可能)。
+                ESLintはチーム内での共通のスタイルガイドを確立することができます。</p>
+                <pre><code>npm install eslint
+                </code></pre>
+                <h4 id="prettier">prettier<!-- omit in toc --></h4>
+                <p>コードのフォーマッター</p>
+                <h3 id="232-nodemon">2.3.2. nodemon</h3>
+                <p>nodemonはアプリケーションを実行しているときに、ソースコードが変更された場合に自動的にアプリケーションを再起動することができるパッケージです。アプリケーションを実行しながら開発するときに、変更をすばやく反映することが可能です。</p>
+                <pre><code>npm install nodemon
+                </code></pre>
+                <h3 id="233-ejs">2.3.3. ejs</h3>
+                <p>ejsはNode.js のためのテンプレートエンジンであり、HTML ファイルに JavaScript のコードを埋め込むことができます。
+                reactやvueのinstallした際にbundleされているため基本これだけをインストールすることはないです。</p>
+                <h3 id="234-webpack">2.3.4. webpack</h3>
+                <p>webpackはJavaScript のモジュールバンドラーです。
+                Webpackを使うことで複数のJavaScript ファイルをまとめて一つのファイルにバンドルすることができます。
+                またCSSや画像などのアセットもバンドルすることができます。</p>
+                <blockquote>
+                <p>モジュール化:別ファイル(モジュール)に分割すること。コードの管理をしやすくすることで、大規模開発などにも対応可能。</p>
+                </blockquote>
+                <p>モジュール化のメリットは以下の通り。</p>
+                <ul>
+                <li>他のコードとの依存性を少なくし、変更、拡張がしやすくなる</li>
+                <li>変数名の競合をさせないことで、名前空間の汚染を防ぐことができる</li>
+                <li>機能ごとにモジュール化するため、再利用がしやすい</li>
+                </ul>
+                <blockquote>
+                <p>モジュールバンドラー: 複数のJavascriptファイルの依存関係を解析して、一つのファイルとしてまとめてくれる</p>
+                </blockquote>
+                <p>webpackコマンドを使うためにwebpack-cliを共にインストールのは一般的。</p>
+                <pre><code>npm install webpack webpack-cli
+                </code></pre>
+                <p>「ルートディレクトリ」で「webpack.config.js」内でwebpackのエントリーポイントや出力設定が可能。</p>
+                <pre><code class="language-config">module.exports = {
+                    entry: &quot;&quot;, //エントリーポイントの指定(バンドルする対象のファイル場所)
+                
+                    //ファイルの出力場所と名称を指定
+                    output: {
+                        path : `${__dirname}/dist`, //__dirnameは絶対パスで得られる
+                        //出力ファイル名
+                        filename: &quot;bundle.js&quot;
+                    },
+                    mode: &quot;develeopment&quot;, //本番用か開発用か指定
+                };
+                </code></pre>
+                <h3 id="235-turbopack">2.3.5. turbopack</h3>
+                <p>turbopackはwebpackの上位互換のモジュールハンドラーです。
+                2022年現在登場したばかりであり、そのうちwebpackの代わりになるかもしれません。</p>
+                <h3 id="236-babel">2.3.6. babel</h3>
+                <p>babelは最新(ES20XX)のJavaScript の構文や新しい機能を使ったコードを、古いブラウザや環境でも実行できるように変換することができます。</p>
+                <h3 id="237-gulp">2.3.7. gulp</h3>
+                <p>gulpはWeb アプリケーションの開発プロセスを自動化することができるパッケージです。
+                コードのビルドやテスト、画像の圧縮などのタスクを、設定した順序で自動実行することができます。</p>
+                <h3 id="238-pug">2.3.8. pug</h3>
+                <p>pugはNode.js のためのテンプレートエンジンであり、JavaScript のようなシンタックスでHTMLを生成できます。
+                近年ほとんど使われることはありません。</p>
+                <h3 id="239-mocha">2.3.9. mocha</h3>
+                <p>mochaはテストフレームであり、JavaScript のコードを自動テストすることができるパッケージです。</p>
+                <pre><code>npm install mocha
+                </code></pre>
+                <h3 id="2310-prisma">2.3.10. prisma</h3>
+                <p>prismaはNode.js/TypeScript環境で利用できるOSSのORM(Object Relational Mapping)パッケージです。
+                Prisma を使うことで、データベースを操作するためのクエリを簡単に書くことができます。
+                API を使ってデータベースを操作することができるためデータベースを操作する処理をより安全かつ効率的に行うことができます。(SQL使う必要なし)</p>
+                <blockquote>
+                <p>ORM(Object Relational Mapping)ではSQLの代わりにオブジェクトのメソッド(create, update, delete, etc.)を通してデータベースの操作が可能</p>
+                </blockquote>
+                <pre><code>npm install prisma
+                </code></pre>
+                <h3 id="2311-zod">2.3.11. zod</h3>
+                <p>TypeScript First なバリデーションのライブラリ。
+                一応、プレーン JavaScript でも動作する。</p>
+                <p>他にはjoiなどがある。</p>
+                <pre><code>npm install zod
+                </code></pre>
+                <h3 id="2312-jest">2.3.12. jest</h3>
+                <p>テストツール。</p>
+                <pre><code>npm install jest
+                </code></pre>
+                <h3 id="2313-sequelize">2.3.13. Sequelize</h3>
+                <p>typeScriptでORMを使うためのツール。</p>
+                <p>対応DB:Oracle, Postgres, MySQL, MariaDB, SQLite and SQL Server</p>
+                <pre><code>npm install sequelize sqlite3
+                </code></pre>
+                <h2 id="24-javascript拡張altjs">2.4. JavaScript拡張(AltJS)</h2>
+                <h3 id="241-typescript">2.4.1. TypeScript</h3>
+                <p>Microsoftによって開発されたAltJSの言語(JavaScriptの拡張版)です。
+                またTypeScriptには型推論があるため自動で変数の型を決定してくれる機能があります。</p>
+                <pre><code>npm install typescript 
+                </code></pre>
+                <p>詳細な使い方のGist: <a href="https://gist.github.com/yuron3141/03d099c78eee25a8d79d6c798344b52e/edit">https://gist.github.com/yuron3141/03d099c78eee25a8d79d6c798344b52e/edit</a></p>
+                <h3 id="242-jsxtsx">2.4.2. JSX(TSX)</h3>
+                <p>JSXはJavaScript内でHTMLっぽい表現をするJavascriptの拡張構文です。
+                Reactユーザにはおなじみです。</p>
+                <p>TSXはTypeScript版です。</p>
+                <h3 id="243-coffeescript">2.4.3. CoffeeScript</h3>
+                <h3 id="244-dart">2.4.4. Dart</h3>
+                <h2 id="25-データベース系パッケージ">2.5. データベース系パッケージ</h2>
+                <h3 id="251-mongod">2.5.1. mongod</h3>
+                <p>MongoDBをnode.jsで使うためのパッケージです。</p>
+                <h3 id="252-sqlite3">2.5.2. sqlite3</h3>
+                <p>sqliteをnode.jsで使うためのパッケージです。</p>
+                <h3 id="253-mysql">2.5.3. mysql</h3>
+                <p>MySQLをnode.jsで使うためのパッケージです。</p>
+                <h3 id="254-pg">2.5.4. pg</h3>
+                <p>postgreSQLをnode.jsで使うためのパッケージです。</p>
+                <h3 id="255-redis">2.5.5. redis</h3>
+                <p>redisというNoSQLデータベースをNode.jsで使うためのパッケージです。</p>
+                <h2 id="26-その他のパッケージ非分類">2.6. その他のパッケージ(非分類)</h2>
+                <p>未分類のパッケージ(ライブラリを含む)をここにまとめます。有名どころも混ざってます。
+                またNode.jsを介しなく利用できるものも含みます。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>名称</th>
+                <th>種類</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>nw.js</td>
+                <td>フレームワーク</td>
+                <td>デスクトップアプリ開発フレームワーク(electronより軽量)</td>
+                </tr>
+                <tr>
+                <td>pixi.js</td>
+                <td>フレームワーク</td>
+                <td>ウェブブラウザのcanvas要素に描画する軽量なJavaScriptライブラリ。JavaScript から GPUを扱うWebGL技術を2Dに特化している。ゲームも作れる。</td>
+                </tr>
+                <tr>
+                <td><strong>chart.js</strong></td>
+                <td>ライブラリ</td>
+                <td>データを視覚化するためのライブラリ、円グラフ棒グラフなど8種類に対応</td>
+                </tr>
+                <tr>
+                <td><strong>three.js</strong></td>
+                <td>ライブラリ</td>
+                <td>ウェブブラウザ上で3次元コンピュータグラフィックスを描画できるライブラリ</td>
+                </tr>
+                <tr>
+                <td>ffmpeg系</td>
+                <td>ライブラリ</td>
+                <td>動画,・音声処理系ライブラリ(ffmpeg, ffmpeg-static, fluent-ffmpegなど)</td>
+                </tr>
+                <tr>
+                <td>puppeteerなど</td>
+                <td>ライブラリ</td>
+                <td>WEBスクレイピングができる(puppeteer, playwright, selenium, cypress,  cheerio, webdriverio)</td>
+                </tr>
+                <tr>
+                <td>暗号化系</td>
+                <td>ライブラリ</td>
+                <td>sodium-native, sodium, tweetnacl, libsodium-wrappersなど</td>
+                </tr>
+                <tr>
+                <td>sharp</td>
+                <td>ライブラリ</td>
+                <td>画像処理モジュール</td>
+                </tr>
+                <tr>
+                <td>i18n</td>
+                <td>ライブラリ</td>
+                <td>多言語対応化系(i18n, i18nextなど)</td>
+                </tr>
+                <tr>
+                <td>pino, wiston</td>
+                <td>ライブラリ</td>
+                <td>ロガーツール</td>
+                </tr>
+                <tr>
+                <td>p5.js</td>
+                <td>ライブラリ</td>
+                <td>ProcessingをJavaScriptに移植したディジタルアートを作るためのグラフィック系ライブラリ。ゲームも作れる。</td>
+                </tr>
+                <tr>
+                <td>Kiwi.js</td>
+                <td>ライブラリ</td>
+                <td>ゲーム系</td>
+                </tr>
+                <tr>
+                <td>Phaser.js</td>
+                <td>ライブラリ</td>
+                <td>ゲーム系。2Dゲーム開発向き</td>
+                </tr>
+                <tr>
+                <td>phina.js</td>
+                <td>ライブラリ</td>
+                <td>ゲーム系。日本語情報が多い</td>
+                </tr>
+                <tr>
+                <td>Babylon.js</td>
+                <td>ライブラリ</td>
+                <td>microsoft製のリアルタイム3Dエンジン</td>
+                </tr>
+                <tr>
+                <td>lodash.js</td>
+                <td>ライブラリ</td>
+                <td>便利な関数を集めたライブラリ</td>
+                </tr>
+                <tr>
+                <td>BackBone.js</td>
+                <td>フレームワーク</td>
+                <td>RESTfulJSONインタフェースを提供する MVPライブラリ、非常に軽量</td>
+                </tr>
+                <tr>
+                <td>Underscore.js</td>
+                <td>ライブラリ</td>
+                <td>フロント側で大量のデータ処理をする際のロジックを簡素化するのに使える機能群</td>
+                </tr>
+                </tbody></table>
+                <h1 id="3-nodejsの基本">3. Node.jsの基本</h1>
+                <h2 id="31-基本操作">3.1. 基本操作</h2>
+                <p>Node.jsを使って作成するアプリケーションは基本的にnpm / yarnを使ってアプリの起動や停止を行います。</p>
+                <p>nodeコマンド<code>node ファイル名</code>でも実行可能ですが、開発では一般的に使われません。</p>
+                <h3 id="npmの例">npmの例<!-- omit in toc --></h3>
+                <p>package.jsonのscriptsフィールドに起動コマンドを設定し起動します。</p>
+                <pre><code class="language-json">
+                 &quot;scripts&quot;: {  
+                    &quot;start&quot;: &quot;node index.js&quot;,
+                    &quot;hoge&quot;: &quot;echo &#39;hogehoge&#39;&quot;
+                  },
+                </code></pre>
+                <p>実行する際は<code>npm start</code>と入力することで起動できます。
+                停止はいつもどおり「Ctrl + C」。</p>
+                <p>スクリプトを実行する場合は<code>npm run スクリプト名</code>です。
+                上記の場合だと、<code>npm run hoge</code>で実行できます。</p>
+                <h2 id="32-nodejsで作成されるファイルディレクトリ構成">3.2. Node.jsで作成されるファイル/ディレクトリ構成</h2>
+                <h3 id="321-ファイルディレクトリ構成">3.2.1. ファイル/ディレクトリ構成</h3>
+                <p>作成される各フォルダやファイル</p>
+                <table>
+                <thead>
+                <tr>
+                <th>ディレクトリ</th>
+                <th>用途</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>public/</td>
+                <td>公開用(デプロイ用)のフォルダ</td>
+                </tr>
+                <tr>
+                <td><strong>src/</strong></td>
+                <td><strong>作業(開発用)のフォルダ</strong></td>
+                </tr>
+                <tr>
+                <td>node_modules/</td>
+                <td>npmなどでインストールした開発に必要なパッケージやライブラリがインストールされるフォルダ</td>
+                </tr>
+                <tr>
+                <td><strong>package.json</strong></td>
+                <td>アプリケーションの設定</td>
+                </tr>
+                <tr>
+                <td>package-lock.json</td>
+                <td>インストールしたパッケージ情報が記載されているファイル(<strong>編集不要</strong>)</td>
+                </tr>
+                <tr>
+                <td>README.md</td>
+                <td>マニュアルなどアプリケーションのドキュメント</td>
+                </tr>
+                <tr>
+                <td>.gitignore</td>
+                <td>Gitに取り込みたくないファイルを指定するためのファイル</td>
+                </tr>
+                </tbody></table>
+                <h3 id="322-packagejson">3.2.2. package.json</h3>
+                <p>package.json はパッケージに関する設定情報が記述されたファイルです。
+                このファイルにより<strong>環境が変わってもコマンド一発で元々あったパッケージをインストールすることが可能</strong>です。
+                パッケージ管理の設計書であるため、どんな環境においてもpackage.jsonを読み込むことで同じパッケージをインストールすることができます。</p>
+                <p>サンプル</p>
+                <pre><code class="language-json">{
+                  &quot;name&quot;: &quot;myProject&quot;,
+                  &quot;version&quot;: &quot;1.0.0&quot;,
+                  &quot;description&quot;: &quot;&quot;,
+                  &quot;main&quot;: &quot;index.js&quot;,
+                  &quot;scripts&quot;: {
+                    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;
+                  },
+                  &quot;keywords&quot;: [],
+                  &quot;author&quot;: &quot;&quot;,
+                  &quot;license&quot;: &quot;ISC&quot;,
+                  &quot;dependencies&quot;: { 
+                    &quot;jquery&quot;: &quot;^3.5.1&quot;,
+                    &quot;sass&quot;: &quot;^1.22.12&quot;
+                  }
+                }
+                </code></pre>
+                <p>よく使うフィールドやパラメータ</p>
+                <table>
+                <thead>
+                <tr>
+                <th>パラメータ/フィールド</th>
+                <th>用途</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>name</td>
+                <td>パッケージ名(必須)</td>
+                </tr>
+                <tr>
+                <td>version</td>
+                <td>パッケージのバージョン</td>
+                </tr>
+                <tr>
+                <td>private</td>
+                <td>パッケージの公開設定の有無</td>
+                </tr>
+                <tr>
+                <td>description</td>
+                <td>パッケージの説明</td>
+                </tr>
+                <tr>
+                <td>main</td>
+                <td>パッケージの中で最初に呼ばれるモジュール（ファイル）を指定(パッケージルートディレクトリからの相対パスを指定)</td>
+                </tr>
+                <tr>
+                <td>homepage</td>
+                <td>プロジェクトのHP（URL）を指定する</td>
+                </tr>
+                <tr>
+                <td><strong>dependencies</strong></td>
+                <td>本番環境でも利用するパッケージやその依存関係が記述される</td>
+                </tr>
+                <tr>
+                <td><strong>devDependencies</strong></td>
+                <td>開発環境やテスト環境で利用するパッケージやその依存関係が記述される</td>
+                </tr>
+                <tr>
+                <td><strong>scripts</strong></td>
+                <td><strong>スクリプトを実行するエイリアスコマンドを指定する</strong></td>
+                </tr>
+                <tr>
+                <td>bin</td>
+                <td>コマンドとして実行したいファイルを指定する</td>
+                </tr>
+                <tr>
+                <td>type</td>
+                <td>commonjs/ESmoduleの切り替えを行う</td>
+                </tr>
+                <tr>
+                <td>engines</td>
+                <td>動かしたいNode.jsのバージョンを指定可能</td>
+                </tr>
+                </tbody></table>
+                <blockquote>
+                <p>dependenciesとdevDependenciesを分けるとnpm install時の–productionオプションによってインストールするパッケージを限定できます。</p>
+                </blockquote>
+                <h2 id="33-nodejsの標準モジュール一覧">3.3. Node.jsの標準モジュール一覧</h2>
+                <table>
+                <thead>
+                <tr>
+                <th>モジュール名</th>
+                <th>require</th>
+                <th>概要</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>Events</td>
+                <td>events</td>
+                <td>イベント処理<br>Node.js の API の多くがこれを使った非同期イベント駆動で構築されている。</td>
+                </tr>
+                <tr>
+                <td>Stream</td>
+                <td>- (stream)</td>
+                <td>ストリームのインターフェース [ベースクラスを使う場合には require]<br>標準出力、 HTTP リクエストなど様々なオブジェクトがこのインターフェースで実装されている。</td>
+                </tr>
+                <tr>
+                <td>Console</td>
+                <td>-</td>
+                <td>デバッグ用などでのコンソール出力 [console : グローバルオブジェクト]<br>ブラウザーでの console に相当するオブジェクト</td>
+                </tr>
+                <tr>
+                <td>Process</td>
+                <td>-</td>
+                <td>カレントプロセスの情報、操作 [process : グローバルオブジェクト]<br>コマンド引数や環境変数などの情報や exit による終了など プログラムとして動作するために必要な基本的な機能群</td>
+                </tr>
+                <tr>
+                <td>Child Processes</td>
+                <td>child_process</td>
+                <td>外部プログラムの実行など子プロセスの実行、管理</td>
+                </tr>
+                <tr>
+                <td>Cluster</td>
+                <td>cluster</td>
+                <td>サーバーポートの複数プロセスでの共有</td>
+                </tr>
+                <tr>
+                <td>Readline</td>
+                <td>readline</td>
+                <td>対話型インターフェースのプログラムでよく使われている readline ライブラリーにあたる機能</td>
+                </tr>
+                <tr>
+                <td>Utilities</td>
+                <td>util</td>
+                <td>他のモジュールからも呼ばれるような汎用関数群</td>
+                </tr>
+                <tr>
+                <td>URL</td>
+                <td>url</td>
+                <td>URL の文字列解析</td>
+                </tr>
+                <tr>
+                <td>Query Strings</td>
+                <td>querystring</td>
+                <td>クエリー文字列(URL 中の ? 以降)</td>
+                </tr>
+                <tr>
+                <td>Path</td>
+                <td>path</td>
+                <td>ファイルパスの文字列処理</td>
+                </tr>
+                <tr>
+                <td>File System</td>
+                <td>fs</td>
+                <td>ファイルの I/O、ファイル情報の取得、ファイル・ディレクトリー操作 など</td>
+                </tr>
+                <tr>
+                <td>Buffer</td>
+                <td>-</td>
+                <td>バイナリーデータ用ストリームオブジェクト [Buffer : グローバルなコンストラクター]<br>ES6 では Uint8Array があるが、Node.js 的にはこちらがいいらしい。</td>
+                </tr>
+                <tr>
+                <td>String Decoder</td>
+                <td>string_decoder</td>
+                <td>Buffer のデコーダー</td>
+                </tr>
+                <tr>
+                <td>DNS</td>
+                <td>dns</td>
+                <td>DNS による ドメイン名、 IP アドレス の解決<br>DNS サーバーに直接問い合わせ、OS の機能 の 2 通りの方法が使える。</td>
+                </tr>
+                <tr>
+                <td>Punycode</td>
+                <td>punycode</td>
+                <td>Punycode (ドメイン名で使われる文字符号化方式) のエンコード、デコード</td>
+                </tr>
+                <tr>
+                <td>Net</td>
+                <td>net</td>
+                <td>ソケット(TCP/IP)通信<br>HTTP などよりも低レベル(下位層)の通信機能</td>
+                </tr>
+                <tr>
+                <td>HTTP</td>
+                <td>http</td>
+                <td>HTTP サーバー、クライアント</td>
+                </tr>
+                <tr>
+                <td>HTTPS</td>
+                <td>https</td>
+                <td>HTTPS(TLS/SSL を使った HTTP)用</td>
+                </tr>
+                <tr>
+                <td>TLS/SSL</td>
+                <td>tls</td>
+                <td>TLS/SSL (暗号化した通信)</td>
+                </tr>
+                <tr>
+                <td>Crypto</td>
+                <td>crypto</td>
+                <td>OpenSSL などをラップした暗号化機能</td>
+                </tr>
+                <tr>
+                <td>ZLIB</td>
+                <td>zlib</td>
+                <td>GZip, Inflate でのデータ圧縮、解凍<br>最近の http サーバーでは gz で圧縮されたまま送って、ブラウザーで解凍することが多い</td>
+                </tr>
+                <tr>
+                <td>UDP/Datagram</td>
+                <td>dgram</td>
+                <td>UDP (データグラムを送受信するプロトコル)通信<br>TCP と違いデータの完全性が保証されないので、途中でデータが抜け落ちても問題が少ない音声や画像のストリーム配信などに使われる。</td>
+                </tr>
+                <tr>
+                <td>OS</td>
+                <td>os</td>
+                <td>OS 関連情報の取得<br>どの OS かというだけなら process.platform で可能。</td>
+                </tr>
+                <tr>
+                <td>V8</td>
+                <td>v8</td>
+                <td>V8 エンジン関連</td>
+                </tr>
+                <tr>
+                <td>VM</td>
+                <td>vm</td>
+                <td>JavaScript コードの実行<br>JavaScript 標準の eval() より細かく制御できる。</td>
+                </tr>
+                </tbody></table>
+                <p>参考(Node.js 19.2.0 Document):<a href="https://nodejs.org/dist/latest-v19.x/docs/api/">https://nodejs.org/dist/latest-v19.x/docs/api/</a></p>
+                
+
+                <!-- END -->
+
+            </main>
+            <footer class="footer mt-auto py-3 bg-light">
+                <div class="container">
+                    <p class="text-muted text-center">Written by ゆーろん / yuron3141</p>
+                </div>
+            </footer>
+        </body>
+    </body>
+</html>

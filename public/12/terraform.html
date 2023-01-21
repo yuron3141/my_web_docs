@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="Ja">
+    <head>
+        <title>ゆーろんのWeb系の学習資料　|　Terraform入門</title>
+        <!-- OGP -->
+        <head prefix="og: https://ogp.me/ns#">
+        <meta property="og:url" content="https://yuron3141.github.io/my_web_docs/" />
+        <meta property="og:type" content="Blog" />
+        <meta property="og:title" content="Terraform入門" />
+        <meta property="og:description" content="ゆーろんのWeb系学習資料です。皆さんの開発のために役立つことを祈っています。" />
+        <meta property="og:site_name" content="ゆーろんアカデミー　ノート支部" />
+        <!-- DOCUMENTS STYLE -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <!-- ORIGINAL CSS -->
+        <link rel="stylesheet" href="../css/style.css" type="text/css">
+    </head>
+    <body>
+        <body class="d-flex flex-column h-100">
+            <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
+                <div>
+                    <h1 class="m-3">Terraform入門</h1>
+                </div>
+            </header>
+            <main class="m-4">
+
+                <!-- Write Text Here-->
+
+                <p>TerraformとはHashiCorp社により開発されているオープンソースのインフラ自動構築ツール(IaC)です。
+                Terraformは作成したコードに基づいて自動でリソースを構築するため、Terraformを利用することでオペレーションミスが無くなる他、複数システムでコードを再利用することで効率化を図ることが可能。</p>
+                <img src="https://knowledge.sakura.ad.jp/wp-content/uploads/2016/07/terraform_overview.png" width="60%">
+                
+                
+                <h2 id="目次">目次<!-- omit in toc --></h2>
+                <ul>
+                <li><a href="#1-terraform%E3%81%AE%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AD%98">1. Terraformの基本知識</a><ul>
+                <li><a href="#11-providertf">1.1. provider.tf</a></li>
+                <li><a href="#12-maintf">1.2. main.tf</a></li>
+                <li><a href="#13-variablestf">1.3. variables.tf</a></li>
+                <li><a href="#14-terraformtfstate">1.4. terraform.tfstate</a></li>
+                <li><a href="#15-terraform%E3%81%AE%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89">1.5. Terraformのコマンド</a><ul>
+                <li><a href="#151-terraform-init">1.5.1. terraform init</a></li>
+                <li><a href="#152-terraform-plan">1.5.2. terraform plan</a></li>
+                <li><a href="#153-terraform-apply">1.5.3. terraform apply</a></li>
+                </ul>
+                </li>
+                <li><a href="#16-terraform%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9windows10">1.6. Terraformの使い方(windows10)</a></li>
+                </ul>
+                </li>
+                <li><a href="#2-aws%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8Bterraform%E5%85%A5%E9%96%80">2. AWSにおけるTerraform入門</a><ul>
+                <li><a href="#aws-cloudshell%E3%82%92%E4%BD%BF%E3%81%86%E6%96%B9%E6%B3%95terraform%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AFgithub%E4%B8%8A%E3%81%AB%E3%81%82%E3%82%8B%E5%A0%B4%E5%90%88">AWS CloudShellを使う方法(TerraformデータはGithub上にある場合)</a></li>
+                <li><a href="#21-providertf">2.1. provider.tf</a></li>
+                <li><a href="#22-variablestf">2.2. variables.tf</a></li>
+                <li><a href="#23-ecs">2.3. ECS</a></li>
+                <li><a href="#24-efs">2.4. EFS</a></li>
+                <li><a href="#25-iam%E3%83%AD%E3%83%BC%E3%83%AB%E8%A8%AD%E5%AE%9A">2.5. IAMロール設定</a></li>
+                <li><a href="#26-%E3%83%AD%E3%83%BC%E3%83%89%E3%83%90%E3%83%A9%E3%83%B3%E3%82%B5%E3%83%BC">2.6. ロードバランサー</a></li>
+                <li><a href="#28-vpc">2.8. VPC</a></li>
+                <li><a href="#29-subnet">2.9. Subnet</a></li>
+                <li><a href="#210-mount_target">2.10. Mount_target</a></li>
+                </ul>
+                </li>
+                </ul>
+                <h2 id="参考資料url">参考資料URL<!-- omit in toc --></h2>
+                <table>
+                <thead>
+                <tr>
+                <th>資料名</th>
+                <th>URL</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>minecraftサーバをECSで作る</td>
+                <td><a href="https://www.serotoninpower.club/archives/903/#%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E6%88%90%E5%9B%B3">https://www.serotoninpower.club/archives/903/#%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E6%88%90%E5%9B%B3</a></td>
+                </tr>
+                </tbody></table>
+                <hr>
+                <h1 id="1-terraformの基本知識">1. Terraformの基本知識</h1>
+                <p>Terraformでは基本的に<code>xxx.tf</code>という拡張子：tfで定義された情報に従って各種リソースを構築します。
+                単一ファイルにすべてを定義することも可能ですが、分離することが一般的です。</p>
+                <p>テンプレートファイル（.tf）に構成情報、プロバイダ情報2、変数等を記載して作成していきます。
+                基本的構成は以下のように記述します。</p>
+                <p>directory</p>
+                <table>
+                <thead>
+                <tr>
+                <th>tfファイル</th>
+                <th>内容</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>providers.tf</td>
+                <td>プロバイダ設定</td>
+                </tr>
+                <tr>
+                <td>main.tf</td>
+                <td>リソース定義（ファイル名は任意）</td>
+                </tr>
+                <tr>
+                <td>variables.tf</td>
+                <td>変数設定</td>
+                </tr>
+                <tr>
+                <td>terraform.tfstate</td>
+                <td>リソースの現状を示すファイル（自動作成）</td>
+                </tr>
+                </tbody></table>
+                <h2 id="11-providertf">1.1. provider.tf</h2>
+                <p>実行するTerraformのバージョンを指定したり、プロバイダ(AWS,GCP,Azure等)を指定する。
+                例としてAWSをプロバイダとしてproviders.tfを記述したものは以下である。</p>
+                <pre><code class="language-tf">terraform {
+                    backend &quot;s3&quot; {
+                        bucket                  = &quot;aws-terraform&quot;
+                        key                     = &quot;path/terraform.tfstate&quot;
+                        region                  = &quot;ap-northeast-1&quot;
+                        shared_credentials_file = &quot;$HOME/.aws/credentials&quot;
+                        profile                 = &quot;xxxxx&quot;
+                    }
+                    required_version        = &quot;&gt;=0.12&quot;
+                }
+                
+                provider aws {
+                    shared_credentials_file =  &quot;$HOME/.aws/credentials&quot;
+                    profile                 =  &quot;xxxxx&quot;
+                    region                  =  &quot;ap-northeast-1&quot;
+                }
+                </code></pre>
+                <p>認証情報もproviders.tfに直接記述可能だが、基本的にはセキュリティリスクを考慮し環境変数で定義する。</p>
+                <h3 id="環境変数の管理手法">環境変数の管理手法<!-- omit in toc --></h3>
+                <h4 id="単一アカウントの場合">単一アカウントの場合<!-- omit in toc --></h4>
+                <ul>
+                <li><code>TF_VAR_&lt;変数名&gt;</code>というかたちで環境変数で定義</li>
+                <li><code>terraform</code>コマンド実行時にこの環境変数が読み込まれ変数に値が代入される</li>
+                </ul>
+                <pre><code>$ export TF_VAR_access_key=&quot;AKIAXXXXXXXXXXXXXXXXXX&quot;
+                $ export TF_VAR_secret_key=&quot;XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&quot;
+                </code></pre>
+                <h4 id="複数アカウントの場合">複数アカウントの場合<!-- omit in toc --></h4>
+                <ul>
+                <li>shared_credentials_fileを利用可能</li>
+                <li>profileを利用してアカウントをスイッチ可能</li>
+                </ul>
+                <p><code>terraform.tfstate</code>の出力先をbackendで指定可能</p>
+                <ul>
+                <li>このファイルはリソースの状態管理に使われる重要なファイルのためローカルは非推奨</li>
+                <li>コンフリクト時の影響を考慮し、git等は非推奨</li>
+                <li>ProviderがAWSであれば、S3/DynamoDBに配置するのが一般的である</li>
+                </ul>
+                <h2 id="12-maintf">1.2. main.tf</h2>
+                <p>main.tfではTerraformにて構築するリソース情報を定義します。</p>
+                <ul>
+                <li><code>resource &quot;&lt;リースの種類&gt;&quot; &quot;&lt;リソース名&gt;&quot; {}</code>　といった構文で指定</li>
+                <li>&lt;リソース名&gt;は任意の名前を設定可能であり、用途を識別できるようにする</li>
+                <li>ブロック中には<code>設定項目名 = 設定値</code>の形式で記述する</li>
+                </ul>
+                <p>定義済みの他リソースの情報を参照することも可能</p>
+                <ul>
+                <li><code>&lt;リソースの種類&gt;.&lt;リソース名&gt;.&lt;属性名&gt;</code>で指定する</li>
+                <li>依存関係はTerraform側で制御されているので、原則、考慮不要</li>
+                <li>明示的に指定したい場合は、<code>depends_on</code>で指定する</li>
+                </ul>
+                <p>Sample</p>
+                <pre><code class="language-tf">resource &quot;aws_security_group&quot; &quot;allow_tls&quot; {
+                    name        = &quot;allow_tls&quot;
+                    description = &quot;Allow TLS inbound traffic&quot;
+                    vpc_id      = aws_vpc.main.id
+                
+                    ingress {
+                        description = &quot;TLS from VPC&quot;
+                        from_port   = 443
+                        to_port     = 443
+                        protocol    = &quot;tcp&quot;
+                        cidr_blocks = [aws_vpc.main.cidr_block]
+                    }
+                
+                    egress {
+                        from_port   = 0
+                        to_port     = 0
+                        protocol    = &quot;-1&quot;
+                        cidr_blocks = [&quot;0.0.0.0/0&quot;]
+                    }
+                }
+                
+                resource &quot;aws_security_group_rule&quot; &quot;add-rule&quot; {
+                    type                     = &quot;ingress&quot;
+                    from_port                = 0
+                    to_port                  = 0
+                    protocol                 = &quot;-1&quot;
+                    source_security_group_id = aws_security_group.allow_tls.id
+                
+                    security_group_id = aws_security_group.allow_tls.id
+                
+                    depends_on = aws_security_group.allow_tls
+                }
+                </code></pre>
+                <h2 id="13-variablestf">1.3. variables.tf</h2>
+                <p>変数情報を<code>main.tf</code>等から分離するためのテンプレートファイルである。
+                一応main.tf内で記述可能だが、<strong>可読性を考慮し別ファイルで管理する</strong>ことが多い。
+                変数は<code>variable &lt;変数名&gt; {}</code>といった構文で定義する。</p>
+                <pre><code class="language-tf">variable &quot;env&quot; {
+                    type        = string
+                    description = &quot;環境種別&quot;
+                    default     = &quot;dev&quot;
+                }
+                </code></pre>
+                <ul>
+                <li><code>type</code> : 変数の型を定義する(String/List/Map など)</li>
+                <li><code>default</code>: 変数のデフォルト値。コマンド実行時や別ファイルを利用して上書き可能。</li>
+                <li><code>description</code>: 対象変数の説明を示す(コメントのように利用する)</li>
+                </ul>
+                <p>また、Terraformでは2種類の変数が定義可能であり、それぞれローカル変数、入力変数がある。</p>
+                <ul>
+                <li><p>ローカル変数</p>
+                <ul>
+                <li><code>locals{}</code>内に定義</li>
+                <li>式をかける</li>
+                <li>外部から指定不可能</li>
+                <li>デフォルト値は定義できない</li>
+                </ul>
+                </li>
+                <li><p>入力変数(Input Variables)</p>
+                <ul>
+                <li><code>variable{}</code>内に定義</li>
+                <li>値のみ指定できる</li>
+                <li>外部から指定可能</li>
+                <li>デフォルト値の定義が可能</li>
+                </ul>
+                </li>
+                </ul>
+                <h2 id="14-terraformtfstate">1.4. terraform.tfstate</h2>
+                <p>Terraformが管理しているリソースの状態を表すファイルである。</p>
+                <ul>
+                <li>デフォルトではローカルにtfstateファイルが生成される</li>
+                <li>ProviderがAWSであれば、S3などのリモートバックエンドで管理することが多い</li>
+                </ul>
+                <p>作成タイミングは<code>terraform apply</code>を実行すると生成される。</p>
+                <ul>
+                <li>次回以降、terraform planを実行時に前回実行時のリソース情報と差分が表示される</li>
+                <li>実機との差分確認は行わないという設計方針6となっている</li>
+                </ul>
+                <p>リソースを分割≒コマンド実行単位を分割することで、更新頻度の高低でtfstateを分割できる</p>
+                <h2 id="15-terraformのコマンド">1.5. Terraformのコマンド</h2>
+                <pre><code class="language-bash">$ terraform init  # BackendとプロバイダのInitialize
+                $ terraform plan  # 実行内容の確認、チェック
+                $ terraform apply # 実行
+                
+                $ terraform -v # バージョン確認
+                $ terraform destroy # 構築したリソースを削除
+                </code></pre>
+                <h3 id="151-terraform-init">1.5.1. terraform init</h3>
+                <ul>
+                <li>ワークスペースを初期化するコマンド</li>
+                <li>Terraform を実行するためには、まず<code>terraform init</code> でワークスペースの初期化が必須</li>
+                <li>.tf（テンプレート）ファイル内の plugin（aws provider など）のダウンロード処理などが走る</li>
+                </ul>
+                <h3 id="152-terraform-plan">1.5.2. terraform plan</h3>
+                <ul>
+                <li>Terraform による実行計画を参照するコマンド</li>
+                <li>.tf（テンプレート）ファイルに情報を元にどのようなリソースが 作成/修正/削除 されるかを参照可能</li>
+                </ul>
+                <h3 id="153-terraform-apply">1.5.3. terraform apply</h3>
+                <ul>
+                <li>.tf（テンプレート）ファイルに記載された情報を元にリソースを作成するコマンド</li>
+                <li>リソースが作成後、 <code>terraform.tfstate</code> に、作成されたリソースに関連する情報が保存される</li>
+                <li>2度目以降の実行後には、1世代前のものが <code>terraform.tfstate.backup</code> に保存される</li>
+                <li>Terraform において、この状態を管理する <code>terraform.state</code> ファイルが非常に重要となるため、手動更新等は行わないこと</li>
+                </ul>
+                <h2 id="16-terraformの使い方windows10">1.6. Terraformの使い方(windows10)</h2>
+                <p>Terraform公式サイトからDLしたファイルを展開したディレクトリ(terraform.exeがある層)に入り、CUI(コマンドプロンプトなど)上でterraformコマンドを使って操作します。
+                作業中のtfファイルやインフラ構築中のファイル群は、その層においてあるほうが操作しやすいです。</p>
+                <h1 id="2-awsにおけるterraform入門">2. AWSにおけるTerraform入門</h1>
+                <p>AWSにおいてTerraformを使いインフラストラクチャーを構築する方法は複数ある。</p>
+                <ol>
+                <li>AWS ClouShell(AWSのWeb上コンソール)を使う方法 ・・・アクセスキー不要</li>
+                <li>ローカルのPCにTerraform等をインストールしローカルから自分のAWSへ構築する方法(企業やチーム開発ではこの手法?)</li>
+                </ol>
+                <h2 id="aws-cloudshellを使う方法terraformデータはgithub上にある場合">AWS CloudShellを使う方法(TerraformデータはGithub上にある場合)</h2>
+                <ol>
+                <li>Terraformをインストール</li>
+                </ol>
+                <pre><code class="language-shell">$ wget https://releases.hashicorp.com/terraform/0.14.2/terraform_0.14.2_linux_amd64.zip
+                $ sudo unzip terraform_0.14.2_linux_amd64.zip -d /usr/local/bin/
+                </code></pre>
+                <ol>
+                <li>Terraformバージョン確認</li>
+                </ol>
+                <pre><code class="language-shell">$ terraform --version
+                </code></pre>
+                <ol>
+                <li><p><code>git clone</code>コマンドによりtfファイル群をGitHubよりダウンロード(未検証)</p>
+                </li>
+                <li><p>Terraformの検証</p>
+                </li>
+                </ol>
+                <pre><code class="language-bash">$ terraform plan
+                </code></pre>
+                <ol>
+                <li>Terraform 実行</li>
+                </ol>
+                <pre><code>$ terraform apply
+                </code></pre>
+                <p>また削除は以下コマンドで行います。</p>
+                <pre><code class="language-bash">$ terraform destroy
+                </code></pre>
+                <h2 id="21-providertf">2.1. provider.tf</h2>
+                <p>サンプル</p>
+                <pre><code class="language-tf">terraform {
+                  required_providers {
+                    aws = {
+                      source  = &quot;hashicorp/aws&quot; # awsにおけるインストールする Provider 指定
+                      version = &quot;~&gt; 3.0&quot;
+                    }
+                  }
+                }
+                
+                provider &quot;aws&quot; {}
+                </code></pre>
+                <ul>
+                <li><code>terraform{}</code>内にTerraform本体のバージョンやプロバイダー(AWS, GCP等)を指定</li>
+                <li><code>provider &quot;aws(or gcp etc...)&quot; {}</code>内にプロバイダー向け情報を記述</li>
+                </ul>
+                <h2 id="22-variablestf">2.2. variables.tf</h2>
+                <p>サンプル</p>
+                <pre><code class="language-tf">variable &quot;aws-ecs-task-name&quot; {
+                  type    = string
+                  default = &quot;minecraft-on-ecs&quot;
+                }
+                </code></pre>
+                <h2 id="23-ecs">2.3. ECS</h2>
+                <p>サンプル</p>
+                <pre><code class="language-tf">resource &quot;aws_ecs_cluster&quot; &quot;default&quot; {
+                  name = &quot;default&quot;
+                }
+                
+                resource &quot;aws_ecs_task_definition&quot; &quot;minecraft-on-ecs-task&quot; {
+                  cpu                = var.aws-ecs-cluster-cpu
+                  execution_role_arn = aws_iam_role.minecraft-on-ecs-task-execution-role.arn
+                  family             = var.aws-ecs-task-name
+                  memory             = var.aws-ecs-cluster-memory
+                  network_mode       = &quot;awsvpc&quot;
+                  requires_compatibilities = [
+                    &quot;FARGATE&quot;,
+                  ]
+                  task_role_arn = aws_iam_role.minecraft-on-ecs-task-execution-role.arn
+                
+                  volume {
+                    name = &quot;data&quot;
+                    efs_volume_configuration {
+                      file_system_id     = aws_efs_file_system.minecraft-data.id
+                      root_directory     = &quot;/&quot;
+                      transit_encryption = &quot;DISABLED&quot;
+                
+                      authorization_config {
+                        iam = &quot;DISABLED&quot;
+                      }
+                    }
+                  }
+                
+                  container_definitions = jsonencode(
+                    [
+                      {
+                        command    = []
+                        cpu        = 0
+                        entryPoint = []
+                        environment = [
+                          {
+                            name  = &quot;EULA&quot;
+                            value = &quot;TRUE&quot;
+                          },
+                          {
+                            name  = &quot;TYPE&quot;
+                            value = &quot;PAPER&quot;
+                          },
+                          {
+                            name  = &quot;MEMORY&quot;
+                            value = var.aws-ecs-container-java-memory-heap
+                          },
+                        ]
+                        essential = true
+                        image     = &quot;itzg/minecraft-server:java16&quot;
+                        logConfiguration = {
+                          logDriver = &quot;awslogs&quot;
+                          options = {
+                            awslogs-group         = &quot;/ecs/${var.aws-ecs-task-name}&quot;
+                            awslogs-region        = var.aws-region
+                            awslogs-stream-prefix = &quot;ecs&quot;
+                          }
+                        }
+                        memory            = var.aws-ecs-container-memory
+                        memoryReservation = var.aws-ecs-container-memory-reservation
+                        mountPoints = [
+                          {
+                            containerPath = &quot;/data&quot;
+                            sourceVolume  = &quot;data&quot;
+                          },
+                        ]
+                        name = &quot;minecraft&quot;
+                        portMappings = [
+                          {
+                            containerPort = 25565
+                            hostPort      = 25565
+                            protocol      = &quot;tcp&quot;
+                          },
+                        ]
+                      },
+                    ]
+                  )
+                
+                  tags = {
+                    Name = &quot;minecraft-on-ecs&quot;
+                  }
+                }
+                
+                resource &quot;aws_ecs_service&quot; &quot;minecraft-on-ecs-service&quot; {
+                  name                               = &quot;minecraft-service&quot;
+                  cluster                            = aws_ecs_cluster.default.arn
+                  deployment_maximum_percent         = 200
+                  deployment_minimum_healthy_percent = 100
+                  desired_count                      = 1
+                  enable_ecs_managed_tags            = true
+                  enable_execute_command             = false
+                  health_check_grace_period_seconds  = 60
+                  launch_type                        = &quot;FARGATE&quot;
+                  platform_version                   = &quot;LATEST&quot;
+                  scheduling_strategy                = &quot;REPLICA&quot;
+                  task_definition                    = &quot;${var.aws-ecs-task-name}:${aws_ecs_task_definition.minecraft-on-ecs-task.revision}&quot;
+                
+                  deployment_circuit_breaker {
+                    enable   = true
+                    rollback = false
+                  }
+                
+                  deployment_controller {
+                    type = &quot;ECS&quot;
+                  }
+                
+                  load_balancer {
+                    container_name   = &quot;minecraft&quot;
+                    container_port   = 25565
+                    target_group_arn = aws_lb_target_group.minecraft-ecs-target.arn
+                  }
+                
+                  network_configuration {
+                    assign_public_ip = true
+                    security_groups = [
+                      aws_security_group.ecs-default.id,
+                    ]
+                    subnets = [
+                      aws_subnet.ecs-default.id,
+                    ]
+                  }
+                
+                  timeouts {}
+                
+                  tags = {
+                    &quot;Name&quot; = &quot;minecraft-on-ecs&quot;
+                  }
+                }
+                </code></pre>
+                <h2 id="24-efs">2.4. EFS</h2>
+                <p>サンプル</p>
+                <pre><code class="language-tf">resource &quot;aws_efs_file_system&quot; &quot;minecraft-data&quot; {
+                  availability_zone_name = var.aws-availability-zone
+                  encrypted              = true
+                  performance_mode       = &quot;generalPurpose&quot;
+                
+                  lifecycle_policy {
+                    transition_to_ia = &quot;AFTER_30_DAYS&quot;
+                  }
+                  lifecycle_policy {
+                    transition_to_primary_storage_class = &quot;AFTER_1_ACCESS&quot;
+                  }
+                
+                  tags = {
+                    Name = &quot;minecraft-data&quot;
+                  }
+                }
+                
+                resource &quot;aws_efs_backup_policy&quot; &quot;minecraft-data-backup-policy&quot; {
+                  file_system_id = aws_efs_file_system.minecraft-data.id
+                
+                  backup_policy {
+                    status = &quot;ENABLED&quot;
+                  }
+                }
+                
+                resource &quot;aws_efs_mount_target&quot; &quot;minecraft-data-mount-target&quot; {
+                  file_system_id = aws_efs_file_system.minecraft-data.id
+                  subnet_id      = aws_subnet.ecs-default.id
+                  security_groups = [
+                    aws_security_group.allow_nfs.id
+                  ]
+                }
+                </code></pre>
+                <h2 id="25-iamロール設定">2.5. IAMロール設定</h2>
+                <p>Terraform によるIAM Policy の作成方法はいくつかあります。</p>
+                <p>サンプル</p>
+                <pre><code class="language-tf">resource &quot;aws_iam_role&quot; &quot;minecraft-on-ecs-task-role&quot; {
+                  name        = &quot;minecraft-on-ecs-task&quot;
+                  description = &quot;Allows ECS tasks to call AWS services on your behalf.&quot;
+                
+                  assume_role_policy = jsonencode({
+                    &quot;Version&quot; : &quot;2012-10-17&quot;,
+                    &quot;Statement&quot; : [
+                      {
+                        &quot;Sid&quot; : &quot;&quot;,
+                        &quot;Effect&quot; : &quot;Allow&quot;,
+                        &quot;Principal&quot; : {
+                          &quot;Service&quot; : &quot;ecs-tasks.amazonaws.com&quot;
+                        },
+                        &quot;Action&quot; : &quot;sts:AssumeRole&quot;
+                      }
+                    ]
+                  })
+                
+                  managed_policy_arns = [
+                    &quot;arn:aws:iam::aws:policy/AmazonElasticFileSystemClientReadWriteAccess&quot;
+                  ]
+                
+                  tags = {
+                    Name = &quot;minecraft-on-ecs&quot;
+                  }
+                }
+                </code></pre>
+                <h2 id="26-ロードバランサー">2.6. ロードバランサー</h2>
+                <p>サンプル</p>
+                <pre><code class="language-tf">resource &quot;aws_lb&quot; &quot;minecraft-lb&quot; {
+                  load_balancer_type = &quot;network&quot;
+                  name               = &quot;minecraft-lb&quot;
+                  internal           = false
+                  ip_address_type    = &quot;ipv4&quot;
+                
+                  subnet_mapping {
+                    subnet_id     = aws_subnet.ecs-default.id
+                    allocation_id = aws_eip.minecraft-global-ip.id
+                  }
+                
+                  tags = {
+                    Name = &quot;minecraft-on-ecs&quot;
+                  }
+                }
+                </code></pre>
+                <h2 id="28-vpc">2.8. VPC</h2>
+                <p>サンプル</p>
+                <pre><code class="language-tf">resource &quot;aws_vpc&quot; &quot;ecs-default&quot; {
+                  assign_generated_ipv6_cidr_block = false
+                  cidr_block                       = &quot;10.0.0.0/16&quot;
+                  enable_classiclink               = false
+                  enable_classiclink_dns_support   = false
+                  enable_dns_hostnames             = true
+                  enable_dns_support               = true
+                  instance_tenancy                 = &quot;default&quot;
+                  tags = {
+                    &quot;Description&quot; = &quot;Created for ECS cluster default&quot;
+                    &quot;Name&quot;        = &quot;ECS default - VPC&quot;
+                  }
+                }
+                </code></pre>
+                <h2 id="29-subnet">2.9. Subnet</h2>
+                <p>サンプル</p>
+                <pre><code class="language-tf">resource &quot;aws_subnet&quot; &quot;ecs-default&quot; {
+                  assign_ipv6_address_on_creation = false
+                  availability_zone               = var.aws-availability-zone
+                  cidr_block                      = &quot;10.0.0.0/24&quot;
+                  map_public_ip_on_launch         = false
+                  tags = {
+                    &quot;Description&quot; = &quot;Created for ECS cluster default&quot;
+                    &quot;Name&quot;        = &quot;ECS default - Public Subnet 1&quot;
+                  }
+                  vpc_id = aws_vpc.ecs-default.id
+                
+                  timeouts {}
+                }
+                </code></pre>
+                <h2 id="210-mount_target">2.10. Mount_target</h2>
+                <p>サンプル(EFSに対して)</p>
+                <pre><code class="language-tf">resource &quot;aws_efs_mount_target&quot; &quot;minecraft-data-mount-target&quot; {
+                  file_system_id = aws_efs_file_system.minecraft-data.id
+                  subnet_id      = aws_subnet.ecs-default.id
+                  security_groups = [
+                    aws_security_group.allow_nfs.id
+                  ]
+                }
+                </code></pre>
+                
+
+                <!-- END -->
+
+            </main>
+            <footer class="footer mt-auto py-3 bg-light">
+                <div class="container">
+                    <p class="text-muted text-center">Written by ゆーろん / yuron3141</p>
+                </div>
+            </footer>
+        </body>
+    </body>
+</html>

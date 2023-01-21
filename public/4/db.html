@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="Ja">
+    <head>
+        <title>ゆーろんのWeb系の学習資料　|　データベース基礎</title>
+        <!-- OGP -->
+        <head prefix="og: https://ogp.me/ns#">
+        <meta property="og:url" content="https://yuron3141.github.io/my_web_docs/" />
+        <meta property="og:type" content="Blog" />
+        <meta property="og:title" content="データベース基礎" />
+        <meta property="og:description" content="ゆーろんのWeb系学習資料です。皆さんの開発のために役立つことを祈っています。" />
+        <meta property="og:site_name" content="ゆーろんアカデミー　ノート支部" />
+        <!-- DOCUMENTS STYLE -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <!-- ORIGINAL CSS -->
+        <link rel="stylesheet" href="../css/style.css" type="text/css">
+    </head>
+    <body>
+        <body class="d-flex flex-column h-100">
+            <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
+                <div>
+                    <h1 class="m-3">データベース基礎</h1>
+                </div>
+            </header>
+            <main class="m-4">
+
+                <!-- Write Text Here-->
+
+                <p>基本的にRDBとSQL、DB設計の基礎に関してまとめ。</p>
+                <h2 id="目次">目次<!-- omit in toc --></h2>
+                <ul>
+                <li><a href="#1-%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9%E6%A6%82%E8%AB%96">1. データベース概論</a><ul>
+                <li><a href="#11-%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9%E3%81%A8%E3%81%AF">1.1. データベースとは</a></li>
+                <li><a href="#12-dbmsdata-base-management-system">1.2. DBMS(Data Base Management System)</a></li>
+                <li><a href="#13-rdbrelational-data-base">1.3. RDB(Relational Data Base)</a></li>
+                <li><a href="#14-sqlstructured-query-language">1.4. SQL(Structured Query Language)</a></li>
+                <li><a href="#15-nosql">1.5. NoSQL</a></li>
+                <li><a href="#16-orm">1.6. ORM</a></li>
+                </ul>
+                </li>
+                <li><a href="#2-%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9%E5%9F%BA%E7%A4%8E">2. データベース基礎</a><ul>
+                <li><a href="#21-%E3%82%AB%E3%83%A9%E3%83%A0%E3%81%A8%E3%83%87%E3%83%BC%E3%82%BF%E5%9E%8B">2.1. カラムとデータ型</a></li>
+                <li><a href="#22-%E6%AD%A3%E8%A6%8F%E5%8C%96">2.2. 正規化</a></li>
+                <li><a href="#23-%E9%96%A2%E4%BF%82%E6%BC%94%E7%AE%97">2.3. 関係演算</a></li>
+                <li><a href="#24-%E3%82%B9%E3%82%AD%E3%83%BC%E3%83%9E">2.4. スキーマ</a></li>
+                <li><a href="#25-%E4%B8%BB%E3%82%AD%E3%83%BC%E3%81%A8%E5%A4%96%E9%83%A8%E3%82%AD%E3%83%BC">2.5. 主キーと外部キー</a></li>
+                <li><a href="#26-%E3%83%88%E3%83%A9%E3%83%B3%E3%82%B6%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%E7%AE%A1%E7%90%86%E3%81%A8%E6%8E%92%E4%BB%96%E5%88%B6%E5%BE%A1">2.6. トランザクション管理と排他制御</a></li>
+                <li><a href="#27-%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9%E3%81%AE%E9%9A%9C%E5%AE%B3%E5%AF%BE%E7%AD%96">2.7. データベースの障害対策</a></li>
+                </ul>
+                </li>
+                <li><a href="#3-db%E3%83%9B%E3%82%B9%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9">3. DBホスティングサービス</a><ul>
+                <li><a href="#31-db">3.1. DB</a></li>
+                <li><a href="#32-%E3%82%B5%E3%83%BC%E3%83%90%E3%83%AC%E3%82%B9db">3.2. サーバレスDB</a></li>
+                </ul>
+                </li>
+                </ul>
+                <p><strong>参考資料</strong></p>
+                <table>
+                <thead>
+                <tr>
+                <th>名称</th>
+                <th>URL</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>postgreSQLドキュメント(JP)</td>
+                <td><a href="https://www.postgresql.jp/document/">https://www.postgresql.jp/document/</a></td>
+                </tr>
+                <tr>
+                <td>PlanetScale公式ドキュメント</td>
+                <td><a href="https://planetscale.com/docs">https://planetscale.com/docs</a></td>
+                </tr>
+                </tbody></table>
+                <h1 id="1-データベース概論">1. データベース概論</h1>
+                <h2 id="11-データベースとは">1.1. データベースとは</h2>
+                <p>データベースはある特定の条件に当てはまる「データ」を複数集めて、後で使いやすい形に整理した情報のかたまりのことを表します。
+                特にコンピュータ上で管理するデータをデータベースと呼ぶことが多いですが、紙の上で管理する「電話帳」や「住所録」なども、立派なデータベースです。</p>
+                <p>また、コンピュータ上でデータベースを管理するシステム（<strong>DBMS：Database Management System</strong>）のことや、そのシステム上で扱うデータ群のことを、単に「データベース」と呼ぶ場合もあります。
+                データベースを使ってデータを管理するメリットには、次のようなものが挙げられます。</p>
+                <ol>
+                <li>複数のデータをまとめて管理できる</li>
+                <li>目的のデータを簡単に探すことができる</li>
+                <li>簡単に編集して使うことができる</li>
+                </ol>
+                <h2 id="12-dbmsdata-base-management-system">1.2. DBMS(Data Base Management System)</h2>
+                <p>DBMSはDBを管理するためのシステムです。</p>
+                <h3 id="rdbms">RDBMS<!-- omit in toc --></h3>
+                <p>RDBMS(関係データベース管理システム)は様々な会社が提供しており、有料のものには以下のようなものがあります。</p>
+                <ul>
+                <li>Oracle DB</li>
+                <li>SQL Server</li>
+                </ul>
+                <h3 id="rdb">RDB<!-- omit in toc --></h3>
+                <p>有名どころのRDB。</p>
+                <ul>
+                <li><strong>MySQL</strong></li>
+                <li><strong>PostgreSQL</strong></li>
+                <li>SQLite</li>
+                </ul>
+                <h2 id="13-rdbrelational-data-base">1.3. RDB(Relational Data Base)</h2>
+                <p>RDB(リレーショナルデータベース)は<strong>表の形でデータを管理する</strong>データベースです。
+                以下の要素で構成されます。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>種類</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>表(テーブル)</td>
+                <td>複数のデータを収容する場所</td>
+                </tr>
+                <tr>
+                <td>行(レコード)</td>
+                <td>1件分のデータを表す</td>
+                </tr>
+                <tr>
+                <td>列(フィールド)</td>
+                <td>データを構成する項目を表す</td>
+                </tr>
+                </tbody></table>
+                <p>RDBの例</p>
+                <img src="https://proengineer.internous.co.jp/topics/wp-content/uploads/2017/01/column_image6411_04.jpg" width="40%">
+                
+                
+                <h2 id="14-sqlstructured-query-language">1.4. SQL(Structured Query Language)</h2>
+                <p>SQLとはデータベースを操作するための言語です。
+                DBMS上でデータの追加や削除、並べ替えなどを行うようコンピュータに命令することができます。
+                基本的に１行ずつ入力して確定し、直ちに実行されます。複数のSQLを組み合わせて大きな一つの塊のSQLとして実行することもできますが、通常のプログラミング言語のように一連の操作をまとめてセットすることのできる「ストアドプロシージャ」という機能のあるDBMSもあります。</p>
+                <h3 id="ストアドプロシージャ">ストアドプロシージャ<!-- omit in toc --></h3>
+                <p>DBMSにSQL文を1つのプログラムにまとめ保存しておくことは<strong>ストアドプロシージャ</strong>と呼ばれます。
+                一連の処理が実行される。
+                また、メリットは以下の通りです。</p>
+                <ul>
+                <li>ネットワークの負荷削減</li>
+                <li>処理速度の向上</li>
+                </ul>
+                <h2 id="15-nosql">1.5. NoSQL</h2>
+                <p>NoSQLはNot only SQLの略で、SQLに限定されることなく非定型な構造を持つデータを柔軟に管理することができるもの。
+                NoSQLはデータモデルによって、「キー・バリュー型」「カラムストア型」「グラフ型」「ドキュメント型」の4つに大きく分けられる。</p>
+                <h3 id="nosqlのメリット">NoSQLのメリット<!-- omit in toc --></h3>
+                <ul>
+                <li>非定型データの格納に対応可能な、柔軟かつ動的なデータモデルを利用できる</li>
+                <li>データスキーマ/戦略の大幅な見直し、あるいはパフォーマンスの低下をともなわずに、データベースのスケーリングが可能</li>
+                <li>ビッグデータ運用にも耐えうる大容量データ処理を実現できる</li>
+                </ul>
+                <h3 id="nosqlの有名どころ">NoSQLの有名どころ<!-- omit in toc --></h3>
+                <ul>
+                <li>redis</li>
+                <li>MongoDB</li>
+                </ul>
+                <h2 id="16-orm">1.6. ORM</h2>
+                <p>ORM(Object-Relational Mapping)ことオブジェクト関係マッピングはオブジェクトと関係(RDB)とのマッピングを行うもの。</p>
+                <p>ORMを使うとSQLを直接書くことなく、<strong>オブジェクトのメソッドでDB操作ができる</strong>と言う特徴があります。</p>
+                <h1 id="2-データベース基礎">2. データベース基礎</h1>
+                <h2 id="21-カラムとデータ型">2.1. カラムとデータ型</h2>
+                <p>テーブルをつくる時、どんなデータを入れるか構造を指定します。カラム型には以下のようなものがあります。</p>
+                <p>ここではMySQLの場合の例を記載します。</p>
+                <h3 id="数値型">数値型<!-- omit in toc --></h3>
+                <p>UNSIGNED を指定すると正の数しか格納できなくなります。(UNSIGNEDでデータ範囲：0~2n)</p>
+                <table>
+                <thead>
+                <tr>
+                <th>名称</th>
+                <th>型</th>
+                <th>概要</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>TINYINT</td>
+                <td>整数型</td>
+                <td>-128 ~ 127</td>
+                </tr>
+                <tr>
+                <td>SMALLINT</td>
+                <td>整数型</td>
+                <td>-32768 〜 32767</td>
+                </tr>
+                <tr>
+                <td>MEDIUMINT</td>
+                <td>整数型</td>
+                <td>-8388608 〜 8388607</td>
+                </tr>
+                <tr>
+                <td><strong>INT、INTEGER</strong></td>
+                <td>整数型</td>
+                <td>-2147483648 〜 2147483647</td>
+                </tr>
+                <tr>
+                <td>BIGINT</td>
+                <td>真数型</td>
+                <td>-9223372036854775808 〜 9223372036854775807</td>
+                </tr>
+                <tr>
+                <td><strong>BOOL、BOOLEAN</strong></td>
+                <td>Boolean型</td>
+                <td>TINYINT(1) で指定した場合と同じ。true と false の2択を保存したいときに使うことが多い。</td>
+                </tr>
+                <tr>
+                <td>BIT</td>
+                <td>BIT型</td>
+                <td>111 や 10000000 といったビットフィールド値を格納するのに使う。ビット値を指定するには、b&#39;111&#39; や b&#39;10000000&#39; のように指定する。</td>
+                </tr>
+                <tr>
+                <td><strong>DECIMAL、DEC、NUMERIC</strong></td>
+                <td>小数点型</td>
+                <td>誤差のない正確な小数を格納できる。</td>
+                </tr>
+                <tr>
+                <td>FLOAT</td>
+                <td>小数点型</td>
+                <td>おおよそ小数第7位まで正確な小数を格納できる。</td>
+                </tr>
+                <tr>
+                <td>DOUBLE</td>
+                <td>小数点型</td>
+                <td>おおよそ小数第15位まで正確な小数を格納できる。</td>
+                </tr>
+                </tbody></table>
+                <h4 id="日付型・時間型">日付型・時間型<!-- omit in toc --></h4>
+                <table>
+                <thead>
+                <tr>
+                <th>型</th>
+                <th>用途</th>
+                <th>フォーマット</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td><strong>DATE</strong></td>
+                <td>日付</td>
+                <td>&#39;年-月-日&#39;（例: &#39;2020-01-01&#39;）</td>
+                </tr>
+                <tr>
+                <td><strong>DATETIME</strong></td>
+                <td>日付と時間</td>
+                <td>&#39;年-月-日 時:分:秒&#39;（例: &#39;2020-01-01 12:15:03&#39;）</td>
+                </tr>
+                <tr>
+                <td><strong>TIMESTAMP</strong></td>
+                <td>タイムスタンプ</td>
+                <td>&#39;年-月-日 時:分:秒&#39;（例: &#39;2020-01-01 12:15:03&#39;））</td>
+                </tr>
+                <tr>
+                <td>TIME</td>
+                <td>時間</td>
+                <td>&#39;時:分:秒&#39;（例: &#39;12:15:03&#39;）</td>
+                </tr>
+                <tr>
+                <td>YEAR</td>
+                <td>年</td>
+                <td>年（例: 2020）</td>
+                </tr>
+                </tbody></table>
+                <h3 id="値の指定方法">値の指定方法<!-- omit in toc --></h3>
+                <p>日付や時間を扱う型のカラムに値を挿入する場合、以下のような基本フォーマット以外の形も使えます。</p>
+                <ul>
+                <li>&#39;2020-01-01 12:15:05&#39; （基本）</li>
+                <li>&#39;20-1-1 12:15:5&#39;</li>
+                <li>&#39;2020/01/01 12:15:05&#39;</li>
+                <li>&#39;20200101121505&#39;</li>
+                </ul>
+                <h3 id="文字列型">文字列型<!-- omit in toc --></h3>
+                <p>文字列を扱う型は以下の種類があり、それぞれ用途が違います。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>型</th>
+                <th>用途</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>CHAR</td>
+                <td>固定長文字列を格納。CHAR(10) のようにして格納できる文字数（0〜255・デフォルトは1）を指定できる。</td>
+                </tr>
+                <tr>
+                <td><strong>VARCHAR</strong></td>
+                <td>可変長文字列を格納。VARCHAR(10) のようにして格納できるバイト数（0〜65,535）を指定できる。</td>
+                </tr>
+                <tr>
+                <td>BINARY</td>
+                <td>固定長バイナリバイト文字列を格納。BINARY(10) のようにして格納できる文字数（0〜255・デフォルトは1）を指定できる。</td>
+                </tr>
+                <tr>
+                <td>VARBINARY</td>
+                <td>可変長バイナリバイト文字列を格納。VARBINARY(10) のようにして格納できるバイト数（0〜65,535）を指定できる。</td>
+                </tr>
+                <tr>
+                <td>TINYBLOB</td>
+                <td>バイナリデータを格納。最大長は 255 (2^8 − 1) バイト。</td>
+                </tr>
+                <tr>
+                <td>BLOB</td>
+                <td>バイナリデータを格納。最大長は 65,535 (216 − 1) バイト。BLOB(10) のようにして格納できるバイト数を指定できる。</td>
+                </tr>
+                <tr>
+                <td>MEDIUMBLOB</td>
+                <td>バイナリデータを格納。最大長は 16,777,215 (2^24 − 1) バイト。</td>
+                </tr>
+                <tr>
+                <td>LONGBLOB</td>
+                <td>バイナリデータを格納。最大長は 4,294,967,295 または 4G バイト (2^32 − 1) バイト。</td>
+                </tr>
+                <tr>
+                <td><strong>TEXT</strong></td>
+                <td>文字列を格納。最大長は 65,535 (216 − 1) 文字。TEXT(10) のようにして格納できる文字数を指定できる。</td>
+                </tr>
+                </tbody></table>
+                <h2 id="22-正規化">2.2. 正規化</h2>
+                <p>関係データベースにおいて蓄積データの重複や矛盾が発生しないように最適化するのが一般的です。
+                同じ内容を表のあちらこちらに書かないように表を分割するなどすることは<strong>正規化</strong>と呼ばれます。</p>
+                <img src="https://medium-company.com/wp-content/uploads/2021/01/regularization2.png" width="60%">
+                
+                <h3 id="正規化の実行">正規化の実行<!-- omit in toc --></h3>
+                <p>非正規形(正規化を行っていない元の形の表)を何回か正規化を行い最適化行います。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>正規化</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>非正規形</td>
+                <td>正規化されていない繰り返し部分を持つ表</td>
+                </tr>
+                <tr>
+                <td>第1正規形</td>
+                <td>繰り返し部分を分離させ独立したレコードを持つ表</td>
+                </tr>
+                <tr>
+                <td>第2正規形</td>
+                <td>部分関数従属しているところを切り出した表</td>
+                </tr>
+                <tr>
+                <td>第3正規形</td>
+                <td>主キー以外の列に関数従属している列を切り出した表</td>
+                </tr>
+                </tbody></table>
+                <h3 id="非正規形">非正規形<!-- omit in toc --></h3>
+                <p>非正規型の表は繰り返し部分を持ち、関係データベースで扱えない表の形である。</p>
+                <h3 id="第1正規形">第1正規形<!-- omit in toc --></h3>
+                <p>非正規形の表から繰り返し部分を取り除いたものは第1正規形となる。
+                また表の形は2次元の表となる。</p>
+                <h3 id="第2正規形">第2正規形<!-- omit in toc --></h3>
+                <p>第1正規形の表から部分関数従属している列を分離した表が第2正規形の表である。</p>
+                <h3 id="第3正規形">第3正規形<!-- omit in toc --></h3>
+                <p>第2正規形の表から主キー以外の列に関数従属している列を分離した表が第3正規形の表である。</p>
+                <h2 id="23-関係演算">2.3. 関係演算</h2>
+                <p>関係演算は表の中から特定の行や列を取り出したり、表と表をくっつけ新しい表を作り出したりする演算のことである。
+                選択、射影、結合などがある。</p>
+                <ul>
+                <li>選択 ・・・ 行を取り出す演算</li>
+                <li>射影 ・・・ 列を取り出す演算</li>
+                <li>結合 ・・・ 表同士を結合する演算</li>
+                </ul>
+                <p>このような演算を行い仮想的に作る一時的な表は<strong>ビュー表</strong>と呼ばれる。</p>
+                <h2 id="24-スキーマ">2.4. スキーマ</h2>
+                <p>スキーマは「概念、要旨」という意味を持ち、データベース構造や使用の定義をするものである。
+                標準使用されているスキーマにはANSI/X3/SPARC規格は<strong>3層スキーマ構造</strong>をとり、<strong>外部スキーマ、概念スキーマ、内部スキーマ</strong>という3層に定義を分けることでデータの独立性を高める。</p>
+                <img src="https://image.itmedia.co.jp/ait/articles/1703/01/l_r20_04-01.PNG" width="60%">
+                
+                <h2 id="25-主キーと外部キー">2.5. 主キーと外部キー</h2>
+                <p>データベースの表には行を識別できるようにキーとなる情報が含まれており、それは<strong>主キー</strong>と呼ばれます。また表同士を関連付けするときの主キーは<strong>外部キー</strong>と呼ばれます。
+                また複数列を組み合わせて主キーにしたものは<strong>複合キー</strong>と呼ばれます。</p>
+                <h3 id="関数従属と部分関数従属">関数従属と部分関数従属<!-- omit in toc --></h3>
+                <ul>
+                <li>関数従属 ・・・ 主キーが決まったとき列が一意に定まる関係</li>
+                <li>部分関数従属 ・・・ 複合キーの一部の項目のみで列の値が一意に定まる関係</li>
+                </ul>
+                <h2 id="26-トランザクション管理と排他制御">2.6. トランザクション管理と排他制御</h2>
+                <p><strong>トランザクション管理と排他処理</strong>は複数人がデータベースにアクセスし同時変更などをした際にデータ内容に不整合が生じる問題からデータベースを守る処理です。</p>
+                <h3 id="トランザクション">トランザクション<!-- omit in toc --></h3>
+                <p>データベースにおいて、一連の処理をひとまとめにしたものは<strong>トランザクション</strong>と呼ばれます。
+                トランザクションが必要なケースは以下のようなものがあります。</p>
+                <ul>
+                <li>手動でSQLを操作する場合</li>
+                <li>複数データの整合性を保つ場合</li>
+                </ul>
+                <h3 id="排他制御">排他制御<!-- omit in toc --></h3>
+                <p>排他制御は処理中のデータをロックし、他の人が読み書きできないようにする機能である。
+                ロックする方法には<strong>共有ロックと専有ロック</strong>がある。</p>
+                <ul>
+                <li>共有ロック ・・・ 各ユーザはデータを読むことはできるが、書き込みができない状態</li>
+                <li>専有ロック ・・・ 他ユーザはデータを読み書きすることができない</li>
+                </ul>
+                <p>また、<strong>デットロック</strong>と呼ばれる現象がロック機能を使いすぎると起こる場合があります。
+                <img src="https://cloudear.jp/blog/wp-content/uploads/2015/07/deadlock2.png" width="60%"></p>
+                <h3 id="acid特性">ACID特性<!-- omit in toc --></h3>
+                <p>DBMSではトランザクション処理に対して4つの特性(<strong>ACID特性</strong>)が必要とされる。
+                <img src="https://image.itmedia.co.jp/ait/articles/1703/01/r20_21-01b.jpg" width="60%"></p>
+                <h2 id="27-データベースの障害対策">2.7. データベースの障害対策</h2>
+                <p>データベースは定期的に<strong>バックアップ</strong>を作ったり、更新前後の状態を<strong>ジャーナルファイル</strong>に記録したりし障害の発生に備えます。
+                バックアップ後の更新は<strong>ジャーナル</strong>と呼ばれるログファイルに更新前の状態と更新後の状態を逐一記録しデータベースの更新履歴を管理するようにする。</p>
+                <p>障害が発生した際にはこれらのファイルを用いて<strong>ロールバック</strong>や<strong>ロールフォワード</strong>などの障害回復処理を行い、元の状態に復旧する。</p>
+                <h3 id="コミットとロールバック">コミットとロールバック<!-- omit in toc --></h3>
+                <p>データベースでは更新処理をトランザクション単位で管理します。
+                トランザクションは一連の処理が問題なく完了できたときに、最後にその更新を確定することでデータベースへ更新内容を反映させる。これは<strong>コミット</strong>と呼ばれる。
+                またトランザクション処理中に障害が発生し更新に失敗した場合、データベース更新前の状態を<strong>更新前ジャーナル</strong>から取得しデータベースをトランザクション処理直前の状態に戻します。この処理は<strong>ロールバック</strong>と呼ばれます。</p>
+                <h3 id="分散データベースと2相コミット">分散データベースと2相コミット<!-- omit in toc --></h3>
+                <p>物理的に分かれている複数のデータベースを見かけ上1つのデータベースとして扱えるようにしたシステムは<strong>分散データベースシステム</strong>と呼ばれます。</p>
+                <p>これはトランザクション処理が各サイトにわたり行われるので、全体の同期をとりコミット、ロールバックを取らないと、データの整合性が取れなくなる恐れがある。
+                そのため全サイトに問い合わせを行い、その結果を見てコミット、ロールバックを行う。この処理は<strong>2相コミット</strong>と呼ばれる。</p>
+                <h3 id="ロールフォワード">ロールフォワード<!-- omit in toc --></h3>
+                <p>データベース自体が突然障害に見舞われた場合、バックアップ以降の更新ジャーナルから更新情報を取得し、データベースを障害発生直前の状態に復旧させる一連の処理があります。
+                この処理は<strong>ロールフォワード</strong>と呼ばれます。</p>
+                <h1 id="3-dbホスティングサービス">3. DBホスティングサービス</h1>
+                <p>一部のみの記載。</p>
+                <h2 id="31-db">3.1. DB</h2>
+                <table>
+                <thead>
+                <tr>
+                <th>名称</th>
+                <th>種類</th>
+                <th>ホスト元</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>Amazon Aurora</td>
+                <td>RDBMS</td>
+                <td>AWS</td>
+                </tr>
+                <tr>
+                <td>Cloud SQL</td>
+                <td>RDBMS</td>
+                <td>GCP</td>
+                </tr>
+                <tr>
+                <td>Azure SQL Database</td>
+                <td>RDBMS</td>
+                <td>Azure</td>
+                </tr>
+                <tr>
+                <td>Amazon Aurora</td>
+                <td>NoSQL</td>
+                <td>AWS</td>
+                </tr>
+                <tr>
+                <td>Cloud Bigtable</td>
+                <td>NoSQL</td>
+                <td>GCP</td>
+                </tr>
+                </tbody></table>
+                <h2 id="32-サーバレスdb">3.2. サーバレスDB</h2>
+                <p>サーバレスDBではサーバ管理を考える必要がないため、開発者はプログラムの開発に集中できます。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>名称</th>
+                <th>種類</th>
+                <th>ホスト元</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>AWS Lambda(NoSQL)</td>
+                <td>-</td>
+                <td>AWS</td>
+                </tr>
+                <tr>
+                <td>Amazon Aurora Serverless</td>
+                <td>-</td>
+                <td>AWS</td>
+                </tr>
+                <tr>
+                <td><strong>PlanetScale</strong></td>
+                <td>RDB</td>
+                <td></td>
+                </tr>
+                </tbody></table>
+                
+
+                <!-- END -->
+
+            </main>
+            <footer class="footer mt-auto py-3 bg-light">
+                <div class="container">
+                    <p class="text-muted text-center">Written by ゆーろん / yuron3141</p>
+                </div>
+            </footer>
+        </body>
+    </body>
+</html>

@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="Ja">
+    <head>
+        <title>ゆーろんのWeb系の学習資料　|　AWS入門</title>
+        <!-- OGP -->
+        <head prefix="og: https://ogp.me/ns#">
+        <meta property="og:url" content="https://yuron3141.github.io/my_web_docs/" />
+        <meta property="og:type" content="Blog" />
+        <meta property="og:title" content="AWS入門" />
+        <meta property="og:description" content="ゆーろんのWeb系学習資料です。皆さんの開発のために役立つことを祈っています。" />
+        <meta property="og:site_name" content="ゆーろんアカデミー　ノート支部" />
+        <!-- DOCUMENTS STYLE -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <!-- ORIGINAL CSS -->
+        <link rel="stylesheet" href="../css/style.css" type="text/css">
+    </head>
+    <body>
+        <body class="d-flex flex-column h-100">
+            <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
+                <div>
+                    <h1 class="m-3">AWS入門</h1>
+                </div>
+            </header>
+            <main class="m-4">
+
+                <!-- Write Text Here-->
+
+                <p>AWSはアプリケーションを動かすためのサーバ環境などのインストラクチャーを構築できるサービスです。</p>
+                <p>AWSで提供されている各サービスや各機能は目次の通りです。</p>
+                <h2 id="目次">目次<!-- omit in toc --></h2>
+                <ul>
+                <li><a href="#aws-%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E4%B8%80%E8%A6%A7">AWS サービス一覧</a><ul>
+                <li><a href="#1-%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF">1. ネットワーク</a><ul>
+                <li><a href="#11-aws-elastic-ip-%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9elastic-ip-address">1.1. AWS Elastic IP アドレス(Elastic IP address)</a></li>
+                <li><a href="#12-elastic-load-balancerelb">1.2. Elastic Load Balancer(ELB)</a><ul>
+                <li><a href="#121-network-load-balancernlb">1.2.1 Network Load Balancer(NLB)</a></li>
+                <li><a href="#122-application-load-balanceralb">1.2.2. Application Load Balancer(ALB)</a></li>
+                </ul>
+                </li>
+                <li><a href="#13-amazon-virtual-private-cloudvpc">1.3. Amazon Virtual Private Cloud(VPC)</a></li>
+                <li><a href="#14-subnet">1.4. Subnet</a></li>
+                <li><a href="#15-route53">1.5. Route53</a></li>
+                <li><a href="#16-internet-gateway">1.6. Internet Gateway</a></li>
+                <li><a href="#17-nat-gateway">1.7. NAT Gateway</a></li>
+                <li><a href="#18-cloudfront">1.8. CloudFront</a></li>
+                </ul>
+                </li>
+                <li><a href="#2-%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A">2. コンテナ</a><ul>
+                <li><a href="#21-aws-ecselastic-container-service">2.1. AWS ECS(Elastic Container Service)</a></li>
+                <li><a href="#22-aws-ekselastic-kubernetes-service">2.2. AWS EKS(Elastic Kubernetes Service)</a></li>
+                <li><a href="#23-aws-ecrelastic-container-registry">2.3. AWS ECR(Elastic Container Registry)</a></li>
+                </ul>
+                </li>
+                <li><a href="#3-%E3%82%B9%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B8">3. ストレージ</a><ul>
+                <li><a href="#31-amazon-efsamazon-elastic-file-system">3.1. Amazon EFS(Amazon Elastic File System)</a></li>
+                <li><a href="#32-simple-storage-services3">3.2. Simple Storage Service(S3)</a></li>
+                </ul>
+                </li>
+                <li><a href="#4-%E3%82%B3%E3%83%B3%E3%83%94%E3%83%A5%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0">4. コンピューティング</a><ul>
+                <li><a href="#41-lambda">4.1. Lambda</a></li>
+                <li><a href="#42-batch">4.2. Batch</a></li>
+                <li><a href="#43-ec2">4.3. EC2</a></li>
+                </ul>
+                </li>
+                <li><a href="#5-%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9%E3%81%AE%E3%83%9E%E3%83%8D%E3%82%B8%E3%83%A1%E3%83%B3%E3%83%88">5. リソースのマネジメント</a><ul>
+                <li><a href="#51-cloudwatch">5.1. CloudWatch</a></li>
+                <li><a href="#52-aws-systems-managerssm">5.2. AWS Systems Manager(SSM)</a></li>
+                </ul>
+                </li>
+                <li><a href="#6-%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3%E6%A8%A9%E9%99%90">6. セキュリティ・権限</a><ul>
+                <li><a href="#61-iam">6.1. IAM</a></li>
+                <li><a href="#62-acmcertificate-manager">6.2. ACM(Certificate Manager)</a></li>
+                <li><a href="#63-web-application-firewallwaf">6.3. Web Application Firewall(WAF)</a></li>
+                <li><a href="#64-shield">6.4. Shield</a></li>
+                <li><a href="#65-cognito">6.5. Cognito</a></li>
+                </ul>
+                </li>
+                <li><a href="#7-%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9">7. データベース</a><ul>
+                <li><a href="#71-rds">7.1. RDS</a></li>
+                <li><a href="#72-dynamodb">7.2. DynamoDB</a></li>
+                </ul>
+                </li>
+                <li><a href="#8-%E3%81%9D%E3%81%AE%E4%BB%96">8. その他</a><ul>
+                <li><a href="#81-eventbridge">8.1. EventBridge</a></li>
+                <li><a href="#82-aws-comand-line-interfacecli">8.2. AWS Comand Line Interface(CLI)</a></li>
+                <li><a href="#83-codepipeline">8.3. CodePipeline</a></li>
+                <li><a href="#84-api-gateway">8.4. API Gateway</a></li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                <li><a href="#aws%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E8%A9%B3%E7%B4%B0%E8%A8%AD%E5%AE%9A">AWSサービス詳細設定</a><ul>
+                <li><a href="#1-%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF-1">1. ネットワーク</a><ul>
+                <li><a href="#11-route-53">1.1. Route 53</a></li>
+                <li><a href="#12-cloudfront">1.2. CloudFront</a></li>
+                <li><a href="#13-vpc">1.3. VPC</a><ul>
+                <li><a href="#131-vpc">1.3.1. VPC</a></li>
+                <li><a href="#132-%E3%82%B5%E3%83%96%E3%83%8D%E3%83%83%E3%83%88">1.3.2. サブネット</a></li>
+                <li><a href="#133-%E3%83%AB%E3%83%BC%E3%83%88%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB">1.3.3. ルートテーブル</a></li>
+                <li><a href="#134-%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%8D%E3%83%83%E3%83%88%E3%82%B2%E3%83%BC%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A4">1.3.4. インターネットゲートウェイ</a></li>
+                <li><a href="#135-%E3%82%AD%E3%83%A3%E3%83%AA%E3%82%A2%E3%82%B2%E3%83%BC%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A4">1.3.5. キャリアゲートウェイ</a></li>
+                <li><a href="#136-dhcp%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E3%82%BB%E3%83%83%E3%83%88">1.3.6. DHCPオプションセット</a></li>
+                <li><a href="#137-elastic-ip">1.3.7. Elastic IP</a></li>
+                <li><a href="#138-%E3%83%9E%E3%83%8D%E3%83%BC%E3%82%B8%E3%83%89%E3%83%97%E3%83%AC%E3%83%95%E3%82%A3%E3%83%AA%E3%82%AF%E3%82%B9%E3%83%AA%E3%82%B9%E3%83%88">1.3.8. マネージドプレフィリクスリスト</a></li>
+                <li><a href="#139-%E3%82%A8%E3%83%B3%E3%83%89%E3%83%9D%E3%82%A4%E3%83%B3%E3%83%88">1.3.9. エンドポイント</a></li>
+                <li><a href="#1310-nat%E3%82%B2%E3%83%BC%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A4">1.3.10. Natゲートウェイ</a></li>
+                <li><a href="#1311-%E3%83%94%E3%82%A2%E3%83%AA%E3%83%B3%E3%82%B0%E6%8E%A5%E7%B6%9A">1.3.11. ピアリング接続</a></li>
+                <li><a href="#1312-%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3">1.3.12. セキュリティ</a></li>
+                <li><a href="#1313--dns%E3%83%95%E3%82%A1%E3%82%A4%E3%83%A4%E3%83%BC%E3%82%A6%E3%82%A9%E3%83%BC%E3%83%AB">1.3.13.  DNSファイヤーウォール</a></li>
+                <li><a href="#1314-%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E3%83%95%E3%82%A1%E3%82%A4%E3%83%A4%E3%83%BC%E3%82%A6%E3%82%A9%E3%83%BC%E3%83%AB">1.3.14. ネットワークファイヤーウォール</a></li>
+                <li><a href="#1315-vpn">1.3.15. VPN</a></li>
+                <li><a href="#1316-transit-gateway">1.3.16. Transit Gateway</a></li>
+                <li><a href="#1317-%E3%83%88%E3%83%A9%E3%83%95%E3%82%A3%E3%83%83%E3%82%AF%E3%83%9F%E3%83%A9%E3%83%BC%E3%83%AA%E3%83%B3%E3%82%B0">1.3.17. トラフィックミラーリング</a></li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                <li><a href="#2-%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A-1">2. コンテナ</a><ul>
+                <li><a href="#21-ecs">2.1. ECS</a></li>
+                <li><a href="#22-eks">2.2. EKS</a></li>
+                <li><a href="#23-ecr">2.3. ECR</a></li>
+                </ul>
+                </li>
+                <li><a href="#3-%E3%82%B9%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B8-1">3. ストレージ</a><ul>
+                <li><a href="#31-efs">3.1. EFS</a></li>
+                <li><a href="#32-s3">3.2. S3</a></li>
+                </ul>
+                </li>
+                <li><a href="#4-%E3%82%B3%E3%83%B3%E3%83%94%E3%83%A5%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0-1">4. コンピューティング</a><ul>
+                <li><a href="#41-lambda-1">4.1. Lambda</a><ul>
+                <li><a href="#411-%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3">4.1.1. アプリケーション</a></li>
+                <li><a href="#412-%E9%96%A2%E6%95%B0">4.1.2. 関数</a></li>
+                <li><a href="#413-%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9">4.1.3. その他のリソース</a></li>
+                </ul>
+                </li>
+                <li><a href="#42-batch-1">4.2. Batch</a></li>
+                <li><a href="#43-ec2-1">4.3. EC2</a><ul>
+                <li><a href="#431-%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9">4.3.1. インスタンス</a></li>
+                <li><a href="#432-%E3%82%A4%E3%83%A1%E3%83%BC%E3%82%B8ami">4.3.2. イメージ(AMI)</a></li>
+                <li><a href="#433-elastic-block-storeebs">4.3.3. Elastic Block Store(EBS)</a></li>
+                <li><a href="#434-%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3">4.3.4. ネットワーク・セキュリティ</a></li>
+                <li><a href="#435-%E3%83%AD%E3%83%BC%E3%83%89%E3%83%90%E3%83%A9%E3%83%B3%E3%82%B7%E3%83%B3%E3%82%B0">4.3.5. ロードバランシング</a></li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                <li><a href="#5-%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9%E3%81%AE%E3%83%9E%E3%83%8D%E3%82%B8%E3%83%A1%E3%83%B3%E3%83%88-1">5. リソースのマネジメント</a><ul>
+                <li><a href="#51-cloudwatch-1">5.1. CloudWatch</a></li>
+                </ul>
+                </li>
+                <li><a href="#6-%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3%E6%A8%A9%E9%99%90-1">6. セキュリティ・権限</a><ul>
+                <li><a href="#61-iam-1">6.1. IAM</a></li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                </ul>
+                <p><strong>参考資料URL</strong></p>
+                <table>
+                <thead>
+                <tr>
+                <th>資料名</th>
+                <th>URL</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>AWS基礎をまとめてみた</td>
+                <td><a href="https://qiita.com/g_ayushi/items/0e0f34d19813b8fdc2b8">https://qiita.com/g_ayushi/items/0e0f34d19813b8fdc2b8</a></td>
+                </tr>
+                </tbody></table>
+                <h1 id="aws-サービス一覧">AWS サービス一覧</h1>
+                <h2 id="1-ネットワーク">1. ネットワーク</h2>
+                <h3 id="11-aws-elastic-ip-アドレスelastic-ip-address">1.1. AWS Elastic IP アドレス(Elastic IP address)</h3>
+                <p>このサービスは固定のパブリックIPアドレス(IPv4)を「Amazon EC2」等のインスタンスに設定できる機能です。</p>
+                <h4 id="特徴">特徴<!-- omit in toc --></h4>
+                <ul>
+                <li>取得した固定のパブリックIPアドレスを専有できること</li>
+                <li>IPアドレスを他のインスタンスやネットワークインターフェイスに付け直すこと(再マッピング)が可能であること</li>
+                </ul>
+                <p>例えば、「Amazon EC2」の「インスタンスA」に関連付けた「AWS Elastic IP アドレス（EIP）」をVPC内の「インスタンスB」に付け替えることが可能。
+                つまり「インスタンスA」に障害が発生した場合でも、そのIPアドレスを「インスタンスB」に再マッピングすることにより、サービスを停止することなく継続することが可能。</p>
+                <h4 id="目的">目的<!-- omit in toc --></h4>
+                <p>「Amazon EC2」などのインスタンスを作成時に自動的に付与される「パブリックIPアドレス」は、インスタンスを起動する毎に新しいIPアドレスに変化します。また他のインスタンスに再マッピングすることもできません。
+                そのためインターネットからアクセスするようなサービスの場合は、固定の「AWS Elastic IP アドレス（EIP）」を利用する必要がある。</p>
+                <h3 id="12-elastic-load-balancerelb">1.2. Elastic Load Balancer(ELB)</h3>
+                <p>ELBはNLB、ALBなどの総称であり、ロードバランサーはアプリやネットワークに対するトラフィック負荷に応じて処理を分散する仕組みです。</p>
+                <h4 id="121-network-load-balancernlb">1.2.1 Network Load Balancer(NLB)</h4>
+                <p>このサービスはアプリケーションへの通信量(トラフィック)による負荷を分散するロードバランサーの一つです。</p>
+                <p>OSI参照モデルにおける「トランスポート層（レイヤー4）」の通信処理を負荷分散するために用いられる。
+                AWSの「Elastic Load Balancing」のロードバランサーの内で、<strong>高度なパフォーマンスと低レイテンシー(通信遅延)が求められるアプリケーションの構築</strong>に一般的に用いられる。</p>
+                <h5 id="特徴-1">特徴<!-- omit in toc --></h5>
+                <ul>
+                <li>TCPやUDPのトランスポート層におけるプロトコルでの通信に関してのトラフィック負荷分散が可能</li>
+                <li>秒間数百万といった大量のリクエスト処理や突発性や変動性が高い通信パターンの処理にも対応可能</li>
+                </ul>
+                <table>
+                <thead>
+                <tr>
+                <th></th>
+                <th></th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>対応プロトコル</td>
+                <td>TCP, UDP, TCP+UDPリスナー, TLSリスナー</td>
+                </tr>
+                </tbody></table>
+                <p>「TLS通信終了」に対応し、クライアント側のソースIPアドレスを保持することで、IPアドレスをゾーンごとに分離して管理することで安定した通信処理も可能。
+                「WebSocket」プロトコルで通信するアプリケーションに対して、接続状態を長時間維持するような通信処理にも対応。</p>
+                <p>また「TCP+UDPリスナー」を使用することで、<strong>TCPとUDPの各通信を同一の「ポート番号」で処理することが可能</strong>である。</p>
+                <h4 id="122-application-load-balanceralb">1.2.2. Application Load Balancer(ALB)</h4>
+                <p>このサービスはHTTP(S)通信への通信量(トラフィック)による負荷を分散するロードバランサーの一つです。
+                マイクロサービス(小規模のサービスを組み合わせる構成)やコンテナサービス(ECS)などに、処理を振り分けることが可能です。</p>
+                <p>OSI参照モデルにおける「アプリケーション層（レイヤー7）」の通信処理を負荷分散するために用いられる。</p>
+                <table>
+                <thead>
+                <tr>
+                <th></th>
+                <th></th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>対応プロトコル</td>
+                <td>HTTP(S), HTTP/2, WebSocket</td>
+                </tr>
+                </tbody></table>
+                <h3 id="13-amazon-virtual-private-cloudvpc">1.3. Amazon Virtual Private Cloud(VPC)</h3>
+                <p>このサービスはプライベートな専用の仮想ネットワーク環境を構築する機能です。</p>
+                <p>VPCではAWS内において他の仮想ネットワークから論理的に分離されたセクションを用意し、VPC内でAWSリソースを起動することが可能です。
+                IPアドレス範囲の選択、サブネットの作成、ルートテーブルの設定、ネットワークゲートウェイの設定などが可能で、仮想ネットワーク環境を完全にコントロールすることができます。</p>
+                <p>これによってAWSのリソースは、指定されたサブネットの中で起動することができるため、インターネットに接続するリソースはパブリックサブネット、閉域ネットワークで使うリソースにはプライベートサブネットを使用することが可能です。</p>
+                <h3 id="14-subnet">1.4. Subnet</h3>
+                <p>サブネットはVPCのIPアドレスの範囲を分割して作成したネットワークです。</p>
+                <p>AWSのVPCはAWSクラウド上で他の仮想ネットワークとは切り離されている。
+                AWSリソースはVPC内で起動することができ、AWSのリソースはサブネットを指定して起動します。</p>
+                <blockquote>
+                <p>サブネットはVPCのIPアドレスの範囲を分割して作成したネットワーク</p>
+                </blockquote>
+                <p>VPCのIPアドレスの範囲内でサブネットを指定することが可能だが、1つのサブネットはVPCの複数アベイラビリティーゾーンをまたぐことはできない。</p>
+                <blockquote>
+                <p>アベイラビリティーゾーン:リージョンごとに存在する複数の独立した場所（データセンター）のこと</p>
+                </blockquote>
+                <h4 id="サブネットの種類">サブネットの種類<!-- omit in toc --></h4>
+                <table>
+                <thead>
+                <tr>
+                <th>種類</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>パブリックサブネット</td>
+                <td>インターネットゲート通信が可能なサブネット</td>
+                </tr>
+                <tr>
+                <td>プライベートサブネット</td>
+                <td>インターネットゲートウェイのルートがないサブネットのこと(インターネット通信不可)</td>
+                </tr>
+                <tr>
+                <td>VPNのみのサブネット</td>
+                <td>AWS Site-to-Site VPN接続の仮想プライベートゲートウェイへのトラフィックがあるサブネット</td>
+                </tr>
+                </tbody></table>
+                <h3 id="15-route53">1.5. Route53</h3>
+                <p>Amazon Route 53はAWSクラウド内で使用するドメインを一元管理するためのサービスです。
+                新しいドメインの購入や所有ドメインの維持管理、DNSサーバーのレコード登録管理などが可能。
+                Route53はドメイン名をIPアドレスに変換するDNSルーティングを設定可能です。(IPv6にも対応)</p>
+                <p>またDNSヘルスチェックの機能やレイテンシーベースルーティングなど高度な機能も用意されています。</p>
+                <h3 id="16-internet-gateway">1.6. Internet Gateway</h3>
+                <p>AWS Internet GatewayはVPCとインターネットとの間の通信を可能にするためのものである。
+                Internet GatewayはVPCに存在し、VPCが外部のインターネットと接続したいときに必要。</p>
+                <h3 id="17-nat-gateway">1.7. NAT Gateway</h3>
+                <p>NAT Gatewayはプライベートサブネット内のインスタンス(EC2かECS,EKSなど)がVPC外部のネットワークへ接続するためのものである。
+                プライベートサブネットは直接インターネットゲートウェイに接続することはできないため、NATゲートウェイを経由しNAT変換を行ってインターネットに接続できるようにします。</p>
+                <blockquote>
+                <p>NATはプライベートIPアドレスをグローバルIPアドレスに変換する技術です</p>
+                </blockquote>
+                <h3 id="18-cloudfront">1.8. CloudFront</h3>
+                <p>Amazon CloudFrontは動画、アプリケーション、静的、動的なコンテンツを迅速かつ安全に配信できるCDN(Content Delivery Network)サービスです。
+                世界中にエッジサーバーがありあらゆる場所からのアクセスに対しても柔軟に対応できるため、低レイテンシーでユーザーにコンテンツを提供することが可能となり、オリジンサーバーへの負荷の軽減が可能です。</p>
+                <h4 id="用語">用語<!-- omit in toc --></h4>
+                <table>
+                <thead>
+                <tr>
+                <th>名称</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>オリジンサーバ</td>
+                <td>コンテンツが格納されているサーバー、EC2やS3、ELBなどが利用可能</td>
+                </tr>
+                <tr>
+                <td>ディストリビューショ</td>
+                <td>ドメインごとに割り当てられるCloudFrontの設定であり、インスタンスのようなもの</td>
+                </tr>
+                <tr>
+                <td>TTL</td>
+                <td>キャッシュを保持する期間</td>
+                </tr>
+                </tbody></table>
+                <h2 id="2-コンテナ">2. コンテナ</h2>
+                <h3 id="21-aws-ecselastic-container-service">2.1. AWS ECS(Elastic Container Service)</h3>
+                <p>このサービスは高性能でスケーラブルなコンテナ管理ができる機能です。</p>
+                <p>AWS ECSはクラスターを管理するインフラのインストールや運用、そしてスケーリングをする必要がないのが特徴です。</p>
+                <h4 id="特徴-2">特徴<!-- omit in toc --></h4>
+                <ul>
+                <li>サーバーレスであること</li>
+                <li>アプリケーションの構築や管理に集中が可能</li>
+                <li>スケールに応じたパフォーマンスが可能</li>
+                <li>安全なアプリケーションを作成できる点</li>
+                </ul>
+                <h4 id="起動タイプとその特徴">起動タイプとその特徴<!-- omit in toc --></h4>
+                <table>
+                <thead>
+                <tr>
+                <th>種類</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>Fargate起動タイプ</td>
+                <td>コンテナ化したアプリケーションに必要となるメモリリソースとvCPUに対して料金が発生するタイプ</td>
+                </tr>
+                <tr>
+                <td>EC2起動タイプ</td>
+                <td>EC2インスタンスやEBS ボリュームなどといったAWS リソースに対してのみ料金が発生するタイプ</td>
+                </tr>
+                </tbody></table>
+                <h3 id="22-aws-ekselastic-kubernetes-service">2.2. AWS EKS(Elastic Kubernetes Service)</h3>
+                <p><strong>現時点では略(必要になれば追記してください)</strong></p>
+                <h3 id="23-aws-ecrelastic-container-registry">2.3. AWS ECR(Elastic Container Registry)</h3>
+                <p>Amazon ECRはコンテナイメージを複数人で共有し、クラウド上でコードを実行してくれるサービスです。</p>
+                <p><strong>現時点では略(必要になれば追記してください)</strong></p>
+                <h2 id="3-ストレージ">3. ストレージ</h2>
+                <h3 id="31-amazon-efsamazon-elastic-file-system">3.1. Amazon EFS(Amazon Elastic File System)</h3>
+                <p>このサービスはAWSが提供する<strong>ファイルストレージタイプ</strong>のサービスの1つであり、Linux等のOSでマウント可能なファイルシステムを提供しています。
+                EFSは自動で容量を拡張可能なので拡張やデータ削除によるファイルサーバの縮小などでサービスの停止などは発生しない特徴があります。</p>
+                <h4 id="選択可能なパフォーマンスモード">選択可能なパフォーマンスモード<!-- omit in toc --></h4>
+                <table>
+                <thead>
+                <tr>
+                <th>種類</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>汎用パフォーマンスモード</td>
+                <td>デフォルトのモード(使用例:・ウェブ配信環境, コンテンツ管理システム, ホームディレクトリ, 一般的なファイルサービス)</td>
+                </tr>
+                <tr>
+                <td>最大I/Oパフォーマンスモード</td>
+                <td>最大I/Oモードのファイルシステムは、ファイル操作のレイテンシーがわずかに長くなる代わりに、高いレベルの集計スループットと 1 秒あたりの操作にスケール可能</td>
+                </tr>
+                </tbody></table>
+                <h3 id="32-simple-storage-services3">3.2. Simple Storage Service(S3)</h3>
+                <p>このサービスはAWSが提供するオブジェクトストレージサービスです。
+                S3はバックアップおよび復元、アーカイブ、エンタープライズアプリケーションなど様々なユースケースに沿ってデータを保存することが可能。</p>
+                <h4 id="s3の概念と用語">S3の概念と用語<!-- omit in toc --></h4>
+                <table>
+                <thead>
+                <tr>
+                <th>用語</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>バケット</td>
+                <td>S3に格納されるオブジェクトのコンテナ。すべてのオブジェクトはバケット内に格納される。</td>
+                </tr>
+                <tr>
+                <td>オブジェクト</td>
+                <td>S3に格納される基本エンティティ(ファイル)。オブジェクトデータとメタデータで構成される。</td>
+                </tr>
+                <tr>
+                <td>キー</td>
+                <td>バケット内のオブジェクトの識別子。バケット内のすべてのオブジェクトは厳密に1個のキーを持つ。</td>
+                </tr>
+                <tr>
+                <td>リージョン</td>
+                <td>S3で作成したバケットを保存する地理的なリージョンを選択可能。</td>
+                </tr>
+                </tbody></table>
+                <h2 id="4-コンピューティング">4. コンピューティング</h2>
+                <h3 id="41-lambda">4.1. Lambda</h3>
+                <p>AWS Lambdaはサーバレスコンピューティングサービスの1つでインフラ管理を気にすることなく、コードを実行させることができるサービスです。
+                利用者はプログラムコードを準備し、Lambdaにアップロードするだけで実行できます。</p>
+                <h3 id="42-batch">4.2. Batch</h3>
+                <p>AWS Batchはフルマネージドなバッチサービスです。
+                AWS BatchはCPUやメモリに最適化されたコンピューティングリソースの中から必要なものにアクセスし、数十万件におよぶバッチコンピューティングジョブを行います。ジョブを実行するためのインフラ環境をユーザ側で準備する必要がないのが特徴です。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>用語</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>ジョブ</td>
+                <td>AWS Batchで実行される作業の単位</td>
+                </tr>
+                <tr>
+                <td>ジョブ定義</td>
+                <td>実行方法を定義する、ジョブの雛形となるテンプレート</td>
+                </tr>
+                <tr>
+                <td>ジョブキュー</td>
+                <td>ジョブキューは投入されたジョブの待ち行列</td>
+                </tr>
+                </tbody></table>
+                <h3 id="43-ec2">4.3. EC2</h3>
+                <p>Amazon EC2は仮想サーバサービス(クラウドサーバ)です。
+                EC2は状況に合わせてスペック(CPU, メモリ, ハードディスクの容量)変更が簡単にできます。</p>
+                <h2 id="5-リソースのマネジメント">5. リソースのマネジメント</h2>
+                <h3 id="51-cloudwatch">5.1. CloudWatch</h3>
+                <p>CloudWatchはAWS内で動作する仮想サーバーや各サービスを監視できるサービスです。
+                必要なものを組み合わせて利用します。</p>
+                <h4 id="メトリクス">メトリクス<!-- omit in toc --></h4>
+                <p>「メトリクス」はCloudWatchで最も基本的な概念で監視対象から取得するデータポイントのセットのことを指す。
+                メトリクスは、収集したデータポイントの中から、どのような統計を提示するかを選択することができます。</p>
+                <h4 id="ログ監視機能（cloudwatch-logs）">ログ監視機能（CloudWatch Logs）<!-- omit in toc --></h4>
+                <p>CloudWatchエージェントをインストールすることで、使用中のすべてのシステム、アプリケーション、AWS サービスのログファイルを監視することができます。特定のキーワードやエラーコードなどを指定して検出することが可能です。</p>
+                <h4 id="アラーム通知機能（cloudwatch-alarms">アラーム通知機能（CloudWatch Alarms)<!-- omit in toc --></h4>
+                <p>メトリクスが特定の閾値を超えた場合、下回った場合、監視ができなくなった場合など、状況に合わせてアラームを発行することができます。</p>
+                <h4 id="イベント管理・自動化機能（cloudwatch-events">イベント管理・自動化機能（CloudWatch Events)<!-- omit in toc --></h4>
+                <p>メトリクスの状態が変化した時に、任意のアクションを実行するように設定できます。
+                状態の変化以外にも、決められたイベントを時間指定で実行することも可能です。
+                他のオンプレミスサーバの機能で言うとWindows系でいうところのタスクスケジューラー、Linux系でいうところのCronといったものに近いことができます。</p>
+                <h3 id="52-aws-systems-managerssm">5.2. AWS Systems Manager(SSM)</h3>
+                <p>AWS SSMではEC2インスタンスのパッチ管理やアンチウィルスソフトの定義ファイルの更新、ソフトウェアのインストール状況の管理、タスクの自動化、共有リソースの利用などが可能です。</p>
+                <h2 id="6-セキュリティ・権限">6. セキュリティ・権限</h2>
+                <h3 id="61-iam">6.1. IAM</h3>
+                <p>IAMはAWSを操作する上で必要となるアクセス制御権限を管理する<strong>ユーザ一元管理サービス</strong>である。</p>
+                <h4 id="iamユーザ">IAMユーザ<!-- omit in toc --></h4>
+                <p>IAMユーザーとは、AWSを利用するアカウントです。
+                AWSを操作するコンソール画面にログインを行うときに人が利用します。ログイン用のIDを決めて作成します。
+                またIAMグループを作成し、複数のIAMユーザをまとめて管理をすることができます。</p>
+                <h4 id="iamグループ">IAMグループ<!-- omit in toc --></h4>
+                <p>IAMグループに権限を付与しておくことで、そのグループに所属したIAMユーザは皆同様権限でAWSを利用することができます。
+                IAMユーザは複数のグループに所属できます。（最大10グループ）</p>
+                <h4 id="iamロール">IAMロール<!-- omit in toc --></h4>
+                <p>IAMロールはEC2などのAWSのサービスや他のアカウントに対してにAWS の操作権限を付与するための仕組みです。
+                例えば、EC2にRDSへの操作を行うアプリケーションを導入する場合は、EC2にRDSへのアクセス権限を記載したIAMロールをアタッチします。
+                また、他アカウントにS3への接続を許可する場合には、自分のアカウントに他アカウント用のIAMロールを作成しておくと、他のアカウントから「スイッチ」することで自アカウントのS3を操作することができるようになります。</p>
+                <p>LambdaやCloudformationを利用する際は必須の設定となります。</p>
+                <p>IDフェデレーションといって、GoogleやFacebookなどのIDプロバイダーに対してアクセスを許可するようなIAMロールを作成することもできます。</p>
+                <h4 id="iamポリシ">IAMポリシ<!-- omit in toc --></h4>
+                <p>権限の管理元となるサービスです。IAMポリシーはIAMユーザ、IAMグループ、IAMロールに紐づけることができ、AWSリソースへの操作権限を設定する機能です。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>種類</th>
+                <th>詳細</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>AWS管理ポリシ</td>
+                <td>各AWSのサービスに対して大まかな制御ポリシーが設定可能</td>
+                </tr>
+                <tr>
+                <td>カスタマー管理ポリシ</td>
+                <td>ユーザがJSONファイルなどを利用して設定するポリシーです。IPアドレスの制御など、AWS管理ポリシーよりも細やかな制御が可能</td>
+                </tr>
+                <tr>
+                <td>インラインポリシ</td>
+                <td>特定のIAMユーザやIAMロール専用に作成されるポリシ</td>
+                </tr>
+                </tbody></table>
+                <h3 id="62-acmcertificate-manager">6.2. ACM(Certificate Manager)</h3>
+                <p>ACMはSSL証明書を発行できるサービスです。
+                ACMが発行したSSL証明書は、ユーザーのプライベートネットワークリソースや、AWSの様々なサービスに導入可能です。</p>
+                <h3 id="63-web-application-firewallwaf">6.3. Web Application Firewall(WAF)</h3>
+                <p>AWS WAFはWebサイトを含めたWebアプリケーションをサイバー攻撃から守るツールである。
+                <strong>ファイアウォールやIPSなどほかのセキュリティツールでは防御できない、Webアプリケーション層への攻撃を検知・遮断できる</strong>のが特徴。
+                Webアプリケーションの脆弱性を突くサイバー攻撃(SQL injection XSSなど)の防衛のさらなる対策になる。</p>
+                <p>WAFはAWSから提供されている標準ルールやAPIを使ってあらゆる脅威に対抗可能なので、アプリケーションを高いレベルで保護可能です。
+                HTTP および HTTPS リクエストのモニタリングや、コンテンツへのアクセスのコントロールが可能で、OSI参照モデルにおけるアプリケーション層(レイヤー7)で動作します。</p>
+                <h3 id="64-shield">6.4. Shield</h3>
+                <p>AWS ShieldはアプリケーションをDDoSから保護をするサービスです。
+                スタンダード(無料)とアドバンスト(有料)の2つのタイプがあります。
+                スタンダードに関してはAWSを利用している時点で自動的に適用されています。</p>
+                <h3 id="65-cognito">6.5. Cognito</h3>
+                <p>Amazon Cognitoは認証処理サービスの1つであり、主に4つの機能で構成されています。</p>
+                <h4 id="ユーザープール">ユーザープール<!-- omit in toc --></h4>
+                <p>IDやパスワードの認証情報をアプリ内部の「ユーザーディレクトリ」という領域に保存し、その情報を利用してアプリの「認証」を行う機能です。</p>
+                <blockquote>
+                <p>ユーザプールにおける認証はいわゆるログインやサインイン等のことで、アクセスしてきたユーザーが誰であるか（アイデンティティ）を確認する処理です</p>
+                </blockquote>
+                <h4 id="idプール">IDプール<!-- omit in toc --></h4>
+                <p>IDプールは外部IDプロバイダーと連携しながらAWSの各サービスに対する「認可」を行う機能です。</p>
+                <blockquote>
+                <p>IDプールにおける認可はアクセスしてきたユーザーが誰であるかを確認した後の処理です。</p>
+                </blockquote>
+                <h4 id="cognito-sync">Cognito Sync<!-- omit in toc --></h4>
+                <p>Cognito Syncはモバイルアプリとクラウド間のデータを同期する機能です。</p>
+                <h4 id="appsync">AppSync<!-- omit in toc --></h4>
+                <p>AppSync はモバイルアプリとクラウド間のデータ同期機能です。Cpgnito Syncより高機能です。
+                特徴としては「GraphQL」が利用できる点です。</p>
+                <h2 id="7-データベース">7. データベース</h2>
+                <h3 id="71-rds">7.1. RDS</h3>
+                <p>RDSはリレーショナルデータベースです。
+                SQL Server・Mariaデータベース・Amazon Aurora・MySQL・Oracle・Postgre SQLがRDSMとして設定可能です。
+                AmazonのRDSにはマルチAZオプション、パッチ作業の自動化、レコメンデーション、リードレプリカなどの機能があります。</p>
+                <ul>
+                <li>マルチAZオプション ・・・ データベースの可用性と持続性を高めるために、異なるアベイラビリティゾーン（AZ）のスタンバイインスタンスにデータを複製すること</li>
+                <li>パッチ作業の自動化 ・・・ リレーショナルデータベースのソフトウェアを最新の状態に保つために、ソフトウェアをアップデートすること</li>
+                <li>レコメンデーション　・・・ データベースインスタンスの設定や使用状況などを分析して、ユーザーにとって最適な使用環境を構築するためのガイダンス</li>
+                <li>リードレプリカ ・・・ 読み取り頻度の高いデータベースの負荷を分散するために、データベースインスタンスのレプリカを複数作成する機能</li>
+                <li>スナップショット ・・・ Amazon S3へデータベースのデータを保存する、ユーザー主導型のバックアップのこと</li>
+                <li>バックアップの自動化 ・・・ データベースとトランザクションログを自動でバックアップする機能</li>
+                </ul>
+                <h3 id="72-dynamodb">7.2. DynamoDB</h3>
+                <h2 id="8-その他">8. その他</h2>
+                <h3 id="81-eventbridge">8.1. EventBridge</h3>
+                <p>EventBridgeは『イベント』を通じて様々なアプリケーション同士を簡単に接続できるようにするサービスです。
+                AWSサービス内やSaaSで発生するイベントをAWS内の他のサービスにつなげるものです。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>用語</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>イベントバス</td>
+                <td>様々なイベントの受け口になるもので3種類存在する</td>
+                </tr>
+                <tr>
+                <td>イベントソース</td>
+                <td>様々なAWSサービス・SaaS・カスタムアプリケーションのこと</td>
+                </tr>
+                <tr>
+                <td>ルール</td>
+                <td>イベントバスに紐付き、イベントの検出パターンの定義やターゲットの定義(設定にはIAMロールが必要)</td>
+                </tr>
+                </tbody></table>
+                <h4 id="イベントバスの種類">イベントバスの種類<!-- omit in toc --></h4>
+                <h5 id="default-event-bus">Default Event Bus<!-- omit in toc --></h5>
+                <p>AWSのサービス・独自のアプリケーションから発生するイベントに対して使用できるイベントバス。
+                どのAWSアカウントにも必ず１つ自動的に作られる。</p>
+                <h5 id="custom-event-bus">Custom Event Bus<!-- omit in toc --></h5>
+                <p>独自のアプリケーションで使用できるイベントバス。
+                自由に作成可能。</p>
+                <h5 id="partner-event-bus">Partner Event Bus<!-- omit in toc --></h5>
+                <p>AWS以外のSaaSサービス経由で利用できるイベントバス。
+                SaaSサービス側で登録してあげないと基本的に利用できない。</p>
+                <h4 id="scheduler-">Scheduler <!-- omit in toc --></h4>
+                <p>SchedulerはEventBridge単体で定期的にAWS各サービスのAPIを呼び出しイベントを実行できる機能(インスタンスの起動、停止など)です。</p>
+                <h3 id="82-aws-comand-line-interfacecli">8.2. AWS Comand Line Interface(CLI)</h3>
+                <p>AWS CLIはAWSサービスを管理するための統合ツールであり、専用ツールを使用して、コマンドラインからAWS上の複数のサービスを制御可能。
+                ローカルのPC上で起動するため、開発に用いるローカルのコンピュータへOS(Windows, Mac, Linux etc..)ごとにインストールして使用する必要があります。</p>
+                <h3 id="83-codepipeline">8.3. CodePipeline</h3>
+                <p>AWS CodePipelineはソフトウェアの構築、テスト、デプロイまでの過程を自動化し、短時間でアップデートできるようCI/CDをサポートする継続的デリバリーサービスです。</p>
+                <h3 id="84-api-gateway">8.4. API Gateway</h3>
+                <p>Amazon API GatewayはAPIの作成、公開、保守、モニタリング、保護が簡単にできるサービスです。
+                APIのバージョン管理、レスポンスデータのモニタリングや監視、API作成(REST API, HTTP API, WebSocket API)、が可能です。
+                スロットリング(ユーザが一定の時間内に特定の操作に対して送信できるリクエストの数を制限する機能)も設定可能です。</p>
+                <h1 id="awsサービス詳細設定">AWSサービス詳細設定</h1>
+                <p>AWSで提供されている<strong>サービス毎の詳細の設定やパラメータ</strong>に関して解説。</p>
+                <h2 id="1-ネットワーク-1">1. ネットワーク</h2>
+                <h3 id="11-route-53">1.1. Route 53</h3>
+                <h3 id="12-cloudfront">1.2. CloudFront</h3>
+                <h3 id="13-vpc">1.3. VPC</h3>
+                <h4 id="131-vpc">1.3.1. VPC</h4>
+                <p>詳しくは上記Gistの「1.3.VPC」にて</p>
+                <h4 id="132-サブネット">1.3.2. サブネット</h4>
+                <p>詳しくは上記Gistの「1.4.Subnet」にて</p>
+                <h4 id="133-ルートテーブル">1.3.3. ルートテーブル</h4>
+                <p>ルールの記載されたテーブルがルートテーブル(通信経路表)であり、パケットのルーティングを設定可能です。
+                ルートテーブルには、ゲートウェイからのネットワークトラフィックをトラフィックに応じて経路設定します。
+                ルートテーブルの種類は以下があります。</p>
+                <ul>
+                <li>メインルートテーブル ・・・ VPCに自動割り当てされるルートテーブル</li>
+                <li>カスタムルートテーブル ・・・ VPC用に各自設定するルートテーブル</li>
+                <li>サブネットルートテーブル ・・・ サブネットに関連付けられるルートテーブル</li>
+                <li>ゲートウェイルートテーブル ・・・ Internet GatewayまたはVPGに関連付けられるルートテーブル</li>
+                <li>ローカルゲートウェイルートテーブル ・・・ Outpostsローカルゲートウェイに関連付けられるルートテーブル</li>
+                </ul>
+                <table>
+                <thead>
+                <tr>
+                <th>名称</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>CIDR</td>
+                <td>IPネットワークの経路情報を集約する際にクラスの概念をなくした技術であり、IPネットワークのクラスを部分的に割り当ててIPアドレスの使用量を削減できます</td>
+                </tr>
+                <tr>
+                <td>CIDRブロック</td>
+                <td>CIDRのプレフィックスに基づいてIPアドレスを解釈するアドレスのグループを指す。CIDRプレフィックスで記載したIPアドレスの範囲をCIDRブロックとしてネットワーク割当や設定の対象アドレスとして指定できます。</td>
+                </tr>
+                </tbody></table>
+                <h4 id="134-インターネットゲートウェイ">1.3.4. インターネットゲートウェイ</h4>
+                <p>詳しくは上記Gistの「1.6. Internet Gateway」にて。</p>
+                <h4 id="135-キャリアゲートウェイ">1.3.5. キャリアゲートウェイ</h4>
+                <p>キャリア網と直結するゲートウェイです。</p>
+                <h4 id="136-dhcpオプションセット">1.3.6. DHCPオプションセット</h4>
+                <p>VPC内に関連付けるDHCP関連の設定のことである。</p>
+                <blockquote>
+                <p>DHCP ・・・ IPアドレスを自動的に割り当てるプロトコル</p>
+                </blockquote>
+                <h4 id="137-elastic-ip">1.3.7. Elastic IP</h4>
+                <p>詳しくは上記Gistの「1.1. Elastic IP」にて。</p>
+                <h4 id="138-マネージドプレフィリクスリスト">1.3.8. マネージドプレフィリクスリスト</h4>
+                <p>複数のCIDRブロックを一元管理することができる機能です。</p>
+                <h4 id="139-エンドポイント">1.3.9. エンドポイント</h4>
+                <p>AWSのサービスに接続するために<strong>必要なURL</strong>を指します。
+                記述は以下の通りです。</p>
+                <p><code>protocol://service-code[.region-code].amazonaws.com</code></p>
+                <h4 id="1310-natゲートウェイ">1.3.10. Natゲートウェイ</h4>
+                <p>詳しくは上記Gistの「1.7. Nat Gateway」にて</p>
+                <h4 id="1311-ピアリング接続">1.3.11. ピアリング接続</h4>
+                <p>VPC ピアリング接続は、2 つの VPC 間のネットワーク接続であり、これらの間でトラフィックをプライベートにルーティングが可能です。</p>
+                <h4 id="1312-セキュリティ">1.3.12. セキュリティ</h4>
+                <h5 id="・aclacces-control-list">・ACL(Acces Control List)<!-- omit in toc --></h5>
+                <p>ACLはネットワークアクセスコントロールリストと呼ばれ、AWSの中でセキュリティを強化するために使用します。
+                ネットワークACL自体は設定されたルールに従うファイヤーウォールです。</p>
+                <p>ネットワークACLとセキュリティグループの違いは以下の通りです。</p>
+                <table>
+                <thead>
+                <tr>
+                <th></th>
+                <th>ネットワークACL</th>
+                <th>セキュリティグループ</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>設定対象</td>
+                <td>サブネット単位</td>
+                <td>インスタンス単位</td>
+                </tr>
+                <tr>
+                <td>ルール</td>
+                <td>許可/拒否ルール</td>
+                <td>許可ルールの実</td>
+                </tr>
+                <tr>
+                <td>設定方向</td>
+                <td>入口出口</td>
+                <td>入口出口</td>
+                </tr>
+                <tr>
+                <td>ステートフル/ステートレス</td>
+                <td>ステートレス</td>
+                <td>ステートフル</td>
+                </tr>
+                <tr>
+                <td>評価順</td>
+                <td>順番に評価</td>
+                <td>全て評価</td>
+                </tr>
+                </tbody></table>
+                <h5 id="・セキュリティグループ">・セキュリティグループ<!-- omit in toc --></h5>
+                <p>セキュリティグループは仮想ファイアウォールです。
+                ACLとの違いはACL項目に記載。</p>
+                <h4 id="1313--dnsファイヤーウォール">1.3.13.  DNSファイヤーウォール</h4>
+                <p><strong>現時点では略(必要になれば追記してください)</strong></p>
+                <h4 id="1314-ネットワークファイヤーウォール">1.3.14. ネットワークファイヤーウォール</h4>
+                <p><strong>現時点では略(必要になれば追記してください)</strong></p>
+                <h4 id="1315-vpn">1.3.15. VPN</h4>
+                <p><strong>現時点では略(必要になれば追記してください)</strong></p>
+                <h4 id="1316-transit-gateway">1.3.16. Transit Gateway</h4>
+                <p><strong>現時点では略(必要になれば追記してください)</strong></p>
+                <h4 id="1317-トラフィックミラーリング">1.3.17. トラフィックミラーリング</h4>
+                <p><strong>現時点では略(必要になれば追記してください)</strong></p>
+                <h2 id="2-コンテナ-1">2. コンテナ</h2>
+                <h3 id="21-ecs">2.1. ECS</h3>
+                <h3 id="22-eks">2.2. EKS</h3>
+                <h3 id="23-ecr">2.3. ECR</h3>
+                <h2 id="3-ストレージ-1">3. ストレージ</h2>
+                <h3 id="31-efs">3.1. EFS</h3>
+                <h3 id="32-s3">3.2. S3</h3>
+                <h2 id="4-コンピューティング-1">4. コンピューティング</h2>
+                <h3 id="41-lambda-1">4.1. Lambda</h3>
+                <h4 id="411-アプリケーション">4.1.1. アプリケーション</h4>
+                <p>AWS CloudFormation または他のツール (AWS Serverless Application Model など) を使用してデプロイされたアプリケーションのことです。</p>
+                <p><strong>現時点では略(必要になれば追記してください)</strong></p>
+                <h4 id="412-関数">4.1.2. 関数</h4>
+                <p>動かしたいソースコードです。
+                以下の環境と言語に対応しています。
+                Node.js(サーバサイドJavaScript), Python, Ruby, Go, Java, PowerShell, C#</p>
+                <h5 id="・関数の詳細設定">・関数の詳細設定<!-- omit in toc --></h5>
+                <p>コード, テスト, モニタリング, 設定, エイリアス, バージョンに関して...
+                <strong>現時点では略(必要になれば追記してください)</strong></p>
+                <h4 id="413-その他のリソース">4.1.3. その他のリソース</h4>
+                <h5 id="・コード署名設定">・コード署名設定<!-- omit in toc --></h5>
+                <p><strong>現時点では略(必要になれば追記してください)</strong></p>
+                <h5 id="・レイヤー">・レイヤー<!-- omit in toc --></h5>
+                <p>使用するライブラリを Lambdaにある関数全体 で共有できる機能のことです。</p>
+                <p><strong>現時点では略(必要になれば追記してください)</strong></p>
+                <h5 id="・レプリカ">・レプリカ<!-- omit in toc --></h5>
+                <p>レプリカ=&gt; 複製? よくわからない(2022/12時点)</p>
+                <h3 id="42-batch-1">4.2. Batch</h3>
+                <h3 id="43-ec2-1">4.3. EC2</h3>
+                <h4 id="431-インスタンス">4.3.1. インスタンス</h4>
+                <p>インスタンスとは、AWS上で稼働する仮想サーバのことを指し仮想サーバを数える際の単位として使われています。</p>
+                <h4 id="432-イメージami">4.3.2. イメージ(AMI)</h4>
+                <p>AMIはEC2インスタンスの構築に必要な情報がまとまってる起動テンプレートです。
+                以下の3つが設定可能です。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>名称</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>OS、アプリケーション</td>
+                <td>AmazonLinux, Ubuntu, Windows, macOS, Red Hatなど</td>
+                </tr>
+                <tr>
+                <td>ブロックデバイスマッピング</td>
+                <td>EC2にどのEBS・インスタンスストアを紐づけるかを決める設定</td>
+                </tr>
+                <tr>
+                <td>AWSアカウントの権限の管理情報</td>
+                <td>作成したEC2インスタンスを誰が使えるかの権限を保存可能</td>
+                </tr>
+                </tbody></table>
+                <h4 id="433-elastic-block-storeebs">4.3.3. Elastic Block Store(EBS)</h4>
+                <p>EC2インスタンスにアタッチして使われるAWSのストレージサービスであり、EC2が仮想サーバならEBSはHDDのような関係となっている。</p>
+                <h5 id="・ebsの種類">・EBSの種類<!-- omit in toc --></h5>
+                <table>
+                <thead>
+                <tr>
+                <th>名称</th>
+                <th>内容</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>汎用 SSD (gp2)</td>
+                <td>Amazon EC2インスタンスが利用するデフォルトのEBSボリューム</td>
+                </tr>
+                <tr>
+                <td>プロビジョンド IOPS SSD (io1)</td>
+                <td>高いパフォーマンスを提供するEBSストレージ、アクセス頻度が高く、ディスクI/Oが多くなるDBやApplicationに適す</td>
+                </tr>
+                <tr>
+                <td>スループット最適化 HDD (st1)</td>
+                <td>高速なHDDを基盤で安定したスループットが必要なシステムに適すボリューム,ログ管理やビッグデータ向けのデータストアなどアクセス頻度が高いシステム向け</td>
+                </tr>
+                <tr>
+                <td>Cold HDD (sc1)</td>
+                <td>EBSボリュームタイプの中でも低コストなボリューム、SSDより大容量のデータの保存に適しているのでバックアップやアクセス頻度の少ないもの向き</td>
+                </tr>
+                </tbody></table>
+                <h4 id="434-ネットワーク・セキュリティ">4.3.4. ネットワーク・セキュリティ</h4>
+                <h5 id="・セキュリティグループ仮想ファイヤウォール">・セキュリティグループ(仮想ファイヤウォール)<!-- omit in toc --></h5>
+                <p>EC2ではセキュリティグループという仮想ファイアウォール機能によりインスタンスに入出力される通信を制御ができます。
+                具体的には通信を許可するポートなどをこの項目で設定可能です。</p>
+                <table>
+                <thead>
+                <tr>
+                <th>名称</th>
+                <th>説明</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>インバウンドルール</td>
+                <td>外部からサーバーへアクセスを許可する内容のルール</td>
+                </tr>
+                <tr>
+                <td>アウトバウンドルール</td>
+                <td>サーバーから外部へのアクセスに対するルール</td>
+                </tr>
+                </tbody></table>
+                <p>セキュリティグループは実装するWEBサーバの種類ごとに合わせて設定します。</p>
+                <ul>
+                <li>公開用WEBサーバ ... HTTP/HTTPSはすべてのIPから許可する、SSHは管理者側の固定IPのみ許可する</li>
+                <li>DBサーバ ... WEBサーバのIPアドレス、プロコトルにDB情報を設定し、SSHは管理者側の固定IPのみ許可する</li>
+                </ul>
+                <h5 id="・elastic-ip">・Elastic IP<!-- omit in toc --></h5>
+                <p>固定のパブリックIPアドレス(IPv4)を設定する機能。
+                IPアドレスを他のインスタンスやネットワークインターフェイスに付け直すこと(再マッピング)が可能です。</p>
+                <h5 id="・プレイスメントグループ">・プレイスメントグループ<!-- omit in toc --></h5>
+                <p>複数のインスタンスを論理的にグループ化して、パフォーマンスの向上・耐障害性を高める機能。
+                3つの種類がある。</p>
+                <h5 id="・キーペア">・キーペア<!-- omit in toc --></h5>
+                <p>秘密鍵と公開鍵を合わせた2つの鍵のことを指し、SSH鍵の作成時に自動作成される。</p>
+                <h5 id="・ネットワークインターフェースeni">・ネットワークインターフェース(ENI)<!-- omit in toc --></h5>
+                <p>物理サーバにおけるNICと同じ機能。</p>
+                <h4 id="435-ロードバランシング">4.3.5. ロードバランシング</h4>
+                <h5 id="・ロードバランサー">・ロードバランサー<!-- omit in toc --></h5>
+                <p>外部からの通信（トラフィック）を複数のサーバーに分散する仕組みを提供するもの。NLBとALBがある。</p>
+                <h5 id="・ターゲットグループ">・ターゲットグループ<!-- omit in toc --></h5>
+                <p>トラフィックを分散する複数のターゲット(トラフィックを分散するところ)を含んでグループ化したもの。</p>
+                <h2 id="5-リソースのマネジメント-1">5. リソースのマネジメント</h2>
+                <h3 id="51-cloudwatch-1">5.1. CloudWatch</h3>
+                <h2 id="6-セキュリティ・権限-1">6. セキュリティ・権限</h2>
+                <h3 id="61-iam-1">6.1. IAM</h3>
+                
+
+                <!-- END -->
+
+            </main>
+            <footer class="footer mt-auto py-3 bg-light">
+                <div class="container">
+                    <p class="text-muted text-center">Written by ゆーろん / yuron3141</p>
+                </div>
+            </footer>
+        </body>
+    </body>
+</html>

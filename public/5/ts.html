@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="Ja">
+    <head>
+        <title>ゆーろんのWeb系の学習資料　|　TypeScript基礎</title>
+        <!-- OGP -->
+        <head prefix="og: https://ogp.me/ns#">
+        <meta property="og:url" content="https://yuron3141.github.io/my_web_docs/" />
+        <meta property="og:type" content="Blog" />
+        <meta property="og:title" content="TypeScript基礎" />
+        <meta property="og:description" content="ゆーろんのWeb系学習資料です。皆さんの開発のために役立つことを祈っています。" />
+        <meta property="og:site_name" content="ゆーろんアカデミー　ノート支部" />
+        <!-- DOCUMENTS STYLE -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <!-- ORIGINAL CSS -->
+        <link rel="stylesheet" href="../css/style.css" type="text/css">
+    </head>
+    <body>
+        <body class="d-flex flex-column h-100">
+            <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
+                <div>
+                    <h1 class="m-3">TypeScript基礎</h1>
+                </div>
+            </header>
+            <main class="m-4">
+
+                <!-- Write Text Here-->
+
+                <p>TypeScriptはMicrosoftによって開発されたAltJSの言語(JavaScriptの拡張版)です。 型チェックなどの機能があるためコンパイルに時間がかかる特徴があります。
+                JavaScriptとは異なる言語ではなく、型に関すること以外のコードについては通常のJavaScriptと同様の構文を使って記述することができます。</p>
+                <h2 id="目次">目次<!-- omit in toc --></h2>
+                <ul>
+                <li><a href="#1-typescript%E3%81%AE%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89">1. TypeScriptの環境構築</a><ul>
+                <li><a href="#11-typescript%E3%81%AE%E5%9F%BA%E6%9C%AC%E7%9A%84%E3%81%AA%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95">1.1. TypeScriptの基本的な使用方法</a></li>
+                <li><a href="#12-tsconfigjson">1.2. tsconfig.json</a></li>
+                <li><a href="#13-%E6%A7%98%E3%80%85%E3%81%AA%E4%BD%BF%E3%81%84%E6%96%B9">1.3. 様々な使い方</a><ul>
+                <li><a href="#131-ts-node%E3%82%82%E5%90%88%E3%82%8F%E3%81%9B%E3%81%9F%E4%BD%BF%E3%81%84%E6%96%B9">1.3.1. ts-nodeも合わせた使い方</a></li>
+                <li><a href="#132-webpack%E3%82%92%E5%90%AB%E3%82%81%E3%81%9F%E4%BD%BF%E3%81%84%E6%96%B9">1.3.2. webpackを含めた使い方</a></li>
+                <li><a href="#133-webpackreact%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9">1.3.3. webpack+reactの使い方</a></li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                <li><a href="#2-typescript%E3%81%AE%E5%9F%BA%E6%9C%AC%E6%96%87%E6%B3%95">2. TypeScriptの基本文法</a><ul>
+                <li><a href="#21-%E5%80%A4%E5%9E%8B%E5%A4%89%E6%95%B0">2.1. 値・型・変数</a><ul>
+                <li><a href="#211-%E5%9E%8B%E4%B8%80%E8%A6%A7">2.1.1. 型一覧</a></li>
+                <li><a href="#212-unknown%E3%81%A8any">2.1.2. unknownとany</a></li>
+                <li><a href="#213-null%E3%81%A8undefined">2.1.3. nullとundefined</a></li>
+                <li><a href="#214-never%E3%81%AE%E4%BD%BF%E7%94%A8%E4%BE%8B">2.1.4. neverの使用例</a></li>
+                <li><a href="#215-%E5%9E%8B%E5%AE%9A%E7%BE%A9type">2.1.5. 型定義(type)</a></li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                <li><a href="#3-typescript%E5%90%91%E3%81%91%E3%81%AE%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8">3. TypeScript向けのパッケージ</a><ul>
+                <li><a href="#31-zod">3.1. zod</a></li>
+                <li><a href="#32-prisma">3.2. Prisma</a></li>
+                </ul>
+                </li>
+                </ul>
+                <table>
+                <thead>
+                <tr>
+                <th>名称</th>
+                <th>URL</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>サバイバルTypeScript</td>
+                <td><a href="https://typescriptbook.jp/">https://typescriptbook.jp/</a></td>
+                </tr>
+                </tbody></table>
+                <h1 id="1-typescriptの環境構築">1. TypeScriptの環境構築</h1>
+                <h2 id="11-typescriptの基本的な使用方法">1.1. TypeScriptの基本的な使用方法</h2>
+                <p>インストールと確認(<strong>使用にはNode.js必須</strong>)</p>
+                <pre><code>npm install -D typescript //開発モードでのinstall
+                
+                npx tsc -v
+                
+                npx tsc --init //tsconfig.jsonの作成
+                </code></pre>
+                <p>tsファイルのコンパイル</p>
+                <pre><code>tsc ファイル名
+                </code></pre>
+                <h2 id="12-tsconfigjson">1.2. tsconfig.json</h2>
+                <h3 id="各設定パラメータ">各設定パラメータ<!-- omit in toc --></h3>
+                <table>
+                <thead>
+                <tr>
+                <th>名称</th>
+                <th>詳細</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>compilerOptions</td>
+                <td>コンパイルする際のオプションを記述するブロック</td>
+                </tr>
+                <tr>
+                <td>target</td>
+                <td>どのバージョンのJavScriptに出力するか指定可能(ES2021, ES2020, ES2019, ES2018, ES2017...)</td>
+                </tr>
+                <tr>
+                <td>lib</td>
+                <td>使いたいtargetには使いたい機能がないが使用したい場合にlibオプション指定で使用可能, セットでtargetも明記する必要あり</td>
+                </tr>
+                <tr>
+                <td></td>
+                <td></td>
+                </tr>
+                </tbody></table>
+                <h3 id="設定例">設定例<!-- omit in toc --></h3>
+                <pre><code>{
+                  &quot;compilerOptions&quot;: {
+                    /* Visit https://aka.ms/tsconfig to read more about this file */
+                
+                    /* Projects */
+                
+                    /* Language and Environment */
+                    &quot;target&quot;: &quot;ES2022&quot;,
+                    /* &quot;lib&quot;: [&quot;DOM&quot;, &quot;ES2021&quot;], */
+                
+                    /* Modules */
+                    &quot;module&quot;: &quot;CommonJS&quot;,
+                    &quot;moduleResolution&quot;: &quot;Node&quot;,
+                    &quot;resolveJsonModule&quot;: true,
+                
+                    /* Emit */
+                    &quot;sourceMap&quot;: true,
+                    &quot;outDir&quot;: &quot;./dist&quot;,
+                    &quot;noEmitOnError&quot;: true,
+                
+                    /* Interop Constraints */
+                    &quot;esModuleInterop&quot;: true,
+                    &quot;forceConsistentCasingInFileNames&quot;: true,
+                
+                    /* Type Checking */
+                    &quot;strict&quot;: true,
+                
+                    /* Completeness */
+                    &quot;skipLibCheck&quot;: true
+                  },
+                  &quot;include&quot;: [&quot;src/**/*.ts&quot;, &quot;scripts/**/*.ts&quot;],
+                  &quot;exclude&quot;: [&quot;src/**/*.test.ts&quot;, &quot;**/node_modules/**&quot;, &quot;dist&quot;]
+                }
+                </code></pre>
+                <h2 id="13-様々な使い方">1.3. 様々な使い方</h2>
+                <h3 id="131-ts-nodeも合わせた使い方">1.3.1. ts-nodeも合わせた使い方</h3>
+                <p>TypeScriptとts-nodeのインストール</p>
+                <pre><code>npm install --save typescript ts-node
+                </code></pre>
+                <h3 id="132-webpackを含めた使い方">1.3.2. webpackを含めた使い方</h3>
+                <p>この場合、TypeScriptをwebpackで処理するために「ts-loader」も一緒にインストールします。</p>
+                <blockquote>
+                <p>ts-loader: JSをTSにトランスコンパイルするパッケージ</p>
+                </blockquote>
+                <pre><code>npm install -D webpack webpack-cli typescript ts-loader
+                </code></pre>
+                <p>webpackを使いやすいようにpackage.jsonのscriptsに自前のビルドコマンドを記述すると便利です。</p>
+                <pre><code class="language-json">{
+                  &quot;scripts&quot;: {
+                    &quot;build&quot;: &quot;webpack&quot;,
+                    &quot;watch&quot;: &quot;webpack -w&quot;
+                  },
+                  &quot;devDependencies&quot;: {
+                    &quot;ts-loader&quot;: &quot;^9.2.8&quot;,
+                    &quot;typescript&quot;: &quot;^4.6.3&quot;,
+                    &quot;webpack&quot;: &quot;^5.72.0&quot;,
+                    &quot;webpack-cli&quot;: &quot;^4.9.2&quot;
+                  },
+                  &quot;private&quot;: true
+                }
+                </code></pre>
+                <p>typescriptsの設定ファイルtsconfig.json</p>
+                <h3 id="133-webpackreactの使い方">1.3.3. webpack+reactの使い方</h3>
+                <p>初めに webpack関連のパッケージとtypeScript, ts-loaderをインポート</p>
+                <pre><code>npm install -D webpack webpack-cli typescript ts-loader
+                </code></pre>
+                <p>次に「react」「react-dom」モジュールもインストールします。
+                型定義ファイルも欲しいので「@types/react」「@types/react-dom」も指定します。</p>
+                <pre><code>npm i -S react react-dom @types/react @types/react-dom
+                </code></pre>
+                <p>tsconfig.jsonのjsxオプションにはreactを指定します。</p>
+                <pre><code>{
+                  &quot;compilerOptions&quot;: {
+                    // 厳密モードとして設定
+                    &quot;strict&quot;: true,
+                    // ソースマップを有効化
+                    &quot;sourceMap&quot;: true,
+                    // TSはECMAScript 5に変換
+                    &quot;target&quot;: &quot;ES5&quot;,
+                    // TSのモジュールはES Modulesとして出力
+                    &quot;module&quot;: &quot;ES2015&quot;,
+                    // JSXの書式を有効に設定
+                    &quot;jsx&quot;: &quot;react&quot;,
+                    &quot;moduleResolution&quot;: &quot;node&quot;,
+                    &quot;lib&quot;: [
+                      &quot;ES2021&quot;,
+                      &quot;DOM&quot;
+                    ]
+                  }
+                }
+                </code></pre>
+                <p>webpack.config.jsのrulesやresolveの部分で拡張子.tsxを指定します。</p>
+                <pre><code>module.exports = {
+                  // モード値を production に設定すると最適化された状態で、
+                  // development に設定するとソースマップ有効でJSファイルが出力される
+                  mode: &quot;development&quot;,
+                
+                  // メインとなるJavaScriptファイル（エントリーポイント）
+                  entry: &quot;./src/main.tsx&quot;,
+                  // ファイルの出力設定
+                  output: {
+                    //  出力ファイルのディレクトリ名
+                    path: `${__dirname}/dist`,
+                    // 出力ファイル名
+                    filename: &quot;main.js&quot;
+                  },
+                  module: {
+                    rules: [
+                      {
+                        // 拡張子 .ts もしくは .tsx の場合
+                        test: /\.tsx?$/,
+                        // TypeScript をコンパイルする
+                        use: &quot;ts-loader&quot;
+                      }
+                    ]
+                  },
+                  // import 文で .ts や .tsx ファイルを解決するため
+                  resolve: {
+                    extensions: [&quot;.ts&quot;, &quot;.tsx&quot;, &quot;.js&quot;, &quot;.json&quot;]
+                  },
+                  // ES5(IE11等)向けの指定（webpack 5以上で必要）
+                  target: [&quot;web&quot;, &quot;es5&quot;],
+                };
+                </code></pre>
+                <p>このように設定すると<code>npm run build</code>コマンドを入力すると、srcフォルダーに配置したTSXファイルがコンパイルされ、distフォルダーにmain.jsファイルが出力されます。</p>
+                <h1 id="2-typescriptの基本文法">2. TypeScriptの基本文法</h1>
+                <h2 id="21-値・型・変数">2.1. 値・型・変数</h2>
+                <p><code>let</code>, <code>const</code>, <code>var</code>の使用は通常通り。</p>
+                <h3 id="宣言例">宣言例<!-- omit in toc --></h3>
+                <pre><code class="language-ts">let Smaple :boolean = false;
+                </code></pre>
+                <h3 id="211-型一覧">2.1.1. 型一覧</h3>
+                <table>
+                <thead>
+                <tr>
+                <th>型</th>
+                <th>説明</th>
+                <th>使用例</th>
+                </tr>
+                </thead>
+                <tbody><tr>
+                <td>boolean</td>
+                <td>True/false(真偽値)の型</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>number</td>
+                <td>全ての数値型(浮動小数点やBinaryなどBigintも含む)</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>string</td>
+                <td>文字列型</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>array</td>
+                <td>値の配列</td>
+                <td><code>let list: Array&lt;number&gt; = [1, 2, 3];</code></td>
+                </tr>
+                <tr>
+                <td>tuple</td>
+                <td>値の中身は同じである必要のない配列(数字,文字など)</td>
+                <td><code>let x: [string, number];</code></td>
+                </tr>
+                <tr>
+                <td>enum</td>
+                <td>列挙型</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>unknown</td>
+                <td>プロパティ、メソッドへのアクセスができない型(何も入る)</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>any</td>
+                <td>TypeScriptが型のチェックを放棄した型(何でも入る)</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>void</td>
+                <td>型を全く持たない型(<strong>値を返さない関数の戻り値としてよく使用</strong>)</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>null</td>
+                <td>下記説明より</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>undefined</td>
+                <td>下記説明より</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>never</td>
+                <td>決して発生しない値の型(<strong>関数式やアロー関数式で常に例外を投げるものや、絶対に返さないものに使う</strong>)</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>object</td>
+                <td>Jsのオブジェクト</td>
+                <td></td>
+                </tr>
+                </tbody></table>
+                <h3 id="212-unknownとany">2.1.2. unknownとany</h3>
+                <p>違いは以下リンク
+                <a href="https://typescriptbook.jp/reference/statements/any-vs-unknown">https://typescriptbook.jp/reference/statements/any-vs-unknown</a></p>
+                <h3 id="213-nullとundefined">2.1.3. nullとundefined</h3>
+                <p>デフォルトではnull と undefined は<strong>number のようなものに null と undefined を代入</strong>します。</p>
+                <p>-strictNullChecks フラグを使用すると、null と undefined は unknown、any、およびそれぞれの型にのみ代入可能です 
+                (ただし、undefined は void にも代入可能です)。
+                これにより、多くの一般的なエラーを回避することができます。</p>
+                <h3 id="214-neverの使用例">2.1.4. neverの使用例</h3>
+                <pre><code class="language-ts">// 関数の戻り値は到達可能な終点を持っていてはいけない
+                function error(message: string): never {
+                  throw new Error(message);
+                }
+                
+                // 推定された戻り値の型は決してありません。
+                function fail() {
+                  return error(&quot;Something failed&quot;);
+                }
+                
+                // 関数の戻り値は到達可能な終点を持っていてはいけない
+                function infiniteLoop(): never {
+                  while (true) {}
+                }
+                </code></pre>
+                <h3 id="215-型定義type">2.1.5. 型定義(type)</h3>
+                <p>typeは型エイリアスと呼ばれ文字通り型定義を扱うものです。
+                オブジェクトや配列の型を強制できます。</p>
+                <p>下記例ではtypeで定義した型をuseStateで使用しています。</p>
+                <pre><code class="language-ts">const [todos, setTodos] = useState&lt;SampleType[]&gt;([]);
+                  
+                type SampleType = {
+                  name: string;
+                  age: number;
+                  isAdult: boolean;
+                };
+                </code></pre>
+                <p>他に型定義が可能な記法には「interface」があるが割愛</p>
+                <h1 id="3-typescript向けのパッケージ">3. TypeScript向けのパッケージ</h1>
+                <h2 id="31-zod">3.1. zod</h2>
+                <p>zodはTypeScript First な<strong>バリデーションライブラリ</strong>です。</p>
+                <blockquote>
+                <p>installの際はtsのバージョンを要確認(4.5以上)</p>
+                </blockquote>
+                <pre><code>npm install zod
+                </code></pre>
+                <p>公式ドキュメント: <a href="https://zod.dev/">https://zod.dev/</a></p>
+                <h2 id="32-prisma">3.2. Prisma</h2>
+                <p>Prisma は、Node.jsでORMを実装するためのパッケージ。</p>
+                <pre><code>npx prisma
+                </code></pre>
+                <p>公式ドキュメント: <a href="https://www.prisma.io/docs">https://www.prisma.io/docs</a></p>
+                
+
+                <!-- END -->
+
+            </main>
+            <footer class="footer mt-auto py-3 bg-light">
+                <div class="container">
+                    <p class="text-muted text-center">Written by ゆーろん / yuron3141</p>
+                </div>
+            </footer>
+        </body>
+    </body>
+</html>
