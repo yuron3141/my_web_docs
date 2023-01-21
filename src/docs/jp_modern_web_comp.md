@@ -61,6 +61,7 @@
   - [3.1. イザ](#31-イザ)
   - [3.2. iSSUE](#32-issue)
   - [3.3. ちょっと](#33-ちょっと)
+  - [3.4. bgrass](#34-bgrass)
 
 
 
@@ -457,4 +458,25 @@ React/Next.js, GCP
 ### 技術スタック<!-- omit in toc -->
 React/Next.js
 
+## 3.4. bgrass
+### 基本情報<!-- omit in toc -->
+| key | value |
+| ---- | ---- |
+| メイン | Web系 |
+| 事業内容 | 以下 |
+| ターゲット | B 向け |
+| 創業年 | 2022年 |
+| ホームページ | https://bgrass.co.jp/ |
 
+### 事業内容<!-- omit in toc -->
+* テック業界の**女性やマイノリティのため**の支援プラットフォーム
+* Webアプリケーション・システム等の受託開発
+* ジェンダーギャップに関するイベント登壇や講演
+
+### 企業のメンバー(エンジニア/人事/経営陣)の方々のSNS・ブログ・記事など<!-- omit in toc -->
+#### だむは さん<!-- omit in toc -->
+* 代表取締役/エンジニア
+* [Twitter](https://twitter.com/damuha_)
+
+### 技術スタック<!-- omit in toc -->
+Vue.js/Nuxt.js, GCP, FireBase
