@@ -347,10 +347,20 @@ TypeScript,
 | ホームページ | https://bitflyer.com/ja-jp |
 
 ### 企業のメンバー(エンジニア/人事/経営陣)の方々のSNS・ブログ・記事など<!-- omit in toc -->
+#### 加納 裕三さん<!-- omit in toc -->
+ * 経営陣
+ * [Twitter](https://twitter.com/YuzoKano?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor)
 
+#### 堀井 保徳さん<!-- omit in toc -->
+ * フロントエンドエンジニア
+ * [紹介記事](https://u-note.me/note/67101)
+
+#### 富木 良さん<!-- omit in toc -->
+ * インターン生(2021時点)_現在不明
+ * [紹介記事](https://u-note.me/note/66188)
 
 ### 技術スタック<!-- omit in toc -->
-暗号資産、ブロックチェーン系技術
+ブロックチェーン系技術, Dapps?, Solidity?
 
 
 ## 2.29. 未来検索ブラジル

@@ -83,7 +83,7 @@ https://www.jmrlsi.co.jp/cgi-bin/ego/diagform.pl
 
 * サイト構成技術はレガシー(2000年代)
 
-#### 3. 超精密性格診断テスト mgram（エムグラム） | あなたの8性格を無料診断<!-- omit in toc -->
+### 3. 超精密性格診断テスト mgram（エムグラム） | あなたの8性格を無料診断<!-- omit in toc -->
 https://mgram.me/ja/
 
 * エニアグラムに基づく性格診断アプリ
