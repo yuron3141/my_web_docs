@@ -7,7 +7,7 @@
 
 日本のメガベンチャーは上場済み andor 資本金が5億以上 andor または従業員数1000人以上。
 
-スタートアップは創業5年以内のWeb系企業。
+スタートアップは創業5年以内(2018年以降設立)のWeb系企業と定義。
 
 それ以外は その他Web系企業 として扱う。
 
@@ -44,7 +44,7 @@
   - [2.16. i-plug](#216-i-plug)
   - [2.17. ファンファーレ](#217-ファンファーレ)
   - [2.18. カケハシ](#218-カケハシ)
-  - [2.19. シャトル](#219-シャトル)
+  - [2.19. atama plus](#219-atama-plus)
   - [2.20. LITALICO](#220-litalico)
   - [2.21. iYell](#221-iyell)
   - [2.22. アルプ](#222-アルプ)
@@ -62,6 +62,7 @@
   - [3.2. iSSUE](#32-issue)
   - [3.3. ちょっと](#33-ちょっと)
   - [3.4. bgrass](#34-bgrass)
+  - [3.5. シャトル](#35-シャトル)
 
 
 
@@ -293,7 +294,7 @@ unity
 
 ## 2.18. カケハシ
 
-## 2.19. シャトル
+## 2.19. atama plus
 
 ## 2.20. LITALICO
 
@@ -349,7 +350,7 @@ TypeScript,
 ### 企業のメンバー(エンジニア/人事/経営陣)の方々のSNS・ブログ・記事など<!-- omit in toc -->
 #### 加納 裕三さん<!-- omit in toc -->
  * 経営陣
- * [Twitter](https://twitter.com/YuzoKano?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor)
+ * [Twitter](https://twitter.com/YuzoKano)
 
 #### 堀井 保徳さん<!-- omit in toc -->
  * フロントエンドエンジニア
@@ -490,3 +491,21 @@ React/Next.js
 
 ### 技術スタック<!-- omit in toc -->
 Vue.js/Nuxt.js, GCP, FireBase
+
+## 3.5. シャトル
+### 基本情報<!-- omit in toc -->
+| key | value |
+| ---- | ---- |
+| メイン | Web系 |
+| 事業内容 | 子供向けプリペイドカード シャトルペイの運営 |
+| ターゲット | C 向け |
+| 創業年 | 2019年 |
+| ホームページ | https://shuttlepay.jp/company/ |
+
+### 企業内のエンジニア/人事/経営陣のSNS・ブログ・記事など<!-- omit in toc -->
+#### 見原 思郎さん<!-- omit in toc -->
+* 経営陣(代表取締役)
+* [Twiiter](https://twitter.com/shirom)
+
+### 技術スタック<!-- omit in toc -->
+Go言語 / AWS、GCP など

@@ -50,6 +50,7 @@ Meta(旧 FaceBook)により開発されました。SPA構成のフロントエ�
   - [3.4. その他のライブラリなど](#34-その他のライブラリなど)
     - [3.4.1. react-chartjs-2](#341-react-chartjs-2)
     - [3.4.2. react-three-fiber](#342-react-three-fiber)
+    - [3.4.3. swiper](#343-swiper)
 
 
 
@@ -767,3 +768,8 @@ Headless UI はスタイルを排除したコンポーネント集で、Tailwind
 three.jsをReactで使うためのライブラリです。
 
 公式ドキュメントhttps://docs.pmnd.rs/react-three-fiber/getting-started/introduction
+
+### 3.4.3. swiper
+Reactでスライダーを実装するのに使える。
+
+公式ドキュメント: https://swiperjs.com/react

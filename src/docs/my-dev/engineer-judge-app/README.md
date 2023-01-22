@@ -63,7 +63,7 @@ https://www.16personalities.com/ja/%E6%80%A7%E6%A0%BC%E8%A8%BA%E6%96%AD%E3%83%86
 * 上記が正しい場合アプリの構成は「モノリシックサービス」である
 * バックエンド機能があると言うことはDBにデータを読み隠している、つまり診断結果はサーバサイドに送信されている
 
-#### 2. データでわかる辛口性格診断 - produced by JMR生活総合研究所<!-- omit in toc -->
+### 2. データでわかる辛口性格診断 - produced by JMR生活総合研究所<!-- omit in toc -->
 https://www.jmrlsi.co.jp/cgi-bin/ego/diagform.pl
 
 * 日本のウェブサイト

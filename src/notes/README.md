@@ -74,14 +74,16 @@ Webサイト/アプリの構築を行う場合。
 | ケース | 技術 |
 | ---- | ---- |
 | Webアプリケーション(バックエンド機能有りWebサイト) | Rails, Node系(express, Nest.jsなど) |
-| 静的なWebサイト(ブログや簡素なホームページ) | Wordpress | 
+| 静的なWebサイト(ブログや簡素なホームページ) | Wordpress, Astro(モダンでいいなら) | 
 
 ## 1.2. バックエンド(APIサーバ)構築
 基本的にWeb系はRails、またはNode系(expressなど)。
 
+新しく時間をかけて挑戦していいなら**Go**。
+
 ゲーム系のAPIサーバならPHP?(要調査)
 
-ブラウザ(Webサイト)ゲームならFireBaseとかもあり？
+ブラウザ(Webサイト)ゲームならクラウドはFireBaseとかもあり？
 
 ## 2. アプリ開発
 PC / Mobile(Iphone, IOS) で実装する場合
@@ -89,7 +91,7 @@ PC / Mobile(Iphone, IOS) で実装する場合
 Electron(少し重い), tkinter(簡易的な場合)
 
 ### 2.2. Mobileアプリ
-React Naitive
+React Naitiveとか
 
 ## 3. ゲーム開発
 ### 3.1. ブラウザで遊べるゲーム
@@ -107,11 +109,11 @@ React Naitive
 
 | Web系の技術 | 目安 | 目標 |
 | ---- | ---- | ---- |
-| Go言語 | ruby＆rails強化後 | 3年以内 |
-| Kubernetes | Docker＆Go言語をある程度触った後 | 3年以内 |
-| 暗号化技術入門 |  | 特になし |
+| Go言語 | ruby＆rails強化後 | 2年以内 |
+| Kubernetes | Docker＆Go言語をある程度触った後 | 2年以内 |
 | Rust |  |  |
 | AI/機械学習入門 |  |  |
+| 暗号化技術入門 |  | 特になし |
 
 
 ## 現状作成予定はない、必要になれば作成
@@ -126,7 +128,7 @@ React Naitive
 暇なときにmd-to-htmlの改良上位互換を作成する。
 私が即席で作ったmd-to-htmlのプログラムは出力ファイルの場所を指定できない問題があるためめんどう。
 
-htmlのフォルダは``public/``とする
+htmlのフォルダは``docs/``とする
 
 作成までは以下サイトを使い変換して貼り付ける。
 
