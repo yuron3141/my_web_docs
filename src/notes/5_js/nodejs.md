@@ -153,8 +153,24 @@ nvm(Node Version Manager)はNode.jsの管理ツールで複数のNode.jsのバ�
 
 
 ### 1.2.2. nvs/fnm
+#### nvs<!-- omit in toc -->
 nvs(Node Version Switcher)はNode.jsの管理ツールで複数のNode.jsのバージョンをインストールして切り替えなどが可能です。
-fnmも同様です。
+#### fnm<!-- omit in toc -->
+上記に同じく。
+基本コマンドは以下に記載。
+
+| コマンド | 説明 | オプション |
+| ---- | ---- | ---- |
+| fnm current | 現在アクティブにしている Node.js のバージョン確認 |  |
+| fnm install バージョン | fnmを経由してNode.jsのインストール |  |
+| fnm uninstall バージョン | nvmを経由してNode.jsのアンインストール |  |
+| fnm use バージョン | Node.js のバージョンを切り替え(バージョンにsystemを指定するとOS内のNode.jsに切り替え) |  |
+| fnm default バージョン | デフォルトで使用するNode.jsのバージョンを指定可能 |  |
+| fnm list | インストール済みnodeの確認 |  |
+| fnm list-remote | インストール可能なversion確認 |  |
+| fnm -V | バージョン確認 |  |
+
+nodeのプロジェクトフォルダのルートディレクトリに``.node-version``を設置し、バージョンを記載すると自動的にfnmがバージョンを変更する。
 
 ### 1.2.3. nodebrew
 nodebrewは**MacOS向け**のNode.jsのバージョンを管理するためのツール。

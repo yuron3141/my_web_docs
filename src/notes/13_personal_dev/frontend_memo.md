@@ -1,6 +1,8 @@
 # HTML/CSS/生javascript(DOM操作)補足メモ<!-- omit in toc -->
 HTMLやCSS、JavaScript(Dom操作)に関してのメモ。
 
+フロントエンドに関してのメモに近い。
+
 ## 目次<!-- omit in toc -->
 - [1. HTML+JavaScript](#1-htmljavascript)
   - [1.1. form要素(input含む)](#11-form要素input含む)

@@ -51,6 +51,7 @@ Web開発を行うための個人的なノート。
     - [13.2. コーディング実装時の小技集](13_personal_dev/dev_memo.md)
     - [13.3. HTML/CSS/生javascript(DOM操作)補足メモ](13_personal_dev/3_frontend_memo.md)
     - [13.4. 言語特性/言語に関するメモ](13_personal_dev/prolang_memo.md)
+    - [13.5. Web開発者向けツールや設定などメモ](13_personal_dev/forwindows_dev.md)
 
 ---
 
