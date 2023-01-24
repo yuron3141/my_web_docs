@@ -82,24 +82,25 @@ VPC / Lambda / EC2 / IAM / CloudWatch
    - クラウド：　Netifly / Heroku
    - [https://www.10typesengineer.net/](https://www.10typesengineer.net/)
 
-#### ブラウザゲーム「たたけ! シーアニマルズ」の開発（2022年4月）
-   - ブラウザで遊べるモグラたたきのようなゲームを開発
-   - 使用技術： JavaScript / Vue.js
-   - [https://yuuronacademy.com/demo/game1/](https://yuuronacademy.com/demo/game1/)
-
 #### VRChatで遊べるゲームワールドの開発（2021年8月）
    - 担当：企画・デザイン・設計・実装
    - 使用技術： Unity ・ C# ・ Udon(U#) ・ VRChatSDK など
    - VRChat で世界中の人が遊べるゲームワールドを制作
    - ワールドに訪れた人数 （2022/11時点）： 121,153 人
    - お気に入りにされた数： 10,332
-   - [ワールドの紹介ページ](https://vrclist.com/world?id=6348)
+   - [ワールドの紹介ページ](https://en.vrcw.net/world/detail/wrld_21bb75ba-60b6-4640-b4ca-0473f093c4db)
 
 ### 記事投稿
 - 個人ブログ「ゆーろんアカデミー」の運営
    - 技術的な情報/個人開発の情報/メタバースに関する情報などの提供
    - [https://yuuronacademy.com/](https://yuuronacademy.com/)
 
+### ポートフォリオ
+#### ブラウザゲーム「たたけ! シーアニマルズ」（2022年4月）
+   - ブラウザで遊べるモグラたたきのようなゲームを開発
+   - 使用技術： JavaScript / Vue.js
+   - [https://yuuronacademy.com/demo/game1/](https://yuuronacademy.com/demo/game1/)
+  
 ---
 
 ## 副業 / 業務経験

@@ -1,5 +1,5 @@
 module.exports = {
-    stylesheet: "src/pdf-configs/style.css",
+    stylesheet: "src/configs/style.css",
 	body_class: 'markdown-body',
 	marked_options: {
 		headerIds: false,
