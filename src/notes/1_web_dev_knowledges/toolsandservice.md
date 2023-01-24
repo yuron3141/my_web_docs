@@ -11,17 +11,23 @@
     - [1.1.4. Fly.io](#114-flyio)
     - [1.1.5. FireBase](#115-firebase)
     - [1.1.6. GitHub Pages](#116-github-pages)
-    - [1.1.7. subabase](#117-subabase)
+    - [1.1.7. Subabase](#117-subabase)
     - [1.1.8. Deta Cloud](#118-deta-cloud)
   - [1.2. IaaS](#12-iaas)
     - [1.2.1. AWS](#121-aws)
     - [1.2.2. GCP](#122-gcp)
     - [1.2.3. Azure](#123-azure)
     - [1.2.4. Alibaba Cloud](#124-alibaba-cloud)
-  - [1.3. CMS(PHPベース)](#13-cmsphpベース)
-    - [1.3.1. Wordpress](#131-wordpress)
-    - [1.3.2. Drupal](#132-drupal)
-    - [1.3.3. EC-CUBE](#133-ec-cube)
+  - [1.3. CMS / HeadlessCMS](#13-cms--headlesscms)
+    - [1.3.1. CMS(従来型)](#131-cms従来型)
+      - [1.3.1.1 Wordpress](#1311-wordpress)
+      - [1.3.1.2. Drupal](#1312-drupal)
+      - [1.3.1.3. EC-CUBE](#1313-ec-cube)
+    - [1.3.2. HeadlessCMS](#132-headlesscms)
+      - [1.3.2.1. Strapi](#1321-strapi)
+      - [1.3.2.2. microCMS](#1322-microcms)
+      - [1.3.2.3. GraphCMS](#1323-graphcms)
+      - [1.3.2.2.](#1322)
   - [1.4. フレームワーク](#14-フレームワーク)
     - [1.4.1. JavaScriptベース](#141-javascriptベース)
     - [1.4.2. Rubyベース](#142-rubyベース)
@@ -211,7 +217,7 @@ Git PagesはGitHubの提供する静的サイト ホスティングサービス�
 使用制限としては、ソースリポジトリには1GBの推奨上限があり、月当たり 100GB のソフトな帯域幅制限があります。
 そのため簡単でシンプルなWEBアプリ(JavaScriptベース)や静的サイトのデプロイに使用用途は限られます。
 
-### 1.1.7. subabase
+### 1.1.7. Subabase
 subabaseは認証やデータべースといったバックエンドに必要な機能を提供するBaaSの1つであり、Firebaseの互換になりえるサービスです。
 FireBaseとの違いはデータベースが**PostgreベースのRDB**であることです。
 とはいってもFirebaseの機能数の方が多いのでデータベースをPosgreSQLのRDBで使用したい場合の検討の1つであると言えます。
@@ -276,8 +282,9 @@ Microsoftの管理するクラウドコンピューティングサービスで�
 Alibaba が提供するクラウドコンピューティングサービスです。
 アジア太平洋地域のIaaS市場で占有率1位(2019)。
 
-## 1.3. CMS(PHPベース)
-### 1.3.1. Wordpress
+## 1.3. CMS / HeadlessCMS
+### 1.3.1. CMS(従来型)
+#### 1.3.1.1 Wordpress
 WordPressはサイトの作成やブログの作成などができるOSSのCMS(コンテンツ管理システム)です。
 ブログ投稿管理システムとしては最も有名であり、企業のコーポーレートサイトや個人ブログなど様々な形で利用可能です。
 全世界の4分の1を超えるサイトがWordPressで作られており、圧倒的なシェアを誇っています。
@@ -285,17 +292,55 @@ WordPressはサイトの作成やブログの作成などができるOSSのCMS(�
 サイトやページ制作に必須となるHTML/CSSやPHPなどのWeb関連技術が無い人でもサイト管理や記事投稿ができるため、個人のブロガーから企業、官公庁まで幅広く使用されています。
 DBはMy SQLを使用しています。
 
-### 1.3.2. Drupal
+PHPベース。
+
+#### 1.3.1.2. Drupal
 DrupalはOSSののモジュラー式フレームワークであるCMS(コンテンツ管理システム)です。
 Drupalは非常に柔軟で拡張性の高いプラットフォームのため、単に通常のウェブサイトを公開するだけではなく、**多言語でさまざななデバイスに向けた情報の配信が可能**です。
 
 多言語化の対応のしやすさやカスタマイズの容易さ、堅牢なセキュリティがあることも特徴です。
 
-### 1.3.3. EC-CUBE
+PHPベース。
+
+#### 1.3.1.3. EC-CUBE
 EC-CUBEは日本の企業である株式会社イーシーキューブが開発するOSSのEC向けCMS(コンテンツ管理システム)です。
 
 特徴として、企業や店が商品紹介を行うページや、ユーザーが実際に商品の注文を行うページの制作など、ECサイトに不可欠なWebページを作るための機能が網羅されています。 このほか、EC-CUBEには商品別の売上集計や在庫管理といった、製作したECサイトを管理するための機能があります。
 
+PHPベース。
+
+### 1.3.2. HeadlessCMS
+ヘッドレスCMSはコンテンツ管理機能に特化したCMS。
+
+ヘッドレスCMSと従来のCMSは、管理機能であるバックエンドのみか、表示機能であるフロントエンド・バックエンド機能を同時に持つかに違いがある。
+
+ヘッドレスCMSでは管理機能のみになるため、別に表示画面の用意と専門知識が必要。その分ヘッドレスCMSは、表示画面の自由度が高まり、APIの受け取り先が格段に増えることから、さまざまなデバイス・チャネルに対応が可能と言える。
+
+#### 1.3.2.1. Strapi
+StrapiとはNode.js環境において動作するOSSヘッドレスCMS。
+
+Strapiは100％Javascriptベースであり、完全にカスタマイズ可能で開発者ファーストなCMSである。
+
+ただし**Self-Hosted型**なのでサーバーやデータベースを自前で用意し、ヘッドレスCMSをインストールやセッティングする必要がある。
+
+対応するフロントエンドフレームワークには``Vue.js, Reactなど``。
+
+公式サイト: https://strapi.io/
+
+#### 1.3.2.2. microCMS
+microCMSとはAPIベースの日本製の中でも最も代表的なヘッドレスCMS。
+ドキュメントもサポートも完全日本語対応している特徴がある。
+
+Jamstackと相性が良いのも特徴。
+
+公式サイト: https://microcms.io/
+
+#### 1.3.2.3. GraphCMS
+Meta社が開発したGraphQLの活用に特化したヘッドレスCMS。
+
+コンテンツフィルタリングの機能の充実度、バッチ処理対応ができる点などが特徴。
+
+#### 1.3.2.2. 
 ## 1.4. フレームワーク
 ### 1.4.1. JavaScriptベース
 
@@ -687,7 +732,9 @@ Jamstackとはウェブサーバーを存在させずにサイトを運用する
 
 <img src="https://images.blog.microcms.io/assets/f5d83e38f9374219900ef1b0cc4d85cd/d15fa6674ef8481a968963c7b24dc4ba/figure4.png" width="60%">
 
-詳細な解説: https://blog.microcms.io/jamstack-introduction/
+[詳細な解説1](https://blog.microcms.io/jamstack-introduction/)
+
+[詳しい解説記事(Qiita)](https://qiita.com/ozaki25/items/4075d03278d1fb51cc37)
 
 ## 3.6. コーディング・実装原則
 ### 3.6.1. YAGNI原則
