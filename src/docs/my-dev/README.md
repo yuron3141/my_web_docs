@@ -1,8 +1,6 @@
 # The rule of creating documents about development
 All documents should be written in English.
 
-∵ It has been confirmed that Japan will decline internationally as a country of Web/IT technology.
-
 If necessary, translate it into Japanese using DeepL, ChatGPT (Open AI).
 
 ## Summary

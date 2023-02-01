@@ -6,20 +6,32 @@ https://mermaid.live/edit
 
 ```mermaid
 erDiagram
-    RESULT_STATISTICS {
-        string enginerr_id
-        string statistics_id
+    STATISTICS {
+        integer id
+        integer engineer_id
+        integer generation
+        integer sum
+        timestamps created_at
+        timestamps updated_at
     }
-    ENGINEER_TYPES ||--o{ RESULT_STATISTICS : places
-    ENGINEER_TYPES {
-        string enginerr_id
-        string engineer_name
+    ENGINEERS ||--o{ STATISTICS : places
+    ENGINEERS {
+        integer id
+        string name
+        timestamps created_at
+        timestamps updated_at
     }
-    ALL_ENGINEER_SUMS ||--o{ RESULT_STATISTICS : places
-    ALL_ENGINEER_SUMS {
-        string statistics_id
-        int generation
-        int sum
-        datetime created_at
+    CLIENT_RESULTS {
+        integer id
+        string ip_address
+        integer point_intention
+        integer point_view
+        integer point_expert
+        integer point_tech
+        integer generation
+        integer sex
+        integer month
+        timestamps created_at
+        timestamps updated_at
     }
 ```

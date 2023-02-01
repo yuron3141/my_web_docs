@@ -76,11 +76,11 @@
                     </ul>
                     <p>補足：機能名は最後に「s」をつける、クエリで指定する場合は 機能名/数字 などで操作するデータを指定する構造にする</p>
                     <div  class="p-2">
-                        <h2>Results/</h2>
+                        <h2>Results/:id</h2>
                         <p class="lead">
                             結果の登録用テーブルへの操作を行うためのエンドポイント
                         </p>
-                        <p>登録機能(CREATE)のみの提供とする。他操作(RUD)は禁止(アクセス無効)。</p>
+                        <p>登録機能(CREATE)と読み取り機能(READ: ログイン必須)のみの提供とする。READの処理は:idで取得するデータベースのid範囲を定めれる</p>
                         <div class="accordion" id="accordionFlushExample">
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="flush-headingOne">
@@ -90,7 +90,7 @@
                                 </h2>
                                 <div id="OneOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body">
-                                        <p>スキーマ</p>
+                                        <p>レスポンス</p>
                                         <ul class="list-group">
                                             <li class="list-group-item">
                                                 {<br>
@@ -114,6 +114,68 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingOne">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#OneTwo" aria-expanded="false" aria-controls="flush-collapseOne">
+                                    <h5>GET (:参照)</h5>
+                                    </button>
+                                </h2>
+                                <div id="OneTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <p>レスポンス</p>
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                {<br>
+                                                    "status": "SUCCESS",<br>
+                                                    "message": "Got a data",<br>
+                                                    "data"{<br>
+                                                <p class="text-primary">
+                                                        {<br>
+                                                            "id" : 1,<br>
+                                                            "ip_address": "142.251.42.195",<br>
+                                                            "point_intention": "120",<br>
+                                                            "point_view": "110",<br>
+                                                            "point_expert": "80",<br>
+                                                            "point_tech": "190",<br>
+                                                            "generation": "120",<br>
+                                                            "sex": "0",<br>
+                                                            "month": "4",<br>
+                                                            "created_at": "2022-01-17T08:39:55.123Z",<br>
+                                                            "updated_at": "2022-01-17T08:39:55.123Z"<br>
+                                                        },<br>
+                                                        {<br>
+                                                            "id" : 2,<br>
+                                                            "ip_address": "142.251.42.195",<br>
+                                                            "point_intention": "120",<br>
+                                                            "point_view": "110",<br>
+                                                            "point_expert": "80",<br>
+                                                            "point_tech": "190",<br>
+                                                            "generation": "120",<br>
+                                                            "sex": "0",<br>
+                                                            "month": "4",<br>
+                                                            "created_at": "2022-01-17T08:39:55.123Z",<br>
+                                                            "updated_at": "2022-01-17T08:39:55.123Z"<br>
+                                                        }<br>
+                                                        :<br>
+
+                                                </p>
+                                                    }<br>
+                                                }<br>
+                                            </li>
+                                        </ul>
+                                        <div class="m-1 p-3 card">
+                                            <h6>補足</h6>
+                                            <p>
+                                                Results/:idの :id の数字で読み取るデータ範囲を指定可能。
+                                            <br>読み取りは100の倍数ずつ行い、100個ずつ読み取る(ex: id=200なら 100～200まで)
+                                            <br>SSKDSのエンドポイントでログインしてSESSIONを入手してなければFAILEDを返す(dataを返さない)
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                     <div class="p-2">
@@ -125,13 +187,13 @@
                         <div class="accordion" id="accordionFlushExample">
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="flush-headingOne">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#OneTwo" aria-expanded="false" aria-controls="flush-collapseOne">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#TwoOne" aria-expanded="false" aria-controls="flush-collapseOne">
                                     <h5>GET (:読み取り)</h5>
                                     </button>
                                 </h2>
-                                <div id="OneTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                <div id="TwoOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body">
-                                        <p>スキーマ</p>
+                                        <p>レスポンス</p>
                                         <ul class="list-group">
                                             <li class="list-group-item">
                                                 {<br>
@@ -139,16 +201,16 @@
                                                     "message": "you got statistics data",<br>
                                                     "data"{<br>
                                                 <p class="text-primary">
-                                                        "statistics": {<br>
-                                                            "10" : [12, 23, 34, 24, 23, 45, 2, 78, 23, 27],<br>
-                                                            "20" : [12, 23, 34, 24, 23, 45, 2, 78, 23, 27],<br>
-                                                            "30" : [12, 23, 34, 24, 23, 45, 2, 78, 23, 27],<br>
-                                                            "40" : [12, 23, 34, 24, 23, 45, 2, 78, 23, 27],<br>
-                                                            "50" : [12, 23, 34, 24, 23, 45, 2, 78, 23, 27],<br>
-                                                            "60" : [12, 23, 34, 24, 23, 45, 2, 78, 23, 27],<br>
-                                                            "70" : [12, 23, 34, 24, 23, 45, 2, 78, 23, 27],<br>
-                                                            "0" : [145, 223, 234, 124, 223, 451, 22, 781, 231, 271],<br>
-                                                        },<br>
+                                                        "statistics": [<br>
+                                                            [12, 23, 34, 24, 23, 45, 2, 78, 23, 27],<br>
+                                                            [12, 23, 34, 24, 23, 45, 2, 78, 23, 27],<br>
+                                                            [12, 23, 34, 24, 23, 45, 2, 78, 23, 27],<br>
+                                                            [12, 23, 34, 24, 23, 45, 2, 78, 23, 27],<br>
+                                                            [12, 23, 34, 24, 23, 45, 2, 78, 23, 27],<br>
+                                                            [12, 23, 34, 24, 23, 45, 2, 78, 23, 27],<br>
+                                                            [12, 23, 34, 24, 23, 45, 2, 78, 23, 27],<br>
+                                                            [145, 223, 234, 124, 223, 451, 22, 781, 231, 271],<br>
+                                                        ],<br>
                                                         "sum": "120",<br>
                                                 </p>
                                                     }<br>
@@ -173,18 +235,162 @@
                 <div id="3" class="container">
                     <h1 class="mt-5">管理者サイド用API(SSKDS)</h1>
                     <p class="lead">
-                        SSKDSなAPI(管理用)の構成は以下の通り
+                        SSKDSなAPI(管理者が主に使用)の構成は以下の通り
                     </p>
                     <ul class="list-group">
-                        <li class="list-group-item text-primary">/admin/ :unique_string: /機能名</li>
+                        <li class="list-group-item text-primary">/admin/機能名</li>
                     </ul>
-                    <p>補足： unique_string は ユニークな文字列 とする これは悪意のあるクライアント側が管理画面にアクセスしにくいようにするため</p>
                     <div  class="p-2">
-                        <h2>sign_in/</h2>
+                        <h2>Login/</h2>
                         <p class="lead">
-                            ログイン認証(パスワード認証)を行うためのエンドポイント
+                            ログイン認証とログイン中か確認をするためのエンドポイント
                         </p>
                         <p></p>
+                        <div class="accordion" id="accordionFlushExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingOne">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ThreeOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                    <h5>POST(ログインに使用)</h5>
+                                    </button>
+                                </h2>
+                                <div id="ThreeOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <p>レスポンス</p>
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                {<br>
+                                                    "logged_in": true,<br>
+                                                    "user"{<br>
+
+                                                    }<br>
+                                                }<br>
+                                            </li>
+                                        </ul>
+                                        <div class="m-1 p-3 card">
+                                            <h6>補足</h6>
+                                            <p>
+                                                userにはログイン_ユーザの情報を含める。
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingOne">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ThreeTwo" aria-expanded="false" aria-controls="flush-collapseOne">
+                                    <h5>GET(ログイン中か確認に使用)</h5>
+                                    </button>
+                                </h2>
+                                <div id="ThreeTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <p>レスポンス</p>
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                {<br>
+                                                    "logged_in": true,<br>
+                                                    "user"{<br>
+
+                                                    }<br>
+                                                }<br>
+                                            </li>
+                                        </ul>
+                                        <div class="m-1 p-3 card">
+                                            <h6>補足</h6>
+                                            <p>
+                                                userにはログイン_ユーザの情報を含める。
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div  class="p-2">
+                        <h2>Logout/</h2>
+                        <p class="lead">
+                            ログアウトに使用
+                        </p>
+                        <p></p>
+                        <div class="accordion" id="accordionFlushExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingOne">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#FourOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                    <h5>DELETE</h5>
+                                    </button>
+                                </h2>
+                                <div id="FourOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <p>レスポンス</p>
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                {<br>
+                                                    "status": "SUCESS",<br>
+                                                    "log_out": true<br>
+                                                }<br>
+                                            </li>
+                                        </ul>
+                                        <div class="m-1 p-3 card">
+                                            <h6>補足</h6>
+                                            <p>
+                                                このエンドポイントにアクセスすることですべてのセッション情報が削除される(データベースのデータ自体は削除しない)
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div  class="p-2">
+                        <h2>Results/:id</h2>
+                        <p class="lead">
+                            統計データの削除に使用
+                        </p>
+                        <p></p>
+                        <div class="accordion" id="accordionFlushExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingOne">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#FiveOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                    <h5>DELETE</h5>
+                                    </button>
+                                </h2>
+                                <div id="FiveOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <p>レスポンス</p>
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                {<br>
+                                                    "status": "SUCESS",<br>
+                                                    "message": "Deleted the post"<br>
+                                                    "data": {<br>
+                                                        <p class="text-primary">
+                                                        {<br>
+                                                            "id" : 2,<br>
+                                                            "ip_address": "142.251.42.195",<br>
+                                                            "point_intention": "120",<br>
+                                                            "point_view": "110",<br>
+                                                            "point_expert": "80",<br>
+                                                            "point_tech": "190",<br>
+                                                            "generation": "120",<br>
+                                                            "sex": "0",<br>
+                                                            "month": "4",<br>
+                                                            "created_at": "2022-01-17T08:39:55.123Z",<br>
+                                                            "updated_at": "2022-01-17T08:39:55.123Z"<br>
+                                                        }<br>
+                                                    </p>
+                                                    }<br>
+                                                }<br>
+                                            </li>
+                                        </ul>
+                                        <div class="m-1 p-3 card">
+                                            <h6>補足</h6>
+                                            <p>
+                                                dataには削除したデータを入れる、削除するデータのidは:idで指定する
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
